@@ -49,6 +49,17 @@
                                         <input type="text" class="form-control" id="name" placeholder="Nome Completo"
                                             name="name" value="{{ old('name') ?? $user->name }}" required>
                                     </div>
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                        <label for="genre_id">Gênero</label>
+                                        <x-adminlte-select2 name="genre_id">
+                                            <option value="">Não Informado</option>
+                                            @foreach ($genres as $genre)
+                                                <option
+                                                    {{ old('genre_id') == $genre->id ? 'selected' : ($user->genre_id == $genre->id ? 'selected' : '') }}
+                                                    value="{{ $genre->id }}">{{ $genre->name }}</option>
+                                            @endforeach
+                                        </x-adminlte-select2>
+                                    </div>
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-between">

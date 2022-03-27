@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\ACL\PermissionController;
 use App\Http\Controllers\Admin\ACL\RoleController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ComplexController;
+use App\Http\Controllers\Admin\Settings\GenreController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +32,18 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
         Route::get('/users/destroy/{id}', [UserController::class, 'destroy']);
         Route::resource('users', UserController::class);
+
+        /** Complex */
+        Route::get('/complexes/destroy/{id}', [ComplexController::class, 'destroy']);
+        Route::resource('complexes', ComplexController::class);
+
+
+        /**
+         * Configurations
+         * */
+        /** Genres */
+        Route::get('/settings/genres/destroy/{id}', [GenreController::class, 'destroy']);
+        Route::resource('settings/genres', GenreController::class);
 
         /**
          * ACL

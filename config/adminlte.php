@@ -238,6 +238,7 @@ return [
             'text' => 'Pesquisar',
         ],
         //Custom menus
+        /** Users */
         [
             'text'        => 'Usuários',
             'url'         => '#',
@@ -258,6 +259,56 @@ return [
                 ],
             ],
         ],
+        /** Complexes */
+        [
+            'text'        => 'Condomínios',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-building',
+            'can'         => 'Acessar Condomínios',
+            'submenu' => [
+                [
+                    'text' => 'Listagem de Condomínios',
+                    'url'  => 'admin/complexes',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Listar Condomínios',
+                ],
+                [
+                    'text' => 'Cadastro de Condomínios',
+                    'url'  => 'admin/complexes/create',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Condomínios',
+                ],
+            ],
+        ],
+        /** Settings */
+        [
+            'text'    => 'Configurações',
+            'icon'    => 'fas fa-fw fa-cogs',
+            'can'     => 'Acessar Configurações',
+            'submenu' => [
+                [
+                    'text' => 'Gêneros',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-genderless',
+                    'can'     => 'Acessar Gêneros',
+                    'submenu' => [
+                        [
+                            'text' => 'Listagem de Gêneros',
+                            'url'  => 'admin/settings/genres',
+                            'icon'    => 'fas fa-fw fa-chevron-right',
+                            'can'     => 'Listar Gêneros',
+                        ],
+                        [
+                            'text' => 'Cadastro de Gêneros',
+                            'url'  => 'admin/settings/genres/create',
+                            'icon'    => 'fas fa-fw fa-chevron-right',
+                            'can'     => 'Criar Gêneros',
+                        ],
+                    ]
+                ],
+            ]
+        ],
+        /** ACL */
         [
             'text'    => 'ACL',
             'icon'    => 'fas fa-fw fa-user-shield',

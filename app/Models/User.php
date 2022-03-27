@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Settings\Genre;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,6 +31,7 @@ class User extends Authenticatable
         'photo',
         'telephone',
         'cell',
+        'genre_id'
     ];
 
     /**
@@ -50,4 +52,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /** Relationships */
+    public function genre()
+    {
+        return $this->belongsTo(Genre::class)->withDefault([
+            'name' => 'Não Informado',
+        ]);
+    }
 }

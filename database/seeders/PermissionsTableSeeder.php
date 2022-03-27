@@ -73,8 +73,40 @@ class PermissionsTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],
+            /** Settings Access 12 */
+            [
+                'name' => 'Acessar Configurações',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            /** Genres 13 to 17 */
+            [
+                'name' => 'Acessar Gêneros',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Listar Gêneros',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Criar Gêneros',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Editar Gêneros',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Excluir Gêneros',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
 
-            /** Users 12 to 16 */
+            /** Users 18 to 22 */
             [
                 'name' => 'Acessar Usuários',
                 'guard_name' => 'web',
@@ -97,6 +129,32 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Excluir Usuários',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            /** Complex 23 to 27 */
+            [
+                'name' => 'Acessar Condomínios',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Listar Condomínios',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Criar Condomínios',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Editar Condomínios',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Excluir Condomínios',
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],

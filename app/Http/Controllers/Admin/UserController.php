@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
+use App\Models\Settings\Genre;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,7 +53,10 @@ class UserController extends Controller
         } else {
             $roles = [];
         }
-        return view('admin.users.create', compact('roles'));
+
+        $genres = Genre::all();
+
+        return view('admin.users.create', compact('roles', 'genres'));
     }
 
     /**
@@ -137,7 +141,9 @@ class UserController extends Controller
         if (empty($user->id)) {
             abort(403, 'Acesso não autorizado');
         }
-        return view('admin.users.edit', compact('user', 'roles'));
+
+        $genres = Genre::all();
+        return view('admin.users.edit', compact('user', 'roles', 'genres'));
     }
 
     /**
