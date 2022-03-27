@@ -1,0 +1,111 @@
+.container {
+    box-sizing: border-box;
+    max-width: 1200px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button-center {
+    margin: 0 auto;
+}
+
+.button {
+    display: inline-block;
+    padding: 16px 32px;
+    background: linear-gradient(#ffbf00, #f2a50c);
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    color: var(--color-p5);
+    font: 600 1.125rem/1.35 "Poppins", sans-serif;
+    max-width: max-content;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: linear-gradient(#ffb60d, #e59317);
+}
+
+.button.secondary {
+    background: var(--color-10);
+    color: var(--color-2);
+}
+
+.button.secondary:hover {
+    background: var(--color-9);
+}
+
+.button.arrow {
+    display: flex;
+    align-items: center;
+}
+
+.button.arrow::after {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 10px;
+    margin-left: 12px;
+    background: url("../../img/icones/seta.svg");
+    transition: transform 0.2s;
+}
+
+.button.arrow:hover::after {
+    transform: translateX(4px);
+}
+
+@media (max-width: 600px) {
+    .button {
+        padding: 12px 16px;
+        font-size: 1rem;
+    }
+}
+
+.link {
+    display: inline-block;
+    color: var(--color-p1);
+    font: 500 1.5rem/1.5 "Poppins", sans-serif;
+    text-transform: uppercase;
+}
+
+.link::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: currentColor;
+}
+
+.link:hover {
+    color: var(--color-0);
+}
+
+/* titulo internas */
+.title-bg {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    background-color: var(--color-11);
+}
+
+.title {
+    background: url("../../img/dec/top-right.svg") no-repeat top right 20px;
+}
+
+.title p {
+    margin-bottom: 4px;
+}
+
+@media (max-width: 800px) {
+    .title-bg {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .title p {
+        font-size: 1rem;
+        text-transform: lowercase;
+        font-weight: 400;
+    }
+}
