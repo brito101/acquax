@@ -27,7 +27,7 @@
                     <div class="card card-solid">
                         <div class="card-header">
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
-                                <h3 class="card-title align-self-center">Condomínios Cadastradas</h3>
+                                <h3 class="card-title align-self-center">Condomínios Cadastrados</h3>
                                 @can('Criar Condomínios')
                                     <a href="{{ route('admin.complexes.create') }}" title="Novo Condomínio"
                                         class="btn btn-success"><i class="fas fa-fw fa-plus"></i>Novo Condomínio</a>
@@ -47,6 +47,9 @@
                                                 <div class="row">
                                                     <div class="col-7">
                                                         <h2 class="lead"><b>{{ $complex->alias_name }}</b></h2>
+                                                        <p class="text-muted text-sm mb-n1">Qtd de
+                                                            Blocos: {{ $complex->blocks->count() }}
+                                                        </p>
                                                         <p class="text-muted text-sm">Qtd de ap</p>
                                                         <p class="text-muted text-sm">Síndicos</p>
                                                         <ul class="ml-4 mb-0 fa-ul text-muted">
@@ -64,9 +67,10 @@
                                                         @if ($complex->photo)
                                                             <img src="{{ url('storage/complexes/' . $complex->photo) }}"
                                                                 alt="{{ $complex->alias_name }}"
-                                                                class="img-circle img-fluid" style="
-                                                                    object-fit: cover; width: 100%; height: 112px;
-                                                                    ">
+                                                                class="img-circle img-fluid"
+                                                                style="
+                                                                                                                                                                object-fit: cover; width: 100%; height: 112px;
+                                                                                                                                                                ">
                                                         @else
                                                             <img src="{{ asset('img/building.png') }}"
                                                                 alt="{{ $complex->alias_name }}"
@@ -88,6 +92,11 @@
                                                         onclick="return confirm('Confirma a exclusão desta condomínio?')">
                                                         <i class="fas fa-trash mr-2"></i>Excluir
                                                     </a>
+                                                </div>
+                                                <div class="text-center d-flex flex-wrap justify-content-center pt-2">
+                                                    <a href="{{ route('admin.blocks.index', ['complex' => $complex->id]) }}"
+                                                        class="btn btn-sm btn-primary mr-2">
+                                                        <i class="fas fa-building mr-2"></i>Blocos</a>
                                                 </div>
                                             </div>
                                         </div>

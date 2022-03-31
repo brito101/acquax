@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\ACL\PermissionController;
 use App\Http\Controllers\Admin\ACL\RoleController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\ComplexController;
 use App\Http\Controllers\Admin\Settings\GenreController;
 use App\Http\Controllers\Admin\UserController;
@@ -36,6 +37,14 @@ Route::group(['middleware' => ['auth']], function () {
         /** Complex */
         Route::get('/complexes/destroy/{id}', [ComplexController::class, 'destroy']);
         Route::resource('complexes', ComplexController::class);
+
+        /** Blocks per Complex */
+        Route::get('blocks/{complex?}', [BlockController::class, 'index'])->name('blocks.index');
+        Route::get('blocks/{complex}/create', [BlockController::class, 'create'])->name('blocks.create');
+        Route::post('blocks/{complex?}/create', [BlockController::class, 'store'])->name('blocks.store');
+        Route::get('blocks/edit/{block}', [BlockController::class, 'edit'])->name('blocks.edit');
+        Route::put('blocks/edit/{block}', [BlockController::class, 'update'])->name('blocks.update');
+        Route::get('blocks/destroy/{block}', [BlockController::class, 'destroy']);
 
 
         /**

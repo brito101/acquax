@@ -278,6 +278,12 @@ return [
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'can'  => 'Criar Condomínios',
                 ],
+                [
+                    'text' => 'Listagem de Blocos',
+                    'url'  => 'admin/blocks',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Blocos',
+                ],
             ],
         ],
         /** Settings */

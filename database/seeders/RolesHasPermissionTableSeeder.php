@@ -133,7 +133,7 @@ class RolesHasPermissionTableSeeder extends Seeder
                 'permission_id' => 22,
                 'role_id' => 2
             ],
-            /** Complexes  de 23 to 27 (progremmer and administrator) */
+            /** Complexes  de 23 to 27 (programmer and administrator) */
             [
                 'permission_id' => 23,
                 'role_id' => 1
@@ -172,6 +172,47 @@ class RolesHasPermissionTableSeeder extends Seeder
             ],
             [
                 'permission_id' => 27,
+                'role_id' => 2
+            ],
+            /** Block  de 28 to 32 (programmer and administrator) */
+            [
+                'permission_id' => 28,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 28,
+                'role_id' => 2
+            ],
+            [
+                'permission_id' => 29,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 29,
+                'role_id' => 2
+            ],
+            [
+                'permission_id' => 30,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 30,
+                'role_id' => 2
+            ],
+            [
+                'permission_id' => 31,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 31,
+                'role_id' => 2
+            ],
+            [
+                'permission_id' => 32,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 32,
                 'role_id' => 2
             ],
         ]);

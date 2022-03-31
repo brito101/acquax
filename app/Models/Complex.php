@@ -35,4 +35,9 @@ class Complex extends Model
     ];
 
     /** Relationships */
+
+    public function blocks()
+    {
+        return $this->hasMany(Block::class);
+    }
 }
