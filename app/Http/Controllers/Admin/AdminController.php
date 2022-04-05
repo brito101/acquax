@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Block;
+use App\Models\Complex;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -14,6 +16,8 @@ class AdminController extends Controller
     public function index()
     {
         $administrators = User::role('Administrador')->get()->count();
+        $complexes = Complex::all()->count();
+        $blocks = Block::all()->count();
 
         /** Statistcs */
         $statistics = $this->accessStatistcs();
@@ -24,6 +28,8 @@ class AdminController extends Controller
 
         return view('admin.home.index', compact(
             'administrators',
+            'complexes',
+            'blocks',
             'onlineUsers',
             'percent',
             'access',

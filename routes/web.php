@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\ACL\PermissionController;
 use App\Http\Controllers\Admin\ACL\RoleController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\ComplexController;
 use App\Http\Controllers\Admin\Settings\GenreController;
@@ -45,6 +46,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('blocks/edit/{block}', [BlockController::class, 'edit'])->name('blocks.edit');
         Route::put('blocks/edit/{block}', [BlockController::class, 'update'])->name('blocks.update');
         Route::get('blocks/destroy/{block}', [BlockController::class, 'destroy']);
+
+        /** Apartments */
+        Route::get('/apartments/destroy/{id}', [ApartmentController::class, 'destroy']);
+        Route::resource('apartments', ApartmentController::class);
 
 
         /**

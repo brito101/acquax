@@ -184,6 +184,13 @@ class PermissionsTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],
+            /** Apartments 33 to ... */
+            [
+                'name' => 'Listar Apartamentos',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+
         ]);
     }
 }
