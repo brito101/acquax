@@ -19,10 +19,19 @@ class Block extends Model
         'complex_id'
     ];
 
+    protected $appends = ['complex_name'];
+
     /** Relationships */
 
     public function complex()
     {
         return $this->belongsTo(Complex::class);
+    }
+
+    // Mutator
+    public function getComplexNameAttribute()
+    {
+        $complex = Complex::where('id', $this->complex_id)->first();
+        return $complex['alias_name'] ?? '';
     }
 }

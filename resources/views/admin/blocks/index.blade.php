@@ -13,8 +13,8 @@
 
             if ($complex instanceof Illuminate\Database\Eloquent\Collection) {
                 $heads = [['label' => 'ID', 'width' => 5], 'Bloco', 'Condomínio', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
-                foreach ($blocks as $block) {
-                    $list[] = [$block->id, $block->name, $block->complex['alias_name'], $block->status, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="blocks/edit/' . $block->id . '"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="blocks/destroy/' . $block->id . '" onclick="return confirm(\'Confirma a exclusão deste bloco?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
+                foreach ($blocks->toArray() as $block) {
+                    $c = $list[] = [$block['id'], $block['name'], $block['complex_name'], $block['status'], '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="blocks/edit/' . $block['id'] . '"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="blocks/destroy/' . $block['id'] . '" onclick="return confirm(\'Confirma a exclusão deste bloco?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
                 }
 
                 $config = [

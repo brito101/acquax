@@ -24,7 +24,7 @@ class BlockRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:100',
+            'name' => 'required|min:1|max:100',
             'status' => 'nullable|min:3|max:20',
         ];
     }

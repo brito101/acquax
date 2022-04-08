@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ComplexRequest;
+use App\Models\Block;
 use App\Models\Complex;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -189,6 +190,13 @@ class ComplexController extends Controller
                 unlink($imagePath);
                 $complex->photo = null;
                 $complex->update();
+            }
+
+            $blocks = Block::where('complex_id', $id)->get();
+            if ($blocks->isNotEmpty()) {
+                foreach ($blocks as $block) {
+                    $block->delete();
+                }
             }
 
             return redirect()

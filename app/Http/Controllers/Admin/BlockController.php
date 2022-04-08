@@ -33,7 +33,6 @@ class BlockController extends Controller
             $blocks = Block::all();
         }
 
-
         return view('admin.blocks.index', compact('blocks', 'complex'));
     }
 
