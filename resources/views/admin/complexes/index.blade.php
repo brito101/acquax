@@ -50,7 +50,8 @@
                                                         <p class="text-muted text-sm mb-n1">Qtd de
                                                             Blocos: {{ $complex->blocks->count() }}
                                                         </p>
-                                                        <p class="text-muted text-sm">Qtd de ap</p>
+                                                        <p class="text-muted text-sm">Qtd de Apts:
+                                                            {{ $complex->apartments->count() }}</p>
                                                         <p class="text-muted text-sm">Síndicos</p>
                                                         <ul class="ml-4 mb-0 fa-ul text-muted">
                                                             <li class="small"><span class="fa-li"><i
@@ -69,8 +70,8 @@
                                                                 alt="{{ $complex->alias_name }}"
                                                                 class="img-circle img-fluid"
                                                                 style="
-                                                                                                                                                                object-fit: cover; width: 100%; height: 112px;
-                                                                                                                                                                ">
+                                                                                                                                                                                                                                                object-fit: cover; width: 100%; height: 112px;
+                                                                                                                                                                                                                                                ">
                                                         @else
                                                             <img src="{{ asset('img/building.png') }}"
                                                                 alt="{{ $complex->alias_name }}"
@@ -97,6 +98,12 @@
                                                     <a href="{{ route('admin.blocks.index', ['complex' => $complex->id]) }}"
                                                         class="btn btn-sm btn-primary mr-2">
                                                         <i class="fas fa-building mr-2"></i>Blocos</a>
+                                                    @if ($complex->blocks->count() > 0)
+                                                        <a href="{{ route('admin.apartments.index', ['complex' => $complex->id]) }}"
+                                                            class="btn btn-sm btn-info mr-2">
+                                                            <i class="fas fa-home mr-2"></i>Apts</a>
+                                                    @endif
+
                                                 </div>
                                             </div>
                                         </div>

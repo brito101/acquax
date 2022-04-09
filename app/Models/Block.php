@@ -28,6 +28,11 @@ class Block extends Model
         return $this->belongsTo(Complex::class);
     }
 
+    public function apartments()
+    {
+        return $this->hasMany(Apartment::class);
+    }
+
     // Mutator
     public function getComplexNameAttribute()
     {

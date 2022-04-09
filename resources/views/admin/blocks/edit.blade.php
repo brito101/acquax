@@ -9,8 +9,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-building"></i> Editar Bloco no Condomínio: <br />
-                        <span class="text-primary">{{ $block->complex['alias_name'] }}</span>
+                    <h1><i class="fas fa-fw fa-building"></i> Editar Bloco <br />
+                        Condomínio {{ $block->complex['alias_name'] }}
                     </h1>
                 </div>
                 <div class="col-sm-6">
@@ -37,12 +37,10 @@
                             <h3 class="card-title">Dados Cadastrais do Bloco</h3>
                         </div>
 
-
-
                         <form method="POST" action="{{ route('admin.blocks.update', ['block' => $block->id]) }}">
                             @method('PUT')
                             @csrf
-                            <input type="hidden" name="id" value="{{ $block->id }}">
+
                             <input type="hidden" name="from" value="{{ url()->previous() }}">
 
                             <div class="card-body">

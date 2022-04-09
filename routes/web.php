@@ -39,13 +39,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/complexes/destroy/{id}', [ComplexController::class, 'destroy']);
         Route::resource('complexes', ComplexController::class);
 
-        /** Blocks per Complex */
-        Route::get('blocks/{complex?}', [BlockController::class, 'index'])->name('blocks.index');
-        Route::get('blocks/{complex}/create', [BlockController::class, 'create'])->name('blocks.create');
-        Route::post('blocks/{complex?}/create', [BlockController::class, 'store'])->name('blocks.store');
-        Route::get('blocks/edit/{block}', [BlockController::class, 'edit'])->name('blocks.edit');
-        Route::put('blocks/edit/{block}', [BlockController::class, 'update'])->name('blocks.update');
-        Route::get('blocks/destroy/{block}', [BlockController::class, 'destroy']);
+        /** Blocks */
+        Route::get('blocks/destroy/{id}', [BlockController::class, 'destroy']);
+        Route::resource('blocks', BlockController::class);
 
         /** Apartments */
         Route::get('/apartments/destroy/{id}', [ApartmentController::class, 'destroy']);

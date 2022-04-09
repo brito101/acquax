@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BlockRequest;
+use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
 use Illuminate\Http\Request;
@@ -16,18 +17,18 @@ class BlockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id = null)
+    public function index(Request $request)
     {
         if (!Auth::user()->hasPermissionTo('Listar Blocos')) {
             abort(403, 'Acesso não autorizado');
         }
 
-        if ($id) {
-            $complex = Complex::where('id', $id)->first();
+        if ($request['complex']) {
+            $complex = Complex::where('id', $request['complex'])->first();
             if (empty($complex->id)) {
                 abort(403, 'Acesso não autorizado');
             }
-            $blocks = Block::where('complex_id', $id)->get();
+            $blocks = Block::where('complex_id', $request['complex'])->get();
         } else {
             $complex = Complex::all();
             $blocks = Block::all();
@@ -41,19 +42,21 @@ class BlockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(Request $request)
     {
         if (!Auth::user()->hasPermissionTo('Criar Blocos')) {
             abort(403, 'Acesso não autorizado');
         }
 
-        if ($id == 'new') {
-            $complex = Complex::all();
-        } else {
-            $complex = Complex::where('id', $id)->first();
+        $prev = (substr(url()->previous(), strpos(url()->previous(), '=') + 1));
+
+        if ($prev) {
+            $complex = Complex::where('id', $prev)->first();
             if (empty($complex->id)) {
-                abort(403, 'Acesso não autorizado');
+                $complex = Complex::all();
             }
+        } else {
+            $complex = Complex::all();
         }
 
         return view('admin.blocks.create', compact('complex'));
@@ -65,22 +68,18 @@ class BlockController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BlockRequest $request, $id)
+    public function store(BlockRequest $request)
     {
         if (!Auth::user()->hasPermissionTo('Criar Blocos')) {
             abort(403, 'Acesso não autorizado');
         }
 
-        if ($id == 'new') {
-            $data = $request->all();
-        } else {
-            $complex = Complex::where('id', $id)->first();
-            if (empty($complex->id)) {
-                abort(403, 'Acesso não autorizado');
-            }
-            $data = $request->all();
-            $data['complex_id'] = $id;
+        $complex = Complex::where('id', $request['complex_id'])->first();
+        if (empty($complex->id)) {
+            abort(403, 'Acesso não autorizado');
         }
+
+        $data = $request->all();
 
         $data['user_id'] = Auth::user()->id;
 
@@ -88,12 +87,8 @@ class BlockController extends Controller
 
         if ($block->save()) {
             if ($request['from']) {
-                $complex = Complex::where('id', $id)->first();
-                if (!empty($complex->id)) {
-                    return redirect()
-                        ->route('admin.blocks.index', ['complex' => $complex->id])
-                        ->with('success', 'Cadastro realizado!');
-                }
+                return redirect($request['from'])
+                    ->with('success', 'Cadastro realizado!');
             } else {
                 return redirect()
                     ->route('admin.blocks.index')
@@ -113,7 +108,7 @@ class BlockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
         if (!Auth::user()->hasPermissionTo('Editar Blocos')) {
             abort(403, 'Acesso não autorizado');
@@ -150,9 +145,14 @@ class BlockController extends Controller
         $data['user_id'] = Auth::user()->id;
 
         if ($block->update($data)) {
-            return redirect()
-                ->route('admin.blocks.index')
-                ->with('success', 'Cadastro realizado!');
+            if ($request['from']) {
+                return redirect($request['from'])
+                    ->with('success', 'Cadastro realizado!');
+            } else {
+                return redirect()
+                    ->route('admin.blocks.index')
+                    ->with('success', 'Cadastro realizado!');
+            }
         } else {
             return redirect()
                 ->back()
@@ -180,8 +180,16 @@ class BlockController extends Controller
         }
 
         if ($block->delete()) {
+
+            $apartments = Apartment::where('block_id', $id)->get();
+            if ($apartments->isNotEmpty()) {
+                foreach ($apartments as $apartment) {
+                    $apartment->delete();
+                }
+            }
+
             return redirect()
-                ->route('admin.blocks.index')
+                ->back()
                 ->with('success', 'Exclusão realizada!');
         } else {
             return redirect()

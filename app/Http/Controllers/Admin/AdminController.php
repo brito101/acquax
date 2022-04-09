@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
 use App\Models\User;
@@ -18,6 +19,7 @@ class AdminController extends Controller
         $administrators = User::role('Administrador')->get()->count();
         $complexes = Complex::all()->count();
         $blocks = Block::all()->count();
+        $apartments = Apartment::all()->count();
 
         /** Statistcs */
         $statistics = $this->accessStatistcs();
@@ -30,6 +32,7 @@ class AdminController extends Controller
             'administrators',
             'complexes',
             'blocks',
+            'apartments',
             'onlineUsers',
             'percent',
             'access',

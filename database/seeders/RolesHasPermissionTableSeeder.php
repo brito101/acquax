@@ -215,13 +215,37 @@ class RolesHasPermissionTableSeeder extends Seeder
                 'permission_id' => 32,
                 'role_id' => 2
             ],
-            /** Apartments 33 (Programmer and Administrator)*/
+            /** Apartments 33 to 36 (Programmer and Administrator)*/
             [
                 'permission_id' => 33,
                 'role_id' => 1
             ],
             [
                 'permission_id' => 33,
+                'role_id' => 2
+            ],
+            [
+                'permission_id' => 34,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 34,
+                'role_id' => 2
+            ],
+            [
+                'permission_id' => 35,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 35,
+                'role_id' => 2
+            ],
+            [
+                'permission_id' => 36,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 36,
                 'role_id' => 2
             ],
         ]);

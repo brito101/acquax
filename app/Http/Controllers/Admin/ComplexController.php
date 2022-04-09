@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ComplexRequest;
+use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
 use Illuminate\Http\Request;
@@ -195,6 +196,12 @@ class ComplexController extends Controller
             $blocks = Block::where('complex_id', $id)->get();
             if ($blocks->isNotEmpty()) {
                 foreach ($blocks as $block) {
+                    $apartments = Apartment::where('block_id', $block->id)->get();
+                    if ($apartments->isNotEmpty()) {
+                        foreach ($apartments as $apartment) {
+                            $apartment->delete();
+                        }
+                    }
                     $block->delete();
                 }
             }

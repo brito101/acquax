@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <div class="row">
                 @if (Auth::user()->hasRole('Programador|Administrador'))
-                    <div class="col-12 col-sm-6 col-md-4">
+                    <div class="col-12 col-sm-6 col-md-3">
                         <div class="info-box mb-3">
                             <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-user-shield"></i></span>
                             <div class="info-box-content">
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-4">
+                    <div class="col-12 col-sm-6 col-md-3">
                         <div class="info-box mb-3">
                             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-map-marked"></i></span>
                             <div class="info-box-content">
@@ -41,12 +41,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-4">
+                    <div class="col-12 col-sm-6 col-md-3">
                         <div class="info-box mb-3">
                             <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-building"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Blocos</span>
                                 <span class="info-box-number">{{ $blocks }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-home"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Apartamentos</span>
+                                <span class="info-box-number">{{ $apartments }}</span>
                             </div>
                         </div>
                     </div>

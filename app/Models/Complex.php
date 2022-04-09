@@ -40,4 +40,9 @@ class Complex extends Model
     {
         return $this->hasMany(Block::class);
     }
+
+    public function apartments()
+    {
+        return $this->hasManyThrough(Apartment::class, Block::class);
+    }
 }

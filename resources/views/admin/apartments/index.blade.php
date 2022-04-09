@@ -5,24 +5,43 @@
 @section('plugins.DatatablesPlugins', true)
 
 @section('content')
-    @php
+    @if (auth()->user()->can('Editar Apartamentos') &&
+    auth()->user()->can('Excluir Apartamentos'))
+        @php
+            $list = [];
 
-    $list = [];
+            $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Bloco', 'Apartamento', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+            foreach ($apartments as $apartment) {
+                $list[] = [$apartment->id, $apartment->complex_name, $apartment->block_name, $apartment->name, $apartment->status, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="apartments/' . $apartment->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="apartments/destroy/' . $apartment->id . '" onclick="return confirm(\'Confirma a exclusão deste apartamento?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
+            }
 
-    $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Bloco', 'Apartamento', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
-    foreach ($apartments as $apartment) {
-        $list[] = [$apartment->id, $apartment->block->complex['name'], $apartment->block['name'], $apartment->name, $apartment->status, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="edit/' . $apartment->id . '"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="destroy/' . $apartment->id . '" onclick="return confirm(\'Confirma a exclusão deste apartamento?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
-    }
+            $config = [
+                'data' => $list,
+                'order' => [[0, 'asc']],
+                'columns' => [null, null, null, null, null, ['orderable' => false]],
+                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+            ];
 
-    $config = [
-        'data' => $list,
-        'order' => [[0, 'asc']],
-        'columns' => [null, null, null, null, null, ['orderable' => false]],
-        'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
-    ];
+        @endphp
+    @else
+        @php
 
-    @endphp
+            $list = [];
 
+            $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Bloco', 'Apartamento', 'Status'];
+            foreach ($apartments as $apartment) {
+                $list[] = [$apartment->id, $apartment->complex_name, $apartment->block_name, $apartment->name, $apartment->status];
+            }
+
+            $config = [
+                'data' => $list,
+                'order' => [[0, 'asc']],
+                'columns' => [null, null, null, null, null],
+                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+            ];
+
+        @endphp
+    @endif
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -49,10 +68,11 @@
                         <div class="card-header">
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
                                 <h3 class="card-title align-self-center">Apartamentos Cadastrados</h3>
-
-                                <a href="{{ route('admin.apartments.create') }}" title="Novo Bloco"
-                                    class="btn btn-success"><i class="fas fa-fw fa-plus"></i>Novo
-                                    Apartamento</a>
+                                @can('Criar Apartamentos')
+                                    <a href="{{ route('admin.apartments.create') }}" title="Novo Apartamento"
+                                        class="btn btn-success"><i class="fas fa-fw fa-plus"></i>Novo
+                                        Apartamento</a>
+                                @endcan
                             </div>
                         </div>
                         <div class="card-body">

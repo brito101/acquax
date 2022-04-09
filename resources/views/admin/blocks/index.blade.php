@@ -14,7 +14,7 @@
             if ($complex instanceof Illuminate\Database\Eloquent\Collection) {
                 $heads = [['label' => 'ID', 'width' => 5], 'Bloco', 'Condomínio', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
                 foreach ($blocks->toArray() as $block) {
-                    $c = $list[] = [$block['id'], $block['name'], $block['complex_name'], $block['status'], '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="blocks/edit/' . $block['id'] . '"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="blocks/destroy/' . $block['id'] . '" onclick="return confirm(\'Confirma a exclusão deste bloco?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
+                    $c = $list[] = [$block['id'], $block['name'], $block['complex_name'], $block['status'], '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="blocks/' . $block['id'] . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="blocks/destroy/' . $block['id'] . '" onclick="return confirm(\'Confirma a exclusão deste bloco?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
                 }
 
                 $config = [
@@ -24,15 +24,15 @@
                     'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                 ];
             } else {
-                $heads = [['label' => 'ID', 'width' => 5], 'Bloco', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                $heads = [['label' => 'ID', 'width' => 5], 'Bloco', 'Condomínio', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
                 foreach ($blocks as $block) {
-                    $list[] = [$block->id, $block->name, $block->status, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="edit/' . $block->id . '"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="destroy/' . $block->id . '" onclick="return confirm(\'Confirma a exclusão deste bloco?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
+                    $list[] = [$block->id, $block->name, $block->complex_name, $block->status, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="blocks/' . $block->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="blocks/destroy/' . $block->id . '" onclick="return confirm(\'Confirma a exclusão deste bloco?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
                 }
 
                 $config = [
                     'data' => $list,
                     'order' => [[0, 'asc']],
-                    'columns' => [null, null, null, ['orderable' => false]],
+                    'columns' => [null, null, null, null, ['orderable' => false]],
                     'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                 ];
             }
@@ -61,13 +61,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    @if ($complex->count() <= 1)
-                        <h1><i class="fas fa-fw fa-building"></i> Blocos do Condomínio <br />
-                            <span class="text-primary">{{ $complex->alias_name }}</span>
-                        </h1>
-                    @else
-                        <h1><i class="fas fa-fw fa-building"></i> Blocos</h1>
-                    @endif
+                    <h1><i class="fas fa-fw fa-building"></i> Blocos</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -90,15 +84,8 @@
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
                                 <h3 class="card-title align-self-center">Blocos Cadastrados</h3>
                                 @can('Criar Blocos')
-                                    @if ($complex instanceof Illuminate\Database\Eloquent\Collection)
-                                        <a href="{{ route('admin.blocks.create', ['complex' => 'new']) }}" title="Novo Bloco"
-                                            class="btn btn-success"><i class="fas fa-fw fa-plus"></i>Novo
-                                            Bloco</a>
-                                    @else
-                                        <a href="{{ route('admin.blocks.create', ['complex' => $complex->id]) }}"
-                                            title="Novo Bloco" class="btn btn-success"><i class="fas fa-fw fa-plus"></i>Novo
-                                            Bloco</a>
-                                    @endif
+                                    <a href="{{ route('admin.blocks.create') }}" title="Novo Bloco" class="btn btn-success"><i
+                                            class="fas fa-fw fa-plus"></i>Novo Bloco</a>
                                 @endcan
                             </div>
                         </div>
