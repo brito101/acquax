@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-building"></i> Condomínios</h1>
+                    <h1><i class="fas fa-fw fa-map-marked"></i> Condomínios</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -70,8 +70,8 @@
                                                                 alt="{{ $complex->alias_name }}"
                                                                 class="img-circle img-fluid"
                                                                 style="
-                                                                                                                                                                                                                                                object-fit: cover; width: 100%; height: 112px;
-                                                                                                                                                                                                                                                ">
+                                                                                                                                                                                                                                                    object-fit: cover; width: 100%; height: 112px;
+                                                                                                                                                                                                                                                    ">
                                                         @else
                                                             <img src="{{ asset('img/building.png') }}"
                                                                 alt="{{ $complex->alias_name }}"

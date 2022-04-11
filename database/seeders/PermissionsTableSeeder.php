@@ -105,7 +105,6 @@ class PermissionsTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],
-
             /** Users 18 to 22 */
             [
                 'name' => 'Acessar Usuários',
@@ -184,7 +183,12 @@ class PermissionsTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],
-            /** Apartments 33 to 36 */
+            /** Apartments 33 to 37 */
+            [
+                'name' => 'Acessar Apartamentos',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
             [
                 'name' => 'Listar Apartamentos',
                 'guard_name' => 'web',
@@ -202,6 +206,32 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Excluir Apartamentos',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            /** Type Meters 38 a  42*/
+            [
+                'name' => 'Acessar Tipos de Medidores',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Listar Tipos de Medidores',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Criar Tipos de Medidores',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Editar Tipos de Medidores',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Excluir Tipos de Medidores',
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],

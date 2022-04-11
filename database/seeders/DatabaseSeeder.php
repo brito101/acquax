@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             RolesHasPermissionTableSeeder::class,
             ModelHasRoleTableSeeder::class,
             GenresTableSeeder::class,
+            TypeMetersTableSeeder::class,
         ]);
     }
 }

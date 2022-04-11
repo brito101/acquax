@@ -263,7 +263,7 @@ return [
         [
             'text'        => 'Condomínios',
             'url'         => '#',
-            'icon'        => 'fas fa-fw fa-building',
+            'icon'        => 'fas fa-fw fa-map-marked',
             'can'         => 'Acessar Condomínios',
             'submenu' => [
                 [
@@ -278,6 +278,15 @@ return [
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'can'  => 'Criar Condomínios',
                 ],
+            ],
+        ],
+        /** Blocks */
+        [
+            'text'        => 'Blocos',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-building',
+            'can'         => 'Acessar Blocos',
+            'submenu' => [
                 [
                     'text' => 'Listagem de Blocos',
                     'url'  => 'admin/blocks',
@@ -285,10 +294,31 @@ return [
                     'can'  => 'Listar Blocos',
                 ],
                 [
+                    'text' => 'Cadastro de Blocos',
+                    'url'  => 'admin/blocks/create',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Blocos',
+                ],
+            ],
+        ],
+        /** Apartments */
+        [
+            'text'        => 'Apartamentos',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-home',
+            'can'         => 'Acessar Apartamentos',
+            'submenu' => [
+                [
                     'text' => 'Listagem de Apartamentos',
                     'url'  => 'admin/apartments',
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'can'  => 'Listar Apartamentos',
+                ],
+                [
+                    'text' => 'Cadastro de Apartamentos',
+                    'url'  => 'admin/apartments/create',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Apartamentos',
                 ],
             ],
         ],
@@ -298,6 +328,28 @@ return [
             'icon'    => 'fas fa-fw fa-cogs',
             'can'     => 'Acessar Configurações',
             'submenu' => [
+                /** Type Metters */
+                [
+                    'text' => 'Tipos de Medidores',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-tachometer-alt',
+                    'can'     => 'Acessar Tipos de Medidores',
+                    'submenu' => [
+                        [
+                            'text' => 'Listagem de Tipos',
+                            'url'  => 'admin/settings/type-meters',
+                            'icon'    => 'fas fa-fw fa-chevron-right',
+                            'can'     => 'Listar Gêneros',
+                        ],
+                        [
+                            'text' => 'Cadastro de Tipos',
+                            'url'  => 'admin/settings/type-meters/create',
+                            'icon'    => 'fas fa-fw fa-chevron-right',
+                            'can'     => 'Criar Gêneros',
+                        ],
+                    ]
+                ],
+                /** Genres */
                 [
                     'text' => 'Gêneros',
                     'url'  => '#',

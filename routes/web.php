@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\ComplexController;
 use App\Http\Controllers\Admin\Settings\GenreController;
+use App\Http\Controllers\Admin\Settings\TypeMetersController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,9 @@ Route::group(['middleware' => ['auth']], function () {
         /** Genres */
         Route::get('/settings/genres/destroy/{id}', [GenreController::class, 'destroy']);
         Route::resource('settings/genres', GenreController::class);
+        /** Type Meters */
+        Route::get('/settings/type-meters/destroy/{id}', [TypeMetersController::class, 'destroy']);
+        Route::resource('settings/type-meters', TypeMetersController::class);
 
         /**
          * ACL
