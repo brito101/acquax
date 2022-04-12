@@ -29,8 +29,8 @@
 
             $list = [];
 
-            foreach ($genres as $genre) {
-                $list[] = [$genre->id, $genre->name, $genre->acronym];
+            foreach ($typeMeters as $type) {
+                $list[] = [$type->id, $type->name, $type->acronym];
             }
 
             $config = [

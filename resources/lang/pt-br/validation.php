@@ -221,6 +221,10 @@ return [
         'end' => 'término',
         'contract' => 'regime contratual',
         'activities' => 'atividades',
+        'register' => 'identificador',
+        'apartment_id' => 'apartamento',
+        'type_meter_id' => 'tipo de medidor',
+        'user_id' => 'usuário'
     ],
 
 ];

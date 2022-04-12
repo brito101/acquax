@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\ComplexController;
+use App\Http\Controllers\Admin\MeterController;
+use App\Http\Controllers\Admin\ResidentController;
 use App\Http\Controllers\Admin\Settings\GenreController;
 use App\Http\Controllers\Admin\Settings\TypeMetersController;
 use App\Http\Controllers\Admin\UserController;
@@ -47,6 +49,14 @@ Route::group(['middleware' => ['auth']], function () {
         /** Apartments */
         Route::get('/apartments/destroy/{id}', [ApartmentController::class, 'destroy']);
         Route::resource('apartments', ApartmentController::class);
+
+        /** Meters */
+        Route::get('/meters/destroy/{id}', [MeterController::class, 'destroy']);
+        Route::resource('meters', MeterController::class);
+
+        /** Residents */
+        Route::get('/residents/destroy/{id}', [ResidentController::class, 'destroy']);
+        Route::resource('residents', ResidentController::class);
 
 
         /**

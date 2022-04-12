@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
+use App\Models\Meter;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -20,6 +21,7 @@ class AdminController extends Controller
         $complexes = Complex::all()->count();
         $blocks = Block::all()->count();
         $apartments = Apartment::all()->count();
+        $meters = Meter::all()->count();
 
         /** Statistcs */
         $statistics = $this->accessStatistcs();
@@ -33,6 +35,7 @@ class AdminController extends Controller
             'complexes',
             'blocks',
             'apartments',
+            'meters',
             'onlineUsers',
             'percent',
             'access',
