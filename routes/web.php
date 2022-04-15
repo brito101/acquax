@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\ComplexController;
 use App\Http\Controllers\Admin\MeterController;
+use App\Http\Controllers\Admin\ReadingController;
 use App\Http\Controllers\Admin\ResidentController;
 use App\Http\Controllers\Admin\Settings\GenreController;
 use App\Http\Controllers\Admin\Settings\TypeMetersController;
@@ -63,6 +64,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/syndics/destroy/{id}', [SyndicController::class, 'destroy']);
         Route::resource('syndics', SyndicController::class);
 
+        /** Readings */
+        Route::get('/readings/destroy/{id}', [ReadingController::class, 'destroy']);
+        Route::resource('readings', ReadingController::class);
 
         /**
          * Configurations

@@ -70,8 +70,8 @@
                                                                 alt="{{ $complex->alias_name }}"
                                                                 class="img-circle img-fluid"
                                                                 style="
-                                                                                                                                                                                                                                                                            object-fit: cover; width: 100%; height: 112px;
-                                                                                                                                                                                                                                                                            ">
+                                                                                                                                                                                                                                                                                object-fit: cover; width: 100%; height: 112px;
+                                                                                                                                                                                                                                                                                ">
                                                         @else
                                                             <img src="{{ asset('img/building.png') }}"
                                                                 alt="{{ $complex->alias_name }}"
@@ -88,7 +88,7 @@
 
                                                     <a href="complexes/destroy/{{ $complex->id }}"
                                                         class="btn btn-sm btn-danger ml-2"
-                                                        onclick="return confirm('Confirma a exclusão desta condomínio?')">
+                                                        onclick="return confirm('Confirma a exclusão deste condomínio?')">
                                                         <i class="fas fa-trash mr-2"></i>Excluir
                                                     </a>
                                                 </div>

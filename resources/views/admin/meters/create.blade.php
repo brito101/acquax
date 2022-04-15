@@ -106,8 +106,3 @@
         </div>
     </section>
 @endsection
-
-@section('custom_js')
-    <script src="{{ asset('vendor/jquery/jquery.inputmask.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/meter.js') }}"></script>
-@endsection

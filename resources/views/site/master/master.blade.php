@@ -7,7 +7,7 @@
 
     <title>{{ $head->title ?? env('APP_NAME') }}</title>
     <meta name="description" content="{{ $head->description }}">
-    <link rel="icon" href="{{ asset('img/favicon.svg') }}" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('img/favicon.png') }}" type="image/svg+xml">
     <link rel="preload" href="{{ asset('site/css/style.css') }}" as="style">
     <link rel="stylesheet" href="{{ asset('site/css/style.css') }}">
 

@@ -19,6 +19,7 @@ mix.js("resources/js/app.js", "public/js")
     .scripts(["resources/js/address.js"], "public/js/address.js")
     .scripts(["resources/js/phone.js"], "public/js/phone.js")
     .scripts(["resources/js/document_person.js"], "public/js/document_person.js")
+    .scripts(["resources/js/reading.js"], "public/js/reading.js")
     /** Web */
     .copy("resources/views/site/assets/img", "public/site/img")
     .sass("resources/views/site/assets/sass/style.scss", "public/site/css")

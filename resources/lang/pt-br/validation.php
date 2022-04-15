@@ -227,7 +227,13 @@ return [
         'user_id' => 'usuário',
         'complex_id' => 'condomínio',
         'location' => 'localização',
-        'initial_reading' => 'leitura inicial'
+        'initial_reading' => 'leitura inicial',
+        'meter_id' => 'medidor',
+        'reading' => 'leitura',
+        'month_ref' => 'mês de referência',
+        'reading_date' => 'data da leitura',
+        'reading_date_next' => 'data da próxima leitura',
+        'cover' => 'imagem',
     ],
 
 ];
