@@ -31,7 +31,8 @@ class UserRequest extends FormRequest
             'photo' => 'image|mimes:jpg,png,jpeg,gif,svg,webp|max:1024|dimensions:max_width=1800,max_height=1800',
             'telephone' => 'nullable|min:8|max:25',
             'cell' => 'nullable|min:8|max:25',
-            'genre_id' => 'nullable|max:1'
+            'genre_id' => 'nullable|max:1',
+            'document_person' => "nullable|min:11|max:20|unique:users,document_person,{$this->id},id,deleted_at,NULL",
         ];
     }
 }

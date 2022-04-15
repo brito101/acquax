@@ -22,6 +22,8 @@ class AdminController extends Controller
         $blocks = Block::all()->count();
         $apartments = Apartment::all()->count();
         $meters = Meter::all()->count();
+        $residents = User::role(['Morador', 'Morador e Síndico'])->count();
+        $syndics = User::role(['Síndico', 'Morador e Síndico'])->count();
 
         /** Statistcs */
         $statistics = $this->accessStatistcs();
@@ -36,6 +38,8 @@ class AdminController extends Controller
             'blocks',
             'apartments',
             'meters',
+            'residents',
+            'syndics',
             'onlineUsers',
             'percent',
             'access',

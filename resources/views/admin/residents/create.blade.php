@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('plugins.select2', true)
 
-@section('title', '- Cadastro de Medidor')
+@section('title', '- Cadastro de Morador')
 
 @section('content')
 
@@ -9,13 +9,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-tachometer-alt"></i> Novo Medidor</h1>
+                    <h1><i class="fas fa-fw fa-user"></i> Novo Morador</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.meters.index') }}">Medidores</a></li>
-                        <li class="breadcrumb-item active">Novo Medidor</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.residents.index') }}">Moradores</a></li>
+                        <li class="breadcrumb-item active">Novo Morador</li>
                     </ol>
                 </div>
             </div>
@@ -31,22 +31,29 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Dados Cadastrais do Medidor</h3>
+                            <h3 class="card-title">Dados Cadastrais do Morador</h3>
                         </div>
 
 
-                        <form method="POST" action="{{ route('admin.meters.store') }}">
+                        <form method="POST" action="{{ route('admin.residents.store') }}">
                             @csrf
                             <input type="hidden" name="from" value="{{ url()->previous() }}">
                             <div class="card-body">
 
+                                <div class="col-12 form-group px-0 pr-md-2">
+                                    <label for="user_id">Morador</label>
+                                    <x-adminlte-select2 name="user_id">
+                                        @foreach ($users as $user)
+                                            <option {{ old('user_id') == $user->id ? 'selected' : '' }}
+                                                value="{{ $user->id }}">
+                                                {{ $user->name . ' - CPF: ' . $user->document_person . ' - E-mail: ' . $user->email }}
+                                            </option>
+                                        @endforeach
+                                    </x-adminlte-select2>
+                                </div>
+
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="register">Identificador</label>
-                                        <input type="text" class="form-control" id="register" placeholder="Identificador"
-                                            name="register" value="{{ old('register') }}" required>
-                                    </div>
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="apartment_id">Apartamento</label>
                                         <x-adminlte-select2 name="apartment_id">
                                             @foreach ($apartments as $apartment)
@@ -57,20 +64,9 @@
                                             @endforeach
                                         </x-adminlte-select2>
                                     </div>
-                                </div>
 
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="type_meter_id">Tipo do Medidor</label>
-                                        <x-adminlte-select2 name="type_meter_id">
-                                            @foreach ($typeMeters as $type)
-                                                <option {{ old('type_meter_id') == $type->id ? 'selected' : '' }}
-                                                    value="{{ $type->id }}">{{ $type->name }}</option>
-                                            @endforeach
-                                        </x-adminlte-select2>
-                                    </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
-                                        <label for="status">Status do Medidor</label>
+                                        <label for="status">Status</label>
                                         <x-adminlte-select2 name="status">
                                             <option {{ old('status') == 'Ativo' ? 'selected' : '' }}>Ativo</option>
                                             <option {{ old('status') == 'Inativo' ? 'selected' : '' }}>Inativo</option>

@@ -18,4 +18,15 @@ class Resident extends Model
         'apartment_id',
         'editor',
     ];
+
+    /** Relationships */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function apartment()
+    {
+        return $this->belongsTo(Apartment::class);
+    }
 }

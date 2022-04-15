@@ -10,7 +10,7 @@
         @php
             $list = [];
 
-            $heads = [['label' => 'ID', 'width' => 5], 'Identificador', 'Localização', 'Tipo', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+            $heads = [['label' => 'ID', 'width' => 5], 'Identificador', 'Propriedade', 'Tipo', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
             foreach ($meters as $meter) {
                 $list[] = [$meter->id, $meter->register, 'Condomínio ' . $meter->apartment->getComplexNameAttribute() . ' - Bl. ' . $meter->apartment->getBlockNameAttribute() . ' - Ap. ' . $meter->apartment['name'], $meter->typeMeter['name'], $meter->status, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="meters/' . $meter->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="meters/destroy/' . $meter->id . '" onclick="return confirm(\'Confirma a exclusão deste medidor?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
             }
@@ -28,9 +28,9 @@
 
             $list = [];
 
-            $heads = [['label' => 'ID', 'width' => 5], 'Identificador', 'Localização', 'Tipo', 'Status'];
+            $heads = [['label' => 'ID', 'width' => 5], 'Identificador', 'Propriedade', 'Tipo', 'Status'];
             foreach ($meters as $meter) {
-                $list[] = [$meter->id, $meter->register, $meter->register, 'Condomínio ' . $meter->apartment->getComplexNameAttribute() . ' - Bl. ' . $meter->apartment->getBlockNameAttribute() . ' - Ap. ' . $meter->apartment['name'], $meter->type_meter_id, $meter->status];
+                $list[] = [$meter->id, $meter->register, $meter->register, 'Condomínio ' . $meter->apartment->getComplexNameAttribute() . ' - Bl. ' . $meter->apartment->getBlockNameAttribute() . ' - Ap. ' . $meter->apartment['name'], $meter->typeMeter['name'], $meter->status];
             }
 
             $config = [

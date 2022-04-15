@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\ApartmentRequest;
 use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
+use App\Models\Resident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -187,6 +188,12 @@ class ApartmentController extends Controller
         }
 
         if ($apartment->delete()) {
+            $residents = Resident::where('apartment_id', $apartment->id)->get();
+            if ($residents->isNotEmpty()) {
+                foreach ($residents as $resident) {
+                    $resident->delete();
+                }
+            }
             return redirect()
                 ->back()
                 ->with('success', 'Exclusão realizada!');

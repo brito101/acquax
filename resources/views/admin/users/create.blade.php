@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-user"></i> Novo Usuário</h1>
+                    <h1><i class="fas fa-fw fa-user-cog"></i> Novo Usuário</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -46,15 +46,11 @@
                                             name="name" value="{{ old('name') }}" required>
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
-                                        <label for="genre_id">Gênero</label>
-                                        <x-adminlte-select2 name="genre_id">
-                                            <option value="">Não Informado</option>
-                                            @foreach ($genres as $genre)
-                                                <option {{ old('genre_id') == $genre->id ? 'selected' : '' }}
-                                                    value="{{ $genre->id }}">{{ $genre->name }}</option>
-                                            @endforeach
-                                        </x-adminlte-select2>
+                                        <label for="document_person">CPF</label>
+                                        <input type="text" class="form-control" id="document_person" placeholder="CPF"
+                                            name="document_person" value="{{ old('document_person') }}" required>
                                     </div>
+
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-between">
@@ -74,6 +70,17 @@
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <x-adminlte-input-file name="photo" label="Foto"
                                             placeholder="Selecione uma imagem..." legend="Selecionar" />
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                        <label for="genre_id">Gênero</label>
+                                        <x-adminlte-select2 name="genre_id">
+                                            <option value="">Não Informado</option>
+                                            @foreach ($genres as $genre)
+                                                <option {{ old('genre_id') == $genre->id ? 'selected' : '' }}
+                                                    value="{{ $genre->id }}">{{ $genre->name }}</option>
+                                            @endforeach
+                                        </x-adminlte-select2>
                                     </div>
                                 </div>
 
@@ -118,5 +125,6 @@
 
 @section('custom_js')
     <script src="{{ asset('vendor/jquery/jquery.inputmask.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/document_person.js') }}"></script>
     <script src="{{ asset('js/phone.js') }}"></script>
 @endsection

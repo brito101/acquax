@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\BlockRequest;
 use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
+use App\Models\Resident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -184,6 +185,12 @@ class BlockController extends Controller
             $apartments = Apartment::where('block_id', $id)->get();
             if ($apartments->isNotEmpty()) {
                 foreach ($apartments as $apartment) {
+                    $residents = Resident::where('apartment_id', $apartment->id)->get();
+                    if ($residents->isNotEmpty()) {
+                        foreach ($residents as $resident) {
+                            $resident->delete();
+                        }
+                    }
                     $apartment->delete();
                 }
             }

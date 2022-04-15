@@ -70,8 +70,8 @@
                                                                 alt="{{ $complex->alias_name }}"
                                                                 class="img-circle img-fluid"
                                                                 style="
-                                                                                                                                                                                                                                                    object-fit: cover; width: 100%; height: 112px;
-                                                                                                                                                                                                                                                    ">
+                                                                                                                                                                                                                                                                object-fit: cover; width: 100%; height: 112px;
+                                                                                                                                                                                                                                                                ">
                                                         @else
                                                             <img src="{{ asset('img/building.png') }}"
                                                                 alt="{{ $complex->alias_name }}"
@@ -85,9 +85,7 @@
                                                     <a href="{{ route('admin.complexes.edit', ['complex' => $complex->id]) }}"
                                                         class="btn btn-sm btn-primary mr-2">
                                                         <i class="fas fa-edit mr-2"></i>Editar</a>
-                                                    <a href="#" class="btn btn-sm btn-secondary">
-                                                        <i class="fas fa-users mr-2"></i>Síndicos
-                                                    </a>
+
                                                     <a href="complexes/destroy/{{ $complex->id }}"
                                                         class="btn btn-sm btn-danger ml-2"
                                                         onclick="return confirm('Confirma a exclusão desta condomínio?')">
@@ -103,6 +101,9 @@
                                                             class="btn btn-sm btn-info mr-2">
                                                             <i class="fas fa-home mr-2"></i>Apts</a>
                                                     @endif
+                                                    <a href="#" class="btn btn-sm btn-secondary">
+                                                        <i class="fas fa-users mr-2"></i>Síndicos
+                                                    </a>
 
                                                 </div>
                                             </div>

@@ -231,7 +231,6 @@ return [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
@@ -242,7 +241,7 @@ return [
         [
             'text'        => 'Usuários',
             'url'         => '#',
-            'icon'        => 'fas fa-fw fa-users',
+            'icon'        => 'fas fa-fw fa-users-cog',
             'can'         => 'Acessar Usuários',
             'submenu' => [
                 [
@@ -340,6 +339,27 @@ return [
                     'url'  => 'admin/meters/create',
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'can'  => 'Criar Medidores',
+                ],
+            ],
+        ],
+        /** Residents */
+        [
+            'text'        => 'Moradores',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-users',
+            'can'         => 'Acessar Moradores',
+            'submenu' => [
+                [
+                    'text' => 'Listagem de Moradores',
+                    'url'  => 'admin/residents',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Listar Moradores',
+                ],
+                [
+                    'text' => 'Cadastro de Moradores',
+                    'url'  => 'admin/residents/create',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Moradores',
                 ],
             ],
         ],

@@ -69,6 +69,24 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users-cog"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Síndicos</span>
+                                <span class="info-box-number">{{ $syndics }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-teal elevation-1"><i class="fas fa-users"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Moradores</span>
+                                <span class="info-box-number">{{ $residents }}</span>
+                            </div>
+                        </div>
+                    </div>
                 @endif
 
             </div>
