@@ -71,7 +71,7 @@
                     </div>
                     <div class="col-12 col-sm-6 col-md-3">
                         <div class="info-box mb-3">
-                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users-cog"></i></span>
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-user-friends"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Síndicos</span>
                                 <span class="info-box-number">{{ $syndics }}</span>
@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-12 col-sm-6 col-md-3">
                         <div class="info-box mb-3">
-                            <span class="info-box-icon bg-teal elevation-1"><i class="fas fa-users"></i></span>
+                            <span class="info-box-icon bg-teal elevation-1"><i class="fas fa-house-user"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Moradores</span>
                                 <span class="info-box-number">{{ $residents }}</span>

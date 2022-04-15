@@ -70,8 +70,8 @@
                                                                 alt="{{ $complex->alias_name }}"
                                                                 class="img-circle img-fluid"
                                                                 style="
-                                                                                                                                                                                                                                                                object-fit: cover; width: 100%; height: 112px;
-                                                                                                                                                                                                                                                                ">
+                                                                                                                                                                                                                                                                            object-fit: cover; width: 100%; height: 112px;
+                                                                                                                                                                                                                                                                            ">
                                                         @else
                                                             <img src="{{ asset('img/building.png') }}"
                                                                 alt="{{ $complex->alias_name }}"
@@ -94,14 +94,15 @@
                                                 </div>
                                                 <div class="text-center d-flex flex-wrap justify-content-center pt-2">
                                                     <a href="{{ route('admin.blocks.index', ['complex' => $complex->id]) }}"
-                                                        class="btn btn-sm btn-primary mr-2">
+                                                        class="btn btn-sm btn-success mr-2">
                                                         <i class="fas fa-building mr-2"></i>Blocos</a>
                                                     @if ($complex->blocks->count() > 0)
                                                         <a href="{{ route('admin.apartments.index', ['complex' => $complex->id]) }}"
                                                             class="btn btn-sm btn-info mr-2">
                                                             <i class="fas fa-home mr-2"></i>Apts</a>
                                                     @endif
-                                                    <a href="#" class="btn btn-sm btn-secondary">
+                                                    <a href="{{ route('admin.syndics.index', ['complex' => $complex->id]) }}"
+                                                        class="btn btn-sm btn-secondary">
                                                         <i class="fas fa-users mr-2"></i>Síndicos
                                                     </a>
 

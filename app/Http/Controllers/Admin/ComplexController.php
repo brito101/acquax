@@ -8,6 +8,7 @@ use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
 use App\Models\Resident;
+use App\Models\Syndic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -210,6 +211,13 @@ class ComplexController extends Controller
                         }
                     }
                     $block->delete();
+                }
+            }
+
+            $syndics = Syndic::where('complex_id', $id)->get();
+            if ($syndics->isNotEmpty()) {
+                foreach ($syndics as $syndic) {
+                    $syndic->delete();
                 }
             }
 

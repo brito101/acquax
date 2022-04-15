@@ -346,7 +346,7 @@ return [
         [
             'text'        => 'Moradores',
             'url'         => '#',
-            'icon'        => 'fas fa-fw fa-users',
+            'icon'        => 'fas fa-fw fa-house-user',
             'can'         => 'Acessar Moradores',
             'submenu' => [
                 [
@@ -358,6 +358,27 @@ return [
                 [
                     'text' => 'Cadastro de Moradores',
                     'url'  => 'admin/residents/create',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Moradores',
+                ],
+            ],
+        ],
+        /** Syndics */
+        [
+            'text'        => 'Síndicos',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-user-friends',
+            'can'         => 'Acessar Síndicos',
+            'submenu' => [
+                [
+                    'text' => 'Listagem de Síndicos',
+                    'url'  => 'admin/syndics',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Listar Síndicos',
+                ],
+                [
+                    'text' => 'Cadastro de Síndicos',
+                    'url'  => 'admin/syndics/create',
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'can'  => 'Criar Moradores',
                 ],

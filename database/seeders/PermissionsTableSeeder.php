@@ -261,7 +261,7 @@ class PermissionsTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],
-            /** Meters 48 to 52 */
+            /** Residents 48 to 52 */
             [
                 'name' => 'Acessar Moradores',
                 'guard_name' => 'web',
@@ -284,6 +284,32 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Excluir Moradores',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            /** Syndics 53 to 57 */
+            [
+                'name' => 'Acessar Síndicos',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Listar Síndicos',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Criar Síndicos',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Editar Síndicos',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Excluir Síndicos',
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],

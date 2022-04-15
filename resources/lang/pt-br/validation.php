@@ -224,7 +224,8 @@ return [
         'register' => 'identificador',
         'apartment_id' => 'apartamento',
         'type_meter_id' => 'tipo de medidor',
-        'user_id' => 'usuário'
+        'user_id' => 'usuário',
+        'complex_id' => 'condomínio'
     ],
 
 ];

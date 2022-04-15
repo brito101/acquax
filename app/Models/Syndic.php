@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Resident extends Model
+class Syndic extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -15,7 +15,7 @@ class Resident extends Model
     protected $fillable = [
         'user_id',
         'status',
-        'apartment_id',
+        'complex_id',
         'editor',
     ];
 
@@ -27,10 +27,10 @@ class Resident extends Model
         ]);
     }
 
-    public function apartment()
+    public function complex()
     {
-        return $this->belongsTo(Apartment::class)->withDefault([
-            'name' => 'Inexistente',
+        return $this->belongsTo(Complex::class)->withDefault([
+            'alias_name' => 'Inexistente',
         ]);
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\MeterController;
 use App\Http\Controllers\Admin\ResidentController;
 use App\Http\Controllers\Admin\Settings\GenreController;
 use App\Http\Controllers\Admin\Settings\TypeMetersController;
+use App\Http\Controllers\Admin\SyndicController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,10 @@ Route::group(['middleware' => ['auth']], function () {
         /** Residents */
         Route::get('/residents/destroy/{id}', [ResidentController::class, 'destroy']);
         Route::resource('residents', ResidentController::class);
+
+        /** Syndics */
+        Route::get('/syndics/destroy/{id}', [SyndicController::class, 'destroy']);
+        Route::resource('syndics', SyndicController::class);
 
 
         /**
