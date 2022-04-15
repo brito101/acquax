@@ -225,7 +225,9 @@ return [
         'apartment_id' => 'apartamento',
         'type_meter_id' => 'tipo de medidor',
         'user_id' => 'usuário',
-        'complex_id' => 'condomínio'
+        'complex_id' => 'condomínio',
+        'location' => 'localização',
+        'initial_reading' => 'leitura inicial'
     ],
 
 ];

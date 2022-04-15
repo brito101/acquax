@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\ComplexRequest;
 use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
+use App\Models\Meter;
 use App\Models\Resident;
 use App\Models\Syndic;
 use Illuminate\Http\Request;
@@ -208,6 +209,12 @@ class ComplexController extends Controller
                                 }
                             }
                             $apartment->delete();
+                            $meters = Meter::where('apartment_id', $apartment->id)->get();
+                            if ($meters->isNotEmpty()) {
+                                foreach ($meters as $meter) {
+                                    $meter->delete();
+                                }
+                            }
                         }
                     }
                     $block->delete();

@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\ApartmentRequest;
 use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
+use App\Models\Meter;
 use App\Models\Resident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -194,6 +195,13 @@ class ApartmentController extends Controller
                     $resident->delete();
                 }
             }
+            $meters = Meter::where('apartment_id', $apartment->id)->get();
+            if ($meters->isNotEmpty()) {
+                foreach ($meters as $meter) {
+                    $meter->delete();
+                }
+            }
+            $apartment->delete();
             return redirect()
                 ->back()
                 ->with('success', 'Exclusão realizada!');

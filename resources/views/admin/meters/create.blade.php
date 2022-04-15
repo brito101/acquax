@@ -61,6 +61,21 @@
 
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                        <label for="location">Localização</label>
+                                        <input type="text" class="form-control" id="location"
+                                            placeholder="Local ou cômodo do medidor" name="location"
+                                            value="{{ old('location') }}">
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                        <label for="initial_reading">Valor Inicial em m<sup>3</sup></label>
+                                        <input type="text" class="form-control" id="initial_reading"
+                                            placeholder="Valor Inicial em decimal" name="initial_reading"
+                                            value="{{ old('initial_reading') }}" required>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="type_meter_id">Tipo do Medidor</label>
                                         <x-adminlte-select2 name="type_meter_id">
                                             @foreach ($typeMeters as $type)
@@ -90,4 +105,9 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('custom_js')
+    <script src="{{ asset('vendor/jquery/jquery.inputmask.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/meter.js') }}"></script>
 @endsection

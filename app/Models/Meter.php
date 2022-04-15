@@ -18,7 +18,9 @@ class Meter extends Model
         'status',
         'apartment_id',
         'type_meter_id',
-        'user_id'
+        'user_id',
+        'location',
+        'initial_reading',
     ];
 
     /** Relationships */
@@ -31,5 +33,11 @@ class Meter extends Model
     public function typeMeter()
     {
         return $this->belongsTo(TypeMeter::class);
+    }
+
+    /**  Accessor */
+    public function getInitialReadingAttribute($value)
+    {
+        return number_format($value, 13, ",", ".");
     }
 }
