@@ -7,6 +7,7 @@ use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
 use App\Models\Meter;
+use App\Models\Reading;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -24,6 +25,7 @@ class AdminController extends Controller
         $meters = Meter::all()->count();
         $residents = User::role(['Morador', 'Morador e Síndico'])->count();
         $syndics = User::role(['Síndico', 'Morador e Síndico'])->count();
+        $readings = Reading::all()->count();
 
         /** Statistcs */
         $statistics = $this->accessStatistcs();
@@ -40,6 +42,7 @@ class AdminController extends Controller
             'meters',
             'residents',
             'syndics',
+            'readings',
             'onlineUsers',
             'percent',
             'access',

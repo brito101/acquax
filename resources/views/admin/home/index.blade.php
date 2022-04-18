@@ -87,6 +87,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-indigo elevation-1"><i class="fas fa-chart-line"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Leituras</span>
+                                <span class="info-box-number">{{ $readings }}</span>
+                            </div>
+                        </div>
+                    </div>
                 @endif
 
             </div>
