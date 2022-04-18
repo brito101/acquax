@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use JeroenNoten\LaravelAdminLte\View\Components\Tool\Datatable;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ReadingsImport;
 
 class ReadingController extends Controller
 {
@@ -266,5 +268,11 @@ class ReadingController extends Controller
         }
 
         return view('admin.readings.index', compact('readings', 'complexes'));
+    }
+
+    public function fileImport(Request $request)
+    {
+        Excel::import(new ReadingsImport, $request->file('file')->store('temp'));
+        return back()->with('success', 'Importação realizada!');;
     }
 }

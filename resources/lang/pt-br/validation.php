@@ -234,6 +234,7 @@ return [
         'reading_date' => 'data da leitura',
         'reading_date_next' => 'data da próxima leitura',
         'cover' => 'imagem',
+        'url_cover' => 'URL da imagem',
     ],
 
 ];

@@ -20,7 +20,8 @@ class Reading extends Model
         'reading_date_next',
         'cover',
         'editor',
-        'cover_base64'
+        'cover_base64',
+        'url_cover'
     ];
 
     /** Relationships */

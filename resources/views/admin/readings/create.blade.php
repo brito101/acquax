@@ -120,8 +120,17 @@
                                             value="{{ old('reading') }}" required>
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
-                                        <x-adminlte-input-file name="cover" label="Imagem"
+                                        <x-adminlte-input-file name="cover" label="Arquivo de Imagem"
                                             placeholder="Selecione uma imagem..." legend="Selecionar" />
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                        <label for="url_cover">URL da imagem</label>
+                                        <input type="text" class="form-control" id="url_cover"
+                                            placeholder="Endereço da Imagem caso exista" name="url_cover"
+                                            value="{{ old('url_cover') }}">
                                     </div>
                                 </div>
 

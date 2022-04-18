@@ -57,7 +57,8 @@ class ReadingRequest extends FormRequest
             'reading_date' => 'required|date_format:Y-m-d',
             'reading_date_next' => 'required|date_format:Y-m-d',
             'cover' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg,webp|max:1024|dimensions:max_width=1800,max_height=1800',
-            'cover_base64' => 'nullable'
+            'cover_base64' => 'nullable',
+            'url_cover' => 'nullable|url|max:1500'
         ];
     }
 

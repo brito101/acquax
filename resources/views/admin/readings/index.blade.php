@@ -1,5 +1,6 @@
 @extends('adminlte::page')
 @section('plugins.select2', true)
+@section('plugins.BsCustomFileInput', true)
 
 @section('title', '- Leituras de Medidores')
 
@@ -20,66 +21,80 @@
         </div>
     </section>
 
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="card card-solid">
-                <div class="card-header">
-                    <i class="fas fa-fw fa-search"></i> Pesquisa de Leituras Cadastradas</h1>
-                </div>
-                <form method="POST" action="{{ route('admin.readings.search') }}">
-                    @csrf
-                    <div class="card-body pb-0">
-                        <div class="d-flex flex-wrap justify-content-start">
-                            <div class="col-12 col-md-4 form-group px-0">
-                                <label for="complex_id">Condomínio</label>
-                                <x-adminlte-select2 name="complex_id">
-                                    <option value="null" selected>Selecione</option>
-                                    @foreach ($complexes as $complex)
-                                        <option value="{{ $complex->id }}">
-                                            {{ $complex->alias_name }}
-                                        </option>
-                                    @endforeach
-                                </x-adminlte-select2>
-                            </div>
-                            <div class="col-12 col-md-4 form-group px-0 pl-md-3">
-                                <label for="month_ref">Mês de Referência</label>
-                                <x-adminlte-select2 name="month_ref">
-                                    <option value="null" selected>Selecione</option>
-                                    <option> Janeiro</option>
-                                    <option>Fevereiro</option>
-                                    <option>Março</option>
-                                    <option>Abril</option>
-                                    <option>Maio</option>
-                                    <option>Junho</option>
-                                    <option>Julho</option>
-                                    <option>Agosto</option>
-                                    <option>Setembro</option>
-                                    <option>Outubro</option>
-                                    <option>Novembro</option>
-                                    <option>Dezembro</option>
-                                </x-adminlte-select2>
-                            </div>
-                            <div class="col-12 col-md-4 form-group px-0 pl-md-3">
-                                <label for="id">Nº da leitura</label>
-                                <input type="text" name="id" class="form-control" placeholder="nº da Leitura (ID)">
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Pequisar</button>
-                        <a href="{{ route('admin.readings.index') }}" class="btn btn-secondary">Limpar</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
 
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     @include('components.alert')
+                    <div class="card card-solid">
+                        <div class="card-header">
+                            <i class="fas fa-fw fa-upload"></i> Importação de Planilha
+                        </div>
+                        <form action="{{ route('admin.readings.import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="card-body pb-0">
+                                <x-adminlte-input-file name="file" label="Arquivo" placeholder="Selecione o arquivo..."
+                                    legend="Selecionar" />
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary">Importar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card card-solid">
+                        <div class="card-header">
+                            <i class="fas fa-fw fa-search"></i> Pesquisa de Leituras Cadastradas
+                        </div>
+                        <form method="POST" action="{{ route('admin.readings.search') }}">
+                            @csrf
+                            <div class="card-body pb-0">
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    <div class="col-12 col-md-4 form-group px-0">
+                                        <label for="complex_id">Condomínio</label>
+                                        <x-adminlte-select2 name="complex_id">
+                                            <option value="null" selected>Selecione</option>
+                                            @foreach ($complexes as $complex)
+                                                <option value="{{ $complex->id }}">
+                                                    {{ $complex->alias_name }}
+                                                </option>
+                                            @endforeach
+                                        </x-adminlte-select2>
+                                    </div>
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-3">
+                                        <label for="month_ref">Mês de Referência</label>
+                                        <x-adminlte-select2 name="month_ref">
+                                            <option value="null" selected>Selecione</option>
+                                            <option> Janeiro</option>
+                                            <option>Fevereiro</option>
+                                            <option>Março</option>
+                                            <option>Abril</option>
+                                            <option>Maio</option>
+                                            <option>Junho</option>
+                                            <option>Julho</option>
+                                            <option>Agosto</option>
+                                            <option>Setembro</option>
+                                            <option>Outubro</option>
+                                            <option>Novembro</option>
+                                            <option>Dezembro</option>
+                                        </x-adminlte-select2>
+                                    </div>
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-3">
+                                        <label for="id">Nº da leitura</label>
+                                        <input type="text" name="id" class="form-control"
+                                            placeholder="nº da Leitura (ID)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Pequisar</button>
+                                <a href="{{ route('admin.readings.index') }}" class="btn btn-secondary">Limpar</a>
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="card card-solid">
                         <div class="card-header">
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
@@ -123,6 +138,10 @@
                                                         @elseif ($reading->cover)
                                                             <img src="{{ url('storage/readings/' . $reading->cover) }}"
                                                                 alt="Imagem da Leitura" class="img-circle img-fluid"
+                                                                style="object-fit: cover; width: 100%; aspect-ratio: 1;">
+                                                        @elseif ($reading->url_cover)
+                                                            <img src="{{ $reading->url_cover }}" alt="Imagem da Leitura"
+                                                                class="img-circle img-fluid"
                                                                 style="object-fit: cover; width: 100%; aspect-ratio: 1;">
                                                         @else
                                                             <img src="{{ asset('img/no-image.png') }}"
