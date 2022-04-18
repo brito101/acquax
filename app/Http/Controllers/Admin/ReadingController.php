@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ReadingRequest;
+use App\Models\Complex;
 use App\Models\Meter;
 use App\Models\Reading;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use JeroenNoten\LaravelAdminLte\View\Components\Tool\Datatable;
 use Illuminate\Support\Str;
@@ -25,8 +27,9 @@ class ReadingController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
+        $complexes = Complex::all();
         $readings = Reading::orderBy('id', 'desc')->paginate(24);
-        return view('admin.readings.index', compact('readings'));
+        return view('admin.readings.index', compact('readings', 'complexes'));
     }
 
     /**
@@ -235,5 +238,33 @@ class ReadingController extends Controller
                 ->back()
                 ->with('error', 'Erro ao excluir!');
         }
+    }
+
+    public function search(Request $request)
+    {
+
+        if (!Auth::user()->hasPermissionTo('Listar Leituras')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        $complexes = Complex::all();
+        $query = Reading::query();
+
+        $query->when(request('month_ref') != 'null', function ($q) {
+            return $q->where('month_ref', request('month_ref'));
+        });
+        $query->when(request('id') != null, function ($q) {
+            return $q->where('id', request('id'));
+        });
+
+        if ($request['complex_id'] != 'null') {
+            $complex = Complex::where('id', $request['complex_id'])->first();
+            $meter_list = Meter::whereIn('apartment_id', $complex->apartments->pluck('id'))->get();
+            $readings = $query->whereIn('meter_id', $meter_list->pluck('id'))->orderBy('id', 'desc')->paginate(24);
+        } else {
+            $readings = $query->orderBy('id', 'desc')->paginate(24);
+        }
+
+        return view('admin.readings.index', compact('readings', 'complexes'));
     }
 }

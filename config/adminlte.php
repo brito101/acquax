@@ -258,6 +258,27 @@ return [
                 ],
             ],
         ],
+        /** Readings */
+        [
+            'text'        => 'Leituras de Medidores',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-chart-line',
+            'can'         => 'Acessar Leituras',
+            'submenu' => [
+                [
+                    'text' => 'Listagem de Leituras',
+                    'url'  => 'admin/readings',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Listar Leituras',
+                ],
+                [
+                    'text' => 'Cadastro de Leituras',
+                    'url'  => 'admin/readings/create',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Leituras',
+                ],
+            ],
+        ],
         /** Complexes */
         [
             'text'        => 'Condomínios',

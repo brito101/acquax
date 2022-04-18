@@ -69,9 +69,7 @@
                                                             <img src="{{ url('storage/complexes/' . $complex->photo) }}"
                                                                 alt="{{ $complex->alias_name }}"
                                                                 class="img-circle img-fluid"
-                                                                style="
-                                                                                                                                                                                                                                                                                object-fit: cover; width: 100%; height: 112px;
-                                                                                                                                                                                                                                                                                ">
+                                                                style="object-fit: cover; width: 100%; aspect-ratio: 1;">
                                                         @else
                                                             <img src="{{ asset('img/building.png') }}"
                                                                 alt="{{ $complex->alias_name }}"

@@ -141,7 +141,7 @@
                                         <canvas id="canvas" class="embed-responsive-item"
                                             style="max-width: 75%; left: 12.5%;"></canvas>
                                     </div>
-                                    <button id="capture" class="btn btn-primary"><i class="fa fa-camera mr-1"></i>
+                                    <button id="capture" class="btn btn-secondary"><i class="fa fa-camera mr-1"></i>
                                         Capturar</button>
                                 </div>
                             </div>

@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('syndics', SyndicController::class);
 
         /** Readings */
+        Route::post('/readings-search', [ReadingController::class, 'search'])->name('readings.search');
         Route::get('/readings/destroy/{id}', [ReadingController::class, 'destroy']);
         Route::resource('readings', ReadingController::class);
 
