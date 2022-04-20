@@ -411,6 +411,27 @@ return [
             'icon'    => 'fas fa-fw fa-cogs',
             'can'     => 'Acessar Configurações',
             'submenu' => [
+                /** Dealerships */
+                [
+                    'text' => 'Concessionárias',
+                    'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-hands-helping',
+                    'can'     => 'Acessar Concessionárias',
+                    'submenu' => [
+                        [
+                            'text' => 'List. de Concessionárias',
+                            'url'  => 'admin/settings/dealerships',
+                            'icon'    => 'fas fa-fw fa-chevron-right',
+                            'can'     => 'Listar Concessionárias',
+                        ],
+                        [
+                            'text' => 'Cad. de Concessionárias',
+                            'url'  => 'admin/settings/dealerships/create',
+                            'icon'    => 'fas fa-fw fa-chevron-right',
+                            'can'     => 'Criar Concessionárias',
+                        ],
+                    ]
+                ],
                 /** Type Metters */
                 [
                     'text' => 'Tipos de Medidores',

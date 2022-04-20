@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ComplexController;
 use App\Http\Controllers\Admin\MeterController;
 use App\Http\Controllers\Admin\ReadingController;
 use App\Http\Controllers\Admin\ResidentController;
+use App\Http\Controllers\Admin\Settings\DealershipController;
 use App\Http\Controllers\Admin\Settings\GenreController;
 use App\Http\Controllers\Admin\Settings\TypeMetersController;
 use App\Http\Controllers\Admin\SyndicController;
@@ -73,12 +74,15 @@ Route::group(['middleware' => ['auth']], function () {
         /**
          * Configurations
          * */
-        /** Genres */
-        Route::get('/settings/genres/destroy/{id}', [GenreController::class, 'destroy']);
-        Route::resource('settings/genres', GenreController::class);
+        /** Dealerships */
+        Route::get('/settings/dealerships/destroy/{id}', [DealershipController::class, 'destroy']);
+        Route::resource('settings/dealerships', DealershipController::class);
         /** Type Meters */
         Route::get('/settings/type-meters/destroy/{id}', [TypeMetersController::class, 'destroy']);
         Route::resource('settings/type-meters', TypeMetersController::class);
+        /** Genres */
+        Route::get('/settings/genres/destroy/{id}', [GenreController::class, 'destroy']);
+        Route::resource('settings/genres', GenreController::class);
 
         /**
          * ACL

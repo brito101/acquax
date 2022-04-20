@@ -3,21 +3,25 @@
 namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Settings\GenreRequest;
-use App\Models\Settings\Genre;
+use App\Http\Requests\Admin\Settings\DealershipRequest;
+use App\Models\Settings\Dealership;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class GenreController extends Controller
+class DealershipController extends Controller
 {
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        if (!Auth::user()->hasPermissionTo('Listar Gêneros')) {
+        if (!Auth::user()->hasPermissionTo('Listar Concessionárias')) {
             abort(403, 'Acesso não autorizado');
         }
-        $genres = Genre::all();
-        return view('admin.settings.genres.index', compact('genres'));
+        $dealerships = Dealership::all();
+        return view('admin.settings.dealerships.index', compact('dealerships'));
     }
 
     /**
@@ -27,10 +31,10 @@ class GenreController extends Controller
      */
     public function create()
     {
-        if (!Auth::user()->hasPermissionTo('Criar Gêneros')) {
+        if (!Auth::user()->hasPermissionTo('Criar Concessionárias')) {
             abort(403, 'Acesso não autorizado');
         }
-        return view('admin.settings.genres.create');
+        return view('admin.settings.dealerships.create');
     }
 
     /**
@@ -39,18 +43,18 @@ class GenreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(GenreRequest $request)
+    public function store(DealershipRequest $request)
     {
-        if (!Auth::user()->hasPermissionTo('Criar Gêneros')) {
+        if (!Auth::user()->hasPermissionTo('Criar Concessionárias')) {
             abort(403, 'Acesso não autorizado');
         }
         $data = $request->all();
-        $data['user_id'] = auth()->user()->id;
-        $genre = Genre::create($data);
+        $data['editor'] = auth()->user()->id;
+        $dealership = Dealership::create($data);
 
-        if ($genre->save()) {
+        if ($dealership->save()) {
             return redirect()
-                ->route('admin.genres.index')
+                ->route('admin.dealerships.index')
                 ->with('success', 'Cadastro realizado!');
         } else {
             return redirect()
@@ -68,14 +72,14 @@ class GenreController extends Controller
      */
     public function edit($id)
     {
-        if (!Auth::user()->hasPermissionTo('Editar Gêneros')) {
+        if (!Auth::user()->hasPermissionTo('Editar Concessionárias')) {
             abort(403, 'Acesso não autorizado');
         }
-        $genre = Genre::where('id', $id)->first();
-        if (empty($genre->id)) {
+        $dealership = Dealership::where('id', $id)->first();
+        if (empty($dealership->id)) {
             abort(403, 'Acesso não autorizado');
         }
-        return view('admin.settings.genres.edit', compact('genre'));
+        return view('admin.settings.dealerships.edit', compact('dealership'));
     }
 
     /**
@@ -85,20 +89,20 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(GenreRequest $request, $id)
+    public function update(DealershipRequest $request, $id)
     {
-        if (!Auth::user()->hasPermissionTo('Editar Gêneros')) {
+        if (!Auth::user()->hasPermissionTo('Editar Concessionárias')) {
             abort(403, 'Acesso não autorizado');
         }
         $data = $request->all();
-        $genre = Genre::where('id', $id)->first();
-        if (empty($genre->id)) {
+        $dealership = Dealership::where('id', $id)->first();
+        if (empty($dealership->id)) {
             abort(403, 'Acesso não autorizado');
         }
-        $data['user_id'] = auth()->user()->id;
-        if ($genre->update($data)) {
+        $data['editor'] = auth()->user()->id;
+        if ($dealership->update($data)) {
             return redirect()
-                ->route('admin.genres.index')
+                ->route('admin.dealerships.index')
                 ->with('success', 'Atualização realizada!');
         } else {
             return redirect()
@@ -116,16 +120,16 @@ class GenreController extends Controller
      */
     public function destroy($id)
     {
-        if (!Auth::user()->hasPermissionTo('Excluir Gêneros')) {
+        if (!Auth::user()->hasPermissionTo('Excluir Concessionárias')) {
             abort(403, 'Acesso não autorizado');
         }
-        $genre = Genre::where('id', $id)->first();
-        if (empty($genre->id)) {
+        $dealership = Dealership::where('id', $id)->first();
+        if (empty($dealership->id)) {
             abort(403, 'Acesso não autorizado');
         }
-        if ($genre->delete()) {
+        if ($dealership->delete()) {
             return redirect()
-                ->route('admin.genres.index')
+                ->route('admin.dealerships.index')
                 ->with('success', 'Exclusão realizada!');
         } else {
             return redirect()

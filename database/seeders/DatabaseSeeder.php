@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             ModelHasRoleTableSeeder::class,
             GenresTableSeeder::class,
             TypeMetersTableSeeder::class,
+            DealershipsTableSeeder::class,
         ]);
     }
 }
