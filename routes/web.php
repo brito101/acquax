@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\ComplexController;
+use App\Http\Controllers\Admin\DealershipReadingController;
 use App\Http\Controllers\Admin\MeterController;
 use App\Http\Controllers\Admin\ReadingController;
 use App\Http\Controllers\Admin\ResidentController;
@@ -70,6 +71,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/readings-search', [ReadingController::class, 'search'])->name('readings.search');
         Route::get('/readings/destroy/{id}', [ReadingController::class, 'destroy']);
         Route::resource('readings', ReadingController::class);
+
+        /** Dealerships Readings */
+        Route::get('/dealerships-readings/destroy/{id}', [DealershipReadingController::class, 'destroy']);
+        Route::resource('dealerships-readings', DealershipReadingController::class);
 
         /**
          * Configurations

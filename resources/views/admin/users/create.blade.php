@@ -125,6 +125,6 @@
 
 @section('custom_js')
     <script src="{{ asset('vendor/jquery/jquery.inputmask.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/document_person.js') }}"></script>
+    <script src="{{ asset('js/document-person.js') }}"></script>
     <script src="{{ asset('js/phone.js') }}"></script>
 @endsection

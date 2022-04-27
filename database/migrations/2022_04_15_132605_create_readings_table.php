@@ -19,7 +19,7 @@ class CreateReadingsTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->decimal('reading', $precision = 23, $scale = 13);
+            $table->decimal('reading', 23, 13);
             $table->string('month_ref');
             $table->date('reading_date');
             $table->date('reading_date_next');

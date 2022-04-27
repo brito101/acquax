@@ -8,6 +8,7 @@ use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
 use App\Models\Meter;
+use App\Models\Reading;
 use App\Models\Resident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -198,6 +199,12 @@ class ApartmentController extends Controller
             $meters = Meter::where('apartment_id', $apartment->id)->get();
             if ($meters->isNotEmpty()) {
                 foreach ($meters as $meter) {
+                    $readings = Reading::where('meter_id', $id)->get();
+                    if ($readings->isNotEmpty()) {
+                        foreach ($readings as $reading) {
+                            $reading->delete();
+                        }
+                    }
                     $meter->delete();
                 }
             }

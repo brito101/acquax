@@ -10,8 +10,9 @@
     "/js/company.js": "/js/company.js",
     "/js/address.js": "/js/address.js",
     "/js/phone.js": "/js/phone.js",
-    "/js/document_person.js": "/js/document_person.js",
+    "/js/document-person.js": "/js/document-person.js",
     "/js/reading.js": "/js/reading.js",
+    "/js/dealerships-reading.js": "/js/dealerships-reading.js",
     "/site/img/.DS_Store": "/site/img/.DS_Store",
     "/site/js/plugins/simple-anime.js": "/site/js/plugins/simple-anime.js",
     "/site/js/script.js": "/site/js/script.js"

@@ -236,6 +236,17 @@ return [
         'cover' => 'imagem',
         'url_cover' => 'URL da imagem',
         'service' => 'serviço',
+        'total_days' => 'total de dias',
+        'dealership_consumption' => 'consumo da concessionária',
+        'dealership_consumption_tax_1' => '1ª faixa',
+        'dealership_consumption_tax_2' => '2ª faixa',
+        'monthly_consumption' => 'consumo mensal',
+        'water_value_consumption' => 'valor do consumo de água',
+        'sewage_value_consumption' => 'valor do serviço de esgoto',
+        'regulation_tax' => 'valor da taxa de regulamentação',
+        'dealership_cost_tax_1' => 'valor de custo da 1ª faixa',
+        'dealership_cost_tax_2' => 'valor de custo da 2ª faixa',
+        'dealership_id' => 'concessionária'
     ],
 
 ];

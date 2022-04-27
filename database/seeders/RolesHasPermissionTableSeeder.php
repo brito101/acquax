@@ -502,6 +502,47 @@ class RolesHasPermissionTableSeeder extends Seeder
                 'permission_id' => 67,
                 'role_id' => 2
             ],
+            /** Dealerships Readings 68 to 72 */
+            [
+                'permission_id' => 68,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 68,
+                'role_id' => 2
+            ],
+            [
+                'permission_id' => 69,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 69,
+                'role_id' => 2
+            ],
+            [
+                'permission_id' => 70,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 70,
+                'role_id' => 2
+            ],
+            [
+                'permission_id' => 71,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 71,
+                'role_id' => 2
+            ],
+            [
+                'permission_id' => 72,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 72,
+                'role_id' => 2
+            ],
         ]);
     }
 }
