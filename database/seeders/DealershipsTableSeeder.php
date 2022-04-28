@@ -18,8 +18,8 @@ class DealershipsTableSeeder extends Seeder
         DB::table('dealerships')->insert(
             [
                 [
-                    'name' => 'Cedade',
-                    'servide' => 'Água e Esgoto',
+                    'name' => 'Cedae',
+                    'service' => 'Água e Esgoto',
                     'editor' => 1,
                     'created_at' => new DateTime('now')
                 ],
