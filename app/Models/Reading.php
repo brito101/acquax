@@ -24,7 +24,11 @@ class Reading extends Model
         'url_cover'
     ];
 
-    protected $appends = ['volume_consumed', 'previous_volume_consumed'];
+    protected $appends = [
+        'volume_consumed',
+        'previous_volume_consumed',
+        'comparative_percentage'
+    ];
 
     /** Relationships */
 
@@ -61,10 +65,10 @@ class Reading extends Model
     {
         $previous = Reading::where('id', '<', $this->id)->where('meter_id', $this->meter_id)->first();
         if ($previous) {
-            $volume = $this->converToFloat($this->reading) - $this->converToFloat($previous->reading);
+            $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($previous->reading);
         } else {
             $mether = Meter::where('id', $this->meter_id)->first();
-            $volume = $this->converToFloat($this->reading) - $this->converToFloat($mether->initial_reading);
+            $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($mether->initial_reading);
         }
         return number_format($volume, 13, ",", ".");
     }
@@ -75,18 +79,28 @@ class Reading extends Model
         $pre_previous = Reading::where('id', '<', $this->id)->where('meter_id', $this->meter_id)->offset(1)->first();
 
         if ($previous && $pre_previous) {
-            $volume = $this->converToFloat($previous->reading) - $this->converToFloat($pre_previous->reading);
+            $volume = $this->convertToFloat($previous->reading) - $this->convertToFloat($pre_previous->reading);
         } elseif ($previous) {
             $mether = Meter::where('id', $this->meter_id)->first();
-            $volume = $this->converToFloat($previous->reading) - $this->converToFloat($mether->initial_reading);
+            $volume = $this->convertToFloat($previous->reading) - $this->convertToFloat($mether->initial_reading);
         } else {
             return "Inexistente";
         }
         return number_format($volume, 13, ",", ".");
     }
 
+    public function getComparativePercentageAttribute()
+    {
+        $actual = $this->convertToFloat($this->volume_consumed);
+        $previous = $this->convertToFloat($this->previous_volume_consumed);
+        if (is_numeric($actual) && is_numeric($previous) && $previous != 0) {
+            return number_format(((($actual * 100) / $previous) - 100), 2, ",", ".") . "%";
+        }
+        return "Inexistente";
+    }
+
     /** Aux function */
-    private function converToFloat($number)
+    private function convertToFloat($number)
     {
         return str_replace(',', '.', str_replace('.', '', $number));
     }

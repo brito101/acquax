@@ -38,7 +38,7 @@ class MeterRequest extends FormRequest
             'apartment_id' => 'required|min:1|',
             'type_meter_id' => 'required|min:1',
             'location' => 'nullable|max:191',
-            'initial_reading' => 'nullable|numeric|between:0,999999999.9999999999999',
+            'initial_reading' => 'required|numeric|between:0,999999999.9999999999999',
         ];
     }
 

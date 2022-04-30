@@ -15,7 +15,7 @@ class AlterTableMeterAddLocationInitialValue extends Migration
     {
         Schema::table('meters', function (Blueprint $table) {
             $table->string('location')->nullable();
-            $table->decimal('initial_reading', $precision = 23, $scale = 13);
+            $table->decimal('initial_reading', $precision = 23, $scale = 13)->default(0);
         });
     }
 
