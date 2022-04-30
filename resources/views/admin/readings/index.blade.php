@@ -124,7 +124,7 @@
                                                 <div class="row">
                                                     <div class="col-7">
                                                         <p class="text-muted text-sm py-0 my-0"><b>Leitura:</b>
-                                                            {{ $reading->getRoundedReading() }}
+                                                            {{ $reading->getRoundedReading() }} m<sup>3</sup>
                                                         </p>
                                                         <p class="text-muted text-sm py-0 my-0"><b>Mês Ref:</b>
                                                             {{ $reading->month_ref }}
