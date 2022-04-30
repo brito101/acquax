@@ -131,14 +131,14 @@
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div
                                         class="col-12 col-md-6 form-group px-0 pr-md-2 d-flex flex-wrap justify-content-between">
-                                        <div class="col-12 col-md-6 form-group px-0 pr-md-2 mb-md-n5">
+                                        <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                             <label for="reading">Valor da Leitura em m<sup>3</sup></label>
                                             <input type="text" class="form-control" id="reading"
                                                 placeholder="Valor da Leitura em decimal" name="reading"
                                                 value="{{ old('reading') ?? $reading->reading }}" required>
                                         </div>
 
-                                        <div class="col-12 col-md-6 form-group px-0 pl-md-2 mb-md-n5">
+                                        <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                             <label for="volume_consumed">Consumo em m<sup>3</sup></label>
                                             <input type="text" class="form-control" id="volume_consumed"
                                                 name="volume_consumed" value="{{ $reading->volume_consumed }}" disabled>
@@ -154,7 +154,7 @@
                                         <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                             <label for="comparative_percentage">Porcentagem Comparativa</label>
                                             <input type="text"
-                                                class="form-control {{ str_contains($reading->comparative_percentage, '-') ? 'bg-success' : 'bg-danger' }}"
+                                                class="form-control {{ str_contains($reading->comparative_percentage, '-')? 'bg-success': ($reading->comparative_percentage == 'Inexistente'? '': 'bg-danger') }}"
                                                 id="comparative_percentage" name="comparative_percentage"
                                                 value="{{ $reading->comparative_percentage }}" disabled>
                                         </div>
@@ -176,9 +176,9 @@
                                             </div>
                                         @elseif ($reading->cover != null)
                                             <div
-                                                class='col-12 col-md-3 align-self-center mt-3 d-flex justify-content-center justify-content-md-end px-0'>
+                                                class='col-12 col-md-3 align-self-center mt-3 d-flex justify-content-center px-0'>
                                                 <img src="{{ url('storage/readings/' . $reading->cover) }}"
-                                                    alt="Imagem da leitura" style="max-width: 80%;"
+                                                    alt="Imagem da leitura" style="max-width: 80%;max-height: 150px;"
                                                     class="img-thumbnail d-block">
                                             </div>
                                         @endif
