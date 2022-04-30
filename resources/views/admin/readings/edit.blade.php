@@ -44,7 +44,6 @@
                             <input type="hidden" name="id" value="{{ $reading->id }}">
                             <input type="hidden" name="from" value="{{ url()->previous() }}">
                             <div class="card-body">
-
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="meter_id">Medidor</label>
@@ -130,11 +129,23 @@
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                    <div class="col-12 col-md-2 form-group px-0 pr-md-2">
                                         <label for="reading">Valor da Leitura em m<sup>3</sup></label>
                                         <input type="text" class="form-control" id="reading"
                                             placeholder="Valor da Leitura em decimal" name="reading"
                                             value="{{ old('reading') ?? $reading->reading }}" required>
+                                    </div>
+
+                                    <div class="col-12 col-md-2 form-group px-0 pr-md-2">
+                                        <label for="volume_consumed">Consumo em m<sup>3</sup></label>
+                                        <input type="text" class="form-control" id="volume_consumed"
+                                            name="volume_consumed" value="{{ $reading->volume_consumed }}" disabled>
+                                    </div>
+                                    <div class="col-12 col-md-2 form-group px-0 pr-md-2">
+                                        <label for="previous_volume_consumed">Anterior em m<sup>3</sup></label>
+                                        <input type="text" class="form-control" id="previous_volume_consumed"
+                                            name="previous_volume_consumed"
+                                            value="{{ $reading->previous_volume_consumed }}" disabled>
                                     </div>
 
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2 d-flex flex-wrap">

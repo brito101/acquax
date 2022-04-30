@@ -20,6 +20,7 @@ mix.js("resources/js/app.js", "public/js")
     .scripts(["resources/js/phone.js"], "public/js/phone.js")
     .scripts(["resources/js/document-person.js"], "public/js/document-person.js")
     .scripts(["resources/js/reading.js"], "public/js/reading.js")
+    .scripts(["resources/js/reading-index.js"], "public/js/reading-index.js")
     .scripts(["resources/js/dealerships-reading.js"], "public/js/dealerships-reading.js")
     /** Web */
     .copy("resources/views/site/assets/img", "public/site/img")

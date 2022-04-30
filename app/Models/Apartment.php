@@ -28,7 +28,7 @@ class Apartment extends Model
         return $this->belongsTo(Block::class);
     }
 
-    // Mutator
+    /**  Appends */
     public function getBlockNameAttribute()
     {
         $block = Block::where('id', $this->block_id)->first();

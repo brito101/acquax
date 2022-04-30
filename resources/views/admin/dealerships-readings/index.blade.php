@@ -11,33 +11,33 @@
 
             $list = [];
 
-            $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Mês Ref', 'Data da Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+            $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Mês Ref', 'Data da Leitura', 'Próx Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
             foreach ($readings as $reading) {
-                $list[] = [$reading->id, $reading->complex['alias_name'], $reading->month_ref, $reading->reading_date, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="dealerships-readings/' . $reading->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="dealerships-readings/destroy/' . $reading->id . '" onclick="return confirm(\'Confirma a exclusão deste consumo?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
+                $list[] = [$reading->id, $reading->complex['alias_name'], $reading->month_ref, $reading->reading_date, $reading->reading_date_next, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="dealerships-readings/' . $reading->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="dealerships-readings/destroy/' . $reading->id . '" onclick="return confirm(\'Confirma a exclusão deste consumo?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
             }
 
             $config = [
                 'data' => $list,
                 'order' => [[0, 'desc']],
-                'columns' => [null, null, null, null, ['orderable' => false]],
+                'columns' => [null, null, null, null, null, ['orderable' => false]],
                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
             ];
 
         @endphp
     @else
         @php
-            $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Mês Ref', 'Data da Leitura'];
+            $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Mês Ref', 'Data da Leitura', 'Próx Leitura'];
 
             $list = [];
 
             foreach ($readings as $reading) {
-                $list[] = [$reading->id, $reading->complex['alias_name'], $reading->month_ref, $reading->reading_date];
+                $list[] = [$reading->id, $reading->complex['alias_name'], $reading->month_ref, $reading->reading_date, $reading->reading_date_next];
             }
 
             $config = [
                 'data' => $list,
                 'order' => [[0, 'desc']],
-                'columns' => [null, null, null, null],
+                'columns' => [null, null, null, null, null],
                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
             ];
         @endphp

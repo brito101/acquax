@@ -255,6 +255,9 @@ class ReadingController extends Controller
         $query->when(request('month_ref') != 'null', function ($q) {
             return $q->where('month_ref', request('month_ref'));
         });
+        $query->when(request('year') != 'null', function ($q) {
+            return $q->whereYear('reading_date', request('year'));
+        });
         $query->when(request('id') != null, function ($q) {
             return $q->where('id', request('id'));
         });

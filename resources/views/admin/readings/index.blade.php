@@ -51,7 +51,7 @@
                             @csrf
                             <div class="card-body pb-0">
                                 <div class="d-flex flex-wrap justify-content-start">
-                                    <div class="col-12 col-md-4 form-group px-0">
+                                    <div class="col-12 col-md-3 form-group px-0">
                                         <label for="complex_id">Condomínio</label>
                                         <x-adminlte-select2 name="complex_id">
                                             <option value="null" selected>Selecione</option>
@@ -62,7 +62,7 @@
                                             @endforeach
                                         </x-adminlte-select2>
                                     </div>
-                                    <div class="col-12 col-md-4 form-group px-0 pl-md-3">
+                                    <div class="col-12 col-md-3 form-group px-0 pl-md-3">
                                         <label for="month_ref">Mês de Referência</label>
                                         <x-adminlte-select2 name="month_ref">
                                             <option value="null" selected>Selecione</option>
@@ -80,7 +80,12 @@
                                             <option>Dezembro</option>
                                         </x-adminlte-select2>
                                     </div>
-                                    <div class="col-12 col-md-4 form-group px-0 pl-md-3">
+                                    <div class="col-12 col-md-3 form-group px-0 pl-md-3">
+                                        <label for="year">Ano</label>
+                                        <input type="text" id="year" name="year" class="form-control" placeholder="YYYY"
+                                            value="{{ date('Y') }}">
+                                    </div>
+                                    <div class="col-12 col-md-3 form-group px-0 pl-md-3">
                                         <label for="id">Nº da leitura</label>
                                         <input type="text" name="id" class="form-control"
                                             placeholder="nº da Leitura (ID)">
@@ -114,11 +119,12 @@
                                             <div class="card-header text-muted border-bottom-0">
                                                 Leitura #{{ $reading->id }}
                                             </div>
+                                            {{-- {{ $reading->getVolumeConsumedAttribute }} --}}
                                             <div class="card-body pt-0">
                                                 <div class="row">
                                                     <div class="col-7">
                                                         <p class="text-muted text-sm py-0 my-0"><b>Leitura:</b>
-                                                            {{ round($reading->reading, 3) }}
+                                                            {{ $reading->getRoundedReading() }}
                                                         </p>
                                                         <p class="text-muted text-sm py-0 my-0"><b>Mês Ref:</b>
                                                             {{ $reading->month_ref }}
@@ -192,4 +198,9 @@
         </div>
 
     </section>
+@endsection
+
+@section('custom_js')
+    <script src="{{ asset('vendor/jquery/jquery.inputmask.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/reading-index.js') }}"></script>
 @endsection
