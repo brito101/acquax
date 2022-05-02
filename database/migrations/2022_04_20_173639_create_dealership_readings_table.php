@@ -22,9 +22,6 @@ class CreateDealershipReadingsTable extends Migration
             $table->decimal('dealership_consumption_tax_1', 13, 3)->default(0); //consumo em m3 medido pela concessionária para a primeira faixa
             $table->decimal('dealership_consumption_tax_2', 13, 3)->default(0); //consumo em m3 medido pela concessionária para a segunda faixa
             $table->decimal('monthly_consumption', 13, 3)->default(0); //consumo em m3 medido pela empresa de individualização
-            $table->decimal('water_value_consumption', 12, 2)->default(0); //valor da água (dados da fatura da concessionária)
-            $table->decimal('sewage_value_consumption', 12, 2)->default(0); //valor do esgoto (dados da fatura da concessionária)
-            $table->decimal('regulation_tax', 12, 2)->default(0); //taxa de regulação (dados da fatura da concessionária caso exista)
             $table->decimal('dealership_cost_tax_1', 13, 3)->default(0); //valor do m3  da concessionária da primeira faixa
             $table->decimal('dealership_cost_tax_2', 13, 3)->default(0); //valor do m3  da concessionária da segunda faixa
             $table->foreignId('dealership_id') //concessionária

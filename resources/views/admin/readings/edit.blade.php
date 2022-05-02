@@ -154,7 +154,7 @@
                                         <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                             <label for="comparative_percentage">Porcentagem Comparativa</label>
                                             <input type="text"
-                                                class="form-control {{ str_contains($reading->comparative_percentage, '-')? 'bg-success': ($reading->comparative_percentage == 'Inexistente'? '': 'bg-danger') }}"
+                                                class="form-control {{ str_contains($reading->comparative_percentage, '-')? 'bg-success': ($reading->comparative_percentage == 'Inexistente'? '': 'bg-warning') }}"
                                                 id="comparative_percentage" name="comparative_percentage"
                                                 value="{{ $reading->comparative_percentage }}" disabled>
                                         </div>

@@ -179,33 +179,12 @@
                                             value="{{ old('dealership_consumption') }}" required>
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
-                                        <label for="monthly_consumption">Consumo Real medido em m<sup>3</sup></label>
-                                        <input type="text" class="form-control" id="monthly_consumption"
-                                            placeholder="Valor da Leitura em decimal" name="monthly_consumption"
-                                            value="{{ old('monthly_consumption') }}" required>
+                                        <label for="dealership_cost">Custo da Concessionária em Reais</label>
+                                        <input type="text" class="form-control money_format_2" id="dealership_cost"
+                                            placeholder="Custo total do medido pela concessionária" name="dealership_cost"
+                                            value="{{ old('dealership_cost') }}" required>
                                     </div>
-                                </div>
 
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
-                                        <label for="water_value_consumption">Valor do Consumo de Água</label>
-                                        <input type="text" class="form-control money_format_2" id="water_value_consumption"
-                                            placeholder="Valor do Consumo de Água em reais" name="water_value_consumption"
-                                            value="{{ old('water_value_consumption') }}" required>
-                                    </div>
-                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
-                                        <label for="sewage_value_consumption">Consumo do Serviço de Esgoto</label>
-                                        <input type="text" class="form-control money_format_2" id="sewage_value_consumption"
-                                            placeholder="Valor do Serviço de Esgoto em reais"
-                                            name="sewage_value_consumption" value="{{ old('sewage_value_consumption') }}"
-                                            required>
-                                    </div>
-                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
-                                        <label for="regulation_tax">Taxa de Regulamentação</label>
-                                        <input type="text" class="form-control money_format_2" id="regulation_tax"
-                                            placeholder="Valor da taxa de Regulamentação" name="regulation_tax"
-                                            value="{{ old('regulation_tax') }}">
-                                    </div>
                                 </div>
 
                             </div>
