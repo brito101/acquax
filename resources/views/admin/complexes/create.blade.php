@@ -1,7 +1,9 @@
 @extends('adminlte::page')
+@section('plugins.BsCustomFileInput', true)
+@section('plugins.select2', true)
 
 @section('title', '- Cadastro de Condomínio')
-@section('plugins.BsCustomFileInput', true)
+
 
 @section('content')
 
@@ -14,7 +16,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.complexes.index') }}">Condomínio</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.complexes.index') }}">Condomínios</a></li>
                         <li class="breadcrumb-item active">Novo Condomínio</li>
                     </ol>
                 </div>
@@ -64,6 +66,21 @@
                                         <input type="text" class="form-control" id="document_company_secondary"
                                             placeholder="Inscrição Estadual" name="document_company_secondary"
                                             value="{{ old('document_company_secondary') }}">
+                                    </div>
+                                </div>
+
+
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                        <label for="apportionment">Tipo de Rateio</label>
+                                        <x-adminlte-select2 name="apportionment">
+                                            <option {{ old('apportionment') == 'Simples' ? 'selected' : '' }}>
+                                                Simples
+                                            </option>
+                                            <option {{ old('apportionment') == 'Fração Ideal' ? 'selected' : '' }}>
+                                                Fração Ideal
+                                            </option>
+                                        </x-adminlte-select2>
                                     </div>
                                 </div>
 

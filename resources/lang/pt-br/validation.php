@@ -246,7 +246,8 @@ return [
         'regulation_tax' => 'valor da taxa de regulamentação',
         'dealership_cost_tax_1' => 'valor de custo da 1ª faixa',
         'dealership_cost_tax_2' => 'valor de custo da 2ª faixa',
-        'dealership_id' => 'concessionária'
+        'dealership_id' => 'concessionária',
+        'apportionment' => 'rateio'
     ],
 
 ];

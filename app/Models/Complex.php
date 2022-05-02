@@ -31,7 +31,8 @@ class Complex extends Model
         'facebook',
         'instagram',
         'twitter',
-        'user_id'
+        'user_id',
+        'apportionment'
     ];
 
     /** Relationships */

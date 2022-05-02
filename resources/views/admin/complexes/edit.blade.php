@@ -1,7 +1,8 @@
 @extends('adminlte::page')
+@section('plugins.BsCustomFileInput', true)
+@section('plugins.select2', true)
 
 @section('title', '- Edição de Condomínio')
-@section('plugins.BsCustomFileInput', true)
 
 @section('content')
 
@@ -67,6 +68,22 @@
                                         <input type="text" class="form-control" id="document_company_secondary"
                                             placeholder="Inscrição Estadual" name="document_company_secondary"
                                             value="{{ old('document_company_secondary') ?? $complex->document_company_secondary }}">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                        <label for="apportionment">Tipo de Rateio</label>
+                                        <x-adminlte-select2 name="apportionment">
+                                            <option
+                                                {{ old('apportionment') == 'Simples' ? 'selected' : ($complex->apportionment == 'Simples' ? 'selected' : '') }}>
+                                                Simples
+                                            </option>
+                                            <option
+                                                {{ old('apportionment') == 'Fração Ideal'? 'selected': ($complex->apportionment == 'Fração Ideal'? 'selected': '') }}>
+                                                Fração Ideal
+                                            </option>
+                                        </x-adminlte-select2>
                                     </div>
                                 </div>
 
