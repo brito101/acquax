@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTableDealershipReadingsAddDealershipCost extends Migration
+class AlterTableApartmentsAddApportionment extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterTableDealershipReadingsAddDealershipCost extends Migration
      */
     public function up()
     {
-        Schema::table('dealership_readings', function (Blueprint $table) {
-            $table->decimal('dealership_cost', 12, 2)->default(0);
+        Schema::table('apartments', function (Blueprint $table) {
+            $table->decimal('fraction', 6, 3)->default(0);
         });
     }
 
@@ -25,8 +25,8 @@ class AlterTableDealershipReadingsAddDealershipCost extends Migration
      */
     public function down()
     {
-        Schema::table('dealership_readings', function (Blueprint $table) {
-            $table->dropColumn('dealership_cost');
+        Schema::table('apartments', function (Blueprint $table) {
+            $table->dropColumn('fraction');
         });
     }
 }

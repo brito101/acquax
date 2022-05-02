@@ -18,22 +18,21 @@ mix.js("resources/js/app.js", "public/js")
     .scripts(["resources/js/company.js"], "public/js/company.js")
     .scripts(["resources/js/address.js"], "public/js/address.js")
     .scripts(["resources/js/phone.js"], "public/js/phone.js")
-    .scripts(["resources/js/document-person.js"], "public/js/document-person.js")
+    .scripts(
+        ["resources/js/document-person.js"],
+        "public/js/document-person.js"
+    )
     .scripts(["resources/js/reading.js"], "public/js/reading.js")
     .scripts(["resources/js/reading-index.js"], "public/js/reading-index.js")
-    .scripts(["resources/js/dealerships-reading.js"], "public/js/dealerships-reading.js")
-    /** Web */
-    .copy("resources/views/site/assets/img", "public/site/img")
-    .sass("resources/views/site/assets/sass/style.scss", "public/site/css")
+    .scripts(
+        ["resources/js/dealerships-reading.js"],
+        "public/js/dealerships-reading.js"
+    )
+    .scripts(
+        ["resources/js/apartment.js"],
+        "public/js/apartment.js"
+    )
     .options({
         processCssUrls: false,
     })
-    .scripts(
-        ["resources/views/site/assets/js/plugins/simple-anime.js"],
-        "public/site/js/plugins/simple-anime.js"
-    )
-    .scripts(
-        ["resources/views/site/assets/js/script.js"],
-        "public/site/js/script.js"
-    )
     .sourceMaps();

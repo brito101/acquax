@@ -49,7 +49,12 @@
                                         <input type="text" class="form-control" id="name" placeholder="Nome do Bloco"
                                             name="name" value="{{ old('name') ?? $apartment->name }}" required>
                                     </div>
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                        <label for="fraction">Fração Ideal</label>
+                                        <input type="text" class="form-control" id="fraction" placeholder="Fração Ideal"
+                                            name="fraction" value="{{ old('fraction') ?? $apartment->fraction }}">
+                                    </div>
+                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
                                         <label for="status">Status do Apartamento</label>
                                         <x-adminlte-select2 name="status">
                                             <option
@@ -90,4 +95,9 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('custom_js')
+    <script src="{{ asset('vendor/jquery/jquery.inputmask.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/apartment.js') }}"></script>
 @endsection

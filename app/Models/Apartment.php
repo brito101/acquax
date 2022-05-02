@@ -16,7 +16,8 @@ class Apartment extends Model
         'name',
         'status',
         'user_id',
-        'block_id'
+        'block_id',
+        'fraction'
     ];
 
     protected $appends = ['complex_name', 'block_name'];
@@ -26,6 +27,12 @@ class Apartment extends Model
     public function block()
     {
         return $this->belongsTo(Block::class);
+    }
+
+    /** Accessor */
+    public function getFractionAttribute($value)
+    {
+        return number_format($value, 3, ",", ".") . '%';
     }
 
     /**  Appends */
