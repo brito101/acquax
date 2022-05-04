@@ -116,7 +116,7 @@
                                         <x-adminlte-select2 name="dealership_id">
                                             @foreach ($dealerships as $dealership)
                                                 <option
-                                                    {{ old('dealership_id') == $dealership->id? 'selected': ($reading->dealership_id == $dealership->id? 'selected': '') }}
+                                                    {{ old('dealership_id') == $dealership->id ? 'selected' : ($reading->dealership_id == $dealership->id ? 'selected' : '') }}
                                                     value="{{ $dealership->id }}">{{ $dealership->name }}
                                                 </option>
                                             @endforeach
@@ -265,6 +265,24 @@
                                         <input type="text" class="form-control" id="diff_cost" name="diff_cost" disabled
                                             value="{{ $reading->diff_cost }}">
                                     </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                        <label for="fraction">Valor para
+                                            {{ $reading->fraction['units'] - $reading->fraction['more_expansive'] . ' Unidades' }}</label>
+                                        <input type="text" class="form-control" id="fraction" name="fraction" disabled
+                                            value="{{ $reading->fraction['geral_fraction'] }}">
+                                    </div>
+
+                                    @if ($reading->complex['apportionment'] == 'Fração Ideal')
+                                        <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                            <label for="fraction">Valor para
+                                                {{ $reading->fraction['more_expansive'] . ' Unidades' }}</label>
+                                            <input type="text" class="form-control" id="fraction" name="fraction" disabled
+                                                value="{{ $reading->fraction['rest_fraction'] }}">
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-between">

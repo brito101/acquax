@@ -6,6 +6,7 @@ use Facade\FlareClient\Api;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 
 class DealershipReading extends Model
@@ -41,7 +42,8 @@ class DealershipReading extends Model
         'real_cost',
         'diff_cost',
         'units_inside_tax_1',
-        'units_above_tax_1'
+        'units_above_tax_1',
+        'fraction'
     ];
 
     /** Relationships */
@@ -185,7 +187,7 @@ class DealershipReading extends Model
         $real_cost = $this->convertToFloat(str_replace('R$ ', '', $this->real_cost));
         $dealership_cost = $this->convertToFloat(str_replace('R$ ', '', $this->dealership_cost));
 
-        $total = $real_cost - $dealership_cost;
+        $total = $dealership_cost - $real_cost;
 
         return 'R$ ' . number_format($total, 2, ",", ".");
     }
@@ -232,6 +234,47 @@ class DealershipReading extends Model
         return $units;
     }
 
+    public function getFractionAttribute()
+    {
+        $complex = $this->complex;
+        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
+        $apartments = Apartment::whereIn('block_id', $blocks)->get();
+        $units = 0;
+        $fractions = [];
+        foreach ($apartments as $apartment) {
+            $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
+            $readings = Reading::whereIn('meter_id', $meters)->where('month_ref', $this->month_ref)->get();
+            $total_consumed = 0;
+            $units++;
+            $fractions[] = $apartment->fraction;
+        }
+
+        /** Valor de diferença entre medição e concessionária */
+        $diff_cost = $this->convertToFloat(str_replace('R$ ', '', $this->diff_cost));
+
+        if ($this->complex['apportionment'] == "Fração Ideal") {
+            $fraction_max = collect($fractions)->max();
+            /** Valor dividido pra todas unidades */
+            $max = $this->convertToFloat(str_replace('%', '', $fraction_max));
+            $geral_fraction = ($diff_cost / $units * $max / 100);
+
+            /** Valor restante para as unidades*/
+            $more_expansive = last(array_count_values(Arr::sort($fractions))); // valor mais alto
+            $rest_fraction = $geral_fraction + (($diff_cost - $units * $geral_fraction) / $more_expansive);
+        } else {
+            $geral_fraction = ($diff_cost / $units);
+            $rest_fraction = 0;
+            $more_expansive = 0;
+        }
+
+        return array(
+            'geral_fraction' => 'R$ ' . number_format($geral_fraction, 2, ",", "."),
+            'rest_fraction' => 'R$ ' . number_format($rest_fraction, 2, ",", "."),
+            'units' => $units,
+            'more_expansive' => $more_expansive
+        );
+    }
+
     public function getReadingDateAttribute($value)
     {
         return date("d/m/Y", strtotime($value));
@@ -275,6 +318,6 @@ class DealershipReading extends Model
 
     private function convertToFloat($number)
     {
-        return str_replace(',', '.', str_replace('.', '', $number));
+        return (float)str_replace(',', '.', str_replace('.', '', $number));
     }
 }

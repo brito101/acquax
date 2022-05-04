@@ -1,3 +1,3 @@
 $(document).ready(function () {
-    $("#fraction").inputmask("99,99%");
+    $("#fraction").inputmask("99,999%");
 });
