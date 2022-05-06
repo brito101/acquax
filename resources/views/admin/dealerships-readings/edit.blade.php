@@ -1,5 +1,7 @@
 @extends('adminlte::page')
 @section('plugins.select2', true)
+@section('plugins.Datatables', true)
+@section('plugins.DatatablesPlugin', true)
 
 @section('title', '- Edição de Consumo de Condomínio')
 
@@ -268,20 +270,16 @@
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="fraction">Valor para
-                                            {{ $reading->fraction['units'] - $reading->fraction['more_expansive'] . ' Unidades' }}</label>
-                                        <input type="text" class="form-control" id="fraction" name="fraction" disabled
-                                            value="{{ $reading->fraction['geral_fraction'] }}">
-                                    </div>
-
-                                    @if ($reading->complex['apportionment'] == 'Fração Ideal')
-                                        <div class="col-12 col-md-6 form-group px-0 pl-md-2">
-                                            <label for="fraction">Valor para
-                                                {{ $reading->fraction['more_expansive'] . ' Unidades' }}</label>
-                                            <input type="text" class="form-control" id="fraction" name="fraction" disabled
-                                                value="{{ $reading->fraction['rest_fraction'] }}">
-                                        </div>
+                                    @if ($reading->fraction)
+                                        @foreach ($reading->fraction as $key => $value)
+                                            <div
+                                                class="col-12 col-md-6 form-group px-0 {{ $loop->index % 2 == 0 ? 'pr-md-2' : 'pl-md-2' }}">
+                                                <label for="fraction">Valor por fração para {{ $key }}
+                                                    unidades</label>
+                                                <input type="text" class="form-control" id="fraction{{ $loop->index }}"
+                                                    name="fraction" disabled value="{{ $value }}">
+                                            </div>
+                                        @endforeach
                                     @endif
                                 </div>
 
@@ -298,6 +296,32 @@
                                             name="units_above_tax_1" disabled value="{{ $reading->units_above_tax_1 }}">
                                     </div>
                                 </div>
+
+
+                                @if ($reading->apartments_report)
+                                    <div class="d-flex flex-wrap justify-content-between">
+                                        @php
+                                            $heads = ['Apartamento', 'Valor Total de Consumo', 'Rateio Proporcional ao Consumo', 'Valor total da Unidade'];
+
+                                            $list = [];
+
+                                            foreach ($reading->apartments_report as $apartment) {
+                                                $list[] = [$apartment->name, $apartment->total, $apartment->partial, $apartment->total_unit];
+                                            }
+
+                                            $config = [
+                                                'data' => $list,
+                                                'order' => [[0, 'asc']],
+                                                'columns' => [null, null, null, null],
+                                                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                                            ];
+                                        @endphp
+
+                                        <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads"
+                                            :config="$config" striped hoverable beautify with-buttons />
+                                    </div>
+                                @endif
+
 
                             </div>
 

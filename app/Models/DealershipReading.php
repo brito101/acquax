@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
+use stdClass;
 
 class DealershipReading extends Model
 {
@@ -43,7 +44,8 @@ class DealershipReading extends Model
         'diff_cost',
         'units_inside_tax_1',
         'units_above_tax_1',
-        'fraction'
+        'fraction',
+        'apartments_report'
     ];
 
     /** Relationships */
@@ -134,7 +136,7 @@ class DealershipReading extends Model
     public function getTotalCostTax1Attribute()
     {
         $tax = $this->convertToFloat($this->dealership_consumption_tax_1);
-        $cost = $this->convertToFloat(str_replace('R$ ', '', $this->dealership_cost_tax_1));
+        $cost = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
         $readings = count($this->getApartmentReadings());
         $total = $tax * $cost * $readings;
 
@@ -160,7 +162,7 @@ class DealershipReading extends Model
     {
         $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
         $tax_2 = $this->convertToFloat($this->dealership_consumption_tax_2);
-        $cost = $this->convertToFloat(str_replace('R$ ', '', $this->dealership_cost_tax_2));
+        $cost = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
         $total = 0;
         foreach ($this->getApartmentReadings() as $reading) {
             $value = $this->convertToFloat($reading->volume_consumed);
@@ -174,8 +176,8 @@ class DealershipReading extends Model
 
     public function getRealCostAttribute()
     {
-        $cost_tax_1 = $this->convertToFloat(str_replace('R$ ', '', $this->total_cost_tax_1));
-        $cost_tax_2 = $this->convertToFloat(str_replace('R$ ', '', $this->total_cost_tax_2));
+        $cost_tax_1 = $this->moneyConvertToFloat($this->total_cost_tax_1);
+        $cost_tax_2 = $this->moneyConvertToFloat($this->total_cost_tax_2);
 
         $total = ($cost_tax_1 + $cost_tax_2) * 2;
 
@@ -184,8 +186,8 @@ class DealershipReading extends Model
 
     public function getDiffCostAttribute()
     {
-        $real_cost = $this->convertToFloat(str_replace('R$ ', '', $this->real_cost));
-        $dealership_cost = $this->convertToFloat(str_replace('R$ ', '', $this->dealership_cost));
+        $real_cost = $this->moneyConvertToFloat($this->real_cost);
+        $dealership_cost = $this->moneyConvertToFloat($this->dealership_cost);
 
         $total = $dealership_cost - $real_cost;
 
@@ -205,8 +207,10 @@ class DealershipReading extends Model
             foreach ($readings as $reading) {
                 $total_consumed += $this->convertToFloat($reading->volume_consumed);
             }
-            if ($total_consumed <= $this->convertToFloat($this->dealership_consumption_tax_1)) {
-                $units++;
+            if (count($readings)) {
+                if ($total_consumed <= $this->convertToFloat($this->dealership_consumption_tax_1)) {
+                    $units++;
+                }
             }
         }
 
@@ -226,8 +230,10 @@ class DealershipReading extends Model
             foreach ($readings as $reading) {
                 $total_consumed += $this->convertToFloat($reading->volume_consumed);
             }
-            if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_1)) {
-                $units++;
+            if (count($readings)) {
+                if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_1)) {
+                    $units++;
+                }
             }
         }
 
@@ -244,35 +250,71 @@ class DealershipReading extends Model
         foreach ($apartments as $apartment) {
             $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
             $readings = Reading::whereIn('meter_id', $meters)->where('month_ref', $this->month_ref)->get();
-            $total_consumed = 0;
-            $units++;
-            $fractions[] = $apartment->fraction;
+            if (count($readings)) {
+                $units++;
+                $fractions[] = $apartment->fraction;
+            }
         }
 
         /** Valor de diferença entre medição e concessionária */
-        $diff_cost = $this->convertToFloat(str_replace('R$ ', '', $this->diff_cost));
+        $diff_cost = $this->moneyConvertToFloat($this->diff_cost);
+        $simple_fraction = $units > 0 ? $diff_cost / $units : 0;
+        $list_fractions = array_count_values(Arr::sort($fractions));
 
         if ($this->complex['apportionment'] == "Fração Ideal") {
-            $fraction_max = collect($fractions)->max();
-            /** Valor dividido pra todas unidades */
-            $max = $this->convertToFloat(str_replace('%', '', $fraction_max));
-            $geral_fraction = ($diff_cost / $units * $max / 100);
-
-            /** Valor restante para as unidades*/
-            $more_expansive = last(array_count_values(Arr::sort($fractions))); // valor mais alto
-            $rest_fraction = $geral_fraction + (($diff_cost - $units * $geral_fraction) / $more_expansive);
+            $fractions = [];
+            foreach ($list_fractions as $key => $value) {
+                $fraction = $this->convertToFloat(str_replace('%', '', $key));
+                $fractions[$value] = 'R$ ' . number_format(($simple_fraction * $fraction / 100), 2, ",", ".");
+            }
         } else {
-            $geral_fraction = ($diff_cost / $units);
-            $rest_fraction = 0;
-            $more_expansive = 0;
+            $fractions = array($units => 'R$ ' . number_format($simple_fraction, 2, ",", "."));
         }
 
-        return array(
-            'geral_fraction' => 'R$ ' . number_format($geral_fraction, 2, ",", "."),
-            'rest_fraction' => 'R$ ' . number_format($rest_fraction, 2, ",", "."),
-            'units' => $units,
-            'more_expansive' => $more_expansive
-        );
+        return $fractions;
+    }
+
+    public function getApartmentsReportAttribute()
+    {
+        $complex = $this->complex;
+        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
+        $apartments = Apartment::whereIn('block_id', $blocks)->get();
+        $units = $this->totalApartments();
+        $reports = [];
+        $diff_cost = $this->moneyConvertToFloat($this->diff_cost);
+        $simple_fraction = $units > 0 ? $diff_cost / $units : 0;
+
+        foreach ($apartments as $apartment) {
+            $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
+            $readings = Reading::whereIn('meter_id', $meters)->where('month_ref', $this->month_ref)->get();
+            if (count($readings)) {
+                $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
+                $cost_1 = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
+                $tax_2 = $this->convertToFloat($this->dealership_consumption_tax_2);
+                $cost_2 = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
+
+                $total_consumed = 0;
+                $total_cost = 0;
+                foreach ($readings as $reading) {
+                    $total_consumed += $this->convertToFloat($reading->volume_consumed);
+                }
+
+                if ($total_consumed <= $tax_1) {
+                    $total_cost = $tax_1 * $cost_1 * 2;
+                } else {
+                    $total_cost = (($tax_1 * $cost_1) + (($total_consumed - $tax_1) * $cost_2)) * 2;
+                }
+
+                $partial = $simple_fraction * $this->convertToFloat($apartment->fraction) / 100;
+                $total_unit = $total_cost +  $partial;
+                $reports[] = $apartment
+                    ->setAttribute('total', $this->convertToMoney($total_cost))
+                    ->setAttribute('partial', $this->convertToMoney($partial))
+                    ->setAttribute('total_unit', $this->convertToMoney($total_unit));
+            }
+        }
+
+        return $reports;
     }
 
     public function getReadingDateAttribute($value)
@@ -319,5 +361,32 @@ class DealershipReading extends Model
     private function convertToFloat($number)
     {
         return (float)str_replace(',', '.', str_replace('.', '', $number));
+    }
+
+    private function convertToMoney($number)
+    {
+        return 'R$ ' . number_format($number, 2, ',', '.');
+    }
+
+    private function moneyConvertToFloat($number)
+    {
+        return (float)str_replace(',', '.', str_replace('.', '', str_replace('R$ ', '', $number)));
+    }
+
+    private function totalApartments()
+    {
+        $complex = $this->complex;
+        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
+        $apartments = Apartment::whereIn('block_id', $blocks)->get();
+        $units = 0;
+        foreach ($apartments as $apartment) {
+            $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
+            $readings = Reading::whereIn('meter_id', $meters)->where('month_ref', $this->month_ref)->get();
+            if (count($readings)) {
+                $units++;
+            }
+        }
+
+        return $units;
     }
 }

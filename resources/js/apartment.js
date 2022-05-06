@@ -1,3 +1,4 @@
 $(document).ready(function () {
-    $("#fraction").inputmask("99,999%");
+    $.mask.definitions['~'] = '([0-9])?';
+    $("#fraction").inputmask("~99,999%");
 });

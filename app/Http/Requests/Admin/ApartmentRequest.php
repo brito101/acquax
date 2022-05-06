@@ -20,7 +20,7 @@ class ApartmentRequest extends FormRequest
     {
 
         $this->merge([
-            'fraction' => str_replace(',', '.', str_replace(['.', '%'], '', $this->fraction))
+            'fraction' => str_replace(',', '.', str_replace(['.', '%', '_'], '', $this->fraction))
         ]);
     }
 
@@ -34,7 +34,7 @@ class ApartmentRequest extends FormRequest
         return [
             'name' => 'required|min:1|max:100',
             'status' => 'nullable|min:3|max:20',
-            'fraction' => 'nullable|numeric|between:0,100',
+            'fraction' => 'nullable|numeric|between:0,999',
         ];
     }
 }
