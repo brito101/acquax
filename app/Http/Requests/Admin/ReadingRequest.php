@@ -54,6 +54,7 @@ class ReadingRequest extends FormRequest
             'meter_id' => 'required|min:1',
             'reading' => 'required|numeric|between:0,999999999.9999999999999',
             'month_ref' => 'required|min:1|max:20|in:Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro',
+            'year_ref' => 'required|min:4|max:4',
             'reading_date' => 'required|date_format:Y-m-d',
             'reading_date_next' => 'required|date_format:Y-m-d',
             'cover' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg,webp|max:1024|dimensions:max_width=1800,max_height=1800',

@@ -126,8 +126,8 @@
                                                         <p class="text-muted text-sm py-0 my-0"><b>Leitura:</b>
                                                             {{ $reading->getRoundedReading() }} m<sup>3</sup>
                                                         </p>
-                                                        <p class="text-muted text-sm py-0 my-0"><b>Mês Ref:</b>
-                                                            {{ $reading->month_ref }}
+                                                        <p class="text-muted text-sm py-0 my-0"><b>Data Ref:</b>
+                                                            {{ $reading->month_ref }}/{{ $reading->year_ref }}
                                                         </p>
                                                         <p class="text-muted text-sm py-0 my-0"><b>Data da leitura:</b>
                                                             {{ $reading->reading_date }}
@@ -157,7 +157,7 @@
                                                     </div>
                                                     <div class="col-12 pt-2 text-center">
                                                         <h2 class="lead">
-                                                            <b>{{ 'Condomínio ' .$reading->meter->apartment->getComplexNameAttribute() .' - Bl. ' .$reading->meter->apartment->getBlockNameAttribute() .' - Ap. ' .$reading->meter->apartment['name'] }}</b>
+                                                            <b>{{ 'Condomínio ' . $reading->meter->apartment->getComplexNameAttribute() . ' - Bl. ' . $reading->meter->apartment->getBlockNameAttribute() . ' - Ap. ' . $reading->meter->apartment['name'] }}</b>
                                                         </h2>
                                                     </div>
                                                 </div>

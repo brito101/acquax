@@ -22,6 +22,7 @@ class ReadingsImport implements ToModel, WithHeadingRow
             'meter_id' => Meter::where('register', $row['chassi'])->first()->id,
             'reading' => str_replace(',', '.', str_replace('.', '', $row['leitura'])),
             'month_ref' => $row['mes_ref'],
+            'year_ref' => $row['ano_ref'],
             'reading_date' => Carbon::createFromFormat('d/m/Y', $row['data_leitura'])->format('Y-m-d'),
             'reading_date_next' => Carbon::createFromFormat('d/m/Y', $row['prox_leitura'])->format('Y-m-d'),
             'url_cover' => $row['foto'],

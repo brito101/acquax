@@ -248,7 +248,8 @@ return [
         'dealership_cost_tax_2' => 'valor de custo da 2ª faixa',
         'dealership_id' => 'concessionária',
         'apportionment' => 'rateio',
-        'fraction' => 'fração ideal'
+        'fraction' => 'fração ideal',
+        'year_ref' => 'ano de referência'
     ],
 
 ];

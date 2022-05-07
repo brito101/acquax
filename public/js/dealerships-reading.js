@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $(".acquax-date").inputmask("dd/mm/yyyy");
+    $("#year_ref").inputmask("9999");
     $("#total_days").inputmask("integer", {
         min: 1,
         max: 31,

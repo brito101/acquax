@@ -47,7 +47,7 @@
                             <div class="card-body">
 
                                 <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2">
                                         <label for="complex_id">Condomínio</label>
                                         <x-adminlte-select2 name="complex_id">
                                             @foreach ($complexes as $complex)
@@ -111,6 +111,12 @@
                                                 Dezembro
                                             </option>
                                         </x-adminlte-select2>
+                                    </div>
+
+                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                        <label for="year_ref">Ano de Referência</label>
+                                        <input type="text" class="form-control" id="year_ref" placeholder="YYYY"
+                                            name="year_ref" value="{{ old('year_ref') ?? $reading->year_ref }}" required>
                                     </div>
 
                                     <div class="col-12 col-md-3 form-group px-0 pl-md-2">

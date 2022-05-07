@@ -57,7 +57,7 @@
                                         </x-adminlte-select2>
                                     </div>
 
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="month_ref">Mês de Referência</label>
                                         <x-adminlte-select2 name="month_ref">
                                             <option
@@ -110,6 +110,12 @@
                                             </option>
                                         </x-adminlte-select2>
                                     </div>
+
+                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
+                                        <label for="year_ref">Ano de Referência</label>
+                                        <input type="text" class="form-control" id="year_ref" placeholder="YYYY"
+                                            name="year_ref" value="{{ old('year_ref') ?? $reading->year_ref }}" required>
+                                    </div>
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-between">
@@ -154,7 +160,7 @@
                                         <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                             <label for="comparative_percentage">Porcentagem Comparativa</label>
                                             <input type="text"
-                                                class="form-control {{ str_contains($reading->comparative_percentage, '-')? 'bg-success': ($reading->comparative_percentage == 'Inexistente'? '': 'bg-warning') }}"
+                                                class="form-control {{ str_contains($reading->comparative_percentage, '-') ? 'bg-success' : ($reading->comparative_percentage == 'Inexistente' ? '' : 'bg-warning') }}"
                                                 id="comparative_percentage" name="comparative_percentage"
                                                 value="{{ $reading->comparative_percentage }}" disabled>
                                         </div>

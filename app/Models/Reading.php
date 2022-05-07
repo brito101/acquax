@@ -16,6 +16,7 @@ class Reading extends Model
         'meter_id',
         'reading',
         'month_ref',
+        'year_ref',
         'reading_date',
         'reading_date_next',
         'cover',

@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $(".acquax-date").inputmask("dd/mm/yyyy");
+    $("#year_ref").inputmask("9999");
 
     const player = document.getElementById("player");
     const canvas = document.getElementById("canvas");

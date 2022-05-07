@@ -244,7 +244,6 @@ class ReadingController extends Controller
 
     public function search(Request $request)
     {
-
         if (!Auth::user()->hasPermissionTo('Listar Leituras')) {
             abort(403, 'Acesso não autorizado');
         }
@@ -256,7 +255,7 @@ class ReadingController extends Controller
             return $q->where('month_ref', request('month_ref'));
         });
         $query->when(request('year') != 'null', function ($q) {
-            return $q->whereYear('reading_date', request('year'));
+            return $q->where('year_ref', request('year'));
         });
         $query->when(request('id') != null, function ($q) {
             return $q->where('id', request('id'));

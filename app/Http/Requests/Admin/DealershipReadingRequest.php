@@ -52,6 +52,7 @@ class DealershipReadingRequest extends FormRequest
             'dealership_id' => 'required|min:1',
             'complex_id' => 'required|min:1',
             'month_ref' => 'required|min:1|max:20|in:Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro',
+            'year_ref' => 'required|min:4|max:4'
         ];
     }
 

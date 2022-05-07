@@ -29,6 +29,7 @@ class DealershipReading extends Model
         'dealership_id',
         'complex_id',
         'month_ref',
+        'year_ref',
         'editor'
     ];
 
@@ -202,7 +203,9 @@ class DealershipReading extends Model
         $units = 0;
         foreach ($apartments as $apartment) {
             $meters = Meter::where('apartment_id', $apartment)->pluck('id');
-            $readings = Reading::whereIn('meter_id', $meters)->where('month_ref', $this->month_ref)->get();
+            $readings = Reading::whereIn('meter_id', $meters)
+                ->where('year_ref', $this->year_ref)
+                ->where('month_ref', $this->month_ref)->get();
             $total_consumed = 0;
             foreach ($readings as $reading) {
                 $total_consumed += $this->convertToFloat($reading->volume_consumed);
@@ -225,7 +228,10 @@ class DealershipReading extends Model
         $units = 0;
         foreach ($apartments as $apartment) {
             $meters = Meter::where('apartment_id', $apartment)->pluck('id');
-            $readings = Reading::whereIn('meter_id', $meters)->where('month_ref', $this->month_ref)->get();
+            $readings = Reading::whereIn('meter_id', $meters)
+                ->where('year_ref', $this->year_ref)
+                ->where('month_ref', $this->month_ref)
+                ->get();
             $total_consumed = 0;
             foreach ($readings as $reading) {
                 $total_consumed += $this->convertToFloat($reading->volume_consumed);
@@ -249,7 +255,10 @@ class DealershipReading extends Model
         $fractions = [];
         foreach ($apartments as $apartment) {
             $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
-            $readings = Reading::whereIn('meter_id', $meters)->where('month_ref', $this->month_ref)->get();
+            $readings = Reading::whereIn('meter_id', $meters)
+                ->where('year_ref', $this->year_ref)
+                ->where('month_ref', $this->month_ref)
+                ->get();
             if (count($readings)) {
                 $units++;
                 $fractions[] = $apartment->fraction;
@@ -286,7 +295,10 @@ class DealershipReading extends Model
 
         foreach ($apartments as $apartment) {
             $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
-            $readings = Reading::whereIn('meter_id', $meters)->where('month_ref', $this->month_ref)->get();
+            $readings = Reading::whereIn('meter_id', $meters)
+                ->where('year_ref', $this->year_ref)
+                ->where('month_ref', $this->month_ref)
+                ->get();
             if (count($readings)) {
                 $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
                 $cost_1 = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
@@ -354,7 +366,10 @@ class DealershipReading extends Model
         $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
         $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
         $meters = Meter::whereIn('apartment_id', $apartments)->pluck('id');
-        $readings = Reading::whereIn('meter_id', $meters)->where('month_ref', $this->month_ref)->get();
+        $readings = Reading::whereIn('meter_id', $meters)
+            ->where('year_ref', $this->year_ref)
+            ->where('month_ref', $this->month_ref)
+            ->get();
         return $readings;
     }
 
@@ -381,7 +396,10 @@ class DealershipReading extends Model
         $units = 0;
         foreach ($apartments as $apartment) {
             $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
-            $readings = Reading::whereIn('meter_id', $meters)->where('month_ref', $this->month_ref)->get();
+            $readings = Reading::whereIn('meter_id', $meters)
+                ->where('year_ref', $this->year_ref)
+                ->where('month_ref', $this->month_ref)
+                ->get();
             if (count($readings)) {
                 $units++;
             }
