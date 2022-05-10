@@ -18,6 +18,10 @@ class AdminController extends Controller
 {
     public function index()
     {
+        if (Auth::user()->hasAnyRole('Morador', 'Síndico', 'Morador e Síndico')) {
+            return redirect()->route('app.home');
+        }
+
         $administrators = User::role('Administrador')->get()->count();
         $complexes = Complex::all()->count();
         $blocks = Block::all()->count();

@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\Settings\GenreController;
 use App\Http\Controllers\Admin\Settings\TypeMetersController;
 use App\Http\Controllers\Admin\SyndicController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Aplication\AppController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('app', [AppController::class, 'index'])->name('app.home');
+
     Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
     Route::prefix('admin')->name('admin.')->group(function () {
         /** Chart home */

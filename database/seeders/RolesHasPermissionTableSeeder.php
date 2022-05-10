@@ -543,6 +543,19 @@ class RolesHasPermissionTableSeeder extends Seeder
                 'permission_id' => 72,
                 'role_id' => 2
             ],
+            /** Application User Edit */
+            [
+                'permission_id' => 73,
+                'role_id' => 3
+            ],
+            [
+                'permission_id' => 73,
+                'role_id' => 4
+            ],
+            [
+                'permission_id' => 73,
+                'role_id' => 5
+            ],
         ]);
     }
 }

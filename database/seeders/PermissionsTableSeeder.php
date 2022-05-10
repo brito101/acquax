@@ -391,6 +391,12 @@ class PermissionsTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],
+            /** Application 73 */
+            [
+                'name' => 'Editar Usuário',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
         ]);
     }
 }

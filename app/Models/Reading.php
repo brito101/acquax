@@ -64,7 +64,10 @@ class Reading extends Model
     /** Appends */
     public function getVolumeConsumedAttribute()
     {
-        $previous = Reading::where('id', '<', $this->id)->where('meter_id', $this->meter_id)->first();
+        $datePrevious = $this->getPreviousDateRef($this->month_ref, $this->year_ref);
+        $previous = Reading::where('month_ref', $datePrevious[0])
+            ->where('year_ref', $datePrevious[1])
+            ->where('meter_id', $this->meter_id)->first();
         if ($previous) {
             $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($previous->reading);
         } else {
@@ -76,8 +79,14 @@ class Reading extends Model
 
     public function getPreviousVolumeConsumedAttribute()
     {
-        $previous = Reading::where('id', '<', $this->id)->where('meter_id', $this->meter_id)->first();
-        $pre_previous = Reading::where('id', '<', $this->id)->where('meter_id', $this->meter_id)->offset(1)->first();
+        $datePrevious = $this->getPreviousDateRef($this->month_ref, $this->year_ref);
+        $previous = Reading::where('month_ref', $datePrevious[0])
+            ->where('year_ref', $datePrevious[1])
+            ->where('meter_id', $this->meter_id)->first();
+        $datePrePrevious = $this->getPrePreviousDateRef($this->month_ref, $this->year_ref);
+        $pre_previous = Reading::where('month_ref', $datePrePrevious[0])
+            ->where('year_ref', $datePrePrevious[1])
+            ->where('meter_id', $this->meter_id)->first();
 
         if ($previous && $pre_previous) {
             $volume = $this->convertToFloat($previous->reading) - $this->convertToFloat($pre_previous->reading);
@@ -104,5 +113,93 @@ class Reading extends Model
     private function convertToFloat($number)
     {
         return str_replace(',', '.', str_replace('.', '', $number));
+    }
+
+    private function getPreviousDateRef($month, $year)
+    {
+        switch ($month) {
+            case 'Janeiro':
+                return array('Dezembro', (int)$year - 1);
+                break;
+            case 'Fevereiro':
+                return array('Janeiro', $year);
+                break;
+            case 'Março':
+                return array('Fevereiro', $year);
+                break;
+            case 'Abril':
+                return array('Março', $year);
+                break;
+            case 'Maio':
+                return array('Abril', $year);
+                break;
+            case 'Junho':
+                return array('Maio', $year);
+                break;
+            case 'Julho':
+                return array('Junho', $year);
+                break;
+            case 'Agosto':
+                return array('Julho', $year);
+                break;
+            case 'Setembro':
+                return array('Agosto', $year);
+                break;
+            case 'Outubro':
+                return array('Setembro', $year);
+                break;
+            case 'Novembro':
+                return array('Outubro', $year);
+                break;
+            case 'Dezembro':
+                return array('Novembro', $year);
+                break;
+            default:
+                return array(null, null);
+        }
+    }
+
+    private function getPrePreviousDateRef($month, $year)
+    {
+        switch ($month) {
+            case 'Janeiro':
+                return array('Novembro', (int)$year - 1);
+                break;
+            case 'Fevereiro':
+                return array('Dezembro', (int)$year - 1);
+                break;
+            case 'Março':
+                return array('Janeiro', $year);
+                break;
+            case 'Abril':
+                return array('Fevereiro', $year);
+                break;
+            case 'Maio':
+                return array('Março', $year);
+                break;
+            case 'Junho':
+                return array('Abril', $year);
+                break;
+            case 'Julho':
+                return array('Maio', $year);
+                break;
+            case 'Agosto':
+                return array('Junho', $year);
+                break;
+            case 'Setembro':
+                return array('Julho', $year);
+                break;
+            case 'Outubro':
+                return array('Agosto', $year);
+                break;
+            case 'Novembro':
+                return array('Setembro', $year);
+                break;
+            case 'Dezembro':
+                return array('Outubro', $year);
+                break;
+            default:
+                return array(null, null);
+        }
     }
 }

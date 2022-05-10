@@ -29,6 +29,11 @@ class Apartment extends Model
         return $this->belongsTo(Block::class);
     }
 
+    public function meter()
+    {
+        return $this->hasMany(Meter::class);
+    }
+
     /** Accessor */
     public function getFractionAttribute($value)
     {
@@ -51,5 +56,31 @@ class Apartment extends Model
             $complex = null;
         }
         return $complex['alias_name'] ?? '';
+    }
+
+    public function getYarlyConsumtion()
+    {
+        $meters = Meter::where('apartment_id', $this->id)->pluck('id');
+        $readings = Reading::whereIn('meter_id', $meters)->where('year_ref', date('Y'))->get();
+        $months = [
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Agosto',
+            'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ];
+        $values = [];
+        foreach ($months as $month) {
+            $consumed = 0;
+            foreach ($readings as $reading) {
+                if ($reading->month_ref == $month) {
+                    $consumed += $this->convertToFloat($reading->volume_consumed);
+                }
+            }
+            $values[] = $consumed;
+        }
+        return ($values);
+    }
+
+    private function convertToFloat($number)
+    {
+        return (float)str_replace(',', '.', str_replace('.', '', $number));
     }
 }

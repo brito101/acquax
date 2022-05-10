@@ -35,9 +35,21 @@ class Meter extends Model
         return $this->belongsTo(TypeMeter::class);
     }
 
+    public function reading()
+    {
+        return $this->hasMany(Reading::class);
+    }
+
     /**  Accessor */
     public function getInitialReadingAttribute($value)
     {
         return number_format($value, 13, ",", ".");
+    }
+
+    /** Aux */
+    public function lastReading()
+    {
+        $reading = Reading::where('meter_id', $this->id)->orderBy('created_at', 'desc')->first();
+        return $reading;
     }
 }
