@@ -119,7 +119,6 @@
                                             <div class="card-header text-muted border-bottom-0">
                                                 Leitura #{{ $reading->id }}
                                             </div>
-                                            {{-- {{ $reading->getVolumeConsumedAttribute }} --}}
                                             <div class="card-body pt-0">
                                                 <div class="row">
                                                     <div class="col-7">

@@ -34,6 +34,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('app', [AppController::class, 'index'])->name('app.home');
+    Route::prefix('app')->name('app.')->group(function () {
+        /** Apartments Readings */
+        Route::get('residences-readings', [AppController::class, 'residencesReadings'])->name('resident.readings');
+        Route::get('residences-readings/{reading}/apartment/{apartment}', [AppController::class, 'residencesReadingsItem'])->name('resident.readings.apartment');
+        Route::get('residences-readings-pdf/{reading}/apartment/{apartment}', [AppController::class, 'residencesReadingsItemPdf'])->name('resident.readings.apartment.pdf');
+        /** User Edit */
+        Route::get('user', [AppController::class, 'userEdit'])->name('user.edit');
+        Route::put('user', [AppController::class, 'userUpdate'])->name('user.update');
+    });
 
     Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
     Route::prefix('admin')->name('admin.')->group(function () {

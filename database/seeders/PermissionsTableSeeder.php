@@ -397,6 +397,18 @@ class PermissionsTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],
+            /** Appartments Reading  74 */
+            [
+                'name' => 'Acessar Leituras Apartamento',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            /** Edit Perfil Application 75 */
+            [
+                'name' => 'Editar Perfil na Aplicação',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ]
         ]);
     }
 }

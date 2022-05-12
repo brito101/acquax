@@ -556,6 +556,28 @@ class RolesHasPermissionTableSeeder extends Seeder
                 'permission_id' => 73,
                 'role_id' => 5
             ],
+            /** Apartment Readings */
+            [
+                'permission_id' => 74,
+                'role_id' => 4
+            ],
+            [
+                'permission_id' => 74,
+                'role_id' => 5
+            ],
+            /** Edit Perfil Application */
+            [
+                'permission_id' => 75,
+                'role_id' => 3
+            ],
+            [
+                'permission_id' => 75,
+                'role_id' => 4
+            ],
+            [
+                'permission_id' => 75,
+                'role_id' => 5
+            ],
         ]);
     }
 }

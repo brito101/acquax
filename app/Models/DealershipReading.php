@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Settings\Dealership;
 use Facade\FlareClient\Api;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,6 +55,11 @@ class DealershipReading extends Model
     public function complex()
     {
         return $this->belongsTo(Complex::class);
+    }
+
+    public function dealership()
+    {
+        return $this->belongsTo(Dealership::class);
     }
 
     /**  Accessor */
@@ -371,6 +377,52 @@ class DealershipReading extends Model
             ->where('month_ref', $this->month_ref)
             ->get();
         return $readings;
+    }
+
+    public function getApartmentReport(Apartment $apartment)
+    {
+        $complex = $this->complex;
+        $units = $this->totalApartments();
+        $reports = [];
+        $diff_cost = $this->moneyConvertToFloat($this->diff_cost);
+        $simple_fraction = $units > 0 ? $diff_cost / $units : 0;
+
+        $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
+        $readings = Reading::whereIn('meter_id', $meters)
+            ->where('year_ref', $this->year_ref)
+            ->where('month_ref', $this->month_ref)
+            ->get();
+        if (count($readings)) {
+            $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
+            $cost_1 = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
+            $tax_2 = $this->convertToFloat($this->dealership_consumption_tax_2);
+            $cost_2 = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
+
+            $total_consumed = 0;
+            $total_cost = 0;
+            foreach ($readings as $reading) {
+                $total_consumed += $this->convertToFloat($reading->volume_consumed);
+            }
+
+            if ($total_consumed <= $tax_1) {
+                $total_cost = $tax_1 * $cost_1 * 2;
+            } else {
+                $total_cost = (($tax_1 * $cost_1) + (($total_consumed - $tax_1) * $cost_2)) * 2;
+            }
+
+            $partial = $simple_fraction * $this->convertToFloat($apartment->fraction) / 100;
+            $total_unit = $total_cost +  $partial;
+            $reports = array(
+                'total' => $this->convertToMoney($total_cost),
+                'partial' => $this->convertToMoney($partial),
+                'total_unit' => $this->convertToMoney($total_unit),
+                'apartment' => $apartment->id,
+                'totalConsumed' => $total_consumed,
+                'readings' => $readings
+            );
+        }
+
+        return $reports;
     }
 
     private function convertToFloat($number)

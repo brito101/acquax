@@ -28,7 +28,8 @@ class Reading extends Model
     protected $appends = [
         'volume_consumed',
         'previous_volume_consumed',
-        'comparative_percentage'
+        'comparative_percentage',
+        'clear_comparative_percentage'
     ];
 
     /** Relationships */
@@ -107,6 +108,16 @@ class Reading extends Model
             return number_format(((($actual * 100) / $previous) - 100), 2, ",", ".") . "%";
         }
         return "Inexistente";
+    }
+
+    public function getClearComparativePercentageAttribute()
+    {
+        $actual = $this->convertToFloat($this->volume_consumed);
+        $previous = $this->convertToFloat($this->previous_volume_consumed);
+        if (is_numeric($actual) && is_numeric($previous) && $previous != 0) {
+            return (($actual * 100) / $previous) - 100;
+        }
+        return 0;
     }
 
     /** Aux function */

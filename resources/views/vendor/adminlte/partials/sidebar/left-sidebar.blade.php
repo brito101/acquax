@@ -12,13 +12,18 @@
 
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ Auth::user()->photo? url('storage/users/' . Auth::user()->photo): asset('vendor/adminlte/dist/img/avatar.png') }}"
+                <img src="{{ Auth::user()->photo ? url('storage/users/' . Auth::user()->photo) : asset('vendor/adminlte/dist/img/avatar.png') }}"
                     class="img-circle elevation-2" style="width: 33.6px; height: 33.6px;"
                     alt="{{ Auth::user()->name }}">
             </div>
             <div class="info">
-                <a href="{{ Auth::user()->hasPermissionTo('Editar Usuários')? route('admin.users.edit', ['user' => Auth::user()->id]): (Auth::user()->hasPermissionTo('Editar Usuário')? route('admin.user.edit'): '#') }}"
-                    class="d-block" title="Editar usuário">{{ Str::words(Auth::user()->name, 1, '') }}</a>
+                @if (!Auth::user()->hasAnyRole('Morador', 'Síndico', 'Morador e Síndico'))
+                    <a href="{{ Auth::user()->hasPermissionTo('Editar Usuários') ? route('admin.users.edit', ['user' => Auth::user()->id]) : (Auth::user()->hasPermissionTo('Editar Usuário') ? route('admin.user.edit') : '#') }}"
+                        class="d-block" title="Editar usuário">{{ Str::words(Auth::user()->name, 1, '') }}</a>
+                @else
+                    <a href="{{ Auth::user()->hasPermissionTo('Editar Usuário') ? route('app.user.edit') : '#' }}"
+                        class="d-block" title="Editar usuário">{{ Str::words(Auth::user()->name, 1, '') }}</a>
+                @endif
             </div>
         </div>
 

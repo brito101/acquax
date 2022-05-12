@@ -33,7 +33,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Dados Cadastrais do Consumo</h3>
+                            <h3 class="card-title">Dados Cadastrais de Consumo</h3>
                         </div>
 
 
@@ -147,8 +147,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
-                                        <label for="dealership_cost_tax_1">Custo da 1ª Faixa de Consumo em
-                                            m<sup>3</sup></label>
+                                        <label for="dealership_cost_tax_1">Custo da 1ª Faixa de Consumo</label>
                                         <input type="text" class="form-control money_format_3" id="dealership_cost_tax_1"
                                             placeholder="Valor em reais da 1ª Faixa de Consumo pela concessionária"
                                             name="dealership_cost_tax_1" value="{{ old('dealership_cost_tax_1') }}"
@@ -167,8 +166,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
-                                        <label for="dealership_cost_tax_2">Custo da 2ª Faixa de Consumo em
-                                            m<sup>3</sup></label>
+                                        <label for="dealership_cost_tax_2">Custo da 2ª Faixa de Consumo</label>
                                         <input type="text" class="form-control money_format_3" id="dealership_cost_tax_2"
                                             placeholder="Valor em reais da 2ª Faixa de Consumo pela concessionária"
                                             name="dealership_cost_tax_2" value="{{ old('dealership_cost_tax_2') }}"

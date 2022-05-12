@@ -236,6 +236,19 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'Pesquisar',
         ],
+        /** Apartment Readings */
+        [
+            'text' => 'Listagem de Leituras',
+            'url'  => 'app/residences-readings',
+            'icon' => 'fas fa-fw fa-chart-line',
+            'can'  => 'Acessar Leituras Apartamento',
+        ],
+        [
+            'text' => 'Meu Perfil',
+            'url'  => 'app/user',
+            'icon' => 'fas fa-fw fa-user',
+            'can'  => 'Editar Perfil na Aplicação',
+        ],
         //Custom menus
         /** Users */
         [

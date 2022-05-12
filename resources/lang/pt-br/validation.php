@@ -249,7 +249,8 @@ return [
         'dealership_id' => 'concessionária',
         'apportionment' => 'rateio',
         'fraction' => 'fração ideal',
-        'year_ref' => 'ano de referência'
+        'year_ref' => 'ano de referência',
+        'photo' => 'foto'
     ],
 
 ];
