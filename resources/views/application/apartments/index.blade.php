@@ -2,7 +2,7 @@
 @section('plugins.Datatables', true)
 @section('plugins.DatatablesPlugins', true)
 
-@section('title', '- Leituras')
+@section('title', '- Relatórios de Leituras')
 
 @section('content')
 
@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-chart-line"></i> Leituras</h1>
+                    <h1><i class="fas fa-fw fa-chart-line"></i> Relatórios de Leituras</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -55,7 +55,6 @@
                                 </div>
                             </div>
                             <div class="card-body">
-
                                 <x-adminlte-datatable id="table{{ $loop->index }}" :heads="$heads" :heads="$heads"
                                     :config="$config" striped hoverable beautify with-buttons />
                             </div>

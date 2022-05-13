@@ -38,7 +38,7 @@ class ResidentController extends Controller
         }
 
         $apartments = Apartment::all();
-        $users = User::role(['Morador', 'Morador e Síndico'])->get();
+        $users = User::role(['Usuário'])->get();
 
         return view('admin.residents.create', compact('users', 'apartments'));
     }
@@ -106,7 +106,7 @@ class ResidentController extends Controller
         }
 
         $apartments = Apartment::all();
-        $users = User::role(['Morador', 'Morador e Síndico'])->get();
+        $users = User::role(['Usuário'])->get();
 
         return view('admin.residents.edit', compact('resident', 'apartments', 'users'));
     }

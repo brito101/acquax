@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('app.home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('app.resident.readings') }}">Leituras</a>
+                        <li class="breadcrumb-item"><a href="{{ route('app.residences.readings') }}">Leituras</a>
                         </li>
                         <li class="breadcrumb-item active">Dados de Consumo</li>
                     </ol>
@@ -246,7 +246,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <a href="{{ route('app.resident.readings.apartment.pdf', ['reading' => $reading->id, 'apartment' => $apartment->id]) }}"
+                                <a href="{{ route('app.residences.readings.print', ['reading' => $reading->id, 'apartment' => $apartment->id]) }}"
                                     target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir</a>
                             </div>
                         </form>

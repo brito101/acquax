@@ -408,7 +408,13 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Editar Perfil na Aplicação',
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
-            ]
+            ],
+            /** Access Meter Reading by Apartment 76 */
+            [
+                'name' => 'Acessar Medições Apartamento',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
         ]);
     }
 }

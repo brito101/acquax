@@ -543,40 +543,20 @@ class RolesHasPermissionTableSeeder extends Seeder
                 'permission_id' => 72,
                 'role_id' => 2
             ],
-            /** Application User Edit */
-            [
-                'permission_id' => 73,
-                'role_id' => 3
-            ],
-            [
-                'permission_id' => 73,
-                'role_id' => 4
-            ],
-            [
-                'permission_id' => 73,
-                'role_id' => 5
-            ],
             /** Apartment Readings */
             [
                 'permission_id' => 74,
-                'role_id' => 4
-            ],
-            [
-                'permission_id' => 74,
-                'role_id' => 5
+                'role_id' => 3
             ],
             /** Edit Perfil Application */
             [
                 'permission_id' => 75,
                 'role_id' => 3
             ],
+            /** Access Meter Reading by Apartment  */
             [
-                'permission_id' => 75,
-                'role_id' => 4
-            ],
-            [
-                'permission_id' => 75,
-                'role_id' => 5
+                'permission_id' => 76,
+                'role_id' => 3
             ],
         ]);
     }

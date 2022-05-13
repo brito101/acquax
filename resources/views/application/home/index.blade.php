@@ -21,6 +21,86 @@
     </div>
     <section class="content">
         <div class="container-fluid">
+            @if ($complexes)
+                @foreach ($complexes as $complex)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header bg-info">
+                                    <h5 class="card-title">Condomínio {{ $complex->alias_name }}</h5>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus text-white"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                            <i class="fas fa-times text-white"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-8 d-flex flex-wrap justify-content-center align-content-center">
+                                            <p class="text-center">
+                                                <strong>Gráfico de Consumo {{ date('Y') }}</strong>
+                                            </p>
+                                            <div class="chart">
+                                                <div class="chartjs-size-monitor">
+                                                    <div class="chartjs-size-monitor-expand">
+                                                        <div class=""></div>
+                                                    </div>
+                                                    <div class="chartjs-size-monitor-shrink">
+                                                        <div class=""></div>
+                                                    </div>
+                                                </div>
+
+                                                <canvas style="height: 250px; display: block; width: 684px;"
+                                                    id="chart-complex-reading-{{ $loop->index }}"
+                                                    class="chart-complex-reading" width="684" height="250px"></canvas>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <p class="text-center">
+                                                <strong>Dados da Última Leitura</strong>
+                                            </p>
+                                            @php  $data = $complex->lastReading() @endphp
+                                            @if ($data)
+                                                <div class="card">
+                                                    <div class="card-header bg-light">
+                                                        <h5 class="card-title">Concessionária:
+                                                            {{ $data->dealership['name'] }}
+                                                        </h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text my-0">{{ $data->month_ref }} /
+                                                            {{ $data->year_ref }} </p>
+                                                        <p class="card-text my-0">Consumo em m<sup>3</sup>:
+                                                            {{ Str::limit($data->monthly_consumption, 11, '') }}</p>
+                                                        <p class="card-text my-0">Consumo anterior em m<sup>3</sup>:
+                                                            {{ Str::limit($data->previous_monthly_consumption, 11, '') }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <a href="#" class="card-link">Visualizar</a>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <p class="text-center text-muted">Não há dados disponíveis</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
             @if ($residences)
                 @foreach ($residences as $residence)
                     <div class="row">
@@ -95,7 +175,8 @@
                                                             </p>
                                                         </div>
                                                         <div class="card-footer">
-                                                            <a href="#" class="card-link">Visualizar</a>
+                                                            <a href="{{ route('app.meter.readings.show', ['reading' => $data->id]) }}"
+                                                                class="card-link">Visualizar</a>
                                                         </div>
                                                     </div>
                                                 @else

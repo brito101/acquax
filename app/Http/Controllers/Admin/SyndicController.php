@@ -61,7 +61,7 @@ class SyndicController extends Controller
             $complexes = Complex::all();
         }
 
-        $users = User::role(['Síndico', 'Morador e Síndico'])->get();
+        $users = User::role(['Usuário'])->get();
 
         return view('admin.syndics.create', compact('users', 'complexes'));
     }
@@ -129,7 +129,7 @@ class SyndicController extends Controller
         }
 
         $complexes = Complex::all();
-        $users = User::role(['Síndico', 'Morador e Síndico'])->get();
+        $users = User::role(['Usuário'])->get();
 
         return view('admin.syndics.edit', compact('syndic', 'complexes', 'users'));
     }

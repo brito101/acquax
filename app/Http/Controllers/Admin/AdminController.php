@@ -8,6 +8,8 @@ use App\Models\Block;
 use App\Models\Complex;
 use App\Models\Meter;
 use App\Models\Reading;
+use App\Models\Resident;
+use App\Models\Syndic;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -18,7 +20,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->hasAnyRole('Morador', 'Síndico', 'Morador e Síndico')) {
+        if (Auth::user()->hasRole('Usuário')) {
             return redirect()->route('app.home');
         }
 
@@ -27,8 +29,8 @@ class AdminController extends Controller
         $blocks = Block::all()->count();
         $apartments = Apartment::all()->count();
         $meters = Meter::all()->count();
-        $residents = User::role(['Morador', 'Morador e Síndico'])->count();
-        $syndics = User::role(['Síndico', 'Morador e Síndico'])->count();
+        $residents = Resident::all()->count();
+        $syndics = Syndic::all()->count();
         $readings = Reading::all()->count();
 
         /** Statistcs */

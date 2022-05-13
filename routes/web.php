@@ -16,7 +16,10 @@ use App\Http\Controllers\Admin\Settings\GenreController;
 use App\Http\Controllers\Admin\Settings\TypeMetersController;
 use App\Http\Controllers\Admin\SyndicController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Aplication\ApartmentController as AplicationApartmentController;
 use App\Http\Controllers\Aplication\AppController;
+use App\Http\Controllers\Aplication\MeterReadingController;
+use App\Http\Controllers\Aplication\UserController as AplicationUserController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,13 +38,19 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth']], function () {
     Route::get('app', [AppController::class, 'index'])->name('app.home');
     Route::prefix('app')->name('app.')->group(function () {
+
         /** Apartments Readings */
-        Route::get('residences-readings', [AppController::class, 'residencesReadings'])->name('resident.readings');
-        Route::get('residences-readings/{reading}/apartment/{apartment}', [AppController::class, 'residencesReadingsItem'])->name('resident.readings.apartment');
-        Route::get('residences-readings-pdf/{reading}/apartment/{apartment}', [AppController::class, 'residencesReadingsItemPdf'])->name('resident.readings.apartment.pdf');
+        Route::get('residences-readings', [AplicationApartmentController::class, 'index'])->name('residences.readings');
+        Route::get('residences-readings/{reading}/apartment/{apartment}', [AplicationApartmentController::class, 'show'])->name('residences.readings.show');
+        Route::get('residences-readings-pdf/{reading}/apartment/{apartment}', [AplicationApartmentController::class, 'print'])->name('residences.readings.print');
+
         /** User Edit */
-        Route::get('user', [AppController::class, 'userEdit'])->name('user.edit');
-        Route::put('user', [AppController::class, 'userUpdate'])->name('user.update');
+        Route::get('user', [AplicationUserController::class, 'edit'])->name('user.edit');
+        Route::put('user', [AplicationUserController::class, 'update'])->name('user.update');
+
+        /** Meter Readings */
+        Route::get('meter-readings', [MeterReadingController::class, 'index'])->name('meter.readings.index');
+        Route::get('meter-readings/{reading}', [MeterReadingController::class, 'show'])->name('meter.readings.show');
     });
 
     Route::get('admin', [AdminController::class, 'index'])->name('admin.home');

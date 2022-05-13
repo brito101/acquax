@@ -12,7 +12,10 @@
 
 @section('content')
     <div class="card ml-n4 border" style="margin-bottom: -75px;">
-        <img src="{{ asset('img/logo.png') }}">
+        <div class="d-flex flex-wrap justify-content-center">
+            <img src="{{ asset('img/logo.png') }}" style="width: 500px;">
+            <h2 class="w-100 text-center">Relatório de Consumo Individual de Água</h2>
+        </div>
         <div class="card-header">
             <h3 class="card-title">Dados de Consumo</h3>
         </div>

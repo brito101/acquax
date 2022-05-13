@@ -46,4 +46,31 @@ class Complex extends Model
     {
         return $this->hasManyThrough(Apartment::class, Block::class);
     }
+
+    /** Aux */
+    public function lastReading()
+    {
+        $months = [
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Agosto',
+            'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ];
+        $reading = null;
+        foreach ($months as $month) {
+            $readingMonth = DealershipReading::where('complex_id', $this->id)->where('month_ref', $month)->where('year_ref', date('Y'))->first();
+            if ($readingMonth) {
+                $reading = $readingMonth;
+            }
+        }
+
+        if ($reading == null) {
+            foreach ($months as $month) {
+                $readingMonth = DealershipReading::where('complex_id', $this->id)->where('month_ref', $month)->where('year_ref', (date('Y') - 1))->first();
+                if ($readingMonth) {
+                    $reading = $readingMonth;
+                }
+            }
+        }
+
+        return $reading;
+    }
 }

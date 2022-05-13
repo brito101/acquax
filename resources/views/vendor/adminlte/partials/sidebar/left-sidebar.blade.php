@@ -17,11 +17,11 @@
                     alt="{{ Auth::user()->name }}">
             </div>
             <div class="info">
-                @if (!Auth::user()->hasAnyRole('Morador', 'Síndico', 'Morador e Síndico'))
+                @if (!Auth::user()->hasRole('Usuário'))
                     <a href="{{ Auth::user()->hasPermissionTo('Editar Usuários') ? route('admin.users.edit', ['user' => Auth::user()->id]) : (Auth::user()->hasPermissionTo('Editar Usuário') ? route('admin.user.edit') : '#') }}"
                         class="d-block" title="Editar usuário">{{ Str::words(Auth::user()->name, 1, '') }}</a>
                 @else
-                    <a href="{{ Auth::user()->hasPermissionTo('Editar Usuário') ? route('app.user.edit') : '#' }}"
+                    <a href="{{ Auth::user()->hasPermissionTo('Editar Perfil na Aplicação') ? route('app.user.edit') : '#' }}"
                         class="d-block" title="Editar usuário">{{ Str::words(Auth::user()->name, 1, '') }}</a>
                 @endif
             </div>
