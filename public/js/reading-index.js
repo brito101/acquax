@@ -1,3 +1,1 @@
-$(document).ready(function () {
-    $("#year").inputmask("9999");
-})
+$(document).ready((function(){$("#year").inputmask("9999")}));
