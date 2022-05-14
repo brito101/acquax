@@ -52,7 +52,7 @@
                                             @foreach ($apartments as $apartment)
                                                 <option {{ old('apartment_id') == $apartment->id ? 'selected' : '' }}
                                                     value="{{ $apartment->id }}">
-                                                    {{ 'Condomínio ' .$apartment->getComplexNameAttribute() .' - Bloco ' .$apartment->getBlockNameAttribute() .' - Apartamento ' .$apartment->name }}
+                                                    {{ 'Condomínio ' . $apartment->getComplexNameAttribute() . ' - Bloco ' . $apartment->getBlockNameAttribute() . ' - Apartamento ' . $apartment->name }}
                                                 </option>
                                             @endforeach
                                         </x-adminlte-select2>
@@ -85,6 +85,15 @@
                                         </x-adminlte-select2>
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                        <label for="year_manufacture">Ano de Fabricação</label>
+                                        <input type="text" class="form-control" id="year_manufacture"
+                                            placeholder="Ano de Fabricação do Medidor" name="year_manufacture"
+                                            value="{{ old('year_manufacture') }}">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="status">Status do Medidor</label>
                                         <x-adminlte-select2 name="status">
                                             <option {{ old('status') == 'Ativo' ? 'selected' : '' }}>Ativo</option>
@@ -105,4 +114,9 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('custom_js')
+    <script src="{{ asset('vendor/jquery/jquery.inputmask.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/meter.js') }}"></script>
 @endsection

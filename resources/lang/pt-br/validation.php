@@ -250,7 +250,8 @@ return [
         'apportionment' => 'rateio',
         'fraction' => 'fração ideal',
         'year_ref' => 'ano de referência',
-        'photo' => 'foto'
+        'photo' => 'foto',
+        'year_manufacture' => 'ano de fabricação'
     ],
 
 ];

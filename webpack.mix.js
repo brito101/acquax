@@ -32,6 +32,10 @@ mix.js("resources/js/app.js", "public/js")
         ["resources/js/apartment.js"],
         "public/js/apartment.js"
     )
+    .scripts(
+        ["resources/js/meter.js"],
+        "public/js/meter.js"
+    )
     .options({
         processCssUrls: false,
     })

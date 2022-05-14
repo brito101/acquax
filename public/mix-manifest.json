@@ -13,5 +13,6 @@
     "/js/reading.js": "/js/reading.js",
     "/js/reading-index.js": "/js/reading-index.js",
     "/js/dealerships-reading.js": "/js/dealerships-reading.js",
-    "/js/apartment.js": "/js/apartment.js"
+    "/js/apartment.js": "/js/apartment.js",
+    "/js/meter.js": "/js/meter.js"
 }

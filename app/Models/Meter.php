@@ -21,6 +21,7 @@ class Meter extends Model
         'user_id',
         'location',
         'initial_reading',
+        'year_manufacture'
     ];
 
     /** Relationships */
