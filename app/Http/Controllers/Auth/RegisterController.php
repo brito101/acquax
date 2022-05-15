@@ -70,7 +70,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        $user->syncRoles('Estagiário');
+        $user->syncRoles('Usuário');
 
         return $user;
     }
