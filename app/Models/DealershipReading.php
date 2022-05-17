@@ -420,6 +420,8 @@ class DealershipReading extends Model
                 'totalConsumed' => $total_consumed,
                 'readings' => $readings
             );
+        } else {
+            $reports = null;
         }
 
         return $reports;

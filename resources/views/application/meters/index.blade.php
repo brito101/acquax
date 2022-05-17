@@ -27,35 +27,71 @@
 
                     @include('components.alert')
 
-                    @php
+                    @if ($readings && count($readings) > 0)
+                        <h3><span class="badge badge-secondary">Meus Imóveis</span></h3>
+                        @php
 
-                        $list = [];
+                            $list = [];
 
-                        $heads = [['label' => 'ID', 'width' => 5], 'Medidor', 'Imóvel', 'Localização', 'Mês Ref', 'Ano Ref', 'Data da Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
-                        foreach ($readings as $reading) {
-                            $list[] = [$reading->id, $reading->meter['register'], $reading->meter->apartment['complex_name'] . ' - ' . $reading->meter->apartment['block_name'] . ' - ' . $reading->meter->apartment['name'], $reading->meter['location'], $reading->month_ref, $reading->year_ref, $reading->reading_date, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="meter-readings/' . $reading->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
-                        }
+                            $heads = [['label' => 'ID', 'width' => 5], 'Medidor', 'Imóvel', 'Localização', 'Mês Ref', 'Ano Ref', 'Data da Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                            foreach ($readings as $reading) {
+                                $list[] = [$reading->id, $reading->meter['register'], $reading->meter->apartment['complex_name'] . ' - ' . $reading->meter->apartment['block_name'] . ' - ' . $reading->meter->apartment['name'], $reading->meter['location'], $reading->month_ref, $reading->year_ref, $reading->reading_date, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="meter-readings/' . $reading->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
+                            }
 
-                        $config = [
-                            'data' => $list,
-                            'order' => [[0, 'desc']],
-                            'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
-                            'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
-                        ];
+                            $config = [
+                                'data' => $list,
+                                'order' => [[0, 'desc']],
+                                'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
+                                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                            ];
 
-                    @endphp
+                        @endphp
 
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
-                                <h3 class="card-title align-self-center">Medições Cadastradas </h3>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
+                                    <h3 class="card-title align-self-center">Medições Cadastradas </h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
+                                    striped hoverable beautify with-buttons />
                             </div>
                         </div>
-                        <div class="card-body">
-                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config" striped
-                                hoverable beautify with-buttons />
+                    @endif
+
+                    @if ($complexReadings && count($complexReadings) > 0)
+                        <h3><span class="badge badge-secondary">Condomínios Administrados</span></h3>
+                        @php
+
+                            $list = [];
+
+                            $heads = [['label' => 'ID', 'width' => 5], 'Medidor', 'Imóvel', 'Localização', 'Mês Ref', 'Ano Ref', 'Data da Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                            foreach ($complexReadings as $reading) {
+                                $list[] = [$reading->id, $reading->meter['register'], $reading->meter->apartment['complex_name'] . ' - ' . $reading->meter->apartment['block_name'] . ' - ' . $reading->meter->apartment['name'], $reading->meter['location'], $reading->month_ref, $reading->year_ref, $reading->reading_date, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="meter-readings/' . $reading->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
+                            }
+
+                            $config = [
+                                'data' => $list,
+                                'order' => [[0, 'desc']],
+                                'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
+                                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                            ];
+
+                        @endphp
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
+                                    <h3 class="card-title align-self-center">Medições Cadastradas </h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <x-adminlte-datatable id="table2" :heads="$heads" :heads="$heads" :config="$config"
+                                    striped hoverable beautify with-buttons />
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>

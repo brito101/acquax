@@ -47,6 +47,11 @@ class Complex extends Model
         return $this->hasManyThrough(Apartment::class, Block::class);
     }
 
+    public function dealershipReading()
+    {
+        return $this->hasMany(DealershipReading::class);
+    }
+
     /** Aux */
     public function lastReading()
     {
@@ -72,5 +77,34 @@ class Complex extends Model
         }
 
         return $reading;
+    }
+
+    public function getValuesChart()
+    {
+        $months = [
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Agosto',
+            'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ];
+
+        $values = [];
+        foreach ($months as $month) {
+            $dealershipReading = DealershipReading::where('complex_id', $this->id)->where('month_ref', $month)->where('year_ref', date('Y'))->first();
+            $monthly_consumption = $this->convertToFloat($dealershipReading['monthly_consumption'] ?? 0);
+            $commonArea = $this->convertToFloat($dealershipReading['diff_consumption'] ?? 0);
+            $real_cost = $this->moneyConvertToFloat($dealershipReading['real_cost'] ?? 0);
+
+            $values[] = array($monthly_consumption, $commonArea, $real_cost);
+        }
+        return ($values);
+    }
+
+    private function convertToFloat($number)
+    {
+        return (float)str_replace(',', '.', str_replace('.', '', $number));
+    }
+
+    private function moneyConvertToFloat($number)
+    {
+        return (float)str_replace(',', '.', str_replace('.', '', str_replace('R$ ', '', $number)));
     }
 }

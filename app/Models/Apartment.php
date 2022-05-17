@@ -136,7 +136,10 @@ class Apartment extends Model
         $dealershipReading = DealershipReading::where('complex_id', $this->block['complex_id'])->orderBy('reading_date', 'desc')->get();
         $values = [];
         foreach ($dealershipReading as $item) {
-            $values[] = array($item, $item->getApartmentReport($this));
+            $report = $item->getApartmentReport($this);
+            if ($report) {
+                $values[] = array($item, $report);
+            }
         }
         return  $values;
     }

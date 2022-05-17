@@ -224,7 +224,6 @@
     </div>
 @endsection
 
-
 @section('custom_js')
     <script>
         window.onload = function() {

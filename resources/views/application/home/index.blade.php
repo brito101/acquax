@@ -148,7 +148,7 @@
                                             <p class="text-center">
                                                 <strong>Dados da Última Leitura</strong>
                                             </p>
-                                            @foreach ($residence->apartment->meter as $meter)
+                                            @forelse ($residence->apartment->meter as $meter)
                                                 @php  $data = $meter->lastReading() @endphp
                                                 @if ($data)
                                                     <div class="card">
@@ -182,7 +182,18 @@
                                                 @else
                                                     <p class="text-center text-muted">Não há dados disponíveis</p>
                                                 @endif
-                                            @endforeach
+                                            @empty
+                                                <div class="card">
+                                                    <div class="card-header bg-light">
+                                                        Não há dados para ser exibidos
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text">Ainda não há registros de leituras.</p>
+                                                        <p class="card-text">Em breve, dados do seu imóvel serão
+                                                            exibidos aqui.</p>
+                                                    </div>
+                                                </div>
+                                            @endforelse
                                         </div>
                                     </div>
                                 </div>
@@ -235,6 +246,22 @@
                         </div>
                     </div>
                 @endforeach
+            @endif
+            @if (!$complexes && count($residences) == 0)
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-info">
+                                Não há dados para ser exibidos
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Por favor, verifique com a administração do condomínio se sua
+                                    conta foi vinculada a um imóvel, ou, no caso de possuir a função de síndico, se este
+                                    cadastro foi realizado.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @endif
         </div>
     </section>
@@ -293,6 +320,76 @@
                                 {
                                     label: 'Total em Reais',
                                     data: totalUnit{!! $loop->index !!},
+                                    borderWidth: 2,
+                                    fill: false,
+                                    borderColor: '#E0D900',
+                                    pointStyle: 'cross',
+                                }
+                            ]
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: false
+                                }
+                            },
+                            legend: {
+                                position: 'bottom',
+                                align: 'center',
+                                labels: {
+                                    boxWidth: 20
+                                }
+                            },
+                        },
+                    });
+                }
+            </script>
+        @endforeach
+    @endif
+
+    @if ($complexes)
+        @foreach ($complexes as $complex)
+            <script>
+                const cty{!! $loop->index !!} = document.getElementById("chart-complex-reading-{!! $loop->index !!}");
+                const datasY{!! $loop->index !!} = {!! json_encode($complex->getValuesChart()) !!};
+                const volumeY{!! $loop->index !!} = [];
+                const commonAreaY{!! $loop->index !!} = [];
+                const totalY{!! $loop->index !!} = [];
+                datasY{!! $loop->index !!}.forEach(el => {
+                    volumeY{!! $loop->index !!}.push(el[0]);
+                    commonAreaY{!! $loop->index !!}.push(el[1]);
+                    totalY{!! $loop->index !!}.push(el[2]);
+                });
+
+                if (cty{!! $loop->index !!}) {
+                    cty{!! $loop->index !!}.getContext('2d');
+                    const myChartY{!! $loop->index !!} = new Chart(cty{!! $loop->index !!}, {
+                        type: 'line',
+                        data: {
+                            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Agosto',
+                                'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+                            ],
+                            datasets: [{
+                                    label: 'Volume Consumido em m3',
+                                    data: volumeY{!! $loop->index !!},
+                                    borderWidth: 2,
+                                    fill: false,
+                                    borderColor: '#0B55DE',
+                                    pointStyle: 'triangle',
+                                },
+                                {
+                                    label: 'Área Comum em m3',
+                                    data: commonAreaY{!! $loop->index !!},
+                                    borderWidth: 2,
+                                    fill: false,
+                                    borderColor: '#01E044',
+                                    pointStyle: 'rect',
+                                },
+                                {
+                                    label: 'Total em Reais',
+                                    data: totalY{!! $loop->index !!},
                                     borderWidth: 2,
                                     fill: false,
                                     borderColor: '#E0D900',

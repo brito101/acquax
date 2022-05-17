@@ -102,7 +102,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-3 form-group px-0 pl-md-2">
-                                        <label for="complex_id">Concessionária</label>
+                                        <label for="dealership_id">Concessionária</label>
                                         <x-adminlte-select2 name="dealership_id">
                                             @foreach ($dealerships as $dealership)
                                                 <option {{ old('dealership_id') == $dealership->id ? 'selected' : '' }}
