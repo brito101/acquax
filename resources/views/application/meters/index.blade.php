@@ -92,6 +92,23 @@
                             </div>
                         </div>
                     @endif
+
+                    @if ((!$readings || count($readings) == 0) && (!$complexReadings || count($complexReadings) == 0))
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header bg-info">
+                                        Não há dados para ser exibidos
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">Por favor, verifique com a administração do condomínio se
+                                            sua conta foi vinculada a um imóvel, ou, no caso de possuir a função de síndico,
+                                            se este cadastro foi realizado.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

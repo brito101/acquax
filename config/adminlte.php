@@ -255,6 +255,12 @@ return [
             'icon' => 'fas fa-fw fa-user',
             'can'  => 'Editar Perfil na Aplicação',
         ],
+        [
+            'text' => 'Suporte',
+            'url'  => 'app/support',
+            'icon' => 'fas fa-life-ring',
+            'can'  => 'Visualizar Suporte',
+        ],
         //Custom menus
         /** Users */
         [

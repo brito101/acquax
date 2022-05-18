@@ -21,6 +21,7 @@
     </div>
     <section class="content">
         <div class="container-fluid">
+            @include('components.alert')
             @if ($complexes)
                 @foreach ($complexes as $complex)
                     <div class="row">

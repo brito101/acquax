@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Aplication\ApartmentController as AplicationApartmentController;
 use App\Http\Controllers\Aplication\AppController;
 use App\Http\Controllers\Aplication\MeterReadingController;
+use App\Http\Controllers\Aplication\SupportControler;
 use App\Http\Controllers\Aplication\UserController as AplicationUserController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,10 @@ Route::group(['middleware' => ['auth']], function () {
         /** Meter Readings */
         Route::get('meter-readings', [MeterReadingController::class, 'index'])->name('meter.readings.index');
         Route::get('meter-readings/{reading}', [MeterReadingController::class, 'show'])->name('meter.readings.show');
+
+        /** Support */
+        Route::get('support', [SupportControler::class, 'index'])->name('support.index');
+        Route::post('support', [SupportControler::class, 'sendMail'])->name('support.send.mail');
     });
 
     Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
