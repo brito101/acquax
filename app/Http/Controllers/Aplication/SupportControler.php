@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Aplication;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendEmailJob;
 use App\Mail\Support;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,7 @@ class SupportControler extends Controller
             'message' => $request->message
         ];
 
-        Mail::send(new Support($data));
+        SendEmailJob::dispatch($data);
 
         return redirect()
             ->route('app.home')
