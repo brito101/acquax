@@ -183,10 +183,33 @@ class DealershipReading extends Model
 
     public function getRealCostAttribute()
     {
-        $cost_tax_1 = $this->moneyConvertToFloat($this->total_cost_tax_1);
-        $cost_tax_2 = $this->moneyConvertToFloat($this->total_cost_tax_2);
+        $complex = $this->complex;
+        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
+        $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
+        $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
+        $tax_2 = $this->convertToFloat($this->dealership_consumption_tax_2);
+        $cost_tax_1 = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
+        $cost_tax_2 = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
+        $total_consumed = 0;
+        foreach ($apartments as $apartment) {
+            $meters = Meter::where('apartment_id', $apartment)->pluck('id');
+            $readings = Reading::whereIn('meter_id', $meters)
+                ->where('year_ref', $this->year_ref)
+                ->where('month_ref', $this->month_ref)->get();
 
-        $total = ($cost_tax_1 + $cost_tax_2) * 2;
+            foreach ($readings as $reading) {
+                $volume_consumed = $reading->volume_consumed;
+                if ($volume_consumed > 0  && $volume_consumed < $tax_2) {
+                    $total_consumed += $this->convertToFloat($reading->volume_consumed) *  $cost_tax_1;
+                }
+
+                if ($volume_consumed > $tax_2) {
+                    $total_consumed += $this->convertToFloat($reading->volume_consumed) *  $cost_tax_2;
+                }
+            }
+        }
+
+        $total = $total_consumed  * 2;
 
         return 'R$ ' . number_format($total, 2, ",", ".");
     }
@@ -317,10 +340,18 @@ class DealershipReading extends Model
                     $total_consumed += $this->convertToFloat($reading->volume_consumed);
                 }
 
-                if ($total_consumed <= $tax_1) {
-                    $total_cost = $tax_1 * $cost_1 * 2;
-                } else {
-                    $total_cost = (($tax_1 * $cost_1) + (($total_consumed - $tax_1) * $cost_2)) * 2;
+                // if ($total_consumed <= $tax_1) {
+                //     $total_cost = $tax_1 * $cost_1 * 2;
+                // } else {
+                //     $total_cost = (($tax_1 * $cost_1) + (($total_consumed - $tax_1) * $cost_2)) * 2;
+                // }
+
+                if ($total_consumed > 0  && $total_consumed < $tax_2) {
+                    $total_cost += $this->convertToFloat($reading->volume_consumed) *  $cost_1 * 2;
+                }
+
+                if ($total_consumed > $tax_2) {
+                    $total_cost += $this->convertToFloat($reading->volume_consumed) *  $cost_2 * 2;
                 }
 
                 $partial = $simple_fraction * $this->convertToFloat($apartment->fraction) / 100;
@@ -404,10 +435,18 @@ class DealershipReading extends Model
                 $total_consumed += $this->convertToFloat($reading->volume_consumed);
             }
 
-            if ($total_consumed <= $tax_1) {
-                $total_cost = $tax_1 * $cost_1 * 2;
-            } else {
-                $total_cost = (($tax_1 * $cost_1) + (($total_consumed - $tax_1) * $cost_2)) * 2;
+            // if ($total_consumed <= $tax_1) {
+            //     $total_cost = $tax_1 * $cost_1 * 2;
+            // } else {
+            //     $total_cost = (($tax_1 * $cost_1) + (($total_consumed - $tax_1) * $cost_2)) * 2;
+            // }
+
+            if ($total_consumed > 0  && $total_consumed < $tax_2) {
+                $total_cost = $this->convertToFloat($reading->volume_consumed) *  $cost_1 * 2;
+            }
+
+            if ($total_consumed > $tax_2) {
+                $total_cost = $this->convertToFloat($reading->volume_consumed) *  $cost_2 * 2;
             }
 
             $partial = $simple_fraction * $this->convertToFloat($apartment->fraction) / 100;

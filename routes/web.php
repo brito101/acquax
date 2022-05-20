@@ -98,6 +98,7 @@ Route::group(['middleware' => ['auth']], function () {
         /** Readings */
         Route::post('readings-import', [ReadingController::class, 'fileImport'])->name('readings.import');
         Route::post('/readings-search', [ReadingController::class, 'search'])->name('readings.search');
+        Route::get('/readings-search', [ReadingController::class, 'index']);
         Route::get('/readings/destroy/{id}', [ReadingController::class, 'destroy']);
         Route::resource('readings', ReadingController::class);
 

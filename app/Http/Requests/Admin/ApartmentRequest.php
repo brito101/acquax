@@ -20,7 +20,7 @@ class ApartmentRequest extends FormRequest
     {
 
         $this->merge([
-            'fraction' => str_replace(',', '.', str_replace(['.', '%', '_'], '', $this->fraction))
+            'fraction' => str_replace(',', '.', str_replace(['.', '%', '_'], '', ($this->fraction ?? 0)))
         ]);
     }
 

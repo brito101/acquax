@@ -180,7 +180,6 @@ class ReadingController extends Controller
                     ->with('error', 'Falha ao fazer o upload da imagem');
         }
 
-
         if ($reading->update($data)) {
             if ($request['from']) {
                 return redirect($request['from'])
@@ -274,6 +273,11 @@ class ReadingController extends Controller
 
     public function fileImport(Request $request)
     {
+        if (!$request->file()) {
+            return redirect()
+                ->back()
+                ->with('error', 'Nenhum arquivo selecionado!');
+        }
         Excel::import(new ReadingsImport, $request->file('file')->store('temp'));
         return back()->with('success', 'Importação realizada!');;
     }

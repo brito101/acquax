@@ -104,8 +104,12 @@ class Reading extends Model
     {
         $actual = $this->convertToFloat($this->volume_consumed);
         $previous = $this->convertToFloat($this->previous_volume_consumed);
-        if (is_numeric($actual) && is_numeric($previous) && $previous != 0) {
-            return number_format(((($actual * 100) / $previous) - 100), 2, ",", ".") . "%";
+        if (is_numeric($actual) && is_numeric($previous)) {
+            if ($previous != 0) {
+                return number_format(((($actual * 100) / $previous) - 100), 2, ",", ".") . "%";
+            } else {
+                return number_format(($actual * 100), 2, ",", ".") . "%";
+            }
         }
         return "Inexistente";
     }
