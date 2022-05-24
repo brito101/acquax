@@ -31,19 +31,28 @@ class DealershipReading extends Model
         'complex_id',
         'month_ref',
         'year_ref',
-        'editor'
+        'editor',
+        'billed_consumption',
+        'consumption_calculation',
+        'type_minimum_value',
+        'minimum_value',
+        'fare_type',
+        'common_area'
     ];
 
     protected $appends = [
         'monthly_consumption',
         'diff_consumption',
         'previous_monthly_consumption',
+        'previous_billed_consumption',
+        'consumption_value',
+        'sewage_value',
+        'total_value',
+        'diff_cost',
         'consumption_tax_1',
         'total_cost_tax_1',
         'consumption_tax_2',
         'total_cost_tax_2',
-        'real_cost',
-        'diff_cost',
         'units_inside_tax_1',
         'units_above_tax_1',
         'fraction',
@@ -88,6 +97,17 @@ class DealershipReading extends Model
         return number_format($value, 3, ",", ".");
     }
 
+    public function getBilledConsumptionAttribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
+    public function getMinimumValueAttribute($value)
+    {
+        return 'R$ ' . number_format($value, 2, ",", ".");
+    }
+
+    /** Consumo real em m3 */
     public function getMonthlyConsumptionAttribute()
     {
         $volume_consumed = 0;
@@ -106,9 +126,22 @@ class DealershipReading extends Model
             $volume_consumed += ($this->convertToFloat($reading->volume_consumed));
         }
 
-        $total = $volume_consumed - $this->convertToFloat($this->dealership_consumption);
+        $total = abs($volume_consumed - $this->convertToFloat($this->dealership_consumption));
 
         return number_format($total, 3, ",", ".");
+    }
+
+    public function getPreviousBilledConsumptionAttribute()
+    {
+        $datePrevious = $this->getPreviousDateRef($this->month_ref, $this->year_ref);
+        $previous = DealershipReading::where('month_ref', $datePrevious[0])
+            ->where('year_ref', $datePrevious[1])
+            ->where('complex_id', $this->complex_id)->first();
+        if ($previous) {
+            return $previous->billed_consumption;
+        } else {
+            return "Inexistente";
+        }
     }
 
     public function getPreviousMonthlyConsumptionAttribute()
@@ -119,19 +152,69 @@ class DealershipReading extends Model
                 $previous_volume_consumed += ($this->convertToFloat($reading->previous_volume_consumed));
             }
         }
-
         return number_format($previous_volume_consumed, 3, ",", ".");
+    }
+
+    public function getConsumptionValueAttribute()
+    {
+        $complex = $this->complex;
+        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
+        $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
+        $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
+        $tax_2 = $this->convertToFloat($this->dealership_consumption_tax_2);
+        $cost_tax_1 = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
+        $cost_tax_2 = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
+        $total_consumed = 0;
+
+        foreach ($apartments as $apartment) {
+            $meters = Meter::where('apartment_id', $apartment)->pluck('id');
+            $readings = Reading::whereIn('meter_id', $meters)
+                ->where('year_ref', $this->year_ref)
+                ->where('month_ref', $this->month_ref)->get();
+
+            foreach ($readings as $reading) {
+                $volume_consumed = $reading->volume_consumed;
+                if ($volume_consumed > 0  && $volume_consumed <= $tax_1) {
+                    $total_consumed += ($this->convertToFloat($reading->volume_consumed) *  $cost_tax_1);
+                }
+
+                if ($volume_consumed > $tax_1) {
+                    $total_consumed += ($tax_1 * $cost_tax_1 + ($this->convertToFloat($reading->volume_consumed) - $tax_2) * $cost_tax_2);
+                }
+            }
+        }
+
+        return 'R$ ' . number_format($total_consumed, 2, ",", ".");
+    }
+
+    public function getSewageValueAttribute()
+    {
+        return $this->consumption_value;
+    }
+
+    public function getTotalValueAttribute()
+    {
+        return 'R$ ' . number_format(($this->moneyConvertToFloat($this->consumption_value) * 2), 2, ',', '.');
+    }
+
+    public function getDiffCostAttribute()
+    {
+        $real_cost = ($this->moneyConvertToFloat($this->consumption_value)) * 2;
+        $dealership_cost = $this->moneyConvertToFloat($this->dealership_cost);
+
+        $total = $dealership_cost - $real_cost;
+
+        return 'R$ ' . number_format($total, 2, ",", ".");
     }
 
     public function getConsumptionTax1Attribute()
     {
         $volume_consumed = 0;
         $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
+
         foreach ($this->getApartmentReadings() as $reading) {
             $value = $this->convertToFloat($reading->volume_consumed);
-            if ($value > $tax_1) {
-                $volume_consumed += $tax_1;
-            } else {
+            if ($value <= $tax_1) {
                 $volume_consumed += $value;
             }
         }
@@ -142,10 +225,9 @@ class DealershipReading extends Model
 
     public function getTotalCostTax1Attribute()
     {
-        $tax = $this->convertToFloat($this->dealership_consumption_tax_1);
+        $tax = $this->convertToFloat($this->consumption_tax_1);
         $cost = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
-        $readings = count($this->getApartmentReadings());
-        $total = $tax * $cost * $readings;
+        $total = $tax * $cost;
 
         return 'R$ ' . number_format($total, 2, ",", ".");
     }
@@ -154,11 +236,10 @@ class DealershipReading extends Model
     {
         $volume_consumed = 0;
         $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
-        $tax_2 = $this->convertToFloat($this->dealership_consumption_tax_2);
         foreach ($this->getApartmentReadings() as $reading) {
             $value = $this->convertToFloat($reading->volume_consumed);
-            if ($value >= $tax_2) {
-                $volume_consumed += $value - $tax_1;
+            if ($value > $tax_1) {
+                $volume_consumed += $value;
             }
         }
 
@@ -167,59 +248,9 @@ class DealershipReading extends Model
 
     public function getTotalCostTax2Attribute()
     {
-        $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
-        $tax_2 = $this->convertToFloat($this->dealership_consumption_tax_2);
+        $tax = $this->convertToFloat($this->consumption_tax_2);
         $cost = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
-        $total = 0;
-        foreach ($this->getApartmentReadings() as $reading) {
-            $value = $this->convertToFloat($reading->volume_consumed);
-            if ($value >= $tax_2) {
-                $total += ($value - $tax_1) * $cost;
-            }
-        }
-
-        return 'R$ ' . number_format($total, 2, ",", ".");
-    }
-
-    public function getRealCostAttribute()
-    {
-        $complex = $this->complex;
-        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
-        $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
-        $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
-        $tax_2 = $this->convertToFloat($this->dealership_consumption_tax_2);
-        $cost_tax_1 = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
-        $cost_tax_2 = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
-        $total_consumed = 0;
-        foreach ($apartments as $apartment) {
-            $meters = Meter::where('apartment_id', $apartment)->pluck('id');
-            $readings = Reading::whereIn('meter_id', $meters)
-                ->where('year_ref', $this->year_ref)
-                ->where('month_ref', $this->month_ref)->get();
-
-            foreach ($readings as $reading) {
-                $volume_consumed = $reading->volume_consumed;
-                if ($volume_consumed > 0  && $volume_consumed < $tax_2) {
-                    $total_consumed += $this->convertToFloat($reading->volume_consumed) *  $cost_tax_1;
-                }
-
-                if ($volume_consumed > $tax_2) {
-                    $total_consumed += $this->convertToFloat($reading->volume_consumed) *  $cost_tax_2;
-                }
-            }
-        }
-
-        $total = $total_consumed  * 2;
-
-        return 'R$ ' . number_format($total, 2, ",", ".");
-    }
-
-    public function getDiffCostAttribute()
-    {
-        $real_cost = $this->moneyConvertToFloat($this->real_cost);
-        $dealership_cost = $this->moneyConvertToFloat($this->dealership_cost);
-
-        $total = $dealership_cost - $real_cost;
+        $total = $tax * $cost;
 
         return 'R$ ' . number_format($total, 2, ",", ".");
     }
@@ -275,43 +306,6 @@ class DealershipReading extends Model
         return $units;
     }
 
-    public function getFractionAttribute()
-    {
-        $complex = $this->complex;
-        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
-        $apartments = Apartment::whereIn('block_id', $blocks)->get();
-        $units = 0;
-        $fractions = [];
-        foreach ($apartments as $apartment) {
-            $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
-            $readings = Reading::whereIn('meter_id', $meters)
-                ->where('year_ref', $this->year_ref)
-                ->where('month_ref', $this->month_ref)
-                ->get();
-            if (count($readings)) {
-                $units++;
-                $fractions[] = $apartment->fraction;
-            }
-        }
-
-        /** Valor de diferença entre medição e concessionária */
-        $diff_cost = $this->moneyConvertToFloat($this->diff_cost);
-        $simple_fraction = $units > 0 ? $diff_cost / $units : 0;
-        $list_fractions = array_count_values(Arr::sort($fractions));
-
-        if ($this->complex['apportionment'] == "Fração Ideal") {
-            $fractions = [];
-            foreach ($list_fractions as $key => $value) {
-                $fraction = $this->convertToFloat(str_replace('%', '', $key));
-                $fractions[$value] = 'R$ ' . number_format(($simple_fraction * $fraction / 100), 2, ",", ".");
-            }
-        } else {
-            $fractions = array($units => 'R$ ' . number_format($simple_fraction, 2, ",", "."));
-        }
-
-        return $fractions;
-    }
-
     public function getApartmentsReportAttribute()
     {
         $complex = $this->complex;
@@ -320,7 +314,6 @@ class DealershipReading extends Model
         $units = $this->totalApartments();
         $reports = [];
         $diff_cost = $this->moneyConvertToFloat($this->diff_cost);
-        $simple_fraction = $units > 0 ? $diff_cost / $units : 0;
 
         foreach ($apartments as $apartment) {
             $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
@@ -340,25 +333,32 @@ class DealershipReading extends Model
                     $total_consumed += $this->convertToFloat($reading->volume_consumed);
                 }
 
-                // if ($total_consumed <= $tax_1) {
-                //     $total_cost = $tax_1 * $cost_1 * 2;
-                // } else {
-                //     $total_cost = (($tax_1 * $cost_1) + (($total_consumed - $tax_1) * $cost_2)) * 2;
-                // }
-
-                if ($total_consumed > 0  && $total_consumed < $tax_2) {
-                    $total_cost += $this->convertToFloat($reading->volume_consumed) *  $cost_1 * 2;
+                if ($total_consumed <= $tax_1) {
+                    $total_cost += ($this->convertToFloat($reading->volume_consumed) *  $cost_1) * 2;
                 }
 
-                if ($total_consumed > $tax_2) {
-                    $total_cost += $this->convertToFloat($reading->volume_consumed) *  $cost_2 * 2;
+                if ($total_consumed > $tax_1) {
+                    $total_cost += ($tax_1 * $cost_1 + ($this->convertToFloat($reading->volume_consumed) - $tax_2) * $cost_2) * 2;
                 }
 
-                $partial = $simple_fraction * $this->convertToFloat($apartment->fraction) / 100;
-                $total_unit = $total_cost +  $partial;
+                $common_area = 0;
+                switch ($this->common_area) {
+                    case 'Sem':
+                        $common_area = 0;
+                        break;
+                    case 'Simples':
+                        $common_area = $diff_cost / $units;
+                        break;
+                    case 'Fração':
+                        $common_area = $diff_cost * $this->convertToFloat($apartment->fraction) / 100;
+                        break;
+                }
+
+                $total_unit = $total_cost +  $common_area;
                 $reports[] = $apartment
                     ->setAttribute('total', $this->convertToMoney($total_cost))
-                    ->setAttribute('partial', $this->convertToMoney($partial))
+                    ->setAttribute('consumed', number_format($this->convertToFloat($reading->volume_consumed), 3, ',', '.'))
+                    ->setAttribute('common_area', $this->convertToMoney($common_area))
                     ->setAttribute('total_unit', $this->convertToMoney($total_unit));
             }
         }
@@ -499,5 +499,49 @@ class DealershipReading extends Model
         }
 
         return $units;
+    }
+
+    private function getPreviousDateRef($month, $year)
+    {
+        switch ($month) {
+            case 'Janeiro':
+                return array('Dezembro', (int)$year - 1);
+                break;
+            case 'Fevereiro':
+                return array('Janeiro', $year);
+                break;
+            case 'Março':
+                return array('Fevereiro', $year);
+                break;
+            case 'Abril':
+                return array('Março', $year);
+                break;
+            case 'Maio':
+                return array('Abril', $year);
+                break;
+            case 'Junho':
+                return array('Maio', $year);
+                break;
+            case 'Julho':
+                return array('Junho', $year);
+                break;
+            case 'Agosto':
+                return array('Julho', $year);
+                break;
+            case 'Setembro':
+                return array('Agosto', $year);
+                break;
+            case 'Outubro':
+                return array('Setembro', $year);
+                break;
+            case 'Novembro':
+                return array('Outubro', $year);
+                break;
+            case 'Dezembro':
+                return array('Novembro', $year);
+                break;
+            default:
+                return array(null, null);
+        }
     }
 }

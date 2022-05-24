@@ -138,10 +138,10 @@
 
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="dealership_consumption_tax_1">Valor máximo da 1ª Faixa de Consumo em
+                                        <label for="dealership_consumption_tax_1">Valor da 1ª Faixa de Consumo em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control" id="dealership_consumption_tax_1"
-                                            placeholder="Valor máximo da 1ª Faixa de Consumo pela concessionária"
+                                            placeholder="Valor da 1ª Faixa de Consumo pela concessionária"
                                             name="dealership_consumption_tax_1"
                                             value="{{ old('dealership_consumption_tax_1') }}" required>
                                     </div>
@@ -157,7 +157,7 @@
 
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="dealership_consumption_tax_2">Valor mínimo da 2ª Faixa de Consumo em
+                                        <label for="dealership_consumption_tax_2">Valor da 2ª Faixa de Consumo em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control" id="dealership_consumption_tax_2"
                                             placeholder="Valor mínimo da 2ª Faixa de Consumo pela concessionária"
@@ -174,15 +174,88 @@
                                     </div>
                                 </div>
 
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                        <label for="consumption_calculation">Tipo de Cálculo de Consumo das
+                                            unidades</label>
+                                        <x-adminlte-select2 name="consumption_calculation">
+                                            <option
+                                                {{ old('consumption_calculation') == 'Consumo Real' ? 'selected' : '' }}>
+                                                Consumo Real</option>
+                                            <option
+                                                {{ old('consumption_calculation') == 'Consumo com Mínimo' ? 'selected' : '' }}>
+                                                Consumo com Mínimo</option>
+                                            <option
+                                                {{ old('consumption_calculation') == 'Consumo sem Mínimo' ? 'selected' : '' }}>
+                                                Consumo sem Mínimo</option>
+                                        </x-adminlte-select2>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                        <label for="type_minimum_value">Tipo de Mínimo</label>
+                                        <x-adminlte-select2 name="type_minimum_value">
+                                            <option
+                                                {{ old('type_minimum_value') == 'Pré Estabelecido' ? 'selected' : '' }}>
+                                                Pré Estabelecido</option>
+                                            <option
+                                                {{ old('type_minimum_value') == 'Da Concessionária' ? 'selected' : '' }}>
+                                                Da Concessionária</option>
+                                        </x-adminlte-select2>
+                                    </div>
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                        <label for="minimum_value">Valor Mínimo de Consumo</label>
+                                        <input type="text" class="form-control money_format_2" id="minimum_value"
+                                            placeholder="Este valor poderá ser zero" name="minimum_value"
+                                            value="{{ old('minimum_value') }}" required>
+                                    </div>
+
+                                </div>
+
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                        <label for="fare_type">Tipo de Tarifa</label>
+                                        <x-adminlte-select2 name="fare_type">
+                                            <option {{ old('fare_type') == 'Metro Cúbico Médio' ? 'selected' : '' }}>
+                                                Metro Cúbico Médio</option>
+                                            <option
+                                                {{ old('fare_type') == 'Concessionária com 2ª faixa pela Progressividade' ? 'selected' : '' }}>
+                                                Concessionária com 2ª faixa pela Progressividade</option>
+                                            <option
+                                                {{ old('fare_type') == 'Concessionária com 2ª faixa pela Média' ? 'selected' : '' }}>
+                                                Concessionária com 2ª faixa pela Média</option>
+                                        </x-adminlte-select2>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                        <label for="common_area">Tipo de Rateio da Área Comum</label>
+                                        <x-adminlte-select2 name="common_area">
+                                            <option {{ old('common_area') == 'Sem' ? 'selected' : '' }}>Sem</option>
+                                            <option {{ old('common_area') == 'Simples' ? 'selected' : '' }}>Simples
+                                            </option>
+                                            <option {{ old('common_area') == 'Fração' ? 'selected' : '' }}>Fração
+                                            </option>
+                                        </x-adminlte-select2>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                        <label for="billed_consumption">Consumo Faturado Mês Atual em m<sup>3</sup></label>
+                                        <input type="text" class="form-control" id="billed_consumption"
+                                            placeholder="Consumo Faturado Mês Atual" name="billed_consumption"
+                                            value="{{ old('billed_consumption') }}" required>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
                                         <label for="dealership_consumption">Consumo da Concessionária em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control" id="dealership_consumption"
                                             placeholder="Consumo medido pela concessionária" name="dealership_consumption"
                                             value="{{ old('dealership_consumption') }}" required>
                                     </div>
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
                                         <label for="dealership_cost">Custo da Concessionária em Reais</label>
                                         <input type="text" class="form-control money_format_2" id="dealership_cost"
                                             placeholder="Custo total do medido pela concessionária" name="dealership_cost"

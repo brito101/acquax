@@ -90,7 +90,7 @@
 
                                                     $config = [
                                                         'data' => $list,
-                                                        'order' => [[0, 'asc']],
+                                                        'order' => [[0, 'desc']],
                                                         'columns' => [null, null, null, null, ['orderable' => false]],
                                                         'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                                     ];
@@ -135,7 +135,7 @@
 
                                                     $config = [
                                                         'data' => $list,
-                                                        'order' => [[0, 'asc']],
+                                                        'order' => [[0, 'desc']],
                                                         'columns' => [null, null, null, null, null, null, ['orderable' => false]],
                                                         'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                                     ];
@@ -175,7 +175,7 @@
 
                                                     $config = [
                                                         'data' => $list,
-                                                        'order' => [[0, 'asc']],
+                                                        'order' => [[0, 'desc']],
                                                         'columns' => [null, null, null, null, ['orderable' => false]],
                                                         'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                                     ];

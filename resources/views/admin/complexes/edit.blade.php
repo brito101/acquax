@@ -71,22 +71,6 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="apportionment">Tipo de Rateio</label>
-                                        <x-adminlte-select2 name="apportionment">
-                                            <option
-                                                {{ old('apportionment') == 'Simples' ? 'selected' : ($complex->apportionment == 'Simples' ? 'selected' : '') }}>
-                                                Simples
-                                            </option>
-                                            <option
-                                                {{ old('apportionment') == 'Fração Ideal'? 'selected': ($complex->apportionment == 'Fração Ideal'? 'selected': '') }}>
-                                                Fração Ideal
-                                            </option>
-                                        </x-adminlte-select2>
-                                    </div>
-                                </div>
-
                                 <h5 class="text-muted">Contato</h5>
 
                                 <div class="d-flex flex-wrap justify-content-between">

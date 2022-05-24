@@ -31,8 +31,7 @@ class Complex extends Model
         'facebook',
         'instagram',
         'twitter',
-        'user_id',
-        'apportionment'
+        'user_id'
     ];
 
     /** Relationships */
@@ -89,13 +88,72 @@ class Complex extends Model
         $values = [];
         foreach ($months as $month) {
             $dealershipReading = DealershipReading::where('complex_id', $this->id)->where('month_ref', $month)->where('year_ref', date('Y'))->first();
-            $monthly_consumption = $this->convertToFloat($dealershipReading['monthly_consumption'] ?? 0);
+            $monthly_consumption = $this->convertToFloat($dealershipReading['dealership_consumption'] ?? 0);
             $commonArea = $this->convertToFloat($dealershipReading['diff_consumption'] ?? 0);
-            $real_cost = $this->moneyConvertToFloat($dealershipReading['real_cost'] ?? 0);
+            $real_cost = $this->moneyConvertToFloat($dealershipReading['dealership_cost'] ?? 0);
 
             $values[] = array($monthly_consumption, $commonArea, $real_cost);
         }
         return ($values);
+    }
+
+    public function getAverageConsume()
+    {
+        $readings = DealershipReading::where('complex_id', $this->id)->where('year_ref', date('Y'))->get();
+        $units = 0;
+        $consumed = 0;
+        foreach ($readings as $reading) {
+            $units++;
+            $consumed += $this->convertToFloat($reading->dealership_consumption);
+        }
+        if ($units > 0) {
+            return $consumed / $units;
+        } else {
+            return 0;
+        }
+    }
+
+    public function getTotalConsume()
+    {
+        $readings = DealershipReading::where('complex_id', $this->id)->where('year_ref', date('Y'))->get();
+        $consumed = 0;
+        foreach ($readings as $reading) {
+            $consumed += $this->convertToFloat($reading->dealership_consumption);
+        }
+
+        return $consumed;
+    }
+
+    public function getAverageCost()
+    {
+        $readings = DealershipReading::where('complex_id', $this->id)->where('year_ref', date('Y'))->get();
+        $units = 0;
+        $cost = 0;
+        foreach ($readings as $reading) {
+            $units++;
+            $cost += $this->moneyConvertToFloat($reading->dealership_cost);
+        }
+        if ($units > 0) {
+            return $cost / $units;
+        } else {
+            return 0;
+        }
+    }
+
+    public function getAverageCommonArea()
+    {
+        $readings = DealershipReading::where('complex_id', $this->id)->where('year_ref', date('Y'))->get();
+        $units = 0;
+        $cost = 0;
+        foreach ($readings as $reading) {
+            $units++;
+            $cost += $this->moneyConvertToFloat($reading->diff_consumption);
+        }
+        if ($units > 0) {
+            return $cost / $units;
+        } else {
+            return 0;
+        }
     }
 
     private function convertToFloat($number)

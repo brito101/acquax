@@ -41,8 +41,7 @@ class ComplexRequest extends FormRequest
             'photo' => 'image|mimes:jpg,png,jpeg,gif,svg,webp|max:1024|dimensions:max_width=1800,max_height=1800',
             'facebook' => 'nullable|url|max:150',
             'instagram' => 'nullable|url|max:150',
-            'twitter' => 'nullable|url|max:150',
-            'apportionment' => 'required|min:1|max:20|in:Simples,Fração Ideal'
+            'twitter' => 'nullable|url|max:150'
         ];
     }
 }

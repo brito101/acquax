@@ -22,6 +22,8 @@ class DealershipReadingRequest extends FormRequest
 
         $this->merge([
             'dealership_consumption' => str_replace(',', '.', str_replace('.', '', $this->dealership_consumption)),
+            'billed_consumption' => str_replace(',', '.', str_replace('.', '', $this->billed_consumption)),
+            'minimum_value'  => str_replace(',', '.', str_replace('.', '', str_replace('R$ ', '', $this->minimum_value))),
             'dealership_consumption_tax_1' => str_replace(',', '.', str_replace('.', '', $this->dealership_consumption_tax_1)),
             'dealership_consumption_tax_2' => str_replace(',', '.', str_replace('.', '', $this->dealership_consumption_tax_2)),
             'dealership_cost_tax_1' => str_replace(',', '.', str_replace('.', '', str_replace('R$ ', '', $this->dealership_cost_tax_1))),
@@ -52,7 +54,13 @@ class DealershipReadingRequest extends FormRequest
             'dealership_id' => 'required|min:1',
             'complex_id' => 'required|min:1',
             'month_ref' => 'required|min:1|max:20|in:Janeiro,Fevereiro,Março,Abril,Maio,Junho,Julho,Agosto,Setembro,Outubro,Novembro,Dezembro',
-            'year_ref' => 'required|min:4|max:4'
+            'year_ref' => 'required|min:4|max:4',
+            'billed_consumption' => 'required|numeric|between:0,999999999.999',
+            'consumption_calculation' => 'required|min:1|max:20|in:Consumo Real,Consumo com Mínimo,Consumo sem Mínimo',
+            'type_minimum_value' => 'required|min:1|max:20|in:Da Concessionária,Pré Estabelecido',
+            'minimum_value' => 'required|numeric|between:0,999999999.999',
+            'fare_type'  => 'required|min:1|max:191|in:Concessionária com 2ª faixa pela Progressividade,PConcessionária com 2ª faixa pela Média,Metro Cúbico Médio',
+            'common_area'  => 'required|min:1|max:20|in:Sem,Simples,Fração',
         ];
     }
 
@@ -67,6 +75,8 @@ class DealershipReadingRequest extends FormRequest
             'dealership_cost_tax_2.between' => 'O campo leitura deve ser entre 0 e 999.999.999,999.',
             'reading_date.date_format' => 'Formato de data inválido',
             'reading_date_next.date_format' => 'Formato de data inválido',
+            'billed_consumption.between' => 'O campo consumo faturado deve ser entre 0 e 999.999.999,999.',
+            'minimum_value.between' => 'O campo consumo faturado deve ser entre 0 e 999.999.999,999.',
         ];
     }
 }

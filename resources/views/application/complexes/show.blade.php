@@ -65,21 +65,18 @@
                                     <div class="col-12 col-md-3 form-group px-0 pr-md-2">
                                         <label for="reading_date">Data da Leitura</label>
                                         <input type="text" class="form-control bg-light" id="reading_date"
-                                            name="reading_date"
-                                            value="{{ old('reading_date') ?? $reading->reading_date }}" required>
+                                            name="reading_date" value="{{ $reading->reading_date }}" disabled>
                                     </div>
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="reading_date_next">Data da Próxima Leitura</label>
                                         <input type="text" class="form-control bg-light" id="reading_date_next"
-                                            name="reading_date_next"
-                                            value="{{ old('reading_date_next') ?? $reading->reading_date_next }}"
-                                            required>
+                                            name="reading_date_next" value="{{ $reading->reading_date_next }}" disabled>
                                     </div>
 
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="total_days">Total de Dias</label>
                                         <input type="text" class="form-control bg-light" id="total_days"
-                                            value="{{ old('total_days') ?? $reading->total_days }}" required>
+                                            value="{{ $reading->total_days }}" disabled>
                                     </div>
 
                                     <div class="col-12 col-md-3 form-group px-0 pl-md-2">
@@ -91,7 +88,7 @@
 
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="dealership_consumption_tax_1">Valor máximo da 1ª Faixa de Consumo em
+                                        <label for="dealership_consumption_tax_1">Valor da 1ª Faixa de Consumo em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light" id="dealership_consumption_tax_1"
                                             name="dealership_consumption_tax_1"
@@ -110,7 +107,7 @@
 
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="dealership_consumption_tax_2">Valor mínimo da 2ª Faixa de Consumo em
+                                        <label for="dealership_consumption_tax_2">Valor da 2ª Faixa de Consumo em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light" id="dealership_consumption_tax_2"
                                             name="dealership_consumption_tax_2"
@@ -127,46 +124,133 @@
                                     </div>
                                 </div>
 
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                        <label for="consumption_calculation">Tipo de Cálculo de Consumo das
+                                            unidades</label>
+                                        <input type="text" class="form-control bg-light" id="consumption_calculation"
+                                            name="consumption_calculation"
+                                            value="{{ $reading->consumption_calculation }}" disabled>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                        <label for="type_minimum_value">Tipo de Mínimo</label>
+                                        <input type="text" class="form-control bg-light" id="type_minimum_value"
+                                            name="type_minimum_value" value="{{ $reading->type_minimum_value }}"
+                                            disabled>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                        <label for="minimum_value">Valor Mínimo de Consumo</label>
+                                        <input type="text" class="form-control bg-light" id="minimum_value"
+                                            name="minimum_value" value="{{ $reading->minimum_value }}" disabled>
+                                    </div>
+                                </div>
+
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                        <label for="fare_type">Tipo de Tarifa</label>
+                                        <input type="text" class="form-control bg-light" id="fare_type" name="fare_type"
+                                            value="{{ $reading->fare_type }}" disabled>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                        <label for="common_area">Tipo de Rateio da Área Comum</label>
+                                        <input type="text" class="form-control bg-light" id="common_area" name="common_area"
+                                            value="{{ $reading->common_area }}" disabled>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                        <label for="billed_consumption">Consumo Faturado Mês Atual em m<sup>3</sup></label>
+                                        <input type="text" class="form-control bg-light" id="billed_consumption"
+                                            placeholder="Consumo Faturado Mês Atual" name="billed_consumption"
+                                            value="{{ $reading->billed_consumption }}" disabled>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
                                         <label for="dealership_consumption">Consumo da Concessionária em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light" id="dealership_consumption"
-                                            name="dealership_consumption"
-                                            value="{{ old('dealership_consumption') ?? $reading->dealership_consumption }}"
-                                            required>
+                                            placeholder="Consumo medido pela concessionária" name="dealership_consumption"
+                                            value="{{ $reading->dealership_consumption }}" disabled>
                                     </div>
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
                                         <label for="dealership_cost">Custo da Concessionária em Reais</label>
                                         <input type="text" class="form-control bg-light" id="dealership_cost"
-                                            name="dealership_cost"
-                                            value="{{ old('dealership_cost') ?? $reading->dealership_cost }}" required>
+                                            placeholder="Custo total do medido pela concessionária" name="dealership_cost"
+                                            value="{{ $reading->dealership_cost }}" disabled>
                                     </div>
+
                                 </div>
+
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                        <label for="previous_billed_consumption">Consumo Faturado Mês Anterior em
+                                            m<sup>3</sup></label>
+                                        <input type="text" class="form-control bg-light" id="previous_billed_consumption"
+                                            name="previous_billed_consumption" disabled
+                                            value="{{ $reading->previous_billed_consumption }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
                                         <label for="monthly_consumption">Consumo Real em m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light" id="monthly_consumption"
                                             name="monthly_consumption" disabled
                                             value="{{ $reading->monthly_consumption }}">
                                     </div>
-                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
-                                        <label for="diff_consumption">Área comum em m<sup>3</sup></label>
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                        <label for="diff_consumption">Diferença entre Real e Concessionária em
+                                            m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light" id="diff_consumption"
                                             name="diff_consumption" disabled value="{{ $reading->diff_consumption }}">
                                     </div>
-                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-start">
+
+                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2">
                                         <label for="previous_monthly_consumption">Consumo Real Anterior em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light" id="previous_monthly_consumption"
                                             name="previous_monthly_consumption" disabled
                                             value="{{ $reading->previous_monthly_consumption }}">
                                     </div>
+
+                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                        <label for="consumption_value">Valor do Consumo</label>
+                                        <input type="text" class="form-control bg-light" id="consumption_value"
+                                            name="consumption_value" disabled value="{{ $reading->consumption_value }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                        <label for="sewage_value">Valor do Esgoto</label>
+                                        <input type="text" class="form-control bg-light" id="sewage_value"
+                                            name="sewage_value" disabled value="{{ $reading->sewage_value }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
+                                        <label for="total_value">Valor Total</label>
+                                        <input type="text" class="form-control bg-light" id="total_value" name="total_value"
+                                            disabled value="{{ $reading->total_value }}">
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-between">
+
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                        <label for="diff_cost">Área Comum</label>
+                                        <input type="text" class="form-control bg-light" id="diff_cost" name="diff_cost"
+                                            disabled value="{{ $reading->diff_cost }}">
+                                    </div>
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-start">
                                     <div class="col-12 col-md-3 form-group px-0 pr-md-2">
-                                        <label for="consumption_tax_1">Consumo 1ª Faixa</label>
+                                        <label for="consumption_tax_1">Consumo na 1ª Faixa</label>
                                         <input type="text" class="form-control bg-light" id="consumption_tax_1"
                                             name="consumption_tax_1" disabled value="{{ $reading->consumption_tax_1 }}">
                                     </div>
@@ -176,7 +260,7 @@
                                             name="total_cost_tax_1" disabled value="{{ $reading->total_cost_tax_1 }}">
                                     </div>
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
-                                        <label for="consumption_tax_2">Consumo 2ª Faixa</label>
+                                        <label for="consumption_tax_2">Consumo na 2ª Faixa</label>
                                         <input type="text" class="form-control bg-light" id="consumption_tax_2"
                                             name="consumption_tax_2" disabled value="{{ $reading->consumption_tax_2 }}">
                                     </div>
@@ -189,43 +273,14 @@
 
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="real_cost">Custo do Total Medido em Reais</label>
-                                        <input type="text" class="form-control bg-light" id="real_cost" name="real_cost"
-                                            disabled value="{{ $reading->real_cost }}">
-                                    </div>
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
-                                        <label for="diff_cost">Diferença entre o Medido e
-                                            Concessionária</label>
-                                        <input type="text" class="form-control bg-light" id="diff_cost" name="diff_cost"
-                                            disabled value="{{ $reading->diff_cost }}">
-                                    </div>
-                                </div>
-
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    @if ($reading->fraction)
-                                        @foreach ($reading->fraction as $key => $value)
-                                            <div
-                                                class="col-12 col-md-6 form-group px-0 {{ $loop->index % 2 == 0 ? 'pr-md-2' : 'pl-md-2' }}">
-                                                <label for="fraction">Valor por fração para {{ $key }}
-                                                    unidades</label>
-                                                <input type="text" class="form-control bg-light"
-                                                    id="fraction{{ $loop->index }}" name="fraction" disabled
-                                                    value="{{ $value }}">
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                </div>
-
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="units_inside_tax_1">Unidades dentro da 1ª Faixa</label>
-                                        <input type="text" class="form-control  bg-light" id="units_inside_tax_1"
+                                        <input type="text" class="form-control bg-light" id="units_inside_tax_1"
                                             name="units_inside_tax_1" disabled
                                             value="{{ $reading->units_inside_tax_1 }}">
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="units_above_tax_1">Unidades acima da 1ª Faixa</label>
-                                        <input type="text" class="form-control  bg-light" id="units_above_tax_1"
+                                        <input type="text" class="form-control bg-light" id="units_above_tax_1"
                                             name="units_above_tax_1" disabled value="{{ $reading->units_above_tax_1 }}">
                                     </div>
                                 </div>
@@ -235,18 +290,18 @@
                                 @if ($reading->apartments_report)
                                     <div class="d-flex flex-wrap justify-content-between">
                                         @php
-                                            $heads = ['Apartamento', 'Valor Total de Consumo', 'Rateio Proporcional ao Consumo', 'Valor total da Unidade'];
+                                            $heads = ['Apartamento', 'Volume Consumido (m3)', 'Valor Total de Consumo', 'Ajuste de Área Comum', 'Valor total da Unidade'];
 
                                             $list = [];
 
                                             foreach ($reading->apartments_report as $apartment) {
-                                                $list[] = [$apartment->name, $apartment->total, $apartment->partial, $apartment->total_unit];
+                                                $list[] = [$apartment->name, $apartment->consumed, $apartment->total, $apartment->common_area, $apartment->total_unit];
                                             }
 
                                             $config = [
                                                 'data' => $list,
                                                 'order' => [[0, 'asc']],
-                                                'columns' => [null, null, null, null],
+                                                'columns' => [null, null, null, null, null],
                                                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                             ];
                                         @endphp

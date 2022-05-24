@@ -84,7 +84,8 @@
                                                         </p>
                                                     </div>
                                                     <div class="card-footer">
-                                                        <a href="#" class="card-link">Visualizar</a>
+                                                        <a href="{{ route('app.residences.readings.complex', ['reading' => $data->id, 'complex' => $complex->id]) }}"
+                                                            class="card-link">Visualizar</a>
                                                     </div>
                                                 </div>
                                             @else
@@ -95,8 +96,50 @@
                                 </div>
 
                                 <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-sm-3 col-6">
+                                            <div class="description-block border-right">
+                                                <h5 class="description-header">
+                                                    {{ number_format($complex->getAverageConsume(), 2, ',', '.') }}
+                                                    m<sup>3</sup>
+                                                </h5>
+                                                <span class="description-text">Consumo médio anual</span>
+                                            </div>
 
+                                        </div>
+
+                                        <div class="col-sm-3 col-6">
+                                            <div class="description-block border-right">
+                                                <h5 class="description-header">
+                                                    {{ number_format($complex->getTotalConsume(), 2, ',', '.') }}
+                                                    m<sup>3</sup>
+                                                </h5>
+                                                <span class="description-text">Consumo total anual</span>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-3 col-6">
+                                            <div class="description-block border-right">
+                                                <h5 class="description-header">
+                                                    {{ 'R$ ' . number_format($complex->getAverageCost(), 2, ',', '.') }}
+                                                </h5>
+                                                <span class="description-text">Custo médio anual</span>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-3 col-6">
+                                            <div class="description-block">
+                                                <h5 class="description-header">
+                                                    {{ 'R$ ' . number_format($complex->getAverageCommonArea(), 2, ',', '.') }}
+                                                </h5>
+                                                <span class="description-text">Custo médio área comum anual</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

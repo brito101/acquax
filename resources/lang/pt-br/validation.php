@@ -251,7 +251,13 @@ return [
         'fraction' => 'fração ideal',
         'year_ref' => 'ano de referência',
         'photo' => 'foto',
-        'year_manufacture' => 'ano de fabricação'
+        'year_manufacture' => 'ano de fabricação',
+        'billed_consumption' => 'consumo faturado',
+        'consumption_calculation' => 'tipo de cálculo de consumo das unidades',
+        'type_minimum_value' => 'tipo de mínimo',
+        'minimum_value' => 'valor mínimo',
+        'fare_type'  => 'tipo de tarifa',
+        'common_area' => 'tipo de rateio da área comum'
     ],
 
 ];
