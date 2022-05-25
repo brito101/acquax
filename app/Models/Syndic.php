@@ -19,6 +19,13 @@ class Syndic extends Model
         'editor',
     ];
 
+    /** Accessors */
+    public function getFirstAccessAttribute($value)
+    {
+        $value = ($value === 1 || $value === true) ? 'Sim' : 'Não';
+        return $value;
+    }
+
     /** Relationships */
     public function user()
     {

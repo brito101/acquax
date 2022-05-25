@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Aplication;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Models\Settings\Genre;
+use App\Models\Syndic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -72,7 +73,19 @@ class UserController extends Controller
         if (!empty($data['password'])) {
             $data['password'] = bcrypt($request->password);
         }
+
+        $syndics = Syndic::where('user_id', Auth::user()->id)->get();
+        $first_access = [];
+
         if ($user->update($data)) {
+            if ($syndics->count() > 0) {
+                foreach ($syndics as $item) {
+                    if ($item->first_access == true) {
+                        $item->first_access = false;
+                        $item->save();
+                    }
+                }
+            }
             return redirect()
                 ->route('app.user.edit')
                 ->with('success', 'Atualização realizada!');

@@ -7,6 +7,7 @@ use App\Models\Complex;
 use App\Models\Resident;
 use App\Models\Syndic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -24,9 +25,14 @@ class AppController extends Controller
         }
 
         $residences = Resident::where('user_id', Auth::user()->id)->get();
-        $syndic = Syndic::where('user_id', Auth::user()->id)->pluck('complex_id');
-        if ($syndic->count() > 0) {
-            $complexes = Complex::whereIn('id', $syndic)->get();
+        $syndics = Syndic::where('user_id', Auth::user()->id)->get();
+        if ($syndics->count() > 0) {
+            if (!$syndics->pluck('first_access')->contains('Não')) {
+                return redirect()
+                    ->route('app.user.edit')
+                    ->with('warning', 'Por favor, atualize seus dados pessoais.');
+            }
+            $complexes = Complex::whereIn('id', $syndics->pluck('complex_id'))->get();
         } else {
             $complexes = null;
         }
