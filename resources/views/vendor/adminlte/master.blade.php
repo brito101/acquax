@@ -4,9 +4,9 @@
 <head>
 
     <!-- PWA  -->
-    <meta name="theme-color" content="#6777ef" />
-    <link rel="apple-touch-icon" href="{{ asset('img/logo.png') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">
+    @if (Route::currentRouteName() == 'login')
+        @laravelPWA
+    @endif
 
     {{-- Base Meta Tags --}}
     <meta charset="utf-8">
@@ -111,14 +111,6 @@
     @yield('adminlte_js')
     @yield('custom_js')
 
-    <script src="{{ asset('/sw.js') }}"></script>
-    <script>
-        if (!navigator.serviceWorker.controller) {
-            navigator.serviceWorker.register("/sw.js").then(function(reg) {
-                console.log("Service worker has been registered for scope: " + reg.scope);
-            });
-        }
-    </script>
 </body>
 
 </html>

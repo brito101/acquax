@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a126acc7346031ebc87447863f446f45",
+    "content-hash": "67e53c6837e71802bc087ac5ee58a31b",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -1321,63 +1321,6 @@
                 "source": "https://github.com/jeroennoten/Laravel-AdminLTE/tree/v3.8.2"
             },
             "time": "2022-05-18T14:12:47+00:00"
-        },
-        {
-            "name": "ladumor/laravel-pwa",
-            "version": "v0.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/shailesh-ladumor/laravel-pwa.git",
-                "reference": "8256db4b88554e69d8c0691ea8880efe29845411"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/shailesh-ladumor/laravel-pwa/zipball/8256db4b88554e69d8c0691ea8880efe29845411",
-                "reference": "8256db4b88554e69d8c0691ea8880efe29845411",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": ">=5.4",
-                "php": ">=5.6"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "\\Ladumor\\LaravelPwa\\PWAServiceProvider"
-                    ],
-                    "aliases": {
-                        "LaravelPwa": "Ladumor\\LaravelPwa\\LaravelPwa"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Ladumor\\LaravelPwa\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Shailesh Ladumor",
-                    "email": "shaileshmladumor@gmail.com"
-                }
-            ],
-            "description": "this package used for the make pwa website.",
-            "keywords": [
-                "laravel",
-                "laravel-pwa",
-                "php",
-                "pwa-laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/shailesh-ladumor/laravel-pwa/issues",
-                "source": "https://github.com/shailesh-ladumor/laravel-pwa/tree/v0.0.3"
-            },
-            "time": "2022-04-24T06:31:02+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3887,6 +3830,56 @@
                 "source": "https://github.com/shetabit/visitor/tree/v3.1.3"
             },
             "time": "2022-03-03T11:28:31+00:00"
+        },
+        {
+            "name": "silviolleite/laravelpwa",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silviolleite/laravel-pwa.git",
+                "reference": "5f7135d2ee870af01793c9fdf6b1b932b546e20e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silviolleite/laravel-pwa/zipball/5f7135d2ee870af01793c9fdf6b1b932b546e20e",
+                "reference": "5f7135d2ee870af01793c9fdf6b1b932b546e20e",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelPWA\\Providers\\LaravelPWAServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelPWA\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Silvio Luis Leite",
+                    "email": "silviolleite@gmail.com"
+                }
+            ],
+            "description": "Looks like an app, feels like an app, but NOT an app.",
+            "keywords": [
+                "laravel",
+                "php",
+                "progressive web apps",
+                "pwa"
+            ],
+            "support": {
+                "issues": "https://github.com/silviolleite/laravel-pwa/issues",
+                "source": "https://github.com/silviolleite/laravel-pwa/tree/2.0.3"
+            },
+            "time": "2020-08-20T12:19:16+00:00"
         },
         {
             "name": "spatie/laravel-permission",
