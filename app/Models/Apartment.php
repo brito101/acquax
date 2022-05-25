@@ -74,7 +74,7 @@ class Apartment extends Model
             foreach ($readings as $reading) {
                 if ($reading->month_ref == $month) {
                     $consumed += $this->convertToFloat($reading->volume_consumed);
-                    $comparativePercentage += number_format($reading->clear_comparative_percentage, 2);
+                    $comparativePercentage += $reading->clear_comparative_percentage;
                 }
             }
             $values[] = array($consumed, $comparativePercentage, $commonArea, $total);

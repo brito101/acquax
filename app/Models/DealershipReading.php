@@ -107,7 +107,7 @@ class DealershipReading extends Model
         return 'R$ ' . number_format($value, 2, ",", ".");
     }
 
-    /** Consumo real em m3 */
+    /** Real Consumed (m3) */
     public function getMonthlyConsumptionAttribute()
     {
         $volume_consumed = 0;
@@ -175,11 +175,15 @@ class DealershipReading extends Model
             foreach ($readings as $reading) {
                 $volume_consumed = $reading->volume_consumed;
                 if ($volume_consumed > 0  && $volume_consumed <= $tax_1) {
-                    $total_consumed += ($this->convertToFloat($reading->volume_consumed) *  $cost_tax_1);
+                    if ($this->consumption_calculation == 'Consumo com Mínimo') {
+                        $total_consumed += $this->moneyConvertToFloat($this->minimum_value);
+                    } else {
+                        $total_consumed += ($this->convertToFloat($reading->volume_consumed) *  $cost_tax_1);
+                    }
                 }
 
                 if ($volume_consumed > $tax_1) {
-                    $total_consumed += ($tax_1 * $cost_tax_1 + ($this->convertToFloat($reading->volume_consumed) - $tax_2) * $cost_tax_2);
+                    $total_consumed += ($tax_1 * $cost_tax_1 + ($this->convertToFloat($reading->volume_consumed) - $tax_1) * $cost_tax_2);
                 }
             }
         }
@@ -306,6 +310,7 @@ class DealershipReading extends Model
         return $units;
     }
 
+    //** Apartments Calc Engine! */
     public function getApartmentsReportAttribute()
     {
         $complex = $this->complex;
@@ -333,14 +338,21 @@ class DealershipReading extends Model
                     $total_consumed += $this->convertToFloat($reading->volume_consumed);
                 }
 
+                /** Calc Rules */
+                /* Total Consumed */
                 if ($total_consumed <= $tax_1) {
-                    $total_cost += ($this->convertToFloat($reading->volume_consumed) *  $cost_1) * 2;
+                    if ($this->consumption_calculation == 'Consumo com Mínimo') {
+                        $total_cost += $this->moneyConvertToFloat($this->minimum_value) * 2;
+                    } else {
+                        $total_cost += ($total_consumed *  $cost_1) * 2;
+                    }
                 }
 
                 if ($total_consumed > $tax_1) {
-                    $total_cost += ($tax_1 * $cost_1 + ($this->convertToFloat($reading->volume_consumed) - $tax_2) * $cost_2) * 2;
+                    $total_cost += ($tax_1 * $cost_1 + ($total_consumed - $tax_1) * $cost_2) * 2;
                 }
 
+                /** Common Area */
                 $common_area = 0;
                 switch ($this->common_area) {
                     case 'Sem':
@@ -416,7 +428,6 @@ class DealershipReading extends Model
         $units = $this->totalApartments();
         $reports = [];
         $diff_cost = $this->moneyConvertToFloat($this->diff_cost);
-        $simple_fraction = $units > 0 ? $diff_cost / $units : 0;
 
         $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
         $readings = Reading::whereIn('meter_id', $meters)
@@ -435,25 +446,37 @@ class DealershipReading extends Model
                 $total_consumed += $this->convertToFloat($reading->volume_consumed);
             }
 
-            // if ($total_consumed <= $tax_1) {
-            //     $total_cost = $tax_1 * $cost_1 * 2;
-            // } else {
-            //     $total_cost = (($tax_1 * $cost_1) + (($total_consumed - $tax_1) * $cost_2)) * 2;
-            // }
-
-            if ($total_consumed > 0  && $total_consumed < $tax_2) {
-                $total_cost = $this->convertToFloat($reading->volume_consumed) *  $cost_1 * 2;
+            if ($total_consumed <= $tax_1) {
+                if ($this->consumption_calculation == 'Consumo com Mínimo') {
+                    $total_cost += $this->moneyConvertToFloat($this->minimum_value) * 2;
+                } else {
+                    $total_cost += ($total_consumed *  $cost_1) * 2;
+                }
             }
 
-            if ($total_consumed > $tax_2) {
-                $total_cost = $this->convertToFloat($reading->volume_consumed) *  $cost_2 * 2;
+            if ($total_consumed > $tax_1) {
+                $total_cost += ($tax_1 * $cost_1 + ($total_consumed - $tax_1) * $cost_2) * 2;
             }
 
-            $partial = $simple_fraction * $this->convertToFloat($apartment->fraction) / 100;
-            $total_unit = $total_cost +  $partial;
+            /** Common Area */
+            $common_area = 0;
+            switch ($this->common_area) {
+                case 'Sem':
+                    $common_area = 0;
+                    break;
+                case 'Simples':
+                    $common_area = $diff_cost / $units;
+                    break;
+                case 'Fração':
+                    $common_area = $diff_cost * $this->convertToFloat($apartment->fraction) / 100;
+                    break;
+            }
+
+            $total_unit = $total_cost +  $common_area;
+
             $reports = array(
                 'total' => $this->convertToMoney($total_cost),
-                'partial' => $this->convertToMoney($partial),
+                'partial' => $this->convertToMoney($common_area),
                 'total_unit' => $this->convertToMoney($total_unit),
                 'apartment' => $apartment->id,
                 'totalConsumed' => $total_consumed,
