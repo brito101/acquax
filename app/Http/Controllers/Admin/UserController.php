@@ -28,7 +28,7 @@ class UserController extends Controller
         if (Auth::user()->hasRole('Programador')) {
             $users = User::all();
         } elseif (Auth::user()->hasRole('Administrador')) {
-            $users = User::role(['Administrador'])->get();
+            $users = User::role(['Administrador', 'Usuário'])->get();
         } else {
             $users = null;
         }

@@ -80,30 +80,40 @@
                                             </div>
                                             <div class="card-footer">
                                                 <div class="text-center d-flex flex-wrap justify-content-center">
-                                                    <a href="{{ route('admin.complexes.edit', ['complex' => $complex->id]) }}"
-                                                        class="btn btn-sm btn-primary mr-2">
-                                                        <i class="fas fa-edit mr-2"></i>Editar</a>
-
-                                                    <a href="complexes/destroy/{{ $complex->id }}"
-                                                        class="btn btn-sm btn-danger ml-2"
-                                                        onclick="return confirm('Confirma a exclusão deste condomínio?')">
-                                                        <i class="fas fa-trash mr-2"></i>Excluir
-                                                    </a>
+                                                    <div class="col-6">
+                                                        <a href="{{ route('admin.complexes.edit', ['complex' => $complex->id]) }}"
+                                                            class="btn btn-sm btn-primary w-100">
+                                                            <i class="fas fa-edit mr-2"></i>Editar</a>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <a href="complexes/destroy/{{ $complex->id }}"
+                                                            class="btn btn-sm btn-danger w-100"
+                                                            onclick="return confirm('Confirma a exclusão deste condomínio?')">
+                                                            <i class="fas fa-trash mr-2"></i>Excluir
+                                                        </a>
+                                                    </div>
                                                 </div>
                                                 <div class="text-center d-flex flex-wrap justify-content-center pt-2">
-                                                    <a href="{{ route('admin.blocks.index', ['complex' => $complex->id]) }}"
-                                                        class="btn btn-sm btn-success mr-2">
-                                                        <i class="fas fa-building mr-2"></i>Blocos</a>
+                                                    <div class="col-6">
+                                                        <a href="{{ route('admin.blocks.index', ['complex' => $complex->id]) }}"
+                                                            class="btn btn-sm btn-success w-100">
+                                                            <i class="fas fa-building mr-2"></i>Blocos</a>
+                                                    </div>
                                                     @if ($complex->blocks->count() > 0)
-                                                        <a href="{{ route('admin.apartments.index', ['complex' => $complex->id]) }}"
-                                                            class="btn btn-sm btn-info mr-2">
-                                                            <i class="fas fa-home mr-2"></i>Apts</a>
+                                                        <div class="col-6">
+                                                            <a href="{{ route('admin.apartments.index', ['complex' => $complex->id]) }}"
+                                                                class="btn btn-sm btn-info w-100">
+                                                                <i class="fas fa-home mr-2"></i>Apts</a>
+                                                        </div>
                                                     @endif
-                                                    <a href="{{ route('admin.syndics.index', ['complex' => $complex->id]) }}"
-                                                        class="btn btn-sm btn-secondary">
-                                                        <i class="fas fa-users mr-2"></i>Síndicos
-                                                    </a>
-
+                                                </div>
+                                                <div class="text-center d-flex flex-wrap justify-content-center pt-2">
+                                                    <div class="col-6">
+                                                        <a href="{{ route('admin.syndics.index', ['complex' => $complex->id]) }}"
+                                                            class="btn btn-sm btn-secondary w-100">
+                                                            <i class="fas fa-users"></i>Síndicos
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

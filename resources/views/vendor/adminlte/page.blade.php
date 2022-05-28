@@ -47,7 +47,7 @@
     <footer class="main-footer fixed-bottom">
         <strong>Copyright © 2022-{{ date('Y') }} <a href="https://www.acquaxdobrasil.com.br" target="_blank"
                 rel="noreferrer" title="AcquaX do Brasil">AcquaX do Brasil</a>.</strong>
-        todos os direitos Reservados.
+        Todos os direitos Reservados.
         <div class="float-right d-none d-sm-inline-block">
             <b>Versão</b> 1.0.0
         </div>
