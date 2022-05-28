@@ -301,8 +301,10 @@
     <script>
         window.onload = function() {
             $(".main-footer").remove();
-            window.print();
-            window.close();
+            setTimeout(function() {
+                window.print();
+                window.close();
+            }, 100);
         }
     </script>
 @endsection
