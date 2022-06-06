@@ -37,7 +37,7 @@ class Apartment extends Model
     /** Accessor */
     public function getFractionAttribute($value)
     {
-        return number_format($value, 3, ",", ".") . '%';
+        return number_format($value, 8, ",", ".");
     }
 
     /**  Appends */

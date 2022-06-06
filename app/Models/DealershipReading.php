@@ -362,7 +362,7 @@ class DealershipReading extends Model
                         $common_area = $diff_cost / $units;
                         break;
                     case 'Fração':
-                        $common_area = $diff_cost * $this->convertToFloat($apartment->fraction) / 100;
+                        $common_area = $diff_cost * $this->convertToFloat($apartment->fraction);
                         break;
                 }
 
@@ -468,7 +468,7 @@ class DealershipReading extends Model
                     $common_area = $diff_cost / $units;
                     break;
                 case 'Fração':
-                    $common_area = $diff_cost * $this->convertToFloat($apartment->fraction) / 100;
+                    $common_area = $diff_cost * $this->convertToFloat($apartment->fraction);
                     break;
             }
 
