@@ -21,7 +21,15 @@
         </div>
     </section>
 
-
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end pb-4">
+                    <a class="btn btn-secondary" href="{{ Storage::url('planilha.ods') }}" download>Download Planilha</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="content">
         <div class="container-fluid">
@@ -82,8 +90,8 @@
                                     </div>
                                     <div class="col-12 col-md-3 form-group px-0 pl-md-3">
                                         <label for="year">Ano</label>
-                                        <input type="text" id="year" name="year" class="form-control" placeholder="YYYY"
-                                            value="{{ date('Y') }}">
+                                        <input type="text" id="year" name="year" class="form-control"
+                                            placeholder="YYYY" value="{{ date('Y') }}">
                                     </div>
                                     <div class="col-12 col-md-3 form-group px-0 pl-md-3">
                                         <label for="id">Nº da leitura</label>

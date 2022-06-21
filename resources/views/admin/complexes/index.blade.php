@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@section('plugins.BsCustomFileInput', true)
 
 @section('title', '- Condomínios')
 
@@ -22,8 +23,34 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
+                <div class="col-12 d-flex justify-content-end pb-4">
+                    <a class="btn btn-secondary" href="{{ Storage::url('condominio.ods') }}" download>Download
+                        Planilha</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
                 <div class="col-12">
                     @include('components.alert')
+                    <div class="card card-solid">
+                        <div class="card-header">
+                            <i class="fas fa-fw fa-upload"></i> Importação de Planilha de Cadastro de Condomínios
+                        </div>
+                        <form action="{{ route('admin.complex.import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="card-body pb-0">
+                                <x-adminlte-input-file name="file" label="Arquivo" placeholder="Selecione o arquivo..."
+                                    legend="Selecionar" />
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary">Importar</button>
+                            </div>
+                        </form>
+                    </div>
                     <div class="card card-solid">
                         <div class="card-header">
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">

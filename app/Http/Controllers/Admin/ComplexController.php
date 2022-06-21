@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ComplexRequest;
+use App\Imports\ComplexImport;
 use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
@@ -16,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ComplexController extends Controller
 {
@@ -251,5 +253,16 @@ class ComplexController extends Controller
                 ->back()
                 ->with('error', 'Erro ao excluir!');
         }
+    }
+
+    public function fileImport(Request $request)
+    {
+        if (!$request->file()) {
+            return redirect()
+                ->back()
+                ->with('error', 'Nenhum arquivo selecionado!');
+        }
+        Excel::import(new ComplexImport, $request->file('file')->store('temp'));
+        return back()->with('success', 'Importação realizada!');;
     }
 }

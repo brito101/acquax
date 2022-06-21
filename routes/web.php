@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('users', UserController::class);
 
         /** Complex */
+        Route::post('complex-import', [ComplexController::class, 'fileImport'])->name('complex.import');
         Route::get('/complexes/destroy/{id}', [ComplexController::class, 'destroy']);
         Route::resource('complexes', ComplexController::class);
 
