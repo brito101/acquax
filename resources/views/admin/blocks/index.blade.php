@@ -3,10 +3,11 @@
 @section('title', '- Blocos')
 @section('plugins.Datatables', true)
 @section('plugins.DatatablesPlugins', true)
+@section('plugins.BsCustomFileInput', true)
 
 @section('content')
     @if (auth()->user()->can('Editar Blocos') &&
-    auth()->user()->can('Excluir Blocos'))
+        auth()->user()->can('Excluir Blocos'))
         @php
 
             $list = [];
@@ -72,12 +73,39 @@
             </div>
         </div>
     </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end pb-4">
+                    <a class="btn btn-secondary" href="{{ Storage::url('bloco.ods') }}" download>Download
+                        Planilha</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
 
                     @include('components.alert')
+                    <div class="card card-solid">
+                        <div class="card-header">
+                            <i class="fas fa-fw fa-upload"></i> Importação de Planilha de Cadastro de Blocos
+                        </div>
+                        <form action="{{ route('admin.blocks.import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="card-body pb-0">
+                                <x-adminlte-input-file name="file" label="Arquivo" placeholder="Selecione o arquivo..."
+                                    legend="Selecionar" />
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary">Importar</button>
+                            </div>
+                        </form>
+                    </div>
 
                     <div class="card">
                         <div class="card-header">
@@ -90,8 +118,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config" striped
-                                hoverable beautify with-buttons />
+                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
+                                striped hoverable beautify with-buttons />
                         </div>
                     </div>
                 </div>

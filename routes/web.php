@@ -77,10 +77,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('complexes', ComplexController::class);
 
         /** Blocks */
+        Route::post('blocks-import', [BlockController::class, 'fileImport'])->name('blocks.import');
         Route::get('blocks/destroy/{id}', [BlockController::class, 'destroy']);
         Route::resource('blocks', BlockController::class);
 
         /** Apartments */
+        Route::post('apartments-import', [ApartmentController::class, 'fileImport'])->name('apartments.import');
         Route::get('/apartments/destroy/{id}', [ApartmentController::class, 'destroy']);
         Route::resource('apartments', ApartmentController::class);
 

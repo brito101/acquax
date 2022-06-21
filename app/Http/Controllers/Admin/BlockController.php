@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BlockRequest;
+use App\Imports\BlockImport;
 use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
@@ -12,6 +13,7 @@ use App\Models\Reading;
 use App\Models\Resident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BlockController extends Controller
 {
@@ -219,5 +221,16 @@ class BlockController extends Controller
                 ->back()
                 ->with('error', 'Erro ao excluir!');
         }
+    }
+
+    public function fileImport(Request $request)
+    {
+        if (!$request->file()) {
+            return redirect()
+                ->back()
+                ->with('error', 'Nenhum arquivo selecionado!');
+        }
+        Excel::import(new BlockImport, $request->file('file')->store('temp'));
+        return back()->with('success', 'Importação realizada!');;
     }
 }
