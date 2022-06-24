@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MeterRequest;
+use App\Imports\MetersImport;
 use App\Models\Apartment;
 use App\Models\Settings\TypeMeter;
 use App\Models\Meter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MeterController extends Controller
 {
@@ -171,5 +173,16 @@ class MeterController extends Controller
                 ->back()
                 ->with('error', 'Erro ao excluir!');
         }
+    }
+
+    public function fileImport(Request $request)
+    {
+        if (!$request->file()) {
+            return redirect()
+                ->back()
+                ->with('error', 'Nenhum arquivo selecionado!');
+        }
+        Excel::import(new MetersImport, $request->file('file')->store('temp'));
+        return back()->with('success', 'Importação realizada!');;
     }
 }

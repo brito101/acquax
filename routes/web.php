@@ -87,6 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('apartments', ApartmentController::class);
 
         /** Meters */
+        Route::post('meters-import', [MeterController::class, 'fileImport'])->name('meters.import');
         Route::get('/meters/destroy/{id}', [MeterController::class, 'destroy']);
         Route::resource('meters', MeterController::class);
 

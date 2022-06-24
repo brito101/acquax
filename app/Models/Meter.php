@@ -21,7 +21,8 @@ class Meter extends Model
         'user_id',
         'location',
         'initial_reading',
-        'year_manufacture'
+        'year_manufacture',
+        'main'
     ];
 
     /** Relationships */
@@ -45,6 +46,15 @@ class Meter extends Model
     public function getInitialReadingAttribute($value)
     {
         return number_format($value, 13, ",", ".");
+    }
+
+    public function getMainAttribute($value)
+    {
+        if ($value == true) {
+            return 'Sim';
+        } else {
+            return 'Não';
+        }
     }
 
     /** Aux */

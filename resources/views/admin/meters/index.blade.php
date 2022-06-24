@@ -3,6 +3,7 @@
 @section('title', '- Medidores')
 @section('plugins.Datatables', true)
 @section('plugins.DatatablesPlugins', true)
+@section('plugins.BsCustomFileInput', true)
 
 @section('content')
     @if (auth()->user()->can('Editar Medidores') &&
@@ -10,15 +11,15 @@
         @php
             $list = [];
 
-            $heads = [['label' => 'ID', 'width' => 5], 'Identificador', 'Propriedade', 'Localização', 'Tipo', 'Fabricação', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+            $heads = [['label' => 'ID', 'width' => 5], 'Identificador', 'Propriedade', 'Localização', 'Tipo', 'Fabricação', 'Principal', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
             foreach ($meters as $meter) {
-                $list[] = [$meter->id, $meter->register, 'Condomínio ' . $meter->apartment->getComplexNameAttribute() . ' - Bl. ' . $meter->apartment->getBlockNameAttribute() . ' - Ap. ' . $meter->apartment['name'], $meter->location, $meter->typeMeter['name'], $meter->year_manufacture, $meter->status, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="meters/' . $meter->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="meters/destroy/' . $meter->id . '" onclick="return confirm(\'Confirma a exclusão deste medidor?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
+                $list[] = [$meter->id, $meter->register, 'Condomínio ' . $meter->apartment->getComplexNameAttribute() . ' - Bl. ' . $meter->apartment->getBlockNameAttribute() . ' - Ap. ' . $meter->apartment['name'], $meter->location, $meter->typeMeter['name'], $meter->year_manufacture, $meter->main, $meter->status, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="meters/' . $meter->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="meters/destroy/' . $meter->id . '" onclick="return confirm(\'Confirma a exclusão deste medidor?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
             }
 
             $config = [
                 'data' => $list,
                 'order' => [[0, 'asc']],
-                'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
+                'columns' => [null, null, null, null, null, null, null, null, ['orderable' => false]],
                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
             ];
 
@@ -57,13 +58,38 @@
             </div>
         </div>
     </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end pb-4">
+                    <a class="btn btn-secondary" href="{{ Storage::url('medidores.ods') }}" download>Download
+                        Planilha</a>
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
 
                     @include('components.alert')
-
+                    <div class="card card-solid">
+                        <div class="card-header">
+                            <i class="fas fa-fw fa-upload"></i> Importação de Planilha de Cadastro de Medidores
+                        </div>
+                        <form action="{{ route('admin.meters.import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="card-body pb-0">
+                                <x-adminlte-input-file name="file" label="Arquivo" placeholder="Selecione o arquivo..."
+                                    legend="Selecionar" />
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary">Importar</button>
+                            </div>
+                        </form>
+                    </div>
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
@@ -76,8 +102,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config" striped
-                                hoverable beautify with-buttons />
+                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
+                                striped hoverable beautify with-buttons />
                         </div>
                     </div>
                 </div>

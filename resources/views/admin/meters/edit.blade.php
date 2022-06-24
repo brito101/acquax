@@ -1,5 +1,6 @@
 @extends('adminlte::page')
 @section('plugins.select2', true)
+@section('plugins.BootstrapSwitch', true)
 
 @section('title', '- Edição de Medidor')
 
@@ -45,8 +46,9 @@
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="register">Identificador</label>
-                                        <input type="text" class="form-control" id="register" placeholder="Identificador"
-                                            name="register" value="{{ old('register') ?? $meter->register }}" required>
+                                        <input type="text" class="form-control" id="register"
+                                            placeholder="Identificador" name="register"
+                                            value="{{ old('register') ?? $meter->register }}" required>
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="apartment_id">Apartamento</label>
@@ -96,8 +98,8 @@
                                     </div>
                                 </div>
 
-
                                 <div class="d-flex flex-wrap justify-content-between">
+
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="status">Status do Medidor</label>
                                         <x-adminlte-select2 name="status">
@@ -108,6 +110,15 @@
                                                 {{ old('status') == 'Inativo' ? 'selected' : ($meter->status == 'Inativo' ? 'selected' : '') }}>
                                                 Inativo</option>
                                         </x-adminlte-select2>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                        @php
+                                            $config = [
+                                                'state' => $meter->main == 'Sim' ? true : false,
+                                            ];
+                                        @endphp
+                                        <x-adminlte-input-switch name="main" data-on-text="Sim" data-off-text="Não"
+                                            label="Medidor principal" data-on-color="teal" :config="$config" />
                                     </div>
                                 </div>
 

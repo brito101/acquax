@@ -20,6 +20,7 @@ class MeterRequest extends FormRequest
     {
         $this->merge([
             'initial_reading' => str_replace(',', '.', str_replace('.', '', $this->initial_reading)),
+            'main' => $this->main == 'true' ? true : false
         ]);
     }
 
@@ -31,7 +32,6 @@ class MeterRequest extends FormRequest
 
     public function rules()
     {
-
         return [
             'register' => "required|min:1|max:191|unique:meters,register,{$this->id},id,deleted_at,NULL",
             'status' => 'nullable|min:3|max:20',
@@ -40,6 +40,7 @@ class MeterRequest extends FormRequest
             'location' => 'nullable|max:191',
             'initial_reading' => 'required|numeric|between:0,999999999.9999999999999',
             'year_manufacture' => 'nullable|integer|min:1900|max:' . date("Y"),
+            'main' => 'boolean'
         ];
     }
 
