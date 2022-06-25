@@ -51,6 +51,36 @@
                             </div>
                         </form>
                     </div>
+
+                    <div class="card card-solid">
+                        <div class="card-header">
+                            <i class="fas fa-fw fa-search"></i> Pesquisa
+                        </div>
+                        <form method="POST" action="{{ route('admin.complex.search') }}">
+                            @csrf
+                            <div class="card-body pb-0">
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    <div class="col-12 col-md-6 form-group px-0 pr-2">
+                                        <label for="alias_name">Nome Fantasia</label>
+                                        <input type="text" id="alias_name" name="alias_name" class="form-control"
+                                            placeholder="Nome Fantasia do Condomínio" value="">
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pl-2">
+                                        <label for="city">Cidade</label>
+                                        <input type="text" id="city" name="city" class="form-control"
+                                            placeholder="Cidade do Condomínio" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Pequisar</button>
+                                <a href="{{ route('admin.complexes.index') }}" class="btn btn-secondary">Limpar</a>
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="card card-solid">
                         <div class="card-header">
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
@@ -155,7 +185,7 @@
                         <div class="card-footer">
                             <nav aria-label="Complexes Page Navigation">
                                 <ul class="pagination justify-content-center m-0">
-                                    {{ $complexes->links() }}
+                                    {{ $complexes->appends(request()->input())->links() }}
                                 </ul>
                             </nav>
                         </div>

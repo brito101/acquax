@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         /** Complex */
         Route::post('complex-import', [ComplexController::class, 'fileImport'])->name('complex.import');
+        Route::match(['get', 'post'], 'complex-search', [ComplexController::class, 'search'])->name('complex.search');
         Route::get('/complexes/destroy/{id}', [ComplexController::class, 'destroy']);
         Route::resource('complexes', ComplexController::class);
 

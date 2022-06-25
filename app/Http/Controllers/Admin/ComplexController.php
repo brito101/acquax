@@ -37,6 +37,17 @@ class ComplexController extends Controller
         return view('admin.complexes.index', compact('complexes'));
     }
 
+    public function search(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Listar Condomínios')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        $complexes = Complex::where('alias_name', 'like', "%{$request['alias_name']}%")->where('city', 'like', "%{$request['city']}%")->orderBy('created_at', 'desc')->paginate(6);
+
+        return view('admin.complexes.index', compact('complexes'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
