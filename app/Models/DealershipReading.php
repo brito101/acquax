@@ -37,10 +37,8 @@ class DealershipReading extends Model
         'type_minimum_value',
         'minimum_value',
         'fare_type',
-        'common_area'
-    ];
-
-    protected $appends = [
+        'common_area',
+        /** computed data */
         'monthly_consumption',
         'diff_consumption',
         'previous_monthly_consumption',
@@ -53,6 +51,9 @@ class DealershipReading extends Model
         'total_cost_tax_1',
         'consumption_tax_2',
         'total_cost_tax_2',
+    ];
+
+    protected $appends = [
         'units_inside_tax_1',
         'units_above_tax_1',
         'fraction',
@@ -108,17 +109,22 @@ class DealershipReading extends Model
     }
 
     /** Real Consumed (m3) */
-    public function getMonthlyConsumptionAttribute()
+    public function setMonthlyConsumptionAttribute($value)
     {
         $volume_consumed = 0;
         foreach ($this->getApartmentReadings() as $reading) {
             $volume_consumed += ($this->convertToFloat($reading->volume_consumed));
         }
 
-        return number_format($volume_consumed, 3, ",", ".");
+        $this->attributes['monthly_consumption'] = $volume_consumed;
     }
 
-    public function getDiffConsumptionAttribute()
+    public function getMonthlyConsumptionAttribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
+    public function setDiffConsumptionAttribute($value)
     {
         $total = 0;
         $volume_consumed = 0;
@@ -128,23 +134,34 @@ class DealershipReading extends Model
 
         $total = abs($volume_consumed - $this->convertToFloat($this->dealership_consumption));
 
-        return number_format($total, 3, ",", ".");
+        $this->attributes['diff_consumption'] = $total;
     }
 
-    public function getPreviousBilledConsumptionAttribute()
+    public function getDiffConsumptionAttribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
+    public function setPreviousBilledConsumptionAttribute($value)
     {
         $datePrevious = $this->getPreviousDateRef($this->month_ref, $this->year_ref);
         $previous = DealershipReading::where('month_ref', $datePrevious[0])
             ->where('year_ref', $datePrevious[1])
             ->where('complex_id', $this->complex_id)->first();
         if ($previous) {
-            return $previous->billed_consumption;
+            $this->attributes['previous_billed_consumption'] = $this->convertToFloat($previous->billed_consumption);
         } else {
-            return "Inexistente";
+            $this->attributes['previous_billed_consumption'] = 0;
         }
     }
 
-    public function getPreviousMonthlyConsumptionAttribute()
+    public function getPreviousBilledConsumptionAttribute($value)
+    {
+
+        return $value == 0 ? "Inexistente" : number_format($value, 3, ",", ".");
+    }
+
+    public function setPreviousMonthlyConsumptionAttribute($value)
     {
         $previous_volume_consumed = 0;
         foreach ($this->getApartmentReadings() as $reading) {
@@ -152,10 +169,15 @@ class DealershipReading extends Model
                 $previous_volume_consumed += ($this->convertToFloat($reading->previous_volume_consumed));
             }
         }
-        return number_format($previous_volume_consumed, 3, ",", ".");
+        $this->attributes['previous_monthly_consumption'] = $previous_volume_consumed;
     }
 
-    public function getConsumptionValueAttribute()
+    public function getPreviousMonthlyConsumptionAttribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
+    public function setConsumptionValueAttribute($value)
     {
         $complex = $this->complex;
         $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
@@ -188,27 +210,45 @@ class DealershipReading extends Model
             }
         }
 
-        return 'R$ ' . number_format($total_consumed, 2, ",", ".");
+        $this->attributes['consumption_value'] = $total_consumed;
     }
 
-    public function getSewageValueAttribute()
+    public function getConsumptionValueAttribute($value)
     {
-        return $this->consumption_value;
+        return 'R$ ' . number_format($value, 2, ",", ".");
     }
 
-    public function getTotalValueAttribute()
+    public function setSewageValueAttribute($value)
     {
-        return 'R$ ' . number_format(($this->moneyConvertToFloat($this->consumption_value) * 2), 2, ',', '.');
+        $this->attributes['sewage_value'] = $this->moneyConvertToFloat($this->consumption_value);
     }
 
-    public function getDiffCostAttribute()
+    public function getSewageValueAttribute($value)
+    {
+        return 'R$ ' . number_format($value, 2, ",", ".");
+    }
+
+    public function setTotalValueAttribute($value)
+    {
+        $this->attributes['total_value'] =  ($this->moneyConvertToFloat($this->consumption_value) * 2);
+    }
+
+    public function getTotalValueAttribute($value)
+    {
+        return 'R$ ' . number_format($value, 2, ',', '.');
+    }
+
+    public function setDiffCostAttribute($value)
     {
         $real_cost = ($this->moneyConvertToFloat($this->consumption_value)) * 2;
         $dealership_cost = $this->moneyConvertToFloat($this->dealership_cost);
 
-        $total = $dealership_cost - $real_cost;
+        $this->attributes['diff_cost'] = $dealership_cost - $real_cost;
+    }
 
-        return 'R$ ' . number_format($total, 2, ",", ".");
+    public function getDiffCostAttribute($value)
+    {
+        return 'R$ ' . number_format($value, 2, ",", ".");
     }
 
     public function getConsumptionTax1Attribute()

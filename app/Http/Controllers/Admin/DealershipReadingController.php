@@ -69,6 +69,16 @@ class DealershipReadingController extends Controller
 
         $data = $request->all();
 
+        /** computed data forced */
+        $data['monthly_consumption'] = 'forced';
+        $data['diff_consumption'] = 'forced';
+        $data['previous_monthly_consumption'] = 'forced';
+        $data['previous_billed_consumption'] = 'forced';
+        $data['consumption_value'] = 'forced';
+        $data['sewage_value'] = 'forced';
+        $data['total_value'] = 'forced';
+        $data['diff_cost'] = 'forced';
+
         $data['editor'] = Auth::user()->id;
 
         $reading = DealershipReading::create($data);
@@ -139,6 +149,16 @@ class DealershipReadingController extends Controller
         }
 
         $data = $request->all();
+
+        /** computed data forced */
+        $data['monthly_consumption'] = 'forced';
+        $data['diff_consumption'] = 'forced';
+        $data['previous_monthly_consumption'] = 'forced';
+        $data['previous_billed_consumption'] = 'forced';
+        $data['consumption_value'] = 'forced';
+        $data['sewage_value'] = 'forced';
+        $data['total_value'] = 'forced';
+        $data['diff_cost'] = 'forced';
 
         $data['editor'] = Auth::user()->id;
 
