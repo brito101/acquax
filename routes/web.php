@@ -101,6 +101,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('syndics', SyndicController::class);
 
         /** Readings */
+        Route::get('/readings/photo', [ReadingController::class, 'photo']);
+        Route::post('/readings/photo', [ReadingController::class, 'photoImport'])->name('photo.import');
         Route::post('readings-import', [ReadingController::class, 'fileImport'])->name('readings.import');
         Route::post('/readings-search', [ReadingController::class, 'search'])->name('readings.search');
         Route::get('/readings-search', [ReadingController::class, 'index']);

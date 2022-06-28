@@ -302,6 +302,12 @@ return [
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'can'  => 'Criar Leituras',
                 ],
+                [
+                    'text' => 'Cadastro de Fotos',
+                    'url'  => 'admin/readings/photo',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Editar Leituras',
+                ],
             ],
         ],
         /** Dealerships Readings */

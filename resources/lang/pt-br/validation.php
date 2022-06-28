@@ -251,6 +251,7 @@ return [
         'fraction' => 'fração ideal',
         'year_ref' => 'ano de referência',
         'photo' => 'foto',
+        'photos' => 'fotos',
         'year_manufacture' => 'ano de fabricação',
         'billed_consumption' => 'consumo faturado',
         'consumption_calculation' => 'tipo de cálculo de consumo das unidades',

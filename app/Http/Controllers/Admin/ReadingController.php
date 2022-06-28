@@ -15,6 +15,8 @@ use JeroenNoten\LaravelAdminLte\View\Components\Tool\Datatable;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ReadingsImport;
+use Illuminate\Support\Facades\Validator;
+use Image;
 
 class ReadingController extends Controller
 {
@@ -280,5 +282,71 @@ class ReadingController extends Controller
         }
         Excel::import(new ReadingsImport, $request->file('file')->store('temp'));
         return back()->with('success', 'Importação realizada!');;
+    }
+
+    public function photo()
+    {
+        if (!Auth::user()->hasPermissionTo('Editar Leituras')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        return view('admin.readings.photo');
+    }
+
+    public function photoImport(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Editar Leituras')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        $validator = Validator::make($request->only('photos'), ['photos.*' => 'image|max:10240']);
+
+        if ($validator->fails() == true) {
+            return redirect()->back()->withInput()->with('error', 'Todas as imagens devem ser do tipo jpg, jpeg ou png.');
+        }
+
+        $counterImg = 0;
+        $counterReadings = 0;
+        if ($request->allFiles()) {
+            foreach ($request->allFiles()['photos'] as $image) {
+                $originalName = (str_replace('.' . $image->extension(), '', $image->getClientOriginalName()));
+
+                $imageName = Str::slug(mb_substr($originalName, 0, 100) . '-' . $request['month_ref']) . time() . '.' . $image->extension();
+
+                $destinationPath = storage_path() . '/app/public/readings';
+                $img = Image::make($image->path());
+                $img->resize(500, 500, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($destinationPath . '/' . $imageName);
+
+                $counterImg++;
+
+                $meter = Meter::where('register', $originalName)->first();
+                if (!empty($meter->id)) {
+                    $reading = Reading::where('month_ref', $request['month_ref'])->where('year_ref', $request['year_ref'])->where('meter_id', $meter->id)->first();
+
+                    if (!empty($reading->id)) {
+                        $imagePath = storage_path() . '/app/public/readings/' . $reading->cover;
+                        $imagePathBase64 = storage_path() . '/app/public/readings/' . $reading->cover_base64;
+
+                        if (File::isFile($imagePath)) {
+                            unlink($imagePath);
+                        }
+
+                        if (File::isFile($imagePathBase64)) {
+                            unlink($imagePathBase64);
+                        }
+
+                        $data['cover'] = $imageName;
+
+                        if ($reading->update($data)) {
+                            $counterReadings++;
+                        }
+                    }
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', "Foram importadas {$counterImg} imagens com sucesso e atualizado o total de {$counterReadings} leituras");
     }
 }
