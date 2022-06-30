@@ -194,7 +194,7 @@
                         <div class="card-footer">
                             <nav aria-label="Readings Page Navigation">
                                 <ul class="pagination justify-content-center m-0">
-                                    {{ $readings->links() }}
+                                    {{ $readings->appends(request()->input())->links() }}
                                 </ul>
                             </nav>
                         </div>

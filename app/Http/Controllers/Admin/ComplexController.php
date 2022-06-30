@@ -16,8 +16,10 @@ use App\Models\Syndic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
+use Image;
 
 class ComplexController extends Controller
 {
@@ -268,6 +270,10 @@ class ComplexController extends Controller
 
     public function fileImport(Request $request)
     {
+        if (!Auth::user()->hasPermissionTo('Criar Condomínios')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
         if (!$request->file()) {
             return redirect()
                 ->back()
@@ -275,5 +281,64 @@ class ComplexController extends Controller
         }
         Excel::import(new ComplexImport, $request->file('file')->store('temp'));
         return back()->with('success', 'Importação realizada!');;
+    }
+
+    public function photo()
+    {
+        if (!Auth::user()->hasPermissionTo('Editar Condomínios')) {
+            abort(403, 'Acesso não autorizado');
+        }
+        toastr()->info('O nome da foto deve ser igual ao nome fantasia do condomínio', 'Dica!', ['timeOut' => 5000]);
+        return view('admin.complexes.photo');
+    }
+
+    public function photoImport(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Editar Condomínios')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        $validator = Validator::make($request->only('photos'), ['photos.*' => 'image|max:10240']);
+
+        if ($validator->fails() == true) {
+            return redirect()->back()->withInput()->with('error', 'Todas as imagens devem ser do tipo jpg, jpeg ou png.');
+        }
+
+        $counterImg = 0;
+        $counterComplex = 0;
+
+        if ($request->allFiles()) {
+            foreach ($request->allFiles()['photos'] as $image) {
+                $originalName = (str_replace('.' . $image->extension(), '', $image->getClientOriginalName()));
+
+                $imageName = Str::slug(mb_substr($originalName, 0, 100) . '-' . $request['month_ref']) . time() . '.' . $image->extension();
+
+                $destinationPath = storage_path() . '/app/public/complexes';
+                $img = Image::make($image->path());
+                $img->resize(500, 500, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($destinationPath . '/' . $imageName);
+
+                $counterImg++;
+
+                $complex = Complex::where('alias_name', $originalName)->first();
+                if (!empty($complex->id)) {
+
+                    $imagePath = storage_path() . '/app/public/complexes/' . $complex->photo;
+
+                    if (File::isFile($imagePath)) {
+                        unlink($imagePath);
+                    }
+
+                    $data['photo'] = $imageName;
+
+                    if ($complex->update($data)) {
+                        $counterComplex++;
+                    }
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', "Foram importadas {$counterImg} imagens com sucesso e atualizado o total de {$counterComplex} condomínios");
     }
 }

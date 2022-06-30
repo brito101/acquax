@@ -275,13 +275,17 @@ class ReadingController extends Controller
 
     public function fileImport(Request $request)
     {
+        if (!Auth::user()->hasPermissionTo('Criar Leituras')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
         if (!$request->file()) {
             return redirect()
                 ->back()
                 ->with('error', 'Nenhum arquivo selecionado!');
         }
         Excel::import(new ReadingsImport, $request->file('file')->store('temp'));
-        return back()->with('success', 'Importação realizada!');;
+        return back()->with('success', 'Importação realizada!');
     }
 
     public function photo()
@@ -289,7 +293,7 @@ class ReadingController extends Controller
         if (!Auth::user()->hasPermissionTo('Editar Leituras')) {
             abort(403, 'Acesso não autorizado');
         }
-
+        toastr()->info('O nome da foto deve ser igual ao chassi do medidor', 'Dica!', ['timeOut' => 5000]);
         return view('admin.readings.photo');
     }
 

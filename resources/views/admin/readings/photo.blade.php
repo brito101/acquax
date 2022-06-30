@@ -36,11 +36,10 @@
                             <h3 class="card-title">Importação de Fotos</h3>
                         </div>
 
-                        <form method="POST" action="{{ route('admin.photo.import') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.readings.photo.import') }}"
+                            enctype="multipart/form-data">
+                            @csrf
                             <div class="card-body">
-
-                                @csrf
-
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-3 form-group px-0 pr-md-2">
                                         <label for="month_ref">Mês de Referência</label>

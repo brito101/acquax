@@ -49,7 +49,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
-                                <h3 class="card-title align-self-center">Usuários Cadastradas</h3>
+                                <h3 class="card-title align-self-center">Usuários Cadastrados</h3>
                                 @can('Criar Usuários')
                                     <a href="{{ route('admin.users.create') }}" title="Novo Usuário"
                                         class="btn btn-success"><i class="fas fa-fw fa-plus"></i>Novo Usuário</a>

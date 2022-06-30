@@ -72,6 +72,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('users', UserController::class);
 
         /** Complex */
+        Route::get('/complexes/photo', [ComplexController::class, 'photo']);
+        Route::post('/complexes/photo', [ComplexController::class, 'photoImport'])->name('complexes.photo.import');
         Route::post('complex-import', [ComplexController::class, 'fileImport'])->name('complex.import');
         Route::match(['get', 'post'], 'complex-search', [ComplexController::class, 'search'])->name('complex.search');
         Route::get('/complexes/destroy/{id}', [ComplexController::class, 'destroy']);
@@ -102,10 +104,9 @@ Route::group(['middleware' => ['auth']], function () {
 
         /** Readings */
         Route::get('/readings/photo', [ReadingController::class, 'photo']);
-        Route::post('/readings/photo', [ReadingController::class, 'photoImport'])->name('photo.import');
+        Route::post('/readings/photo', [ReadingController::class, 'photoImport'])->name('readings.photo.import');
         Route::post('readings-import', [ReadingController::class, 'fileImport'])->name('readings.import');
-        Route::post('/readings-search', [ReadingController::class, 'search'])->name('readings.search');
-        Route::get('/readings-search', [ReadingController::class, 'index']);
+        Route::match(['get', 'post'], '/readings-search', [ReadingController::class, 'search'])->name('readings.search');
         Route::get('/readings/destroy/{id}', [ReadingController::class, 'destroy']);
         Route::resource('readings', ReadingController::class);
 

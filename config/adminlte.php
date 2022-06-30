@@ -350,6 +350,12 @@ return [
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'can'  => 'Criar Condomínios',
                 ],
+                [
+                    'text' => 'Cadastro de Fotos',
+                    'url'  => 'admin/complexes/photo',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Editar Condomínios',
+                ],
             ],
         ],
         /** Blocks */
