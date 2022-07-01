@@ -11,9 +11,11 @@ use App\Models\Complex;
 use App\Models\Meter;
 use App\Models\Reading;
 use App\Models\Resident;
+use App\Models\Views\Apartment as ViewApartment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use DataTables;
 
 class ApartmentController extends Controller
 {
@@ -28,16 +30,28 @@ class ApartmentController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
+        $complex_id = substr($request->headers->get('referer'), strpos($request->headers->get('referer'), "=") + 1);
+
         if ($request['complex']) {
             $complex = Complex::where('id', $request['complex'])->first();
             if (empty($complex->id)) {
                 abort(403, 'Acesso não autorizado');
             } else {
-                $blocks = Block::where('complex_id', $complex->id)->get();
-                $apartments = Apartment::whereIn('block_id', $blocks->pluck('id'))->get();
+                $apartments = ViewApartment::where('complex_id', $complex->id)->get();
             }
         } else {
-            $apartments = Apartment::all();
+            $apartments = ViewApartment::query();
+        }
+
+        if ($request->ajax()) {
+            return Datatables::of($apartments)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="apartments/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="users/apartments/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão deste apartamento?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
 
         return view('admin.apartments.index', compact('apartments'));

@@ -6,43 +6,7 @@
 @section('plugins.BsCustomFileInput', true)
 
 @section('content')
-    @if (auth()->user()->can('Editar Apartamentos') &&
-        auth()->user()->can('Excluir Apartamentos'))
-        @php
-            $list = [];
 
-            $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Bloco', 'Apartamento', 'Fração Ideal', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
-            foreach ($apartments as $apartment) {
-                $list[] = [$apartment->id, $apartment->complex_name, $apartment->block_name, $apartment->name, $apartment->fraction, $apartment->status, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="apartments/' . $apartment->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="apartments/destroy/' . $apartment->id . '" onclick="return confirm(\'Confirma a exclusão deste apartamento?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
-            }
-
-            $config = [
-                'data' => $list,
-                'order' => [[0, 'asc']],
-                'columns' => [null, null, null, null, null, null, ['orderable' => false]],
-                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
-            ];
-
-        @endphp
-    @else
-        @php
-
-            $list = [];
-
-            $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Bloco', 'Apartamento', 'Fração Ideal', 'Status'];
-            foreach ($apartments as $apartment) {
-                $list[] = [$apartment->id, $apartment->complex_name, $apartment->block_name, $apartment->name, $apartment->fraction, $apartment->status];
-            }
-
-            $config = [
-                'data' => $list,
-                'order' => [[0, 'asc']],
-                'columns' => [null, null, null, null, null, null],
-                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
-            ];
-
-        @endphp
-    @endif
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -104,10 +68,34 @@
                                 @endcan
                             </div>
                         </div>
+
+                        @php
+                            $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Bloco', 'Apartamento', 'Fração Ideal', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                            $config = [
+                                'ajax' => url('/admin/apartments'),
+                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'complex_name', 'name' => 'complex_name'], ['data' => 'block_name', 'name' => 'block_name'], ['data' => 'name', 'name' => 'name'], ['data' => 'fraction', 'name' => 'fraction'], ['data' => 'status', 'name' => 'status'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                                'autoFill' => true,
+                                'processing' => true,
+                                'serverSide' => true,
+                                'responsive' => true,
+                                'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
+                                'buttons' => [
+                                    ['extend' => 'pageLength', 'className' => 'btn-default'],
+                                    ['extend' => 'copy', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-copy text-secondary"></i>', 'titleAttr' => 'Copiar', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'print', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-print text-info"></i>', 'titleAttr' => 'Imprimir', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'csv', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-csv text-primary"></i>', 'titleAttr' => 'Exportar para CSV', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'excel', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-excel text-success"></i>', 'titleAttr' => 'Exportar para Excel', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'pdf', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-pdf text-danger"></i>', 'titleAttr' => 'Exportar para PDF', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                ],
+                            ];
+                        @endphp
+
                         <div class="card-body">
                             <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
-                                striped hoverable beautify with-buttons />
+                                striped hoverable beautify />
                         </div>
+
                     </div>
                 </div>
             </div>
