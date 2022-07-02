@@ -20,6 +20,7 @@ class CreateApartmentsRecordView extends Migration
         FROM apartments as ap
         LEFT JOIN blocks as bl ON ap.block_id = bl.id
         LEFT JOIN complexes as cp ON bl.complex_id = cp.id
+        WHERE ap.deleted_at IS NULL
         ");
     }
 
