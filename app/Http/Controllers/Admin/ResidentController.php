@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ResidentRequest;
+use App\Imports\ResidentsImport;
 use App\Models\Apartment;
 use App\Models\Resident;
 use App\Models\User;
+use App\Models\Views\Resident as ViewsResident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ResidentController extends Controller
 {
@@ -17,13 +21,26 @@ class ResidentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!Auth::user()->hasPermissionTo('Listar Moradores')) {
             abort(403, 'Acesso não autorizado');
         }
-        $residents = Resident::all();
-        return view('admin.residents.index', compact('residents'));
+
+        $residents = ViewsResident::query();
+
+        if ($request->ajax()) {
+            return Datatables::eloquent($residents)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="residents/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="residents/destroy/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão deste morador?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('admin.residents.index');
     }
 
     /**
@@ -176,5 +193,20 @@ class ResidentController extends Controller
                 ->back()
                 ->with('error', 'Erro ao excluir!');
         }
+    }
+
+    public function fileImport(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Criar Moradores')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->file()) {
+            return redirect()
+                ->back()
+                ->with('error', 'Nenhum arquivo selecionado!');
+        }
+        Excel::import(new ResidentsImport, $request->file('file')->store('temp'));
+        return back()->with('success', 'Importação realizada!');;
     }
 }

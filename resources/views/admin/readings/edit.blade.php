@@ -198,7 +198,7 @@
                                             <label for="url_cover">URL da imagem</label>
                                             <input type="text" class="form-control" id="url_cover"
                                                 placeholder="Endereço da Imagem caso exista" name="url_cover"
-                                                value="{{ old('url_cover') }}">
+                                                value="{{ old('url_cover') ?? $reading->url_cover }}">
                                         </div>
                                         @if ($reading->url_cover != null)
                                             <div

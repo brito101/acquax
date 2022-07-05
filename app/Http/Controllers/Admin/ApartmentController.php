@@ -30,8 +30,6 @@ class ApartmentController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $complex_id = substr($request->headers->get('referer'), strpos($request->headers->get('referer'), "=") + 1);
-
         if ($request['complex']) {
             $complex = Complex::where('id', $request['complex'])->first();
             if (empty($complex->id)) {
@@ -54,7 +52,7 @@ class ApartmentController extends Controller
                 ->make(true);
         }
 
-        return view('admin.apartments.index', compact('apartments'));
+        return view('admin.apartments.index');
     }
 
     /**
@@ -237,6 +235,10 @@ class ApartmentController extends Controller
 
     public function fileImport(Request $request)
     {
+        if (!Auth::user()->hasPermissionTo('Criar Apartamentos')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
         if (!$request->file()) {
             return redirect()
                 ->back()

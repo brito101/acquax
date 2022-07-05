@@ -3,45 +3,11 @@
 @section('title', '- Moradores')
 @section('plugins.Datatables', true)
 @section('plugins.DatatablesPlugins', true)
+@section('plugins.BsCustomFileInput', true)
 
 @section('content')
-    @if (auth()->user()->can('Editar Moradores') &&
-    auth()->user()->can('Excluir Moradores'))
-        @php
-            $list = [];
 
-            $heads = [['label' => 'ID', 'width' => 5], 'Morador', 'Propriedade', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
-            foreach ($residents as $resident) {
-                $list[] = [$resident->id, $resident->user['name'] . ' - CPF: ' . $resident->user['document_person'] . ' - E-mail: ' . $resident->user['email'], 'Condomínio ' . $resident->apartment->getComplexNameAttribute() . ' - Bl. ' . $resident->apartment->getBlockNameAttribute() . ' - Ap. ' . $resident->apartment['name'], $resident->status, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="residents/' . $resident->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="residents/destroy/' . $resident->id . '" onclick="return confirm(\'Confirma a exclusão deste morador?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
-            }
 
-            $config = [
-                'data' => $list,
-                'order' => [[0, 'asc']],
-                'columns' => [null, null, null, null, ['orderable' => false]],
-                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
-            ];
-
-        @endphp
-    @else
-        @php
-
-            $list = [];
-
-            $heads = [['label' => 'ID', 'width' => 5], 'Morador', 'Propriedade', 'Status'];
-            foreach ($residents as $resident) {
-                $list[] = [$resident->id, $resident->user['name'] . ' - CPF: ' . $resident->user['document_person'] . ' - E-mail: ' . $resident->user['email'], 'Condomínio ' . $resident->apartment->getComplexNameAttribute() . ' - Bl. ' . $resident->apartment->getBlockNameAttribute() . ' - Ap. ' . $meter->apartment['name'], $meter->status];
-            }
-
-            $config = [
-                'data' => $list,
-                'order' => [[0, 'asc']],
-                'columns' => [null, null, null, null],
-                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
-            ];
-
-        @endphp
-    @endif
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -57,12 +23,39 @@
             </div>
         </div>
     </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end pb-4">
+                    <a class="btn btn-secondary" href="{{ Storage::url('moradores.ods') }}" download>Download Planilha</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
 
                     @include('components.alert')
+
+                    <div class="card card-solid">
+                        <div class="card-header">
+                            <i class="fas fa-fw fa-upload"></i> Importação de Planilha de Criação de Moradores
+                        </div>
+                        <form action="{{ route('admin.residents.import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="card-body pb-0">
+                                <x-adminlte-input-file name="file" label="Arquivo" placeholder="Selecione o arquivo..."
+                                    legend="Selecionar" />
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary">Importar</button>
+                            </div>
+                        </form>
+                    </div>
 
                     <div class="card">
                         <div class="card-header">
@@ -75,9 +68,32 @@
                                 @endcan
                             </div>
                         </div>
+
+                        @php
+                            $heads = [['label' => 'ID', 'width' => 5], 'Morador', 'Propriedade', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                            $config = [
+                                'ajax' => url('/admin/residents'),
+                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'resident', 'name' => 'resident'], ['data' => 'property', 'name' => 'property'], ['data' => 'status', 'name' => 'status'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                                'autoFill' => true,
+                                'processing' => true,
+                                'serverSide' => true,
+                                'responsive' => true,
+                                'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
+                                'buttons' => [
+                                    ['extend' => 'pageLength', 'className' => 'btn-default'],
+                                    ['extend' => 'copy', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-copy text-secondary"></i>', 'titleAttr' => 'Copiar', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'print', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-print text-info"></i>', 'titleAttr' => 'Imprimir', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'csv', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-csv text-primary"></i>', 'titleAttr' => 'Exportar para CSV', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'excel', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-excel text-success"></i>', 'titleAttr' => 'Exportar para Excel', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'pdf', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-pdf text-danger"></i>', 'titleAttr' => 'Exportar para PDF', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                ],
+                            ];
+                        @endphp
+
                         <div class="card-body">
-                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config" striped
-                                hoverable beautify with-buttons />
+                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
+                                striped hoverable beautify with-buttons />
                         </div>
                     </div>
                 </div>
