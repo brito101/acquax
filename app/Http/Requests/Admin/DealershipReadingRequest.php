@@ -59,7 +59,7 @@ class DealershipReadingRequest extends FormRequest
             'consumption_calculation' => 'required|min:1|max:20|in:Consumo Real,Consumo com Mínimo,Consumo sem Mínimo',
             'type_minimum_value' => 'required|min:1|max:20|in:Da Concessionária,Pré Estabelecido',
             'minimum_value' => 'required|numeric|between:0,999999999.999',
-            'fare_type'  => 'required|min:1|max:191|in:Concessionária com 2ª faixa pela Progressividade,PConcessionária com 2ª faixa pela Média,Metro Cúbico Médio',
+            'fare_type'  => 'required|min:1|max:191|in:Concessionária com 2ª faixa pela Progressividade,Concessionária com 2ª faixa pela Média,Metro Cúbico Médio',
             'common_area'  => 'required|min:1|max:20|in:Sem,Simples,Fração',
         ];
     }
