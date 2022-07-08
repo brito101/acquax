@@ -7,7 +7,6 @@
         @page {
             margin: 2cm;
         }
-
     </style>
 @endsection
 
@@ -117,8 +116,8 @@
 
                     <div class="col-4 form-group px-2">
                         <label for="type_minimum_value">Tipo de Mínimo</label>
-                        <input type="text" class="form-control bg-light" id="type_minimum_value" name="type_minimum_value"
-                            value="{{ $reading->type_minimum_value }}" disabled>
+                        <input type="text" class="form-control bg-light" id="type_minimum_value"
+                            name="type_minimum_value" value="{{ $reading->type_minimum_value }}" disabled>
                     </div>
 
                     <div class="col-4 form-group pl-2">
@@ -178,14 +177,14 @@
 
                     <div class="col-4 form-group px-2">
                         <label for="monthly_consumption">Consumo Real em m<sup>3</sup></label>
-                        <input type="text" class="form-control bg-light" id="monthly_consumption" name="monthly_consumption"
-                            disabled value="{{ $reading->monthly_consumption }}">
+                        <input type="text" class="form-control bg-light" id="monthly_consumption"
+                            name="monthly_consumption" disabled value="{{ $reading->monthly_consumption }}">
                     </div>
                     <div class="col-4 form-group pl-2">
                         <label for="diff_consumption">Diferença entre Real e Concessionária em
                             m<sup>3</sup></label>
-                        <input type="text" class="form-control bg-light" id="diff_consumption" name="diff_consumption"
-                            disabled value="{{ $reading->diff_consumption }}">
+                        <input type="text" class="form-control bg-light" id="diff_consumption"
+                            name="diff_consumption" disabled value="{{ $reading->diff_consumption }}">
                     </div>
                 </div>
 
@@ -201,14 +200,14 @@
 
                     <div class="col-3 form-group px-2">
                         <label for="consumption_value">Valor do Consumo</label>
-                        <input type="text" class="form-control bg-light" id="consumption_value" name="consumption_value"
-                            disabled value="{{ $reading->consumption_value }}">
+                        <input type="text" class="form-control bg-light" id="consumption_value"
+                            name="consumption_value" disabled value="{{ $reading->consumption_value }}">
                     </div>
 
                     <div class="col-3 form-group px-2">
                         <label for="sewage_value">Valor do Esgoto</label>
-                        <input type="text" class="form-control bg-light" id="sewage_value" name="sewage_value" disabled
-                            value="{{ $reading->sewage_value }}">
+                        <input type="text" class="form-control bg-light" id="sewage_value" name="sewage_value"
+                            disabled value="{{ $reading->sewage_value }}">
                     </div>
 
                     <div class="col-3 form-group pl-2">
@@ -230,56 +229,56 @@
                 <div class="d-flex flex-wrap justify-content-start">
                     <div class="col-3 form-group pr-2">
                         <label for="consumption_tax_1">Consumo na 1ª Faixa</label>
-                        <input type="text" class="form-control bg-light" id="consumption_tax_1" name="consumption_tax_1"
-                            disabled value="{{ $reading->consumption_tax_1 }}">
+                        <input type="text" class="form-control bg-light" id="consumption_tax_1"
+                            name="consumption_tax_1" disabled value="{{ $reading->consumption_tax_1 }}">
                     </div>
                     <div class="col-3 form-group px-2">
                         <label for="total_cost_tax_1">Custo total 1ª Faixa</label>
-                        <input type="text" class="form-control bg-light" id="total_cost_tax_1" name="total_cost_tax_1"
-                            disabled value="{{ $reading->total_cost_tax_1 }}">
+                        <input type="text" class="form-control bg-light" id="total_cost_tax_1"
+                            name="total_cost_tax_1" disabled value="{{ $reading->total_cost_tax_1 }}">
                     </div>
                     <div class="col-3 form-group px-2">
                         <label for="consumption_tax_2">Consumo na 2ª Faixa</label>
-                        <input type="text" class="form-control bg-light" id="consumption_tax_2" name="consumption_tax_2"
-                            disabled value="{{ $reading->consumption_tax_2 }}">
+                        <input type="text" class="form-control bg-light" id="consumption_tax_2"
+                            name="consumption_tax_2" disabled value="{{ $reading->consumption_tax_2 }}">
                     </div>
                     <div class="col-3 form-group pl-2">
                         <label for="total_cost_tax_2">Custo total 2ª Faixa</label>
-                        <input type="text" class="form-control bg-light" id="total_cost_tax_2" name="total_cost_tax_2"
-                            disabled value="{{ $reading->total_cost_tax_2 }}">
+                        <input type="text" class="form-control bg-light" id="total_cost_tax_2"
+                            name="total_cost_tax_2" disabled value="{{ $reading->total_cost_tax_2 }}">
                     </div>
                 </div>
 
                 <div class="d-flex flex-wrap justify-content-between">
                     <div class="col-6 form-group pr-2">
                         <label for="units_inside_tax_1">Unidades dentro da 1ª Faixa</label>
-                        <input type="text" class="form-control bg-light" id="units_inside_tax_1" name="units_inside_tax_1"
-                            disabled value="{{ $reading->units_inside_tax_1 }}">
+                        <input type="text" class="form-control bg-light" id="units_inside_tax_1"
+                            name="units_inside_tax_1" disabled value="{{ $reading->units_inside_tax_1 }}">
                     </div>
                     <div class="col-6 form-group pl-2">
                         <label for="units_above_tax_1">Unidades acima da 1ª Faixa</label>
-                        <input type="text" class="form-control bg-light" id="units_above_tax_1" name="units_above_tax_1"
-                            disabled value="{{ $reading->units_above_tax_1 }}">
+                        <input type="text" class="form-control bg-light" id="units_above_tax_1"
+                            name="units_above_tax_1" disabled value="{{ $reading->units_above_tax_1 }}">
                     </div>
                 </div>
 
                 <div class="border-bottom mb-4"></div>
 
-                @if ($reading->apartments_report)
+                @if ($reading->apartmentReports->count() > 0)
                     <div class="d-flex flex-wrap justify-content-between">
                         @php
-                            $heads = ['Apartamento', 'Volume Consumido (m3)', 'Valor Total de Consumo', 'Ajuste de Área Comum', 'Valor total da Unidade'];
+                            $heads = ['Apartamento', 'Volume Consumido (m3)', 'Valor de Consumo', 'Valor de Esgoto', 'Ajuste de Área Comum', 'Valor total da Unidade'];
 
                             $list = [];
 
-                            foreach ($reading->apartments_report as $apartment) {
-                                $list[] = [$apartment->name, $apartment->consumed, $apartment->total, $apartment->common_area, $apartment->total_unit];
+                            foreach ($reading->apartmentReports as $report) {
+                                $list[] = [$report->apartment->name, $report->consumed, $report->consumed_cost, $report->sewage_cost, $report->partial, $report->total_unit];
                             }
 
                             $config = [
                                 'data' => $list,
                                 'order' => [[0, 'asc']],
-                                'columns' => [null, null, null, null, null],
+                                'columns' => [null, null, null, null, null, null],
                                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                 'paging' => false,
                                 'searching' => false,
@@ -288,7 +287,8 @@
 
                         @endphp
 
-                        <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config" striped />
+                        <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
+                            striped />
                     </div>
                 @endif
             </div>

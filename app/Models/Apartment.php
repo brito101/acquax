@@ -69,7 +69,8 @@ class Apartment extends Model
             $commonArea = $this->convertToFloat($dealershipReading['diff_consumption'] ?? 0);
             $total = 0;
             if ($dealershipReading) {
-                $total = $this->moneyConvertToFloat($dealershipReading->getApartmentReport($this)['total_unit'] ?? 0);
+                $apartmentReport = ApartmentReport::where('dealership_reading_id', $dealershipReading->id)->where('apartment_id', $this->id)->first();
+                $total = $this->moneyConvertToFloat($apartmentReport['total_unit'] ?? 0);
             }
             foreach ($readings as $reading) {
                 if ($reading->month_ref == $month) {
@@ -120,9 +121,9 @@ class Apartment extends Model
 
         $values = [];
         foreach ($months as $month) {
-            $dealershipReading = DealershipReading::where('complex_id', $this->block['complex_id'])->where('month_ref', $month)->where('year_ref', date('Y'))->first();
-            if ($dealershipReading) {
-                $values[$month] = $dealershipReading->getApartmentReport($this);
+            $report = ApartmentReport::where('month_ref', $month)->where('year_ref', date('Y'))->first();
+            if ($report) {
+                $values[$month] = $report;
             } else {
                 $values[$month] = null;
             }
@@ -141,7 +142,9 @@ class Apartment extends Model
                 $values[] = array($item, $report);
             }
         }
-        return  $values;
+        // return  $values;
+        $reports = ApartmentReport::where('apartment_id', $this->id)->get();
+        return $reports;
     }
 
     public function getAverageCost()

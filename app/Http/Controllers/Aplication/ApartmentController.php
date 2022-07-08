@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Aplication;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\ApartmentReport;
 use App\Models\Block;
 use App\Models\Complex;
 use App\Models\DealershipReading;
+use App\Models\Reading;
 use App\Models\Resident;
 use App\Models\Syndic;
 use Illuminate\Http\Request;
@@ -42,7 +44,7 @@ class ApartmentController extends Controller
         return view('application.apartments.index', compact('apartments', 'complexesApartments', 'complexes'));
     }
 
-    public function apartmentReading($re, $ap)
+    public function apartmentReading($id)
     {
         if (!Auth::user()->hasRole('Usuário')) {
             abort(403, 'Acesso não autorizado');
@@ -52,45 +54,23 @@ class ApartmentController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $apartment = Apartment::where('id', $ap)->first();
-        if (empty($apartment->id)) {
-            abort(403, 'Acesso não autorizado');
-        }
+        $reading = ApartmentReport::where('id', $id)->first();
 
-        $reading = DealershipReading::where('id', $re)
-            ->where('complex_id', $apartment->block->complex['id'])->first();
         if (empty($reading->id)) {
             abort(403, 'Acesso não autorizado');
         }
 
-        return view('application.apartments.show', compact('reading', 'apartment'));
-    }
-
-    public function apartmentPrint($re, $ap)
-    {
-        if (!Auth::user()->hasRole('Usuário')) {
-            abort(403, 'Acesso não autorizado');
-        }
-
-        if (!Auth::user()->hasPermissionTo('Acessar Leituras Apartamento')) {
-            abort(403, 'Acesso não autorizado');
-        }
-
-        $apartment = Apartment::where('id', $ap)->first();
+        $apartment = Apartment::where('id', $reading->apartment_id)->first();
         if (empty($apartment->id)) {
             abort(403, 'Acesso não autorizado');
         }
 
-        $reading = DealershipReading::where('id', $re)
-            ->where('complex_id', $apartment->block->complex['id'])->first();
-        if (empty($reading->id)) {
-            abort(403, 'Acesso não autorizado');
-        }
+        $readings = Reading::whereIn('id', $reading->readings)->get();
 
-        return view('application.apartments.print', compact('reading', 'apartment'));
+        return view('application.apartments.show', compact('reading', 'apartment', 'readings'));
     }
 
-    public function complexReading($re, $c)
+    public function apartmentPrint($id)
     {
         if (!Auth::user()->hasRole('Usuário')) {
             abort(403, 'Acesso não autorizado');
@@ -100,21 +80,46 @@ class ApartmentController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $complex = Complex::where('id', $c)->first();
+        $reading = ApartmentReport::where('id', $id)->first();
+
+        if (empty($reading->id)) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        $apartment = Apartment::where('id', $reading->apartment_id)->first();
+        if (empty($apartment->id)) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        $readings = Reading::whereIn('id', $reading->readings)->get();
+
+        return view('application.apartments.print', compact('reading', 'apartment', 'readings'));
+    }
+
+    public function complexReading($id)
+    {
+        if (!Auth::user()->hasRole('Usuário')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!Auth::user()->hasPermissionTo('Acessar Leituras Apartamento')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        $reading = DealershipReading::where('id', $id)->first();
+        if (empty($reading->id)) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        $complex = Complex::where('id', $reading->complex_id)->first();
         if (empty($complex->id)) {
-            abort(403, 'Acesso não autorizado');
-        }
-
-        $reading = DealershipReading::where('id', $re)
-            ->where('complex_id', $complex->id)->first();
-        if (empty($reading->id)) {
             abort(403, 'Acesso não autorizado');
         }
 
         return view('application.complexes.show', compact('reading', 'complex'));
     }
 
-    public function complexPrint($re, $c)
+    public function complexPrint($id)
     {
         if (!Auth::user()->hasRole('Usuário')) {
             abort(403, 'Acesso não autorizado');
@@ -124,16 +129,16 @@ class ApartmentController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $complex = Complex::where('id', $c)->first();
+        $reading = DealershipReading::where('id', $id)->first();
+        if (empty($reading->id)) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        $complex = Complex::where('id', $reading->complex_id)->first();
         if (empty($complex->id)) {
             abort(403, 'Acesso não autorizado');
         }
 
-        $reading = DealershipReading::where('id', $re)
-            ->where('complex_id', $complex->id)->first();
-        if (empty($reading->id)) {
-            abort(403, 'Acesso não autorizado');
-        }
 
         return view('application.complexes.print', compact('reading', 'complex'));
     }

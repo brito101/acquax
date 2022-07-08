@@ -61,6 +61,7 @@ class DealershipReadingRequest extends FormRequest
             'minimum_value' => 'required|numeric|between:0,999999999.999',
             'fare_type'  => 'required|min:1|max:191|in:Concessionária com 2ª faixa pela Progressividade,Concessionária com 2ª faixa pela Média,Metro Cúbico Médio',
             'common_area'  => 'required|min:1|max:20|in:Sem,Simples,Fração',
+            'sewage_calc' => 'nullable|in:Igual ao consumo de água,Metade do valor do consumo de água,Sem cobrança|max:191',
         ];
     }
 

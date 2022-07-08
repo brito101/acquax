@@ -98,7 +98,7 @@
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="year_ref">Ano de Referência</label>
                                         <input type="text" class="form-control" id="year_ref" placeholder="YYYY"
-                                            name="year_ref" value="{{ old('year_ref') }}" required>
+                                            name="year_ref" value="{{ old('year_ref') ?? date('Y') }}" required>
                                     </div>
 
                                     <div class="col-12 col-md-3 form-group px-0 pl-md-2">
@@ -212,7 +212,7 @@
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
                                         <label for="fare_type">Tipo de Tarifa</label>
                                         <x-adminlte-select2 name="fare_type">
                                             <option {{ old('fare_type') == 'Metro Cúbico Médio' ? 'selected' : '' }}>
@@ -226,7 +226,7 @@
                                         </x-adminlte-select2>
                                     </div>
 
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
                                         <label for="common_area">Tipo de Rateio da Área Comum</label>
                                         <x-adminlte-select2 name="common_area">
                                             <option {{ old('common_area') == 'Sem' ? 'selected' : '' }}>Sem</option>
@@ -234,6 +234,20 @@
                                             </option>
                                             <option {{ old('common_area') == 'Fração' ? 'selected' : '' }}>Fração
                                             </option>
+                                        </x-adminlte-select2>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                        <label for="sewage_calc">Tipo de Cálculo do Esgoto</label>
+                                        <x-adminlte-select2 name="sewage_calc">
+                                            <option
+                                                {{ old('sewage_calc') == 'Igual ao consumo de água' ? 'selected' : '' }}>
+                                                Igual ao consumo de água</option>
+                                            <option
+                                                {{ old('sewage_calc') == 'Metade do valor do consumo de água' ? 'selected' : '' }}>
+                                                Metade do valor do consumo de água</option>
+                                            <option {{ old('sewage_calc') == 'Sem cobrança' ? 'selected' : '' }}>
+                                                Sem cobrança</option>
                                         </x-adminlte-select2>
                                     </div>
 

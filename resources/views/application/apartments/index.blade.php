@@ -67,8 +67,8 @@
                                     @if ($complexesApartments && count($complexesApartments) > 0)
                                         <li class="nav-item">
                                             <a class="nav-link" id="custom-tabs-one-complexesApartments-tab"
-                                                data-toggle="pill" href="#custom-tabs-one-complexesApartments" role="tab"
-                                                aria-controls="custom-tabs-one-complexesApartments"
+                                                data-toggle="pill" href="#custom-tabs-one-complexesApartments"
+                                                role="tab" aria-controls="custom-tabs-one-complexesApartments"
                                                 aria-selected="false">Apartamentos por
                                                 Condomínio</a>
                                         </li>
@@ -85,7 +85,7 @@
                                                     $list = [];
                                                     $heads = [['label' => 'ID', 'width' => 5], 'Mês', 'Ano', 'Valor', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
                                                     foreach ($apartment->getFullReports() as $report) {
-                                                        $list[] = [$report[0]->id, $report[0]->month_ref, $report[0]->year_ref, $report[1]['total_unit'], '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="residences-readings/' . $report[0]->id . '/apartment/' . $report[1]['apartment'] . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
+                                                        $list[] = [$report->id, $report->month_ref, $report->year_ref, $report->total_unit, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="residences-readings/' . $report->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
                                                     }
 
                                                     $config = [
@@ -130,7 +130,7 @@
                                                     $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Mês Ref', 'Ano Ref', 'Data da Leitura', 'Próx Leitura', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
 
                                                     foreach ($complex->dealershipReading as $reading) {
-                                                        $list[] = [$reading->id, $reading->complex['alias_name'], $reading->month_ref, $reading->year_ref, $reading->reading_date, $reading->reading_date_next, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="residences-readings/' . $reading->id . '/complex/' . $complex->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
+                                                        $list[] = [$reading->id, $reading->complex['alias_name'], $reading->month_ref, $reading->year_ref, $reading->reading_date, $reading->reading_date_next, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar"    href="complex-readings/' . $reading->id .'"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
                                                     }
 
                                                     $config = [
@@ -170,7 +170,7 @@
                                                     $heads = [['label' => 'ID', 'width' => 5], 'Mês', 'Ano', 'Valor', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
 
                                                     foreach ($apartment->getFullReports() as $report) {
-                                                        $list[] = [$report[0]->id, $report[0]->month_ref, $report[0]->year_ref, $report[1]['total_unit'], '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="residences-readings/' . $report[0]->id . '/apartment/' . $report[1]['apartment'] . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
+                                                        $list[] = [$report->id, $report->month_ref, $report->year_ref, $report->total_unit, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="residences-readings/' . $report->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
                                                     }
 
                                                     $config = [

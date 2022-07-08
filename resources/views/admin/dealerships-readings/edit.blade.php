@@ -236,7 +236,7 @@
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
                                         <label for="fare_type">Tipo de Tarifa</label>
                                         <x-adminlte-select2 name="fare_type">
                                             <option
@@ -251,7 +251,7 @@
                                         </x-adminlte-select2>
                                     </div>
 
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
                                         <label for="common_area">Tipo de Rateio da Área Comum</label>
                                         <x-adminlte-select2 name="common_area">
                                             <option
@@ -268,6 +268,20 @@
                                         </x-adminlte-select2>
                                     </div>
 
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                        <label for="sewage_calc">Tipo de Cálculo do Esgoto</label>
+                                        <x-adminlte-select2 name="sewage_calc">
+                                            <option
+                                                {{ old('sewage_calc') == 'Igual ao consumo de água' ? 'selected' : ($reading->sewage_calc == 'Igual ao consumo de água' ? 'selected' : '') }}>
+                                                Igual ao consumo de água</option>
+                                            <option
+                                                {{ old('sewage_calc') == 'Metade do valor do consumo de água' ? 'selected' : ($reading->sewage_calc == 'Metade do valor do consumo de água' ? 'selected' : '') }}>
+                                                Metade do valor do consumo de água</option>
+                                            <option
+                                                {{ old('sewage_calc') == 'Sem cobrança' ? 'selected' : ($reading->sewage_calc == 'Sem cobrança' ? 'selected' : '') }}>
+                                                Sem cobrança</option>
+                                        </x-adminlte-select2>
+                                    </div>
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-between">
@@ -332,7 +346,8 @@
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="consumption_value">Valor do Consumo</label>
                                         <input type="text" class="form-control" id="consumption_value"
-                                            name="consumption_value" disabled value="{{ $reading->consumption_value }}">
+                                            name="consumption_value" disabled
+                                            value="{{ $reading->consumption_value }}">
                                     </div>
 
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
@@ -353,8 +368,8 @@
 
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="diff_cost">Área Comum</label>
-                                        <input type="text" class="form-control" id="diff_cost" name="diff_cost" disabled
-                                            value="{{ $reading->diff_cost }}">
+                                        <input type="text" class="form-control" id="diff_cost" name="diff_cost"
+                                            disabled value="{{ $reading->diff_cost }}">
                                     </div>
                                 </div>
 
@@ -362,7 +377,8 @@
                                     <div class="col-12 col-md-3 form-group px-0 pr-md-2">
                                         <label for="consumption_tax_1">Consumo na 1ª Faixa</label>
                                         <input type="text" class="form-control" id="consumption_tax_1"
-                                            name="consumption_tax_1" disabled value="{{ $reading->consumption_tax_1 }}">
+                                            name="consumption_tax_1" disabled
+                                            value="{{ $reading->consumption_tax_1 }}">
                                     </div>
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="total_cost_tax_1">Custo total 1ª Faixa</label>
@@ -372,7 +388,8 @@
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="consumption_tax_2">Consumo na 2ª Faixa</label>
                                         <input type="text" class="form-control" id="consumption_tax_2"
-                                            name="consumption_tax_2" disabled value="{{ $reading->consumption_tax_2 }}">
+                                            name="consumption_tax_2" disabled
+                                            value="{{ $reading->consumption_tax_2 }}">
                                     </div>
                                     <div class="col-12 col-md-3 form-group px-0 pl-md-2">
                                         <label for="total_cost_tax_2">Custo total 2ª Faixa</label>
@@ -391,27 +408,28 @@
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="units_above_tax_1">Unidades acima da 1ª Faixa</label>
                                         <input type="text" class="form-control" id="units_above_tax_1"
-                                            name="units_above_tax_1" disabled value="{{ $reading->units_above_tax_1 }}">
+                                            name="units_above_tax_1" disabled
+                                            value="{{ $reading->units_above_tax_1 }}">
                                     </div>
                                 </div>
 
                                 <div class="border-bottom mb-4"></div>
 
-                                @if ($reading->apartments_report)
+                                @if ($reading->apartmentReports->count() > 0)
                                     <div class="d-flex flex-wrap justify-content-between">
                                         @php
-                                            $heads = ['Apartamento', 'Volume Consumido (m3)', 'Valor Total de Consumo', 'Ajuste de Área Comum', 'Valor total da Unidade'];
+                                            $heads = ['Apartamento', 'Volume Consumido (m3)', 'Valor de Consumo', 'Valor de Esgoto', 'Ajuste de Área Comum', 'Valor total da Unidade'];
 
                                             $list = [];
 
-                                            foreach ($reading->apartments_report as $apartment) {
-                                                $list[] = [$apartment->name, $apartment->consumed, $apartment->total, $apartment->common_area, $apartment->total_unit];
+                                            foreach ($reading->apartmentReports as $report) {
+                                                $list[] = [$report->apartment->name, $report->consumed, $report->consumed_cost, $report->sewage_cost, $report->partial, $report->total_unit];
                                             }
 
                                             $config = [
                                                 'data' => $list,
                                                 'order' => [[0, 'asc']],
-                                                'columns' => [null, null, null, null, null],
+                                                'columns' => [null, null, null, null, null, null],
                                                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                             ];
                                         @endphp

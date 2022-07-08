@@ -4,7 +4,6 @@
         @page {
             margin: 2cm;
         }
-
     </style>
 @endsection
 
@@ -33,7 +32,7 @@
                     <div class="col-6 form-group pl-2">
                         <label for="dealership">Concessionária</label>
                         <input type="text" class="form-control bg-light" id="dealership" name="dealership"
-                            value="{{ $reading->dealership['name'] }}" disabled>
+                            value="{{ $reading->dealershipReading->dealership['name'] }}" disabled>
                     </div>
                 </div>
 
@@ -53,13 +52,13 @@
                     <div class="col-3 form-group px-2">
                         <label for="reading_date">Data da Leitura</label>
                         <input type="text" class="form-control bg-light" id="reading_date" name="reading_date"
-                            value="{{ $reading->reading_date }}" disabled>
+                            value="{{ $reading->dealershipReading->reading_date }}" disabled>
                     </div>
 
                     <div class="col-3 form-group pl-2">
                         <label for="reading_date_next">Data da Próxima Leitura</label>
                         <input type="text" class="form-control bg-light" id="reading_date_next" name="reading_date_next"
-                            value="{{ $reading->reading_date_next }}" disabled>
+                            value="{{ $reading->dealershipReading->reading_date_next }}" disabled>
                     </div>
                 </div>
 
@@ -68,29 +67,31 @@
                         <label for="dealership_consumption_tax_1">Limite da 1ª Faixa em
                             m<sup>3</sup></label>
                         <input type="text" class="form-control bg-light" id="dealership_consumption_tax_1"
-                            name="dealership_consumption_tax_1" value="{{ $reading->dealership_consumption_tax_1 }}"
-                            disabled>
+                            name="dealership_consumption_tax_1"
+                            value="{{ $reading->dealershipReading->dealership_consumption_tax_1 }}" disabled>
                     </div>
 
                     <div class="col-3 form-group px-2">
                         <label for="dealership_cost_tax_1">Custo da 1ª Faixa de Consumo</label>
                         <input type="text" class="form-control bg-light" id="dealership_cost_tax_1"
                             placeholder="Valor em reais da 1ª Faixa de Consumo pela concessionária"
-                            name="dealership_cost_tax_1" value="{{ $reading->dealership_cost_tax_1 }}" disabled>
+                            name="dealership_cost_tax_1" value="{{ $reading->dealershipReading->dealership_cost_tax_1 }}"
+                            disabled>
                     </div>
 
                     <div class="col-3 form-group px-2">
                         <label for="dealership_consumption_tax_2">Base da 2ª Faixa em
                             m<sup>3</sup></label>
                         <input type="text" class="form-control bg-light" id="dealership_consumption_tax_2"
-                            name="dealership_consumption_tax_2" value="{{ $reading->dealership_consumption_tax_2 }}"
-                            disabled>
+                            name="dealership_consumption_tax_2"
+                            value="{{ $reading->dealershipReading->dealership_consumption_tax_2 }}" disabled>
                     </div>
 
                     <div class="col-3 form-group pl-2">
                         <label for="dealership_cost_tax_2">Custo da 2ª Faixa de Consumo</label>
                         <input type="text" class="form-control bg-light" id="dealership_cost_tax_2"
-                            name="dealership_cost_tax_2" value="{{ $reading->dealership_cost_tax_2 }}" disabled>
+                            name="dealership_cost_tax_2" value="{{ $reading->dealershipReading->dealership_cost_tax_2 }}"
+                            disabled>
                     </div>
                 </div>
 
@@ -99,48 +100,58 @@
                     <div class="col-4 form-group pr-2">
                         <label for="dealership_consumption">Consumo do Condomínio em m<sup>3</sup></label>
                         <input type="text" class="form-control bg-light" id="dealership_consumption"
-                            name="dealership_consumption" value="{{ $reading->dealership_consumption }}" disabled>
+                            name="dealership_consumption"
+                            value="{{ $reading->dealershipReading->dealership_consumption }}" disabled>
                     </div>
                     <div class="col-4 form-group px-2">
                         <label for="dealership_cost">Consumo do Condomínio em Reais</label>
                         <input type="text" class="form-control bg-light" id="dealership_cost" name="dealership_cost"
-                            value="{{ $reading->dealership_cost }}" disabled>
+                            value="{{ $reading->dealershipReading->dealership_cost }}" disabled>
                     </div>
                     <div class="col-4 form-group pl-2">
                         <label for="diff_consumption">Área Comum em m<sup>3</sup></label>
-                        <input type="text" class="form-control bg-light" id="diff_consumption" name="diff_consumption"
-                            value="{{ $reading->diff_consumption }}" disabled>
+                        <input type="text" class="form-control bg-light" id="diff_consumption"
+                            name="diff_consumption" value="{{ $reading->dealershipReading->diff_consumption }}"
+                            disabled>
                     </div>
                 </div>
-                @php $appData = $reading->getApartmentReport($apartment) @endphp
+
                 <h4 class="h5 text-muted mt-3">Dados da Unidade</h4>
                 <div class="d-flex flex-wrap justify-content-between">
                     <div class="col-3 form-group pr-2">
                         <label for="total_consumed">Consumo da Unidade em m<sup>3</sup></label>
                         <input type="text" class="form-control bg-light" id="total_consumed" name="total_consumed"
-                            value="{{ number_format($appData['totalConsumed'], 3, ',', '.') }}" disabled>
+                            value="{{ $reading->consumed }}" disabled>
                     </div>
                     <div class="col-3 form-group px-2">
-                        <label for="total">Valor Total</label>
-                        <input type="text" class="form-control bg-light" id="total" name="total"
-                            value="{{ $appData['total'] }}" disabled>
+                        <label for="consumed_cost">Valor de Consumo</label>
+                        <input type="text" class="form-control bg-light" id="consumed_cost" name="consumed_cost"
+                            value="{{ $reading->consumed_cost }}" disabled>
                     </div>
                     <div class="col-3 form-group px-2">
+                        <label for="sewage_cost">Valor do Esgoto</label>
+                        <input type="text" class="form-control bg-light" id="sewage_cost" name="sewage_cost"
+                            value="{{ $reading->sewage_cost }}" disabled>
+                    </div>
+                    <div class="col-3 form-group pl-2">
                         <label for="partial">Rateio Proporcional</label>
                         <input type="text" class="form-control bg-light" id="partial" name="partial"
-                            value="{{ $appData['partial'] }}" disabled>
+                            value="{{ $reading->partial }}" disabled>
                     </div>
+                </div>
+
+                <div class="d-flex flex-wrap justify-content-end">
                     <div class="col-3 form-group pl-2">
                         <label for="total_unit">Valor Total da Unidade</label>
                         <input type="text" class="form-control bg-light" id="total_unit" name="total_unit"
-                            value="{{ $appData['total_unit'] }}" disabled>
+                            value="{{ $reading->total_unit }}" disabled>
                     </div>
                 </div>
 
                 <div class="border-bottom mb-4"></div>
                 <h4 class="h5 text-muted mt-3">Detalhes por Medidor</h4>
                 <div class="d-flex flex-wrap justify-content-between">
-                    @foreach ($appData['readings'] as $reading)
+                    @foreach ($readings as $reading)
                         <div class="col-12 px-0">
                             <h5>Medidor {{ $reading->meter['register'] }}
                                 @if ($reading->meter['location'])
@@ -194,7 +205,8 @@
 
                             <div class="col-6 form-group pl-2">
                                 <label for="volume_consumed">Consumo em m<sup>3</sup></label>
-                                <input type="text" class="form-control bg-light" id="volume_consumed" name="volume_consumed"
+                                <input type="text" class="form-control bg-light" id="volume_consumed"
+                                    name="volume_consumed"
                                     value="{{ number_format(str_replace(',', '.', str_replace('.', '', $reading->volume_consumed)), 3, ',', '.') }}"
                                     disabled>
                             </div>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Settings\Dealership;
+use App\Models\Views\Apartment;
 use Facade\FlareClient\Api;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +39,7 @@ class DealershipReading extends Model
         'minimum_value',
         'fare_type',
         'common_area',
+        'sewage_calc',
         /** computed data */
         'monthly_consumption',
         'diff_consumption',
@@ -51,13 +53,8 @@ class DealershipReading extends Model
         'total_cost_tax_1',
         'consumption_tax_2',
         'total_cost_tax_2',
-    ];
-
-    protected $appends = [
         'units_inside_tax_1',
         'units_above_tax_1',
-        'fraction',
-        'apartments_report'
     ];
 
     /** Relationships */
@@ -70,6 +67,11 @@ class DealershipReading extends Model
     public function dealership()
     {
         return $this->belongsTo(Dealership::class);
+    }
+
+    public function apartmentReports()
+    {
+        return $this->hasMany(ApartmentReport::class);
     }
 
     /**  Accessor */
@@ -177,78 +179,41 @@ class DealershipReading extends Model
         return number_format($value, 3, ",", ".");
     }
 
-    public function setConsumptionValueAttribute($value)
-    {
-        $complex = $this->complex;
-        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
-        $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
-        $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
-        $tax_2 = $this->convertToFloat($this->dealership_consumption_tax_2);
-        $cost_tax_1 = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
-        $cost_tax_2 = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
-        $total_consumed = 0;
-
-        foreach ($apartments as $apartment) {
-            $meters = Meter::where('apartment_id', $apartment)->pluck('id');
-            $readings = Reading::whereIn('meter_id', $meters)
-                ->where('year_ref', $this->year_ref)
-                ->where('month_ref', $this->month_ref)->get();
-
-            foreach ($readings as $reading) {
-                $volume_consumed = $reading->volume_consumed;
-                if ($volume_consumed > 0  && $volume_consumed <= $tax_1) {
-                    if ($this->consumption_calculation == 'Consumo com Mínimo') {
-                        $total_consumed += $this->moneyConvertToFloat($this->minimum_value);
-                    } else {
-                        $total_consumed += ($this->convertToFloat($reading->volume_consumed) *  $cost_tax_1);
-                    }
-                }
-
-                if ($volume_consumed > $tax_1) {
-                    $total_consumed += ($tax_1 * $cost_tax_1 + ($this->convertToFloat($reading->volume_consumed) - $tax_1) * $cost_tax_2);
-                }
-            }
-        }
-
-        $this->attributes['consumption_value'] = $total_consumed;
-    }
-
     public function getConsumptionValueAttribute($value)
     {
-        return 'R$ ' . number_format($value, 2, ",", ".");
-    }
-
-    public function setSewageValueAttribute($value)
-    {
-        $this->attributes['sewage_value'] = $this->moneyConvertToFloat($this->consumption_value);
+        $reports = $this->apartmentReports;
+        $total = 0;
+        foreach ($reports as $report) {
+            $total += $this->moneyConvertToFloat($report->consumed_cost);
+        }
+        return 'R$ ' . number_format($total, 2, ",", ".");
     }
 
     public function getSewageValueAttribute($value)
     {
-        return 'R$ ' . number_format($value, 2, ",", ".");
-    }
-
-    public function setTotalValueAttribute($value)
-    {
-        $this->attributes['total_value'] =  ($this->moneyConvertToFloat($this->consumption_value) * 2);
+        $reports = $this->apartmentReports;
+        $total = 0;
+        foreach ($reports as $report) {
+            $total += $this->moneyConvertToFloat($report->sewage_cost);
+        }
+        return 'R$ ' . number_format($total, 2, ",", ".");
     }
 
     public function getTotalValueAttribute($value)
     {
-        return 'R$ ' . number_format($value, 2, ',', '.');
-    }
+        $total =  $this->moneyConvertToFloat($this->consumption_value) + $this->moneyConvertToFloat($this->sewage_value);
 
-    public function setDiffCostAttribute($value)
-    {
-        $real_cost = ($this->moneyConvertToFloat($this->consumption_value)) * 2;
-        $dealership_cost = $this->moneyConvertToFloat($this->dealership_cost);
-
-        $this->attributes['diff_cost'] = $dealership_cost - $real_cost;
+        return 'R$ ' . number_format($total, 2, ',', '.');
     }
 
     public function getDiffCostAttribute($value)
     {
-        return 'R$ ' . number_format($value, 2, ",", ".");
+        $dealership_cost = $this->moneyConvertToFloat($this->dealership_cost);
+        //AQUI
+        $real_cost = ($this->moneyConvertToFloat($this->consumption_value)) + ($this->moneyConvertToFloat($this->sewage_value));
+
+
+        return 'R$ ' . number_format(($dealership_cost - $real_cost), 2, ",", ".");
     }
 
     public function getConsumptionTax1Attribute()
@@ -299,10 +264,9 @@ class DealershipReading extends Model
         return 'R$ ' . number_format($total, 2, ",", ".");
     }
 
-    public function getUnitsInsideTax1Attribute()
+    public function setUnitsInsideTax1Attribute($value)
     {
-        $complex = $this->complex;
-        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
+        $blocks = Block::where('complex_id', $this->complex_id)->pluck('id');
         $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
         $units = 0;
         foreach ($apartments as $apartment) {
@@ -321,13 +285,12 @@ class DealershipReading extends Model
             }
         }
 
-        return $units;
+        $this->attributes['units_inside_tax_1'] = $units;
     }
 
-    public function getUnitsAboveTax1Attribute()
+    public function setUnitsAboveTax1Attribute($value)
     {
-        $complex = $this->complex;
-        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
+        $blocks = Block::where('complex_id', $this->complex_id)->pluck('id');
         $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
         $units = 0;
         foreach ($apartments as $apartment) {
@@ -347,75 +310,7 @@ class DealershipReading extends Model
             }
         }
 
-        return $units;
-    }
-
-    //** Apartments Calc Engine! */
-    public function getApartmentsReportAttribute()
-    {
-        $complex = $this->complex;
-        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
-        $apartments = Apartment::whereIn('block_id', $blocks)->get();
-        $units = $this->totalApartments();
-        $reports = [];
-        $diff_cost = $this->moneyConvertToFloat($this->diff_cost);
-
-        foreach ($apartments as $apartment) {
-            $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
-            $readings = Reading::whereIn('meter_id', $meters)
-                ->where('year_ref', $this->year_ref)
-                ->where('month_ref', $this->month_ref)
-                ->get();
-            if (count($readings)) {
-                $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
-                $cost_1 = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
-                $tax_2 = $this->convertToFloat($this->dealership_consumption_tax_2);
-                $cost_2 = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
-
-                $total_consumed = 0;
-                $total_cost = 0;
-                foreach ($readings as $reading) {
-                    $total_consumed += $this->convertToFloat($reading->volume_consumed);
-                }
-
-                /** Calc Rules */
-                /* Total Consumed */
-                if ($total_consumed <= $tax_1) {
-                    if ($this->consumption_calculation == 'Consumo com Mínimo') {
-                        $total_cost += $this->moneyConvertToFloat($this->minimum_value) * 2;
-                    } else {
-                        $total_cost += ($total_consumed *  $cost_1) * 2;
-                    }
-                }
-
-                if ($total_consumed > $tax_1) {
-                    $total_cost += ($tax_1 * $cost_1 + ($total_consumed - $tax_1) * $cost_2) * 2;
-                }
-
-                /** Common Area */
-                $common_area = 0;
-                switch ($this->common_area) {
-                    case 'Sem':
-                        $common_area = 0;
-                        break;
-                    case 'Simples':
-                        $common_area = $diff_cost / $units;
-                        break;
-                    case 'Fração':
-                        $common_area = $diff_cost * $this->convertToFloat($apartment->fraction);
-                        break;
-                }
-
-                $total_unit = $total_cost +  $common_area;
-                $reports[] = $apartment
-                    ->setAttribute('total', $this->convertToMoney($total_cost))
-                    ->setAttribute('consumed', number_format($this->convertToFloat($reading->volume_consumed), 3, ',', '.'))
-                    ->setAttribute('common_area', $this->convertToMoney($common_area))
-                    ->setAttribute('total_unit', $this->convertToMoney($total_unit));
-            }
-        }
-
-        return $reports;
+        $this->attributes['units_above_tax_1'] = $units;
     }
 
     public function getReadingDateAttribute($value)
@@ -426,11 +321,6 @@ class DealershipReading extends Model
     public function getReadingDateNextAttribute($value)
     {
         return date("d/m/Y", strtotime($value));
-    }
-
-    public function getWaterValueConsumptionAttribute($value)
-    {
-        return 'R$ ' . number_format($value, 2, ",", ".");
     }
 
     public function getSewageValueConsumptionAttribute($value)
@@ -451,8 +341,7 @@ class DealershipReading extends Model
     /** Aux function */
     private function getApartmentReadings()
     {
-        $complex = $this->complex;
-        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
+        $blocks = Block::where('complex_id', $this->complex_id)->pluck('id');
         $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
         $meters = Meter::whereIn('apartment_id', $apartments)->pluck('id');
         $readings = Reading::whereIn('meter_id', $meters)
@@ -462,13 +351,44 @@ class DealershipReading extends Model
         return $readings;
     }
 
-    public function getApartmentReport(Apartment $apartment)
+    public function generateApartmentReport()
     {
-        $complex = $this->complex;
-        $units = $this->totalApartments();
+        $blocks = Block::where('complex_id', $this->complex_id)->pluck('id');
+        $apartments = Apartment::whereIn('block_id', $blocks)->get();
         $reports = [];
-        $diff_cost = $this->moneyConvertToFloat($this->diff_cost);
 
+        foreach ($apartments as $apartment) {
+            $result = $this->getApartmentReport($apartment);
+
+            if ($result) {
+                $report = ApartmentReport::where('dealership_reading_id', $this->id)->where('apartment_id',  $apartment->id)->first();
+
+                $data = [
+                    'consumed' => $result['volume_consumed'],
+                    'consumed_cost' => $result['consumed_cost'],
+                    'sewage_cost' => $result['sewage_cost'],
+                    // 'total_unit' => $result['total_unit'],
+                    // 'partial' => $result['partial'],
+                    'dealership_reading_id' => $this->id,
+                    'readings' => $result['readings'],
+                    'apartment_id' => $apartment->id,
+                    'month_ref' => $this->month_ref,
+                    'year_ref' => $this->year_ref
+                ];
+                if ($report) {
+                    $report->update($data);
+                } else {
+                    ApartmentReport::create($data);
+                }
+            }
+        }
+    }
+
+    //** Apartments Calc Engine! */
+    public function getApartmentReport($apartment)
+    {
+        // $diff_cost = $this->moneyConvertToFloat($this->diff_cost);
+        // $units = $this->totalApartments();
         $meters = Meter::where('apartment_id', $apartment->id)->pluck('id');
         $readings = Reading::whereIn('meter_id', $meters)
             ->where('year_ref', $this->year_ref)
@@ -481,23 +401,81 @@ class DealershipReading extends Model
             $cost_2 = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
 
             $total_consumed = 0;
-            $total_cost = 0;
+            $consumed_cost = 0;
+            $sewage_cost = 0;
             foreach ($readings as $reading) {
                 $total_consumed += $this->convertToFloat($reading->volume_consumed);
             }
 
+            /** Calc Rules */
+            /* Total Consumed */
             if ($total_consumed <= $tax_1) {
                 if ($this->consumption_calculation == 'Consumo com Mínimo') {
-                    $total_cost += $this->moneyConvertToFloat($this->minimum_value) * 2;
+                    $consumed_cost += $this->moneyConvertToFloat($this->minimum_value);
                 } else {
-                    $total_cost += ($total_consumed *  $cost_1) * 2;
+                    $consumed_cost += ($total_consumed *  $cost_1);
                 }
             }
 
             if ($total_consumed > $tax_1) {
-                $total_cost += ($tax_1 * $cost_1 + ($total_consumed - $tax_1) * $cost_2) * 2;
+                $consumed_cost += ($tax_1 * $cost_1 + ($total_consumed - $tax_1) * $cost_2);
             }
 
+            switch ($this->sewage_calc) {
+                case 'Igual ao consumo de água':
+                    $sewage_cost = $consumed_cost;
+                    break;
+                case 'Metade do valor do consumo de água':
+                    $sewage_cost = $consumed_cost / 2;
+                    break;
+                case 'Sem cobrança':
+                    $sewage_cost = 0;
+                    break;
+                default:
+                    $sewage_cost = $consumed_cost;
+                    break;
+            }
+
+            // /** Common Area */
+            // $common_area = 0;
+
+            // switch ($this->common_area) {
+            //     case 'Sem':
+            //         $common_area = 0;
+            //         break;
+            //     case 'Simples':
+            //         $common_area = $diff_cost / $units;
+            //         break;
+            //     case 'Fração':
+            //         $common_area = $diff_cost * $this->convertToFloat($apartment->fraction);
+            //         break;
+            //     default:
+            //         $common_area = 0;
+            //         break;
+            // }
+
+            // $total_unit = $consumed_cost + $sewage_cost +  $common_area;
+
+            return [
+                'volume_consumed' => $total_consumed,
+                'consumed_cost' => $consumed_cost,
+                'sewage_cost' => $sewage_cost,
+                // 'total_unit' => $total_unit,
+                // 'partial' => $common_area,
+                'readings' => $readings->pluck('id'),
+            ];
+        } else {
+            return null;
+        }
+    }
+
+    public function finalCalc()
+    {
+        $units = $this->totalApartments();
+        $diff_cost = $this->moneyConvertToFloat($this->diff_cost);
+        $reports = ApartmentReport::where('dealership_reading_id', $this->id)->get();
+
+        foreach ($reports as $report) {
             /** Common Area */
             $common_area = 0;
             switch ($this->common_area) {
@@ -508,25 +486,20 @@ class DealershipReading extends Model
                     $common_area = $diff_cost / $units;
                     break;
                 case 'Fração':
-                    $common_area = $diff_cost * $this->convertToFloat($apartment->fraction);
+                    $common_area = $diff_cost * $this->convertToFloat($report->apartment->fraction);
+                    break;
+                default:
+                    $common_area = 0;
                     break;
             }
 
-            $total_unit = $total_cost +  $common_area;
+            $total_unit = $this->moneyConvertToFloat($report->consumed_cost) + $this->moneyConvertToFloat($report->sewage_cost) +  $common_area;
 
-            $reports = array(
-                'total' => $this->convertToMoney($total_cost),
-                'partial' => $this->convertToMoney($common_area),
-                'total_unit' => $this->convertToMoney($total_unit),
-                'apartment' => $apartment->id,
-                'totalConsumed' => $total_consumed,
-                'readings' => $readings
-            );
-        } else {
-            $reports = null;
+            $report->update([
+                'total_unit' => $total_unit,
+                'partial' => $common_area,
+            ]);
         }
-
-        return $reports;
     }
 
     private function convertToFloat($number)
@@ -546,8 +519,7 @@ class DealershipReading extends Model
 
     private function totalApartments()
     {
-        $complex = $this->complex;
-        $blocks = Block::where('complex_id', $this->complex->id)->pluck('id');
+        $blocks = Block::where('complex_id', $this->complex_id)->pluck('id');
         $apartments = Apartment::whereIn('block_id', $blocks)->get();
         $units = 0;
         foreach ($apartments as $apartment) {

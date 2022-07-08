@@ -258,7 +258,10 @@ return [
         'type_minimum_value' => 'tipo de mínimo',
         'minimum_value' => 'valor mínimo',
         'fare_type'  => 'tipo de tarifa',
-        'common_area' => 'tipo de rateio da área comum'
+        'common_area' => 'tipo de rateio da área comum',
+        'consumption_value' => 'valor da água',
+        'sewage_value' => 'valor do esgoto',
+        'sewage_calc' => 'tipo de cálculo de esgoto'
     ],
 
 ];

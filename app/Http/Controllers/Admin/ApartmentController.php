@@ -45,7 +45,7 @@ class ApartmentController extends Controller
             return Datatables::of($apartments)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="apartments/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="users/apartments/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão deste apartamento?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>';
+                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="apartments/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="apartments/destroy/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão deste apartamento?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])

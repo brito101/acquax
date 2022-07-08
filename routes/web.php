@@ -42,11 +42,11 @@ Route::group(['middleware' => ['auth']], function () {
 
         /** Apartments Readings */
         Route::get('residences-readings', [AplicationApartmentController::class, 'index'])->name('residences.readings');
-        Route::get('residences-readings/{reading}/apartment/{apartment}', [AplicationApartmentController::class, 'apartmentReading'])->name('residences.readings.apartment');
-        Route::get('residences-readings-pdf/{reading}/apartment/{apartment}', [AplicationApartmentController::class, 'apartmentPrint'])->name('residences.readings.print');
+        Route::get('residences-readings/{reading}', [AplicationApartmentController::class, 'apartmentReading'])->name('residences.readings.apartment');
+        Route::get('residences-readings-pdf/{reading}', [AplicationApartmentController::class, 'apartmentPrint'])->name('residences.readings.print');
 
-        Route::get('residences-readings/{reading}/complex/{complex}', [AplicationApartmentController::class, 'complexReading'])->name('residences.readings.complex');
-        Route::get('residences-readings-pdf/{reading}/complex/{complex}', [AplicationApartmentController::class, 'complexPrint'])->name('complex.readings.print');
+        Route::get('complex-readings/{reading}/', [AplicationApartmentController::class, 'complexReading'])->name('residences.readings.complex');
+        Route::get('complex-readings-pdf/{reading}', [AplicationApartmentController::class, 'complexPrint'])->name('complex.readings.print');
 
         /** User Edit */
         Route::get('user', [AplicationUserController::class, 'edit'])->name('user.edit');
