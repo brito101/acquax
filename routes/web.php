@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/chart', [AdminController::class, 'chart'])->name('home.chart');
 
         /** Users */
+        Route::post('users-import-email', [UserController::class, 'fileImportEmail'])->name('users.importEmail');
         Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
         Route::get('/users/destroy/{id}', [UserController::class, 'destroy']);
         Route::resource('users', UserController::class);

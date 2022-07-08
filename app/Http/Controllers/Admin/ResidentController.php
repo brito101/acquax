@@ -207,6 +207,6 @@ class ResidentController extends Controller
                 ->with('error', 'Nenhum arquivo selecionado!');
         }
         Excel::import(new ResidentsImport, $request->file('file')->store('temp'));
-        return back()->with('success', 'Importação realizada!');;
+        return back()->with('success', 'Importação realizada!');
     }
 }

@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
+use App\Imports\UsersImport;
 use App\Models\Settings\Genre;
 use App\Models\User;
+use App\Models\Views\User as ViewsUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
+use DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -19,18 +23,29 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!Auth::user()->hasPermissionTo('Listar Usuários')) {
             abort(403, 'Acesso não autorizado');
         }
 
         if (Auth::user()->hasRole('Programador')) {
-            $users = User::all();
+            $users = ViewsUser::all('id', 'name', 'document_person', 'email', 'type');
         } elseif (Auth::user()->hasRole('Administrador')) {
-            $users = User::role(['Administrador', 'Usuário'])->get();
+            $users = ViewsUser::role(['Administrador', 'Usuário'])->get('id', 'name', 'document_person', 'email', 'type');
         } else {
             $users = null;
+        }
+
+        if ($request->ajax()) {
+            return Datatables::of($users)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="users/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="users/destroy/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão deste usuário?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
 
         return view('admin.users.index', compact('users'));
@@ -246,5 +261,20 @@ class UserController extends Controller
                 ->back()
                 ->with('error', 'Erro ao excluir!');
         }
+    }
+
+    public function fileImportEmail(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Editar Usuários')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->file()) {
+            return redirect()
+                ->back()
+                ->with('error', 'Nenhum arquivo selecionado!');
+        }
+        Excel::import(new UsersImport, $request->file('file')->store('temp'));
+        return back()->with('success', 'Importação realizada!');
     }
 }
