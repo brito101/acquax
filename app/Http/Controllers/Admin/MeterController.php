@@ -8,9 +8,11 @@ use App\Imports\MetersImport;
 use App\Models\Apartment;
 use App\Models\Settings\TypeMeter;
 use App\Models\Meter;
+use App\Models\Views\Meter as ViewsMeter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use DataTables;
 
 class MeterController extends Controller
 {
@@ -19,12 +21,24 @@ class MeterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!Auth::user()->hasPermissionTo('Listar Medidores')) {
             abort(403, 'Acesso não autorizado');
         }
-        $meters = Meter::all();
+
+        $meters = ViewsMeter::query();
+
+        if ($request->ajax()) {
+            return Datatables::of($meters)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="meters/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="meters/destroy/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão deste medidor?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
         return view('admin.meters.index', compact('meters'));
     }
 

@@ -9,5 +9,5 @@ class Resident extends Model
 {
     use HasFactory;
 
-    public $table = "residents_view";
+    public $table = 'residents_view';
 }

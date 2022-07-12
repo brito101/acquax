@@ -11,10 +11,12 @@ use App\Models\Reading;
 use App\Models\Resident;
 use App\Models\Syndic;
 use App\Models\User;
-use Carbon\Carbon;
+use App\Models\Views\Apartment as ViewsApartment;
+use App\Models\Views\Resident as ViewsResident;
+use App\Models\Views\User as ViewsUser;
+use App\Models\Views\Visit;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Shetabit\Visitor\Models\Visit;
 
 class AdminController extends Controller
 {
@@ -24,21 +26,22 @@ class AdminController extends Controller
             return redirect()->route('app.home');
         }
 
-        $administrators = User::role('Administrador')->get()->count();
-        $complexes = Complex::all()->count();
-        $blocks = Block::all()->count();
-        $apartments = Apartment::all()->count();
-        $meters = Meter::all()->count();
-        $residents = Resident::all()->count();
-        $syndics = Syndic::all()->count();
-        $readings = Reading::all()->count();
+        $administrators = ViewsUser::where('type', 'Administrador')->count();
+        $complexes = Complex::all('id')->count();
+        $blocks = Block::all('id')->count();
+        $apartments = ViewsApartment::all('id')->count();
+        $meters = Meter::all('id')->count();
+        $residents = ViewsResident::all('id')->count();
+        $syndics = Syndic::all('id')->count();
+        $readings = Reading::all('id')->count();
 
-        /** Statistcs */
-        $statistics = $this->accessStatistcs();
+        /** Statistics */
+        $statistics = $this->accessStatistics();
         $onlineUsers = $statistics['onlineUsers'];
         $percent = $statistics['percent'];
         $access = $statistics['access'];
         $chart = $statistics['chart'];
+        $topPages = $statistics['topPages'];
 
         return view('admin.home.index', compact(
             'administrators',
@@ -53,13 +56,14 @@ class AdminController extends Controller
             'percent',
             'access',
             'chart',
+            'topPages'
         ));
     }
 
     public function chart()
     {
-        /** Statistcs */
-        $statistics = $this->accessStatistcs();
+        /** Statistics */
+        $statistics = $this->accessStatistics();
         $onlineUsers = $statistics['onlineUsers'];
         $percent = $statistics['percent'];
         $access = $statistics['access'];
@@ -73,24 +77,26 @@ class AdminController extends Controller
         ]);
     }
 
-    private function accessStatistcs()
+    private function accessStatistics()
     {
-        $onlineUsers = User::online()->get()->count();
+        $onlineUsers = User::online()->count();
 
         $access = Visit::where('created_at', '>=', date("Y-m-d"))
             ->where('url', '!=', route('admin.home.chart'))
             ->get();
-        $accessYesterday = Visit::where('created_at', '>=', Carbon::now()->subDays(1))
-            ->where('created_at', '<', Carbon::now())
+        $accessYesterday = Visit::where('created_at', '>=', date("Y-m-d", strtotime('-1 day')))
+            ->where('created_at', '<', date("Y-m-d"))
             ->where('url', '!=', route('admin.home.chart'))
-            ->get();
+            ->count();
+
+        $totalDaily = $access->count();
 
         $percent = 0;
-        if ($accessYesterday->count() > 0) {
-            $percent = number_format((($access->count() - $accessYesterday->count()) / $access->count() * 100), 2, ",", ".");
+        if ($accessYesterday > 0) {
+            $percent = number_format((($totalDaily - $accessYesterday) / $totalDaily * 100), 2, ",", ".");
         }
 
-        /**Visitor Chart */
+        /** Visitor Chart */
         $data = $access->groupBy(function ($reg) {
             return date('H', strtotime($reg->created_at));
         });
@@ -104,11 +110,32 @@ class AdminController extends Controller
         $chart->labels = (array_keys($dataList));
         $chart->dataset = (array_values($dataList));
 
+        /** Top Pages */
+        $pages = Visit::where('url', 'like', "%app%")->where('method', 'GET')->get();
+        $topPages = $pages->groupBy(function ($reg) {
+            $array = explode("/", $reg->url);
+            $name = "app";
+            $foundIndex = array_search($name, $array);
+            $page = array_slice($array,  $foundIndex + 1, 1);
+            // return $page[2] ?? 'home';
+            return $page;
+        });
+
+        $pageList = [];
+        foreach ($topPages as $key => $value) {
+            $pageList[ucfirst($key)] = count($value);
+        }
+
+        $pages = new \stdClass();
+        $pages->labels = (array_keys($pageList));
+        $pages->dataset = (array_values($pageList));
+
         return array(
             'onlineUsers' => $onlineUsers,
-            'access' => $access->count(),
+            'access' => $totalDaily,
             'percent' => $percent,
-            'chart' => $chart
+            'chart' => $chart,
+            'topPages' => $pages,
         );
     }
 }

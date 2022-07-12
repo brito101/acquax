@@ -9,7 +9,7 @@ class Apartment extends Model
 {
     use HasFactory;
 
-    public $table = "apartments_record_view";
+    public $table = 'apartments_record_view';
 
     /** Accessor */
     public function getFractionAttribute($value)
