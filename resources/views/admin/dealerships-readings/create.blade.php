@@ -278,6 +278,42 @@
 
                                 </div>
 
+                                {{-- Kite Car --}}
+                                <div class="d-flex flex-wrap justify-content-start" id="kitCarContainer">
+
+                                    <div class="col-12 col-md-2 form-group px-0 pr-md-2 mb-0">
+                                        <label for="kite_car">Carro Pipa</label>
+                                        <x-adminlte-select2 name="kite_car">
+                                            <option {{ old('kite_car') == 'Não' ? 'selected' : '' }}>
+                                                Não</option>
+                                            <option {{ old('kite_car') == 'Sim' ? 'selected' : '' }}>
+                                                Sim</option>
+                                        </x-adminlte-select2>
+                                    </div>
+
+                                    <div class="col-12 col-md-2 form-group px-0 px-md-2 kite_car">
+                                        <label for="dealership_consumption">m<sup>3</sup> recebidos</label>
+                                        <input type="text" class="form-control" id="kite_car_consumption"
+                                            placeholder="Quantidade de m³" name="kite_car_consumption"
+                                            value="{{ old('kite_car_consumption') }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-2 form-group px-0 px-md-2 kite_car">
+                                        <label for="kite_car_tax">Valor do m<sup>3</sup></label>
+                                        <input type="text" class="form-control money_format_2" id="kite_car_tax"
+                                            placeholder="Quantidade em Reais" name="kite_car_tax"
+                                            value="{{ old('kite_car_tax') }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-2 form-group px-0 px-md-2 kite_car">
+                                        <label for="kite_car_qtd">Qtd Caminhões</label>
+                                        <input type="number" class="form-control" id="kite_car_qtd"
+                                            placeholder="Quantidade" name="kite_car_qtd" min="0"
+                                            value="{{ old('kite_car_qtd') }}">
+                                    </div>
+
+                                </div>
+
                             </div>
 
                             <div class="card-footer">

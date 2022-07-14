@@ -11,8 +11,11 @@ use App\Models\DealershipReading;
 use App\Models\Reading;
 use App\Models\Resident;
 use App\Models\Syndic;
+use App\Models\Views\ApartmentReport as ViewsApartmentReport;
+use App\Models\Views\DealershipReading as ViewsDealershipReading;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use DataTables;
 
 class ApartmentController extends Controller
 {
@@ -34,14 +37,11 @@ class ApartmentController extends Controller
         $syndic = Syndic::where('user_id', $user_id)->pluck('complex_id');
         if (count($syndic) > 0) {
             $complexes = Complex::whereIn('id', $syndic)->get();
-            $blocks = Block::whereIn('complex_id', $complexes->pluck('id'))->pluck('id');
-            $complexesApartments = Apartment::whereIn('block_id', $blocks)->get();
         } else {
-            $complexesApartments = null;
             $complexes = null;
         }
 
-        return view('application.apartments.index', compact('apartments', 'complexesApartments', 'complexes'));
+        return view('application.apartments.index', compact('apartments', 'complexes'));
     }
 
     public function apartmentReading($id)
@@ -141,5 +141,67 @@ class ApartmentController extends Controller
 
 
         return view('application.complexes.print', compact('reading', 'complex'));
+    }
+
+    public function residencesReadingAjax(Request $request, $id)
+    {
+        $reports = ViewsApartmentReport::where('apartment_id', $id)->get();
+        if ($request->ajax()) {
+            return Datatables::of($reports)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<nobr>' . '<a class="btn btn-xs btn-default bg-primary mx-1 shadow" title="Visualizar" href="residences-readings/' . $row->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function complexReadingAjax(Request $request, $id)
+    {
+        $readings = ViewsDealershipReading::where('complex_id', $id)->get();
+        if ($request->ajax()) {
+            return Datatables::of($readings)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<nobr>' . '<a class="btn btn-xs btn-default bg-primary mx-1 shadow" title="Visualizar"    href="complex-readings/' . $row->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function complexResidencesReadingAjax(Request $request, $id)
+    {
+        $blocks = Block::where('complex_id', $id)->pluck('id');
+        $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
+        $reports = ViewsApartmentReport::whereIn('apartment_id', $apartments)->get();
+        if ($request->ajax()) {
+            return Datatables::of($reports)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<nobr>' . '<a class="btn btn-xs btn-default bg-primary mx-1 shadow" title="Visualizar" href="residences-readings/' . $row->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function readingsReportAjax(Request $request, $id)
+    {
+        $reports = ViewsApartmentReport::where('dealership_reading_id', $id)->get();
+        if ($request->ajax()) {
+            return Datatables::of($reports)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<nobr>' . '<a class="btn btn-xs btn-default bg-primary mx-1 shadow" title="Visualizar" href="' . url('/app/residences-readings/') . '/' . $row->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 }

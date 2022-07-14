@@ -38,7 +38,7 @@
 
                         <form>
                             <div class="card-body d-flex flex-wrap">
-                                <div class="d-flex flex-wrap justify-content-between">
+                                <div class="d-flex flex-wrap justify-content-between col-12">
 
                                     <div class="col-12 col-md-3 form-group px-0 pr-md-2">
                                         <label for="meter_id">Medidor</label>
@@ -66,7 +66,7 @@
 
                                 </div>
 
-                                <div class="d-flex flex-wrap justify-content-between">
+                                <div class="d-flex flex-wrap justify-content-between col-12">
 
                                     <div class="col-12 col-md-3 form-group px-0 pr-md-2">
                                         <label for="reading_date">Data da Leitura</label>

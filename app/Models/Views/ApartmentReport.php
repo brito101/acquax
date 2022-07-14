@@ -1,38 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Views;
 
-use App\Models\Views\Apartment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ApartmentReport extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    protected $dates = ['deleted_at'];
-
-    protected $table = 'apartment_reports';
-
-    protected $casts = [
-        'readings' => 'array',
-    ];
-
-    protected $fillable = [
-        'consumed', 'consumed_cost', 'sewage_cost', 'total_unit', 'partial', 'dealership_reading_id', 'readings', 'apartment_id', 'month_ref', 'year_ref', 'kite_car_consumed', 'kite_car_cost', 'total_consumed'
-    ];
-
-    /** Relationships */
-    public function apartment()
-    {
-        return $this->belongsTo(Apartment::class);
-    }
-
-    public function dealershipReading()
-    {
-        return $this->belongsTo(DealershipReading::class);
-    }
+    protected $table = 'apartment_reports_view';
 
     /** Accessors */
     public function getConsumedAttribute($value)
@@ -70,10 +47,6 @@ class ApartmentReport extends Model
         return 'R$ ' . number_format($value, 2, ',', '.');
     }
 
-    public function getTotalConsumedAttribute($value)
-    {
-        return number_format($value, 3, ',', '.');
-    }
 
     /** Aux */
     private function convertToMoney($number)

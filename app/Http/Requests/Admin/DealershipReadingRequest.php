@@ -19,7 +19,6 @@ class DealershipReadingRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-
         $this->merge([
             'dealership_consumption' => str_replace(',', '.', str_replace('.', '', $this->dealership_consumption)),
             'billed_consumption' => str_replace(',', '.', str_replace('.', '', $this->billed_consumption)),
@@ -31,6 +30,9 @@ class DealershipReadingRequest extends FormRequest
             'dealership_cost' => str_replace(',', '.', str_replace('.', '', str_replace('R$ ', '', $this->dealership_cost))),
             'reading_date' => Carbon::createFromFormat('d/m/Y', $this->reading_date)->format('Y-m-d'),
             'reading_date_next' => Carbon::createFromFormat('d/m/Y', $this->reading_date_next)->format('Y-m-d'),
+            'kite_car' => $this->kite_car === 'Sim' ? true : false,
+            'kite_car_consumption' => $this->kite_car === 'Sim' ? str_replace(',', '.', str_replace('.', '', $this->kite_car_consumption)) : 0,
+            'kite_car_tax' => $this->kite_car === 'Sim' ? str_replace(',', '.', str_replace('.', '', str_replace('R$ ', '', $this->kite_car_tax))) : 0,
         ]);
     }
 
@@ -62,6 +64,10 @@ class DealershipReadingRequest extends FormRequest
             'fare_type'  => 'required|min:1|max:191|in:Concessionária com 2ª faixa pela Progressividade,Concessionária com 2ª faixa pela Média,Metro Cúbico Médio',
             'common_area'  => 'required|min:1|max:20|in:Sem,Simples,Fração',
             'sewage_calc' => 'nullable|in:Igual ao consumo de água,Metade do valor do consumo de água,Sem cobrança|max:191',
+            'kite_car' => 'nullable|boolean',
+            'kite_car_consumption' => 'nullable|numeric|between:0,999999999.999',
+            'kite_car_tax' => 'nullable|numeric|between:0,999999999.999',
+            'kite_car_qtd' => 'nullable|integer|min:0|max:9999'
         ];
     }
 
@@ -78,6 +84,8 @@ class DealershipReadingRequest extends FormRequest
             'reading_date_next.date_format' => 'Formato de data inválido',
             'billed_consumption.between' => 'O campo consumo faturado deve ser entre 0 e 999.999.999,999.',
             'minimum_value.between' => 'O campo consumo faturado deve ser entre 0 e 999.999.999,999.',
+            'kite_car_consumption.between' => 'O campo m3 do carro pipa deve ser entre 0 e 999.999.999,999.',
+            'kite_car_tax.between' => 'O campo valor do m3 do carro pipa deve ser entre 0 e 999.999.999,999.',
         ];
     }
 }

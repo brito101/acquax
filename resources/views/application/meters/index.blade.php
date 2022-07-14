@@ -29,23 +29,6 @@
 
                     @if ($readings && count($readings) > 0)
                         <h3><span class="badge badge-secondary">Meus Imóveis</span></h3>
-                        @php
-
-                            $list = [];
-
-                            $heads = [['label' => 'ID', 'width' => 5], 'Medidor', 'Imóvel', 'Localização', 'Mês Ref', 'Ano Ref', 'Data da Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
-                            foreach ($readings as $reading) {
-                                $list[] = [$reading->id, $reading->meter['register'], $reading->meter->apartment['complex_name'] . ' - ' . $reading->meter->apartment['block_name'] . ' - ' . $reading->meter->apartment['name'], $reading->meter['location'], $reading->month_ref, $reading->year_ref, $reading->reading_date, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="meter-readings/' . $reading->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
-                            }
-
-                            $config = [
-                                'data' => $list,
-                                'order' => [[0, 'desc']],
-                                'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
-                                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
-                            ];
-
-                        @endphp
 
                         <div class="card">
                             <div class="card-header">
@@ -53,6 +36,30 @@
                                     <h3 class="card-title align-self-center">Medições Cadastradas </h3>
                                 </div>
                             </div>
+
+                            @php
+                                $heads = [['label' => 'ID', 'width' => 5], 'Medidor', 'Imóvel', 'Localização', 'Mês Ref', 'Ano Ref', 'Data da Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                                $config = [
+                                    'ajax' => url('/app/meters-readings-ajax'),
+                                    'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'register', 'name' => 'register'], ['data' => 'property', 'name' => 'property'], ['data' => 'location', 'name' => 'location'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'reading_date', 'name' => 'reading_date'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                    'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                                    'autoFill' => true,
+                                    'processing' => true,
+                                    'serverSide' => true,
+                                    'responsive' => true,
+                                    'order' => [[0, 'desc']],
+                                    'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
+                                    'buttons' => [
+                                        ['extend' => 'pageLength', 'className' => 'btn-default'],
+                                        ['extend' => 'copy', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-copy text-secondary"></i>', 'titleAttr' => 'Copiar', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                        ['extend' => 'print', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-print text-info"></i>', 'titleAttr' => 'Imprimir', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                        ['extend' => 'csv', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-csv text-primary"></i>', 'titleAttr' => 'Exportar para CSV', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                        ['extend' => 'excel', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-excel text-success"></i>', 'titleAttr' => 'Exportar para Excel', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                        ['extend' => 'pdf', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-pdf text-danger"></i>', 'titleAttr' => 'Exportar para PDF', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ],
+                                ];
+                            @endphp
+
                             <div class="card-body">
                                 <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
                                     striped hoverable beautify with-buttons />
@@ -62,22 +69,28 @@
 
                     @if ($complexReadings && count($complexReadings) > 0)
                         <h3><span class="badge badge-secondary">Condomínios Administrados</span></h3>
+
                         @php
-
-                            $list = [];
-
                             $heads = [['label' => 'ID', 'width' => 5], 'Medidor', 'Imóvel', 'Localização', 'Mês Ref', 'Ano Ref', 'Data da Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
-                            foreach ($complexReadings as $reading) {
-                                $list[] = [$reading->id, $reading->meter['register'], $reading->meter->apartment['complex_name'] . ' - ' . $reading->meter->apartment['block_name'] . ' - ' . $reading->meter->apartment['name'], $reading->meter['location'], $reading->month_ref, $reading->year_ref, $reading->reading_date, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="meter-readings/' . $reading->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
-                            }
-
                             $config = [
-                                'data' => $list,
-                                'order' => [[0, 'desc']],
-                                'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
+                                'ajax' => url('/app/meters-complex-readings-ajax'),
+                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'register', 'name' => 'register'], ['data' => 'property', 'name' => 'property'], ['data' => 'location', 'name' => 'location'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'reading_date', 'name' => 'reading_date'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
                                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                                'autoFill' => true,
+                                'processing' => true,
+                                'serverSide' => true,
+                                'responsive' => true,
+                                'order' => [[0, 'desc']],
+                                'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
+                                'buttons' => [
+                                    ['extend' => 'pageLength', 'className' => 'btn-default'],
+                                    ['extend' => 'copy', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-copy text-secondary"></i>', 'titleAttr' => 'Copiar', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'print', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-print text-info"></i>', 'titleAttr' => 'Imprimir', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'csv', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-csv text-primary"></i>', 'titleAttr' => 'Exportar para CSV', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'excel', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-excel text-success"></i>', 'titleAttr' => 'Exportar para Excel', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'pdf', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-pdf text-danger"></i>', 'titleAttr' => 'Exportar para PDF', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                ],
                             ];
-
                         @endphp
 
                         <div class="card">

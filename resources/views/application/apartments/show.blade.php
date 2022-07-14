@@ -130,7 +130,7 @@
                                             name="dealership_cost"
                                             value="{{ $reading->dealershipReading->dealership_cost }}" disabled>
                                     </div>
-                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
                                         <label for="diff_consumption">Área Comum em m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light" id="diff_consumption"
                                             name="diff_consumption"
@@ -138,37 +138,226 @@
                                     </div>
                                 </div>
 
+                                {{-- Kite Car --}}
+                                @if ($reading->dealershipReading->kite_car == 'Sim')
+                                    <div class="d-flex flex-wrap justify-content-start">
+
+                                        <div class="col-12 col-md-2 form-group px-0 pr-md-2">
+                                            <label for="kite_car">Carro Pipa</label>
+                                            <input type="text" class="form-control bg-light" id="kite_car"
+                                                name="kite_car" disabled
+                                                value="{{ $reading->dealershipReading->kite_car }}" disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-2 form-group px-0 px-md-2">
+                                            <label for="dealership_consumption">m<sup>3</sup> recebidos</label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_consumption"
+                                                placeholder="Quantidade de m³" name="kite_car_consumption"
+                                                value="{{ $reading->dealershipReading->kite_car_consumption }}"
+                                                disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-2 form-group px-0 px-md-2">
+                                            <label for="kite_car_tax">Valor do m<sup>3</sup></label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_tax"
+                                                placeholder="Quantidade em Reais" name="kite_car_tax"
+                                                value="R$ {{ $reading->dealershipReading->kite_car_tax }}" disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-2 form-group px-0 px-md-2">
+                                            <label for="kite_car_qtd">Qtd Caminhões</label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_qtd"
+                                                placeholder="Quantidade" name="kite_car_qtd"
+                                                value="{{ $reading->dealershipReading->kite_car_qtd }}" disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-2 form-group px-0 px-md-2">
+                                            <label for="value_per_kite_car">Valor por Caminhão</label>
+                                            <input type="text" class="form-control bg-light" id="value_per_kite_car"
+                                                name="value_per_kite_car" disabled
+                                                value="{{ $reading->dealershipReading->value_per_kite_car }}">
+                                        </div>
+
+                                        <div class="col-12 col-md-2 form-group px-0 pl-md-2">
+                                            <label for="kite_car_total">Valor Total Carro Pipa</label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_total"
+                                                name="kite_car_total" disabled
+                                                value="{{ $reading->dealershipReading->kite_car_total }}">
+                                        </div>
+
+                                    </div>
+                                @endif
+
+                                {{-- Totais --}}
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2">
+                                        <label for="monthly_consumption">Consumo Unidades em m<sup>3</sup></label>
+                                        <input type="text" class="form-control bg-light" id="monthly_consumption"
+                                            name="monthly_consumption" disabled
+                                            value="{{ $reading->dealershipReading->monthly_consumption }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                        <label for="monthly_consumption">Conta Total</label>
+                                        <input type="text" class="form-control bg-light" id="monthly_consumption"
+                                            name="monthly_consumption" disabled
+                                            value="{{ $reading->dealershipReading->total_value }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                        <label for="consumption_value">Valor do Consumo</label>
+                                        <input type="text" class="form-control bg-light" id="consumption_value"
+                                            name="consumption_value" disabled
+                                            value="{{ $reading->dealershipReading->consumption_value }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
+                                        <label for="sewage_value">Valor do Esgoto</label>
+                                        <input type="text" class="form-control bg-light" id="sewage_value"
+                                            name="sewage_value" disabled
+                                            value="{{ $reading->dealershipReading->sewage_value }}">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    @if ($reading->dealershipReading->kite_car == 'Sim')
+                                        <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                            <label for="kite_car_consumed_units">Consumo Carro Pipa das Unidades em
+                                                m<sup>3</sup></label>
+                                            <input type="text" class="form-control bg-light"
+                                                id="kite_car_consumed_units" name="kite_car_consumed_units" disabled
+                                                value="{{ $reading->dealershipReading->kite_car_consumed_units }}">
+                                        </div>
+
+                                        <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                            <label for="kite_car_cost_units">Valor Carro Pipa das Unidades</label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_cost_units"
+                                                name="kite_car_cost_units" disabled
+                                                value="{{ $reading->dealershipReading->kite_car_cost_units }}">
+                                        </div>
+
+                                        <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                            <label for="diff_cost">Área Comum</label>
+                                            <input type="text" class="form-control bg-light" id="diff_cost"
+                                                name="diff_cost" disabled
+                                                value="{{ $reading->dealershipReading->diff_cost }}">
+                                        </div>
+                                    @else
+                                        <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                            <label for="diff_cost">Área Comum</label>
+                                            <input type="text" class="form-control bg-light" id="diff_cost"
+                                                name="diff_cost" disabled
+                                                value="{{ $reading->dealershipReading->diff_cost }}">
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-start">
+
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                        <label for="diff_consumption">Diferença entre Real e Concessionária em
+                                            m<sup>3</sup></label>
+                                        <input type="text" class="form-control bg-light" id="diff_consumption"
+                                            name="diff_consumption" disabled
+                                            value="{{ $reading->dealershipReading->diff_consumption }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                        <label for="previous_billed_consumption">Consumo Faturado Mês Anterior em
+                                            m<sup>3</sup></label>
+                                        <input type="text" class="form-control bg-light"
+                                            id="previous_billed_consumption" name="previous_billed_consumption" disabled
+                                            value="{{ $reading->dealershipReading->previous_billed_consumption }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                        <label for="previous_monthly_consumption">Consumo Real Anterior em
+                                            m<sup>3</sup></label>
+                                        <input type="text" class="form-control bg-light"
+                                            id="previous_monthly_consumption" name="previous_monthly_consumption" disabled
+                                            value="{{ $reading->dealershipReading->previous_monthly_consumption }}">
+                                    </div>
+
+                                </div>
+
                                 <h4 class="h5 text-muted mt-3">Dados da Unidade</h4>
                                 <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2">
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
                                         <label for="total_consumed">Consumo da Unidade em m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light" id="total_consumed"
                                             name="total_consumed" value="{{ $reading->consumed }}" disabled>
                                     </div>
-                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
                                         <label for="consumed_cost">Valor de Consumo</label>
                                         <input type="text" class="form-control bg-light" id="consumed_cost"
                                             name="consumed_cost" value="{{ $reading->consumed_cost }}" disabled>
                                     </div>
-                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
                                         <label for="sewage_cost">Valor do Esgoto</label>
                                         <input type="text" class="form-control bg-light" id="sewage_cost"
                                             name="sewage_cost" value="{{ $reading->sewage_cost }}" disabled>
                                     </div>
-                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
-                                        <label for="partial">Rateio Proporcional</label>
-                                        <input type="text" class="form-control bg-light" id="partial"
-                                            name="partial" value="{{ $reading->partial }}" disabled>
-                                    </div>
                                 </div>
 
-                                <div class="d-flex flex-wrap justify-content-end">
-                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
-                                        <label for="total_unit">Valor Total da Unidade</label>
-                                        <input type="text" class="form-control bg-light" id="total_unit"
-                                            name="total_unit" value="{{ $reading->total_unit }}" disabled>
+                                @if ($reading->dealershipReading->kite_car == 'Sim')
+                                    <div class="d-flex flex-wrap justify-content-start">
+                                        <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                            <label for="total_cokite_car_consumednsumed">Consumo Carro Pipa em
+                                                m<sup>3</sup></label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_consumed"
+                                                name="kite_car_consumed" value="{{ $reading->kite_car_consumed }}"
+                                                disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                            <label for="total_cokite_car_consumednsumed">Valor do Carro Pipa</label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_consumed"
+                                                name="kite_car_consumed" value="{{ $reading->kite_car_cost }}"
+                                                disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                            <label for="partial">Rateio Proporcional</label>
+                                            <input type="text" class="form-control bg-light" id="partial"
+                                                name="partial" value="{{ $reading->partial }}" disabled>
+                                        </div>
+
                                     </div>
-                                </div>
+
+                                    <div class="d-flex flex-wrap justify-content-start">
+                                        <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                            <label for="total_consumed">Cosumo Total da Unidade</label>
+                                            <input type="text" class="form-control bg-light" id="total_consumed"
+                                                name="total_consumed" value="{{ $reading->total_consumed }}" disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                            <label for="total_unit">Valor Total da Unidade em m<sup>3</sup></label>
+                                            <input type="text" class="form-control bg-light" id="total_unit"
+                                                name="total_unit" value="{{ $reading->total_unit }}" disabled>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="d-flex flex-wrap justify-content-start">
+                                        <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                            <label for="partial">Rateio Proporcional</label>
+                                            <input type="text" class="form-control bg-light" id="partial"
+                                                name="partial" value="{{ $reading->partial }}" disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                            <label for="total_consumed">Cosumo Total da Unidade em m<sup>3</sup></label>
+                                            <input type="text" class="form-control bg-light" id="total_consumed"
+                                                name="total_consumed" value="{{ $reading->total_consumed }}" disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                            <label for="total_unit">Valor Total da Unidade</label>
+                                            <input type="text" class="form-control bg-light" id="total_unit"
+                                                name="total_unit" value="{{ $reading->total_unit }}" disabled>
+                                        </div>
+                                    </div>
+                                @endif
 
                                 <div class="border-bottom mb-4"></div>
                                 <h4 class="h5 text-muted mt-3">Detalhes por Medidor</h4>

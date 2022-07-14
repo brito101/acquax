@@ -12,8 +12,11 @@ use App\Models\Complex;
 use App\Models\DealershipReading;
 use App\Models\Settings\Dealership;
 use App\Models\Views\Apartment as ViewsApartment;
+use App\Models\Views\ApartmentReport as ViewsApartmentReport;
+use App\Models\Views\DealershipReading as ViewsDealershipReading;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use DataTables;
 
 class DealershipReadingController extends Controller
 {
@@ -22,13 +25,24 @@ class DealershipReadingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!Auth::user()->hasPermissionTo('Listar Leitura das Concessionárias')) {
             abort(403, 'Acesso não autorizado');
         }
 
-        $readings = DealershipReading::all();
+        $readings = ViewsDealershipReading::query();
+        if ($request->ajax()) {
+            return Datatables::of($readings)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="dealerships-readings/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="dealerships-readings/destroy/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão desta leitura?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
         return view('admin.dealerships-readings.index', compact('readings'));
     }
 
@@ -43,8 +57,8 @@ class DealershipReadingController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $complexes = Complex::all();
-        $dealerships = Dealership::all();
+        $complexes = Complex::all('id', 'alias_name');
+        $dealerships = Dealership::all('id', 'name');
 
         return view('admin.dealerships-readings.create', compact('complexes', 'dealerships'));
     }
@@ -75,18 +89,28 @@ class DealershipReadingController extends Controller
 
         /** computed data forced */
         $data['monthly_consumption'] = 'forced';
+        $data['total_value'] = 'forced';
         $data['diff_consumption'] = 'forced';
         $data['previous_monthly_consumption'] = 'forced';
         $data['previous_billed_consumption'] = 'forced';
         $data['units_inside_tax_1'] = 'forced';
         $data['units_above_tax_1'] = 'forced';
+        $data['kite_car_total'] = 'forced';
+        $data['value_per_kite_car'] = 'forced';
 
         $data['editor'] = Auth::user()->id;
 
         $reading = DealershipReading::create($data);
 
         if ($reading->save()) {
-            $this->generateApartmentReport($reading);
+            $reading->generateApartmentReport();
+            $consumedCalc = $reading->calcTotalConsumed();
+            $reading->consumption_value = $consumedCalc['water'];
+            $reading->sewage_value = $consumedCalc['sewage'];
+            $reading->kite_car_consumed_units = $consumedCalc['kite_car_consumed_units'];
+            $reading->kite_car_cost_units = $consumedCalc['kite_car_cost_units'];
+            $reading->diff_cost = $consumedCalc['diff_cost'];
+            $reading->update();
             $reading->finalCalc();
             return redirect()
                 ->route('admin.dealerships-readings.index')
@@ -106,7 +130,7 @@ class DealershipReadingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         if (!Auth::user()->hasPermissionTo('Editar Leitura das Concessionárias')) {
             abort(403, 'Acesso não autorizado');
@@ -117,10 +141,17 @@ class DealershipReadingController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $complexes = Complex::all();
-        $dealerships = Dealership::all();
+        $complexes = Complex::all('id', 'alias_name');
+        $dealerships = Dealership::all('id', 'name');
 
-        return view('admin.dealerships-readings.edit', compact('reading', 'complexes', 'dealerships'));
+        $reports = ViewsApartmentReport::where('dealership_reading_id', $id)->get();
+        if ($request->ajax()) {
+            return Datatables::of($reports)
+                ->addIndexColumn()
+                ->make(true);
+        }
+
+        return view('admin.dealerships-readings.edit', compact('reading', 'complexes', 'dealerships', 'reports'));
     }
 
     /**
@@ -155,16 +186,28 @@ class DealershipReadingController extends Controller
 
         /** computed data forced */
         $data['monthly_consumption'] = 'forced';
+        $data['total_value'] = 'forced';
         $data['diff_consumption'] = 'forced';
         $data['previous_monthly_consumption'] = 'forced';
         $data['previous_billed_consumption'] = 'forced';
         $data['units_inside_tax_1'] = 'forced';
         $data['units_above_tax_1'] = 'forced';
+        $data['kite_car_total'] = 'forced';
+        $data['value_per_kite_car'] = 'forced';
+        $data['consumption_tax_1'] = 'forced';
+        $data['consumption_tax_2'] = 'forced';
 
         $data['editor'] = Auth::user()->id;
 
         if ($reading->update($data)) {
-            $this->generateApartmentReport($reading);
+            $reading->generateApartmentReport();
+            $consumedCalc = $reading->calcTotalConsumed();
+            $reading->consumption_value = $consumedCalc['water'];
+            $reading->sewage_value = $consumedCalc['sewage'];
+            $reading->kite_car_consumed_units = $consumedCalc['kite_car_consumed_units'];
+            $reading->kite_car_cost_units = $consumedCalc['kite_car_cost_units'];
+            $reading->diff_cost = $consumedCalc['diff_cost'];
+            $reading->update();
             $reading->finalCalc();
             return redirect()
                 ->route('admin.dealerships-readings.index')
@@ -210,39 +253,6 @@ class DealershipReadingController extends Controller
             return redirect()
                 ->back()
                 ->with('error', 'Erro ao excluir!');
-        }
-    }
-
-    public function generateApartmentReport($reading)
-    {
-        $blocks = Block::where('complex_id', $reading->complex_id)->pluck('id');
-        $apartments = ViewsApartment::whereIn('block_id', $blocks)->get();
-        $reports = [];
-
-        foreach ($apartments as $apartment) {
-            $result = $reading->getApartmentReport($apartment);
-
-            if ($result) {
-                $report = ApartmentReport::where('dealership_reading_id', $reading->id)->where('apartment_id',  $apartment->id)->first();
-
-                $data = [
-                    'consumed' => $result['volume_consumed'],
-                    'consumed_cost' => $result['consumed_cost'],
-                    'sewage_cost' => $result['sewage_cost'],
-                    // 'total_unit' => $result['total_unit'],
-                    // 'partial' => $result['partial'],
-                    'dealership_reading_id' => $reading->id,
-                    'readings' => $result['readings'],
-                    'apartment_id' => $apartment->id,
-                    'month_ref' => $reading->month_ref,
-                    'year_ref' => $reading->year_ref
-                ];
-                if ($report) {
-                    $report->update($data);
-                } else {
-                    ApartmentReport::create($data);
-                }
-            }
         }
     }
 }

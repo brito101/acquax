@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
-class SupportControler extends Controller
+class SupportController extends Controller
 {
     public function index()
     {

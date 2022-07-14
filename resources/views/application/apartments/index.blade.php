@@ -28,7 +28,7 @@
 
                     @include('components.alert')
 
-                    @if (count($apartments) == 0 && !$complexesApartments && !$complexes)
+                    @if (count($apartments) == 0 && !$complexes)
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
@@ -63,8 +63,7 @@
                                                 aria-controls="custom-tabs-one-dealershipReadings"
                                                 aria-selected="false">Condomínios Administrados</a>
                                         </li>
-                                    @endif
-                                    @if ($complexesApartments && count($complexesApartments) > 0)
+
                                         <li class="nav-item">
                                             <a class="nav-link" id="custom-tabs-one-complexesApartments-tab"
                                                 data-toggle="pill" href="#custom-tabs-one-complexesApartments"
@@ -81,22 +80,6 @@
                                         <div class="tab-pane fade show active" id="custom-tabs-one-apartments"
                                             role="tabpanel" aria-labelledby="custom-tabs-one-apartments-tab">
                                             @foreach ($apartments as $apartment)
-                                                @php
-                                                    $list = [];
-                                                    $heads = [['label' => 'ID', 'width' => 5], 'Mês', 'Ano', 'Valor', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
-                                                    foreach ($apartment->getFullReports() as $report) {
-                                                        $list[] = [$report->id, $report->month_ref, $report->year_ref, $report->total_unit, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="residences-readings/' . $report->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
-                                                    }
-
-                                                    $config = [
-                                                        'data' => $list,
-                                                        'order' => [[0, 'desc']],
-                                                        'columns' => [null, null, null, null, ['orderable' => false]],
-                                                        'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
-                                                    ];
-
-                                                @endphp
-
                                                 <div class="card">
                                                     <div class="card-header">
                                                         <div
@@ -111,6 +94,30 @@
                                                             </h3>
                                                         </div>
                                                     </div>
+
+                                                    @php
+                                                        $heads = [['label' => 'ID', 'width' => 5], 'Mês', 'Ano', 'Valor', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
+                                                        $config = [
+                                                            'ajax' => url('/app/residences-readings-ajax/' . $apartment->id),
+                                                            'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'total_unit', 'name' => 'total_unit'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                                            'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                                                            'autoFill' => true,
+                                                            'processing' => true,
+                                                            'serverSide' => true,
+                                                            'responsive' => true,
+                                                            'order' => [[0, 'desc']],
+                                                            'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
+                                                            'buttons' => [
+                                                                ['extend' => 'pageLength', 'className' => 'btn-default'],
+                                                                ['extend' => 'copy', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-copy text-secondary"></i>', 'titleAttr' => 'Copiar', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'print', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-print text-info"></i>', 'titleAttr' => 'Imprimir', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'csv', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-csv text-primary"></i>', 'titleAttr' => 'Exportar para CSV', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'excel', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-excel text-success"></i>', 'titleAttr' => 'Exportar para Excel', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'pdf', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-pdf text-danger"></i>', 'titleAttr' => 'Exportar para PDF', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                            ],
+                                                        ];
+                                                    @endphp
+
                                                     <div class="card-body">
                                                         <x-adminlte-datatable id="table{{ $loop->index }}"
                                                             :heads="$heads" :heads="$heads" :config="$config" striped
@@ -125,33 +132,38 @@
                                             id="custom-tabs-one-dealershipReadings" role="tabpanel"
                                             aria-labelledby="custom-tabs-one-dealershipReadings-tab">
                                             @foreach ($complexes as $complex)
-                                                @php
-                                                    $list = [];
-                                                    $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Mês Ref', 'Ano Ref', 'Data da Leitura', 'Próx Leitura', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
-
-                                                    foreach ($complex->dealershipReading as $reading) {
-                                                        $list[] = [$reading->id, $reading->complex['alias_name'], $reading->month_ref, $reading->year_ref, $reading->reading_date, $reading->reading_date_next, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar"    href="complex-readings/' . $reading->id .'"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
-                                                    }
-
-                                                    $config = [
-                                                        'data' => $list,
-                                                        'order' => [[0, 'desc']],
-                                                        'columns' => [null, null, null, null, null, null, ['orderable' => false]],
-                                                        'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
-                                                    ];
-
-                                                @endphp
-
                                                 <div class="card">
                                                     <div class="card-header">
                                                         <div
                                                             class="d-flex flex-wrap justify-content-between col-12 align-content-center">
                                                             <h3 class="card-title align-self-center">Leituras Cadastradas
-                                                                para o Condomínio {{ $complex->alias_name }}
-
-                                                            </h3>
+                                                                para o Condomínio {{ $complex->alias_name }}</h3>
                                                         </div>
                                                     </div>
+
+                                                    @php
+                                                        $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Mês Ref', 'Ano Ref', 'Data da Leitura', 'Próx Leitura', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
+                                                        $config = [
+                                                            'ajax' => url('/app/complex-readings-ajax/' . $complex->id),
+                                                            'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'alias_name', 'name' => 'alias_name'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'reading_date', 'name' => 'reading_date'], ['data' => 'reading_date_next', 'name' => 'reading_date_next'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                                            'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                                                            'autoFill' => true,
+                                                            'processing' => true,
+                                                            'serverSide' => true,
+                                                            'responsive' => true,
+                                                            'order' => [[0, 'desc']],
+                                                            'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
+                                                            'buttons' => [
+                                                                ['extend' => 'pageLength', 'className' => 'btn-default'],
+                                                                ['extend' => 'copy', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-copy text-secondary"></i>', 'titleAttr' => 'Copiar', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'print', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-print text-info"></i>', 'titleAttr' => 'Imprimir', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'csv', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-csv text-primary"></i>', 'titleAttr' => 'Exportar para CSV', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'excel', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-excel text-success"></i>', 'titleAttr' => 'Exportar para Excel', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'pdf', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-pdf text-danger"></i>', 'titleAttr' => 'Exportar para PDF', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                            ],
+                                                        ];
+                                                    @endphp
+
                                                     <div class="card-body">
                                                         <x-adminlte-datatable id="tableX{{ $loop->index }}"
                                                             :heads="$heads" :heads="$heads" :config="$config" striped
@@ -161,41 +173,43 @@
                                             @endforeach
                                         </div>
                                     @endif
-                                    @if ($complexesApartments && count($complexesApartments) > 0)
+                                    @if ($complexes && count($complexes) > 0)
                                         <div class="tab-pane fade" id="custom-tabs-one-complexesApartments" role="tabpanel"
                                             aria-labelledby="custom-tabs-one-complexesApartments-tab">
-                                            @foreach ($complexesApartments as $apartment)
-                                                @php
-                                                    $list = [];
-                                                    $heads = [['label' => 'ID', 'width' => 5], 'Mês', 'Ano', 'Valor', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
-
-                                                    foreach ($apartment->getFullReports() as $report) {
-                                                        $list[] = [$report->id, $report->month_ref, $report->year_ref, $report->total_unit, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Visualizar" href="residences-readings/' . $report->id . '"><i class="fa fa-lg fa-fw fa-eye"></i></a>'];
-                                                    }
-
-                                                    $config = [
-                                                        'data' => $list,
-                                                        'order' => [[0, 'desc']],
-                                                        'columns' => [null, null, null, null, ['orderable' => false]],
-                                                        'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
-                                                    ];
-
-                                                @endphp
-
+                                            @foreach ($complexes as $complex)
                                                 <div class="card">
                                                     <div class="card-header">
                                                         <div
                                                             class="d-flex flex-wrap justify-content-between col-12 align-content-center">
                                                             <h3 class="card-title align-self-center">Leituras Cadastradas
-                                                                para o
-                                                                Ap.
-                                                                {{ $apartment->name }}, Bl.
-                                                                {{ $apartment->block['name'] }}
-                                                                no Condomínio
-                                                                {{ $apartment->block->complex['alias_name'] }}
+                                                                para o condomínio {{ $complex->alias_name }}
                                                             </h3>
                                                         </div>
                                                     </div>
+
+                                                    @php
+                                                        $heads = [['label' => 'ID', 'width' => 5], 'Bl', 'Ap', 'Mês', 'Ano', 'Valor', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
+                                                        $config = [
+                                                            'ajax' => url('/app/complex-residences-readings-ajax/' . $complex->id),
+                                                            'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'block', 'name' => 'block'], ['data' => 'apartment', 'name' => 'apartment'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'total_unit', 'name' => 'total_unit'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                                            'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                                                            'autoFill' => true,
+                                                            'processing' => true,
+                                                            'serverSide' => true,
+                                                            'responsive' => true,
+                                                            'order' => [[0, 'desc']],
+                                                            'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
+                                                            'buttons' => [
+                                                                ['extend' => 'pageLength', 'className' => 'btn-default'],
+                                                                ['extend' => 'copy', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-copy text-secondary"></i>', 'titleAttr' => 'Copiar', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'print', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-print text-info"></i>', 'titleAttr' => 'Imprimir', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'csv', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-csv text-primary"></i>', 'titleAttr' => 'Exportar para CSV', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'excel', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-excel text-success"></i>', 'titleAttr' => 'Exportar para Excel', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                                ['extend' => 'pdf', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-pdf text-danger"></i>', 'titleAttr' => 'Exportar para PDF', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                                            ],
+                                                        ];
+                                                    @endphp
+
                                                     <div class="card-body">
                                                         <x-adminlte-datatable id="tableY{{ $loop->index }}"
                                                             :heads="$heads" :heads="$heads" :config="$config" striped
@@ -208,7 +222,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                     @endif
                 </div>

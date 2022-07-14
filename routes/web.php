@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Aplication\ApartmentController as AplicationApartmentController;
 use App\Http\Controllers\Aplication\AppController;
 use App\Http\Controllers\Aplication\MeterReadingController;
-use App\Http\Controllers\Aplication\SupportControler;
+use App\Http\Controllers\Aplication\SupportController;
 use App\Http\Controllers\Aplication\UserController as AplicationUserController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Auth;
@@ -45,8 +45,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('residences-readings/{reading}', [AplicationApartmentController::class, 'apartmentReading'])->name('residences.readings.apartment');
         Route::get('residences-readings-pdf/{reading}', [AplicationApartmentController::class, 'apartmentPrint'])->name('residences.readings.print');
 
+        /** Ajax request */
+        Route::get('residences-readings-ajax/{apartment}', [AplicationApartmentController::class, 'residencesReadingAjax'])->name('residences.readings.ajax');
+        Route::get('complex-readings-ajax/{complex}', [AplicationApartmentController::class, 'complexReadingAjax'])->name('complex.readings.ajax');
+        Route::get('complex-residences-readings-ajax/{complex}', [AplicationApartmentController::class, 'complexResidencesReadingAjax'])->name('complex.residences.readings.ajax');
+
+        /** Complex Reading */
         Route::get('complex-readings/{reading}/', [AplicationApartmentController::class, 'complexReading'])->name('residences.readings.complex');
         Route::get('complex-readings-pdf/{reading}', [AplicationApartmentController::class, 'complexPrint'])->name('complex.readings.print');
+        /** Ajax request */
+        Route::get('complex-readings-report-ajax/{dealership_reading}', [AplicationApartmentController::class, 'readingsReportAjax'])->name('complex.readings.report.ajax');
 
         /** User Edit */
         Route::get('user', [AplicationUserController::class, 'edit'])->name('user.edit');
@@ -55,10 +63,13 @@ Route::group(['middleware' => ['auth']], function () {
         /** Meter Readings */
         Route::get('meter-readings', [MeterReadingController::class, 'index'])->name('meter.readings.index');
         Route::get('meter-readings/{reading}', [MeterReadingController::class, 'show'])->name('meter.readings.show');
+        /** Ajax request */
+        Route::get('meters-readings-ajax', [MeterReadingController::class, 'metersReadingAjax'])->name('meters.readings.ajax');
+        Route::get('meters-complex-readings-ajax', [MeterReadingController::class, 'metersComplexReadingAjax'])->name('meters.complex.readings.ajax');
 
         /** Support */
-        Route::get('support', [SupportControler::class, 'index'])->name('support.index');
-        Route::post('support', [SupportControler::class, 'sendMail'])->name('support.send.mail');
+        Route::get('support', [SupportController::class, 'index'])->name('support.index');
+        Route::post('support', [SupportController::class, 'sendMail'])->name('support.send.mail');
     });
 
     Route::get('admin', [AdminController::class, 'index'])->name('admin.home');

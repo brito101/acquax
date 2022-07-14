@@ -28,4 +28,20 @@ $(document).ready(function () {
         rightAlign: true,
         unmaskAsNumber: true,
     });
+
+    let kiteCarGroup = $(".kite_car");
+        let kitCarContainer = $("#kitCarContainer").data("value");
+        if (kitCarContainer == "Sim") {
+            kiteCarGroup.show();
+        } else {
+            kiteCarGroup.hide();
+        }
+
+        $("#kite_car").on("change", function() {
+            if (this.value == 'Sim') {
+                kiteCarGroup.show();
+            } else {
+                kiteCarGroup.hide();
+            }
+        });
 });

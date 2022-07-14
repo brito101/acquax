@@ -121,7 +121,7 @@ class Apartment extends Model
 
         $values = [];
         foreach ($months as $month) {
-            $report = ApartmentReport::where('month_ref', $month)->where('year_ref', date('Y'))->first();
+            $report = ApartmentReport::where('apartment_id', $this->id)->where('month_ref', $month)->where('year_ref', date('Y'))->first();
             if ($report) {
                 $values[$month] = $report;
             } else {
@@ -134,15 +134,6 @@ class Apartment extends Model
 
     public function getFullReports()
     {
-        $dealershipReading = DealershipReading::where('complex_id', $this->block['complex_id'])->orderBy('reading_date', 'desc')->get();
-        $values = [];
-        foreach ($dealershipReading as $item) {
-            $report = $item->getApartmentReport($this);
-            if ($report) {
-                $values[] = array($item, $report);
-            }
-        }
-        // return  $values;
         $reports = ApartmentReport::where('apartment_id', $this->id)->get();
         return $reports;
     }

@@ -261,7 +261,11 @@ return [
         'common_area' => 'tipo de rateio da área comum',
         'consumption_value' => 'valor da água',
         'sewage_value' => 'valor do esgoto',
-        'sewage_calc' => 'tipo de cálculo de esgoto'
+        'sewage_calc' => 'tipo de cálculo de esgoto',
+        'kite_car' => 'carro pipa',
+        'kite_car_consumption' => 'metro cúbico carro pipa',
+        'kite_car_tax' => 'valor do metro cúbico do carro pipa',
+        'kite_car_qtd' => 'quantidade de caminhões',
     ],
 
 ];

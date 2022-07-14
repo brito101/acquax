@@ -92,15 +92,13 @@
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light"
                                             id="dealership_consumption_tax_1" name="dealership_consumption_tax_1"
-                                            value="{{ old('dealership_consumption_tax_1') ?? $reading->dealership_consumption_tax_1 }}"
-                                            required>
+                                            value="{{ $reading->dealership_consumption_tax_1 }}" required>
                                     </div>
 
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="dealership_cost_tax_1">Custo da 1ª Faixa de Consumo</label>
                                         <input type="text" class="form-control bg-light" id="dealership_cost_tax_1"
-                                            name="dealership_cost_tax_1"
-                                            value="{{ old('dealership_cost_tax_1') ?? $reading->dealership_cost_tax_1 }}"
+                                            name="dealership_cost_tax_1" value="{{ $reading->dealership_cost_tax_1 }}"
                                             required>
                                     </div>
                                 </div>
@@ -111,15 +109,13 @@
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light"
                                             id="dealership_consumption_tax_2" name="dealership_consumption_tax_2"
-                                            value="{{ old('dealership_consumption_tax_2') ?? $reading->dealership_consumption_tax_2 }}"
-                                            required>
+                                            value="{{ $reading->dealership_consumption_tax_2 }}" required>
                                     </div>
 
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="dealership_cost_tax_2">Custo da 2ª Faixa de Consumo</label>
                                         <input type="text" class="form-control bg-light" id="dealership_cost_tax_2"
-                                            name="dealership_cost_tax_2"
-                                            value="{{ old('dealership_cost_tax_2') ?? $reading->dealership_cost_tax_2 }}"
+                                            name="dealership_cost_tax_2" value="{{ $reading->dealership_cost_tax_2 }}"
                                             required>
                                     </div>
                                 </div>
@@ -164,59 +160,83 @@
 
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-4 form-group px-0 pr-md-2">
-                                        <label for="billed_consumption">Consumo Faturado Mês Atual em m<sup>3</sup></label>
-                                        <input type="text" class="form-control bg-light" id="billed_consumption"
-                                            placeholder="Consumo Faturado Mês Atual" name="billed_consumption"
-                                            value="{{ $reading->billed_consumption }}" disabled>
-                                    </div>
-
-                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
-                                        <label for="dealership_consumption">Consumo da Concessionária em
-                                            m<sup>3</sup></label>
+                                        <label for="dealership_consumption">Consumo do Condomínio em m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light" id="dealership_consumption"
-                                            placeholder="Consumo medido pela concessionária" name="dealership_consumption"
+                                            name="dealership_consumption"
                                             value="{{ $reading->dealership_consumption }}" disabled>
                                     </div>
-                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
-                                        <label for="dealership_cost">Custo da Concessionária em Reais</label>
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                        <label for="dealership_cost">Consumo do Condomínio em Reais</label>
                                         <input type="text" class="form-control bg-light" id="dealership_cost"
-                                            placeholder="Custo total do medido pela concessionária" name="dealership_cost"
-                                            value="{{ $reading->dealership_cost }}" disabled>
+                                            name="dealership_cost" value="{{ $reading->dealership_cost }}" disabled>
                                     </div>
-
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                        <label for="diff_consumption">Área Comum em m<sup>3</sup></label>
+                                        <input type="text" class="form-control bg-light" id="diff_consumption"
+                                            name="diff_consumption" value="{{ $reading->diff_consumption }}" disabled>
+                                    </div>
                                 </div>
 
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
-                                        <label for="previous_billed_consumption">Consumo Faturado Mês Anterior em
-                                            m<sup>3</sup></label>
-                                        <input type="text" class="form-control bg-light"
-                                            id="previous_billed_consumption" name="previous_billed_consumption" disabled
-                                            value="{{ $reading->previous_billed_consumption }}">
-                                    </div>
+                                {{-- Kite Car --}}
+                                @if ($reading->kite_car == 'Sim')
+                                    <div class="d-flex flex-wrap justify-content-start">
 
-                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
-                                        <label for="monthly_consumption">Consumo Real em m<sup>3</sup></label>
+                                        <div class="col-12 col-md-2 form-group px-0 pr-md-2">
+                                            <label for="kite_car">Carro Pipa</label>
+                                            <input type="text" class="form-control bg-light" id="kite_car"
+                                                name="kite_car" disabled value="{{ $reading->kite_car }}" disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-2 form-group px-0 px-md-2">
+                                            <label for="dealership_consumption">m<sup>3</sup> recebidos</label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_consumption"
+                                                placeholder="Quantidade de m³" name="kite_car_consumption"
+                                                value="{{ $reading->kite_car_consumption }}" disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-2 form-group px-0 px-md-2">
+                                            <label for="kite_car_tax">Valor do m<sup>3</sup></label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_tax"
+                                                placeholder="Quantidade em Reais" name="kite_car_tax"
+                                                value="R$ {{ $reading->kite_car_tax }}" disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-2 form-group px-0 px-md-2">
+                                            <label for="kite_car_qtd">Qtd Caminhões</label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_qtd"
+                                                placeholder="Quantidade" name="kite_car_qtd"
+                                                value="{{ $reading->kite_car_qtd }}" disabled>
+                                        </div>
+
+                                        <div class="col-12 col-md-2 form-group px-0 px-md-2">
+                                            <label for="value_per_kite_car">Valor por Caminhão</label>
+                                            <input type="text" class="form-control bg-light" id="value_per_kite_car"
+                                                name="value_per_kite_car" disabled
+                                                value="{{ $reading->value_per_kite_car }}">
+                                        </div>
+
+                                        <div class="col-12 col-md-2 form-group px-0 pl-md-2">
+                                            <label for="kite_car_total">Valor Total Carro Pipa</label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_total"
+                                                name="kite_car_total" disabled value="{{ $reading->kite_car_total }}">
+                                        </div>
+
+                                    </div>
+                                @endif
+
+                                {{-- Totais --}}
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2">
+                                        <label for="monthly_consumption">Consumo Unidades em m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light" id="monthly_consumption"
                                             name="monthly_consumption" disabled
                                             value="{{ $reading->monthly_consumption }}">
                                     </div>
-                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
-                                        <label for="diff_consumption">Diferença entre Real e Concessionária em
-                                            m<sup>3</sup></label>
-                                        <input type="text" class="form-control bg-light" id="diff_consumption"
-                                            name="diff_consumption" disabled value="{{ $reading->diff_consumption }}">
-                                    </div>
-                                </div>
 
-                                <div class="d-flex flex-wrap justify-content-start">
-
-                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2">
-                                        <label for="previous_monthly_consumption">Consumo Real Anterior em
-                                            m<sup>3</sup></label>
-                                        <input type="text" class="form-control bg-light"
-                                            id="previous_monthly_consumption" name="previous_monthly_consumption" disabled
-                                            value="{{ $reading->previous_monthly_consumption }}">
+                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                        <label for="monthly_consumption">Conta Total</label>
+                                        <input type="text" class="form-control bg-light" id="monthly_consumption"
+                                            name="monthly_consumption" disabled value="{{ $reading->total_value }}">
                                     </div>
 
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
@@ -226,27 +246,69 @@
                                             value="{{ $reading->consumption_value }}">
                                     </div>
 
-                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
                                         <label for="sewage_value">Valor do Esgoto</label>
                                         <input type="text" class="form-control bg-light" id="sewage_value"
                                             name="sewage_value" disabled value="{{ $reading->sewage_value }}">
                                     </div>
-
-                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
-                                        <label for="total_value">Valor Total</label>
-                                        <input type="text" class="form-control bg-light" id="total_value"
-                                            name="total_value" disabled value="{{ $reading->total_value }}">
-                                    </div>
-
                                 </div>
 
-                                <div class="d-flex flex-wrap justify-content-between">
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    @if ($reading->kite_car == 'Sim')
+                                        <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                            <label for="kite_car_consumed_units">Consumo Carro Pipa das Unidades em
+                                                m<sup>3</sup></label>
+                                            <input type="text" class="form-control bg-light"
+                                                id="kite_car_consumed_units" name="kite_car_consumed_units" disabled
+                                                value="{{ $reading->kite_car_consumed_units }}">
+                                        </div>
 
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="diff_cost">Área Comum</label>
-                                        <input type="text" class="form-control bg-light" id="diff_cost"
-                                            name="diff_cost" disabled value="{{ $reading->diff_cost }}">
+                                        <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                            <label for="kite_car_cost_units">Valor Carro Pipa das Unidades</label>
+                                            <input type="text" class="form-control bg-light" id="kite_car_cost_units"
+                                                name="kite_car_cost_units" disabled
+                                                value="{{ $reading->kite_car_cost_units }}">
+                                        </div>
+
+                                        <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                            <label for="diff_cost">Área Comum</label>
+                                            <input type="text" class="form-control bg-light" id="diff_cost"
+                                                name="diff_cost" disabled value="{{ $reading->diff_cost }}">
+                                        </div>
+                                    @else
+                                        <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                            <label for="diff_cost">Área Comum</label>
+                                            <input type="text" class="form-control bg-light" id="diff_cost"
+                                                name="diff_cost" disabled value="{{ $reading->diff_cost }}">
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-start">
+
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                        <label for="diff_consumption">Diferença entre Real e Concessionária em
+                                            m<sup>3</sup></label>
+                                        <input type="text" class="form-control bg-light" id="diff_consumption"
+                                            name="diff_consumption" disabled value="{{ $reading->diff_consumption }}">
                                     </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                        <label for="previous_billed_consumption">Consumo Faturado Mês Anterior em
+                                            m<sup>3</sup></label>
+                                        <input type="text" class="form-control bg-light"
+                                            id="previous_billed_consumption" name="previous_billed_consumption" disabled
+                                            value="{{ $reading->previous_billed_consumption }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                        <label for="previous_monthly_consumption">Consumo Real Anterior em
+                                            m<sup>3</sup></label>
+                                        <input type="text" class="form-control bg-light"
+                                            id="previous_monthly_consumption" name="previous_monthly_consumption" disabled
+                                            value="{{ $reading->previous_monthly_consumption }}">
+                                    </div>
+
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-start">
@@ -293,23 +355,39 @@
 
                                 @if ($reading->apartmentReports->count() > 0)
                                     <div class="d-flex flex-wrap justify-content-between">
-                                        @php
-                                            $heads = ['Apartamento', 'Volume Consumido (m3)', 'Valor de Consumo', 'Valor de Esgoto', 'Ajuste de Área Comum', 'Valor total da Unidade'];
+                                        @if ($reading->kite_car == 'Sim')
+                                            @php
+                                                $heads = ['Bl', 'Ap', 'Consumo Unidades (m³)', 'Valor de Consumo', 'Valor de Esgoto', 'Consumo Carro Pipa (m³)', 'Custo Carro Pipa', 'Ajuste de Área Comum', 'Total da Unidade', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
 
-                                            $list = [];
+                                                $config = [
+                                                    'ajax' => url('/app/complex-readings-report-ajax/' . $reading->id),
+                                                    'columns' => [['data' => 'block', 'name' => 'block'], ['data' => 'apartment', 'name' => 'apartment'], ['data' => 'consumed', 'name' => 'consumed'], ['data' => 'consumed_cost', 'name' => 'consumed_cost'], ['data' => 'sewage_cost', 'name' => 'sewage_cost'], ['data' => 'kite_car_consumed', 'name' => 'kite_car_consumed'], ['data' => 'kite_car_cost', 'name' => 'kite_car_cost'], ['data' => 'partial', 'name' => 'partial'], ['data' => 'total_unit', 'name' => 'total_unit'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                                    'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                                                    'autoFill' => true,
+                                                    'processing' => true,
+                                                    'serverSide' => true,
+                                                    'responsive' => true,
+                                                    'order' => [[0, 'asc']],
+                                                    'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
+                                                ];
+                                            @endphp
+                                        @else
+                                            @php
+                                                $heads = ['Bl', 'Ap', 'Consumo Unidades (m³)', 'Valor de Consumo', 'Valor de Esgoto', 'Ajuste de Área Comum', 'Total da Unidade', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
 
-                                            foreach ($reading->apartmentReports as $report) {
-                                                $list[] = [$report->apartment->name, $report->consumed, $report->consumed_cost, $report->sewage_cost, $report->partial, $report->total_unit];
-                                            }
-
-                                            $config = [
-                                                'data' => $list,
-                                                'order' => [[0, 'asc']],
-                                                'columns' => [null, null, null, null, null, null],
-                                                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
-                                            ];
-                                        @endphp
-
+                                                $config = [
+                                                    'ajax' => url('/app/complex-readings-report-ajax/' . $reading->id),
+                                                    'columns' => [['data' => 'block', 'name' => 'block'], ['data' => 'apartment', 'name' => 'apartment'], ['data' => 'consumed', 'name' => 'consumed'], ['data' => 'consumed_cost', 'name' => 'consumed_cost'], ['data' => 'sewage_cost', 'name' => 'sewage_cost'], ['data' => 'partial', 'name' => 'partial'], ['data' => 'total_unit', 'name' => 'total_unit'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                                    'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                                                    'autoFill' => true,
+                                                    'processing' => true,
+                                                    'serverSide' => true,
+                                                    'responsive' => true,
+                                                    'order' => [[0, 'asc']],
+                                                    'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
+                                                ];
+                                            @endphp
+                                        @endif
                                         <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads"
                                             :config="$config" striped hoverable beautify with-buttons />
                                     </div>
