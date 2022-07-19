@@ -25,8 +25,15 @@ class DealershipReading extends Model
         'dealership_consumption',
         'dealership_consumption_tax_1',
         'dealership_consumption_tax_2',
+        'dealership_consumption_tax_3',
+        'dealership_consumption_tax_4',
+        'dealership_consumption_tax_5',
         'dealership_cost_tax_1',
         'dealership_cost_tax_2',
+        'dealership_cost_tax_3',
+        'dealership_cost_tax_4',
+        'dealership_cost_tax_5',
+        'dealership_cost_tax_6',
         'dealership_cost',
         'dealership_id',
         'complex_id',
@@ -49,12 +56,19 @@ class DealershipReading extends Model
         'sewage_value',
         'total_value',
         'diff_cost',
+        'consumption_ranges',
         'consumption_tax_1',
-        'total_cost_tax_1',
         'consumption_tax_2',
-        'total_cost_tax_2',
+        'consumption_tax_3',
+        'consumption_tax_4',
+        'consumption_tax_5',
+        'consumption_tax_6',
         'units_inside_tax_1',
-        'units_above_tax_1',
+        'units_inside_tax_2',
+        'units_inside_tax_3',
+        'units_inside_tax_4',
+        'units_inside_tax_5',
+        'units_inside_tax_6',
         /** Kite Car Calc*/
         'kite_car',
         'kite_car_consumption',
@@ -64,6 +78,15 @@ class DealershipReading extends Model
         'value_per_kite_car',
         'kite_car_consumed_units',
         'kite_car_cost_units'
+    ];
+
+    protected $appends = [
+        'total_cost_tax_1',
+        'total_cost_tax_2',
+        'total_cost_tax_3',
+        'total_cost_tax_4',
+        'total_cost_tax_5',
+        'total_cost_tax_6',
     ];
 
     /**
@@ -136,17 +159,52 @@ class DealershipReading extends Model
         return number_format($value, 3, ",", ".");
     }
 
-    public function getDealershipCostTax1Attribute($value)
-    {
-        return 'R$ ' . number_format($value, 3, ",", ".");
-    }
-
     public function getDealershipConsumptionTax2Attribute($value)
     {
         return number_format($value, 3, ",", ".");
     }
 
+    public function getDealershipConsumptionTax3Attribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
+    public function getDealershipConsumptionTax4Attribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
+    public function getDealershipConsumptionTax5Attribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
+    public function getDealershipCostTax1Attribute($value)
+    {
+        return 'R$ ' . number_format($value, 3, ",", ".");
+    }
+
     public function getDealershipCostTax2Attribute($value)
+    {
+        return 'R$ ' . number_format($value, 3, ",", ".");
+    }
+
+    public function getDealershipCostTax3Attribute($value)
+    {
+        return 'R$ ' . number_format($value, 3, ",", ".");
+    }
+
+    public function getDealershipCostTax4Attribute($value)
+    {
+        return 'R$ ' . number_format($value, 3, ",", ".");
+    }
+
+    public function getDealershipCostTax5Attribute($value)
+    {
+        return 'R$ ' . number_format($value, 3, ",", ".");
+    }
+
+    public function getDealershipCostTax6Attribute($value)
     {
         return 'R$ ' . number_format($value, 3, ",", ".");
     }
@@ -211,6 +269,31 @@ class DealershipReading extends Model
         return number_format($value, 3, ",", ".");
     }
 
+    public function getConsumptionTax2Attribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
+    public function getConsumptionTax3Attribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
+    public function getConsumptionTax4Attribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
+    public function getConsumptionTax5Attribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
+    public function getConsumptionTax6Attribute($value)
+    {
+        return number_format($value, 3, ",", ".");
+    }
+
     public function getTotalCostTax1Attribute()
     {
         $tax = $this->convertToFloat($this->consumption_tax_1);
@@ -220,15 +303,46 @@ class DealershipReading extends Model
         return 'R$ ' . number_format($total, 2, ",", ".");
     }
 
-    public function getConsumptionTax2Attribute($value)
-    {
-        return number_format($value, 3, ",", ".");
-    }
-
     public function getTotalCostTax2Attribute()
     {
         $tax = $this->convertToFloat($this->consumption_tax_2);
         $cost = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
+        $total = $tax * $cost;
+
+        return 'R$ ' . number_format($total, 2, ",", ".");
+    }
+
+    public function getTotalCostTax3Attribute()
+    {
+        $tax = $this->convertToFloat($this->consumption_tax_3);
+        $cost = $this->moneyConvertToFloat($this->dealership_cost_tax_3);
+        $total = $tax * $cost;
+
+        return 'R$ ' . number_format($total, 2, ",", ".");
+    }
+
+    public function getTotalCostTax4Attribute()
+    {
+        $tax = $this->convertToFloat($this->consumption_tax_4);
+        $cost = $this->moneyConvertToFloat($this->dealership_cost_tax_4);
+        $total = $tax * $cost;
+
+        return 'R$ ' . number_format($total, 2, ",", ".");
+    }
+
+    public function getTotalCostTax5Attribute()
+    {
+        $tax = $this->convertToFloat($this->consumption_tax_5);
+        $cost = $this->moneyConvertToFloat($this->dealership_cost_tax_5);
+        $total = $tax * $cost;
+
+        return 'R$ ' . number_format($total, 2, ",", ".");
+    }
+
+    public function getTotalCostTax6Attribute()
+    {
+        $tax = $this->convertToFloat($this->consumption_tax_6);
+        $cost = $this->moneyConvertToFloat($this->dealership_cost_tax_6);
         $total = $tax * $cost;
 
         return 'R$ ' . number_format($total, 2, ",", ".");
@@ -343,39 +457,192 @@ class DealershipReading extends Model
             }
             if (count($readings)) {
                 $total_consumed  = $this->kiteCarCalc($total_consumed);
-                if ($total_consumed <= $this->convertToFloat($this->dealership_consumption_tax_1)) {
+                if ($this->consumption_ranges == 1) {
                     $units++;
+                }
+                if ($this->consumption_ranges > 1) {
+                    if ($total_consumed <= $this->convertToFloat($this->dealership_consumption_tax_1)) {
+                        $units++;
+                    }
                 }
             }
         }
-
         $this->attributes['units_inside_tax_1'] = $units;
     }
 
-    public function setUnitsAboveTax1Attribute($value)
+    public function setUnitsInsideTax2Attribute($value)
     {
         $blocks = Block::where('complex_id', $this->complex_id)->pluck('id');
         $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
         $units = 0;
-        foreach ($apartments as $apartment) {
-            $meters = Meter::where('apartment_id', $apartment)->pluck('id');
-            $readings = Reading::whereIn('meter_id', $meters)
-                ->where('year_ref', $this->year_ref)
-                ->where('month_ref', $this->month_ref)
-                ->get();
-            $total_consumed = 0;
-            foreach ($readings as $reading) {
-                $total_consumed += $this->convertToFloat($reading->volume_consumed);
-            }
-            if (count($readings)) {
-                $total_consumed  = $this->kiteCarCalc($total_consumed);
-                if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_1)) {
-                    $units++;
+        if ($this->consumption_ranges > 1) {
+            foreach ($apartments as $apartment) {
+                $meters = Meter::where('apartment_id', $apartment)->pluck('id');
+                $readings = Reading::whereIn('meter_id', $meters)
+                    ->where('year_ref', $this->year_ref)
+                    ->where('month_ref', $this->month_ref)
+                    ->get();
+                $total_consumed = 0;
+                foreach ($readings as $reading) {
+                    $total_consumed += $this->convertToFloat($reading->volume_consumed);
+                }
+                if (count($readings)) {
+                    $total_consumed  = $this->kiteCarCalc($total_consumed);
+                    if ($this->consumption_ranges == 2) {
+                        if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_1)) {
+                            $units++;
+                        }
+                    }
+                    if ($this->consumption_ranges > 2) {
+                        if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_1) && $total_consumed <= $this->convertToFloat($this->dealership_consumption_tax_2)) {
+                            $units++;
+                        }
+                    }
                 }
             }
         }
 
-        $this->attributes['units_above_tax_1'] = $units;
+        $this->attributes['units_inside_tax_2'] = $units;
+    }
+
+    public function setUnitsInsideTax3Attribute($value)
+    {
+        $blocks = Block::where('complex_id', $this->complex_id)->pluck('id');
+        $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
+        $units = 0;
+        if ($this->consumption_ranges > 2) {
+            foreach ($apartments as $apartment) {
+                $meters = Meter::where('apartment_id', $apartment)->pluck('id');
+                $readings = Reading::whereIn('meter_id', $meters)
+                    ->where('year_ref', $this->year_ref)
+                    ->where('month_ref', $this->month_ref)
+                    ->get();
+                $total_consumed = 0;
+                foreach ($readings as $reading) {
+                    $total_consumed += $this->convertToFloat($reading->volume_consumed);
+                }
+                if (count($readings)) {
+                    $total_consumed  = $this->kiteCarCalc($total_consumed);
+                    if ($this->consumption_ranges == 3) {
+                        if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_2)) {
+                            $units++;
+                        }
+                    }
+                    if ($this->consumption_ranges > 3) {
+                        if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_2) && $total_consumed <= $this->convertToFloat($this->dealership_consumption_tax_3)) {
+                            $units++;
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->attributes['units_inside_tax_3'] = $units;
+    }
+
+    public function setUnitsInsideTax4Attribute($value)
+    {
+        $blocks = Block::where('complex_id', $this->complex_id)->pluck('id');
+        $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
+        $units = 0;
+        if ($this->consumption_ranges > 3) {
+            foreach ($apartments as $apartment) {
+                $meters = Meter::where('apartment_id', $apartment)->pluck('id');
+                $readings = Reading::whereIn('meter_id', $meters)
+                    ->where('year_ref', $this->year_ref)
+                    ->where('month_ref', $this->month_ref)
+                    ->get();
+                $total_consumed = 0;
+                foreach ($readings as $reading) {
+                    $total_consumed += $this->convertToFloat($reading->volume_consumed);
+                }
+                if (count($readings)) {
+                    $total_consumed  = $this->kiteCarCalc($total_consumed);
+                    if ($this->consumption_ranges == 4) {
+                        if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_3)) {
+                            $units++;
+                        }
+                    }
+                    if ($this->consumption_ranges > 4) {
+                        if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_3) && $total_consumed <= $this->convertToFloat($this->dealership_consumption_tax_4)) {
+                            $units++;
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->attributes['units_inside_tax_4'] = $units;
+    }
+
+    public function setUnitsInsideTax5Attribute($value)
+    {
+        $blocks = Block::where('complex_id', $this->complex_id)->pluck('id');
+        $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
+        $units = 0;
+        if ($this->consumption_ranges > 4) {
+            foreach ($apartments as $apartment) {
+                $meters = Meter::where('apartment_id', $apartment)->pluck('id');
+                $readings = Reading::whereIn('meter_id', $meters)
+                    ->where('year_ref', $this->year_ref)
+                    ->where('month_ref', $this->month_ref)
+                    ->get();
+                $total_consumed = 0;
+                foreach ($readings as $reading) {
+                    $total_consumed += $this->convertToFloat($reading->volume_consumed);
+                }
+                if (count($readings)) {
+                    $total_consumed  = $this->kiteCarCalc($total_consumed);
+                    if ($this->consumption_ranges == 5) {
+                        if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_4)) {
+                            $units++;
+                        }
+                    }
+                    if ($this->consumption_ranges > 5) {
+                        if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_4) && $total_consumed <= $this->convertToFloat($this->dealership_consumption_tax_5)) {
+                            $units++;
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->attributes['units_inside_tax_5'] = $units;
+    }
+
+    public function setUnitsInsideTax6Attribute($value)
+    {
+        $blocks = Block::where('complex_id', $this->complex_id)->pluck('id');
+        $apartments = Apartment::whereIn('block_id', $blocks)->pluck('id');
+        $units = 0;
+        if ($this->consumption_ranges > 5) {
+            foreach ($apartments as $apartment) {
+                $meters = Meter::where('apartment_id', $apartment)->pluck('id');
+                $readings = Reading::whereIn('meter_id', $meters)
+                    ->where('year_ref', $this->year_ref)
+                    ->where('month_ref', $this->month_ref)
+                    ->get();
+                $total_consumed = 0;
+                foreach ($readings as $reading) {
+                    $total_consumed += $this->convertToFloat($reading->volume_consumed);
+                }
+                if (count($readings)) {
+                    $total_consumed  = $this->kiteCarCalc($total_consumed);
+                    if ($this->consumption_ranges == 6) {
+                        if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_5)) {
+                            $units++;
+                        }
+                    }
+                    if ($this->consumption_ranges > 6) {
+                        if ($total_consumed > $this->convertToFloat($this->dealership_consumption_tax_5) && $total_consumed <= $this->convertToFloat($this->dealership_consumption_tax_6)) {
+                            $units++;
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->attributes['units_inside_tax_6'] = $units;
     }
 
     public function setConsumptionTax1Attribute($value)
@@ -397,16 +664,111 @@ class DealershipReading extends Model
     public function setConsumptionTax2Attribute($value)
     {
         $volume_consumed = 0;
-        $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
+        $tax = $this->convertToFloat($this->dealership_consumption_tax_1);
+        $limit = $this->convertToFloat($this->dealership_consumption_tax_2);
         foreach ($this->getApartmentReadings() as $reading) {
             $value = $this->convertToFloat($reading->volume_consumed);
             $value = $this->kiteCarCalc($value);
-            if ($value > $tax_1) {
-                $volume_consumed += $value;
+            if ($this->consumption_ranges == 2) {
+                if ($value > $tax) {
+                    $volume_consumed += $value;
+                }
+            } else {
+                if ($value > $tax && $value <= $limit) {
+                    $volume_consumed += $value;
+                }
             }
         }
 
         $this->attributes['consumption_tax_2'] =  $volume_consumed;
+    }
+
+    public function setConsumptionTax3Attribute($value)
+    {
+        $volume_consumed = 0;
+        $tax = $this->convertToFloat($this->dealership_consumption_tax_2);
+        $limit = $this->convertToFloat($this->dealership_consumption_tax_3);
+        foreach ($this->getApartmentReadings() as $reading) {
+            $value = $this->convertToFloat($reading->volume_consumed);
+            $value = $this->kiteCarCalc($value);
+            if ($this->consumption_ranges == 3) {
+                if ($value > $tax) {
+                    $volume_consumed += $value;
+                }
+            } else {
+                if ($value > $tax && $value <= $limit) {
+                    $volume_consumed += $value;
+                }
+            }
+        }
+
+        $this->attributes['consumption_tax_3'] =  $volume_consumed;
+    }
+
+    public function setConsumptionTax4Attribute($value)
+    {
+        $volume_consumed = 0;
+        $tax = $this->convertToFloat($this->dealership_consumption_tax_3);
+        $limit = $this->convertToFloat($this->dealership_consumption_tax_4);
+        foreach ($this->getApartmentReadings() as $reading) {
+            $value = $this->convertToFloat($reading->volume_consumed);
+            $value = $this->kiteCarCalc($value);
+            if ($this->consumption_ranges == 4) {
+                if ($value > $tax) {
+                    $volume_consumed += $value;
+                }
+            } else {
+                if ($value > $tax && $value <= $limit) {
+                    $volume_consumed += $value;
+                }
+            }
+        }
+
+        $this->attributes['consumption_tax_4'] =  $volume_consumed;
+    }
+
+    public function setConsumptionTax5Attribute($value)
+    {
+        $volume_consumed = 0;
+        $tax = $this->convertToFloat($this->dealership_consumption_tax_4);
+        $limit = $this->convertToFloat($this->dealership_consumption_tax_5);
+        foreach ($this->getApartmentReadings() as $reading) {
+            $value = $this->convertToFloat($reading->volume_consumed);
+            $value = $this->kiteCarCalc($value);
+            if ($this->consumption_ranges == 5) {
+                if ($value > $tax) {
+                    $volume_consumed += $value;
+                }
+            } else {
+                if ($value > $tax && $value <= $limit) {
+                    $volume_consumed += $value;
+                }
+            }
+        }
+
+        $this->attributes['consumption_tax_5'] =  $volume_consumed;
+    }
+
+    public function setConsumptionTax6Attribute($value)
+    {
+        $volume_consumed = 0;
+        $tax = $this->convertToFloat($this->dealership_consumption_tax_5);
+        $limit = $this->convertToFloat($this->dealership_consumption_tax_6);
+        foreach ($this->getApartmentReadings() as $reading) {
+            $value = $this->convertToFloat($reading->volume_consumed);
+            $value = $this->kiteCarCalc($value);
+            if ($this->consumption_ranges == 6) {
+                if ($value > $tax) {
+                    $volume_consumed += $value;
+                }
+            } else {
+                if ($value > $tax && $value <= $limit) {
+                    $volume_consumed += $value;
+                }
+            }
+        }
+
+        $this->attributes['consumption_tax_6'] =  $volume_consumed;
     }
 
     /**
@@ -496,9 +858,16 @@ class DealershipReading extends Model
             ->get();
         if (count($readings)) {
             $tax_1 = $this->convertToFloat($this->dealership_consumption_tax_1);
-            $cost_1 = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
             $tax_2 = $this->convertToFloat($this->dealership_consumption_tax_2);
+            $tax_3 = $this->convertToFloat($this->dealership_consumption_tax_3);
+            $tax_4 = $this->convertToFloat($this->dealership_consumption_tax_4);
+            $tax_5 = $this->convertToFloat($this->dealership_consumption_tax_5);
+            $cost_1 = $this->moneyConvertToFloat($this->dealership_cost_tax_1);
             $cost_2 = $this->moneyConvertToFloat($this->dealership_cost_tax_2);
+            $cost_3 = $this->moneyConvertToFloat($this->dealership_cost_tax_3);
+            $cost_4 = $this->moneyConvertToFloat($this->dealership_cost_tax_4);
+            $cost_5 = $this->moneyConvertToFloat($this->dealership_cost_tax_5);
+            $cost_6 = $this->moneyConvertToFloat($this->dealership_cost_tax_6);
 
             $total_consumed = 0;
             $consumed_cost = 0;
@@ -516,16 +885,120 @@ class DealershipReading extends Model
 
             /** Calc Rules */
             /* Dealership Consumed */
-            if ($total_consumed <= $tax_1) {
-                if ($this->consumption_calculation == 'Consumo com Mínimo') {
-                    $consumed_cost += $this->moneyConvertToFloat($this->minimum_value);
-                } else {
-                    $consumed_cost += ($total_consumed *  $cost_1);
-                }
-            }
+            switch ($this->consumption_ranges) {
+                case 1:
+                    if ($this->consumption_calculation == 'Consumo com Mínimo') {
+                        $consumed_cost += $this->moneyConvertToFloat($this->minimum_value);
+                    } else {
+                        $consumed_cost += ($total_consumed *  $cost_1);
+                    }
+                    break;
+                case 2:
+                    if ($total_consumed <= $tax_1) {
+                        if ($this->consumption_calculation == 'Consumo com Mínimo') {
+                            $consumed_cost += $this->moneyConvertToFloat($this->minimum_value);
+                        } else {
+                            $consumed_cost += ($total_consumed *  $cost_1);
+                        }
+                    }
 
-            if ($total_consumed > $tax_1) {
-                $consumed_cost += ($tax_1 * $cost_1 + ($total_consumed - $tax_1) * $cost_2);
+                    if ($total_consumed > $tax_1) {
+                        $consumed_cost += ($tax_1 * $cost_1 + ($total_consumed - $tax_1) * $cost_2);
+                    }
+                    break;
+                case 3:
+                    if ($total_consumed <= $tax_1) {
+                        if ($this->consumption_calculation == 'Consumo com Mínimo') {
+                            $consumed_cost += $this->moneyConvertToFloat($this->minimum_value);
+                        } else {
+                            $consumed_cost += ($total_consumed *  $cost_1);
+                        }
+                    }
+
+                    if ($total_consumed > $tax_1 && $total_consumed <= $tax_2) {
+                        $consumed_cost += ($tax_1 * $cost_1 + ($total_consumed - $tax_1) * $cost_2);
+                    }
+
+                    if ($total_consumed > $tax_2) {
+                        $consumed_cost += ($tax_2 * $cost_2 + ($total_consumed - $tax_2) * $cost_3);
+                    }
+
+                    break;
+                case 4:
+                    if ($total_consumed <= $tax_1) {
+                        if ($this->consumption_calculation == 'Consumo com Mínimo') {
+                            $consumed_cost += $this->moneyConvertToFloat($this->minimum_value);
+                        } else {
+                            $consumed_cost += ($total_consumed *  $cost_1);
+                        }
+                    }
+
+                    if ($total_consumed > $tax_1 && $total_consumed <= $tax_2) {
+                        $consumed_cost += ($tax_1 * $cost_1 + ($total_consumed - $tax_1) * $cost_2);
+                    }
+
+                    if ($total_consumed > $tax_2 && $total_consumed <= $tax_3) {
+                        $consumed_cost += ($tax_2 * $cost_2 + ($total_consumed - $tax_2) * $cost_3);
+                    }
+
+                    if ($total_consumed > $tax_3) {
+                        $consumed_cost += ($tax_3 * $cost_3 + ($total_consumed - $tax_3) * $cost_4);
+                    }
+                    break;
+                case 5:
+                    if ($total_consumed <= $tax_1) {
+                        if ($this->consumption_calculation == 'Consumo com Mínimo') {
+                            $consumed_cost += $this->moneyConvertToFloat($this->minimum_value);
+                        } else {
+                            $consumed_cost += ($total_consumed *  $cost_1);
+                        }
+                    }
+
+                    if ($total_consumed > $tax_1 && $total_consumed <= $tax_2) {
+                        $consumed_cost += ($tax_1 * $cost_1 + ($total_consumed - $tax_1) * $cost_2);
+                    }
+
+                    if ($total_consumed > $tax_2 && $total_consumed <= $tax_3) {
+                        $consumed_cost += ($tax_2 * $cost_2 + ($total_consumed - $tax_2) * $cost_3);
+                    }
+
+                    if ($total_consumed > $tax_3 && $total_consumed <= $tax_4) {
+                        $consumed_cost += ($tax_3 * $cost_3 + ($total_consumed - $tax_3) * $cost_4);
+                    }
+
+                    if ($total_consumed > $tax_4) {
+                        $consumed_cost += ($tax_4 * $cost_4 + ($total_consumed - $tax_4) * $cost_5);
+                    }
+                    break;
+                case 6:
+                    if ($total_consumed <= $tax_1) {
+                        if ($this->consumption_calculation == 'Consumo com Mínimo') {
+                            $consumed_cost += $this->moneyConvertToFloat($this->minimum_value);
+                        } else {
+                            $consumed_cost += ($total_consumed *  $cost_1);
+                        }
+                    }
+
+                    if ($total_consumed > $tax_1 && $total_consumed <= $tax_2) {
+                        $consumed_cost += ($tax_1 * $cost_1 + ($total_consumed - $tax_1) * $cost_2);
+                    }
+
+                    if ($total_consumed > $tax_2 && $total_consumed <= $tax_3) {
+                        $consumed_cost += ($tax_2 * $cost_2 + ($total_consumed - $tax_2) * $cost_3);
+                    }
+
+                    if ($total_consumed > $tax_3 && $total_consumed <= $tax_4) {
+                        $consumed_cost += ($tax_3 * $cost_3 + ($total_consumed - $tax_3) * $cost_4);
+                    }
+
+                    if ($total_consumed > $tax_4 && $total_consumed <= $tax_5) {
+                        $consumed_cost += ($tax_4 * $cost_4 + ($total_consumed - $tax_4) * $cost_5);
+                    }
+
+                    if ($total_consumed > $tax_5) {
+                        $consumed_cost += ($tax_5 * $cost_5 + ($total_consumed - $tax_5) * $cost_6);
+                    }
+                    break;
             }
 
             switch ($this->sewage_calc) {

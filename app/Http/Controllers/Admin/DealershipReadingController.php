@@ -94,9 +94,19 @@ class DealershipReadingController extends Controller
         $data['previous_monthly_consumption'] = 'forced';
         $data['previous_billed_consumption'] = 'forced';
         $data['units_inside_tax_1'] = 'forced';
-        $data['units_above_tax_1'] = 'forced';
+        $data['units_inside_tax_2'] = 'forced';
+        $data['units_inside_tax_3'] = 'forced';
+        $data['units_inside_tax_4'] = 'forced';
+        $data['units_inside_tax_5'] = 'forced';
+        $data['units_inside_tax_6'] = 'forced';
         $data['kite_car_total'] = 'forced';
         $data['value_per_kite_car'] = 'forced';
+        $data['consumption_tax_1'] = 'forced';
+        $data['consumption_tax_2'] = 'forced';
+        $data['consumption_tax_3'] = 'forced';
+        $data['consumption_tax_4'] = 'forced';
+        $data['consumption_tax_5'] = 'forced';
+        $data['consumption_tax_6'] = 'forced';
 
         $data['editor'] = Auth::user()->id;
 
@@ -191,11 +201,19 @@ class DealershipReadingController extends Controller
         $data['previous_monthly_consumption'] = 'forced';
         $data['previous_billed_consumption'] = 'forced';
         $data['units_inside_tax_1'] = 'forced';
-        $data['units_above_tax_1'] = 'forced';
+        $data['units_inside_tax_2'] = 'forced';
+        $data['units_inside_tax_3'] = 'forced';
+        $data['units_inside_tax_4'] = 'forced';
+        $data['units_inside_tax_5'] = 'forced';
+        $data['units_inside_tax_6'] = 'forced';
         $data['kite_car_total'] = 'forced';
         $data['value_per_kite_car'] = 'forced';
         $data['consumption_tax_1'] = 'forced';
         $data['consumption_tax_2'] = 'forced';
+        $data['consumption_tax_3'] = 'forced';
+        $data['consumption_tax_4'] = 'forced';
+        $data['consumption_tax_5'] = 'forced';
+        $data['consumption_tax_6'] = 'forced';
 
         $data['editor'] = Auth::user()->id;
 

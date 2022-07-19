@@ -156,9 +156,26 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex flex-wrap justify-content-between">
+                                <div class="d-flex flex-wrap justify-content-start">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="dealership_consumption_tax_1">Valor da 1ª Faixa de Consumo em
+                                        <label for="consumption_ranges">Qtd de faixas de Consumo</label>
+                                        <input name="consumption_ranges" id="consumption_ranges" class="form-control"
+                                            type="number" min="1" max="6"
+                                            value="{{ old('consumption_ranges') ?? $reading->consumption_ranges }}"
+                                            required>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                        <label for="dealership_cost_tax_1">Custo da 1ª Faixa de Consumo</label>
+                                        <input type="text" class="form-control money_format_3" id="dealership_cost_tax_1"
+                                            placeholder="Valor limite da 1ª Faixa de Consumo pela concessionária"
+                                            name="dealership_cost_tax_1"
+                                            value="{{ old('dealership_cost_tax_1') ?? $reading->dealership_cost_tax_1 }}"
+                                            required>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2" data-consumption_ranges="2">
+                                        <label for="dealership_consumption_tax_1">Valor limite da 1ª Faixa de Consumo em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control" id="dealership_consumption_tax_1"
                                             placeholder="Valor da 1ª Faixa de Consumo pela concessionária"
@@ -167,35 +184,96 @@
                                             required>
                                     </div>
 
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
-                                        <label for="dealership_cost_tax_1">Custo da 1ª Faixa de Consumo</label>
-                                        <input type="text" class="form-control money_format_3" id="dealership_cost_tax_1"
-                                            placeholder="Valor em reais da 1ª Faixa de Consumo pela concessionária"
-                                            name="dealership_cost_tax_1"
-                                            value="{{ old('dealership_cost_tax_1') ?? $reading->dealership_cost_tax_1 }}"
-                                            required>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="dealership_consumption_tax_2">Valor da 2ª Faixa de Consumo em
-                                            m<sup>3</sup></label>
-                                        <input type="text" class="form-control" id="dealership_consumption_tax_2"
-                                            placeholder="Valor mínimo da 2ª Faixa de Consumo pela concessionária"
-                                            name="dealership_consumption_tax_2"
-                                            value="{{ old('dealership_consumption_tax_2') ?? $reading->dealership_consumption_tax_2 }}"
-                                            required>
-                                    </div>
-
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2" data-consumption_ranges="2">
                                         <label for="dealership_cost_tax_2">Custo da 2ª Faixa de Consumo</label>
-                                        <input type="text" class="form-control money_format_3" id="dealership_cost_tax_2"
+                                        <input type="text" class="form-control money_format_3"
+                                            id="dealership_cost_tax_2"
                                             placeholder="Valor em reais da 2ª Faixa de Consumo pela concessionária"
                                             name="dealership_cost_tax_2"
                                             value="{{ old('dealership_cost_tax_2') ?? $reading->dealership_cost_tax_2 }}"
                                             required>
                                     </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2" data-consumption_ranges="3">
+                                        <label for="dealership_consumption_tax_2">Valor limite da 2ª Faixa de Consumo em
+                                            m<sup>3</sup></label>
+                                        <input type="text" class="form-control" id="dealership_consumption_tax_2"
+                                            placeholder="Valor limite da 2ª Faixa de Consumo pela concessionária"
+                                            name="dealership_consumption_tax_2"
+                                            value="{{ old('dealership_consumption_tax_2') ?? $reading->dealership_consumption_tax_2 }}"
+                                            required>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2" data-consumption_ranges="3">
+                                        <label for="dealership_cost_tax_3">Custo da 3ª Faixa de Consumo</label>
+                                        <input type="text" class="form-control money_format_3"
+                                            id="dealership_cost_tax_3"
+                                            placeholder="Valor em reais da 3ª Faixa de Consumo pela concessionária"
+                                            name="dealership_cost_tax_3"
+                                            value="{{ old('dealership_cost_tax_3') ?? $reading->dealership_cost_tax_3 }}"
+                                            required>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2" data-consumption_ranges="4">
+                                        <label for="dealership_consumption_tax_3">Valor limite da 3ª Faixa de Consumo em
+                                            m<sup>3</sup></label>
+                                        <input type="text" class="form-control" id="dealership_consumption_tax_3"
+                                            placeholder="Valor limite da 3ª Faixa de Consumo pela concessionária"
+                                            name="dealership_consumption_tax_3"
+                                            value="{{ old('dealership_consumption_tax_3') ?? $reading->dealership_consumption_tax_3 }}"
+                                            required>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2" data-consumption_ranges="4">
+                                        <label for="dealership_cost_tax_4">Custo da 4ª Faixa de Consumo</label>
+                                        <input type="text" class="form-control money_format_3"
+                                            id="dealership_cost_tax_4"
+                                            placeholder="Valor em reais da 4ª Faixa de Consumo pela concessionária"
+                                            name="dealership_cost_tax_4"
+                                            value="{{ old('dealership_cost_tax_4') ?? $reading->dealership_cost_tax_4 }}"
+                                            required>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2" data-consumption_ranges="5">
+                                        <label for="dealership_consumption_tax_4">Valor limite da 4ª Faixa de Consumo em
+                                            m<sup>3</sup></label>
+                                        <input type="text" class="form-control" id="dealership_consumption_tax_4"
+                                            placeholder="Valor limite da 4ª Faixa de Consumo pela concessionária"
+                                            name="dealership_consumption_tax_4"
+                                            value="{{ old('dealership_consumption_tax_4') ?? $reading->dealership_consumption_tax_4 }}"
+                                            required>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2" data-consumption_ranges="5">
+                                        <label for="dealership_cost_tax_5">Custo da 5ª Faixa de Consumo</label>
+                                        <input type="text" class="form-control money_format_3"
+                                            id="dealership_cost_tax_5"
+                                            placeholder="Valor em reais da 5ª Faixa de Consumo pela concessionária"
+                                            name="dealership_cost_tax_5"
+                                            value="{{ old('dealership_cost_tax_5') ?? $reading->dealership_cost_tax_5 }}"
+                                            required>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2" data-consumption_ranges="6">
+                                        <label for="dealership_consumption_tax_5">Valor limite da 5ª Faixa de Consumo em
+                                            m<sup>3</sup></label>
+                                        <input type="text" class="form-control" id="dealership_consumption_tax_5"
+                                            placeholder="Valor limite da 5ª Faixa de Consumo pela concessionária"
+                                            name="dealership_consumption_tax_5"
+                                            value="{{ old('dealership_consumption_tax_5') ?? $reading->dealership_consumption_tax_5 }}"
+                                            required>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2" data-consumption_ranges="6">
+                                        <label for="dealership_cost_tax_6">Custo da 6ª Faixa de Consumo</label>
+                                        <input type="text" class="form-control money_format_3"
+                                            id="dealership_cost_tax_6"
+                                            placeholder="Valor em reais da 6ª Faixa de Consumo pela concessionária"
+                                            name="dealership_cost_tax_6"
+                                            value="{{ old('dealership_cost_tax_6') ?? $reading->dealership_cost_tax_6 }}"
+                                            required>
+                                    </div>
+
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-start">
@@ -454,32 +532,130 @@
                                         <input type="text" class="form-control" id="total_cost_tax_1"
                                             name="total_cost_tax_1" disabled value="{{ $reading->total_cost_tax_1 }}">
                                     </div>
-                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
-                                        <label for="consumption_tax_2">Consumo na 2ª Faixa</label>
-                                        <input type="text" class="form-control" id="consumption_tax_2"
-                                            name="consumption_tax_2" disabled
-                                            value="{{ $reading->consumption_tax_2 }}">
-                                    </div>
-                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
-                                        <label for="total_cost_tax_2">Custo total 2ª Faixa</label>
-                                        <input type="text" class="form-control" id="total_cost_tax_2"
-                                            name="total_cost_tax_2" disabled value="{{ $reading->total_cost_tax_2 }}">
-                                    </div>
+                                    @if ($reading->consumption_ranges > 1)
+                                        <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                            <label for="consumption_tax_2">Consumo na 2ª Faixa</label>
+                                            <input type="text" class="form-control" id="consumption_tax_2"
+                                                name="consumption_tax_2" disabled
+                                                value="{{ $reading->consumption_tax_2 }}">
+                                        </div>
+                                        <div class="col-12 col-md-3 form-group px-0 pl-md-2">
+                                            <label for="total_cost_tax_2">Custo total 2ª Faixa</label>
+                                            <input type="text" class="form-control" id="total_cost_tax_2"
+                                                name="total_cost_tax_2" disabled
+                                                value="{{ $reading->total_cost_tax_2 }}">
+                                        </div>
+                                    @endif
+
+                                    @if ($reading->consumption_ranges > 2)
+                                        <div class="col-12 col-md-3 form-group px-0 pr-md-2">
+                                            <label for="consumption_tax_3">Consumo na 3ª Faixa</label>
+                                            <input type="text" class="form-control" id="consumption_tax_3"
+                                                name="consumption_tax_3" disabled
+                                                value="{{ $reading->consumption_tax_3 }}">
+                                        </div>
+                                        <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                            <label for="total_cost_tax_3">Custo total 3ª Faixa</label>
+                                            <input type="text" class="form-control" id="total_cost_tax_3"
+                                                name="total_cost_tax_3" disabled
+                                                value="{{ $reading->total_cost_tax_3 }}">
+                                        </div>
+                                    @endif
+
+                                    @if ($reading->consumption_ranges > 3)
+                                        <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                            <label for="consumption_tax_4">Consumo na 4ª Faixa</label>
+                                            <input type="text" class="form-control" id="consumption_tax_4"
+                                                name="consumption_tax_4" disabled
+                                                value="{{ $reading->consumption_tax_4 }}">
+                                        </div>
+                                        <div class="col-12 col-md-3 form-group px-0 pl-md-2">
+                                            <label for="total_cost_tax_4">Custo total 4ª Faixa</label>
+                                            <input type="text" class="form-control" id="total_cost_tax_4"
+                                                name="total_cost_tax_4" disabled
+                                                value="{{ $reading->total_cost_tax_4 }}">
+                                        </div>
+                                    @endif
+
+                                    @if ($reading->consumption_ranges > 4)
+                                        <div class="col-12 col-md-3 form-group px-0 pr-md-2">
+                                            <label for="consumption_tax_5">Consumo na 5ª Faixa</label>
+                                            <input type="text" class="form-control" id="consumption_tax_5"
+                                                name="consumption_tax_5" disabled
+                                                value="{{ $reading->consumption_tax_5 }}">
+                                        </div>
+                                        <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                            <label for="total_cost_tax_5">Custo total 5ª Faixa</label>
+                                            <input type="text" class="form-control" id="total_cost_tax_5"
+                                                name="total_cost_tax_5" disabled
+                                                value="{{ $reading->total_cost_tax_5 }}">
+                                        </div>
+                                    @endif
+
+                                    @if ($reading->consumption_ranges > 5)
+                                        <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                            <label for="consumption_tax_6">Consumo na 6ª Faixa</label>
+                                            <input type="text" class="form-control" id="consumption_tax_6"
+                                                name="consumption_tax_6" disabled
+                                                value="{{ $reading->consumption_tax_6 }}">
+                                        </div>
+                                        <div class="col-12 col-md-3 form-group px-0 pl-md-2">
+                                            <label for="total_cost_tax_6">Custo total 6ª Faixa</label>
+                                            <input type="text" class="form-control" id="total_cost_tax_6"
+                                                name="total_cost_tax_6" disabled
+                                                value="{{ $reading->total_cost_tax_6 }}">
+                                        </div>
+                                    @endif
+
                                 </div>
 
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
                                         <label for="units_inside_tax_1">Unidades dentro da 1ª Faixa</label>
                                         <input type="text" class="form-control" id="units_inside_tax_1"
                                             name="units_inside_tax_1" disabled
                                             value="{{ $reading->units_inside_tax_1 }}">
                                     </div>
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
-                                        <label for="units_above_tax_1">Unidades acima da 1ª Faixa</label>
-                                        <input type="text" class="form-control" id="units_above_tax_1"
-                                            name="units_above_tax_1" disabled
-                                            value="{{ $reading->units_above_tax_1 }}">
-                                    </div>
+                                    @if ($reading->consumption_ranges > 1)
+                                        <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                            <label for="units_inside_tax_2">Unidades dentro da 2ª Faixa</label>
+                                            <input type="text" class="form-control" id="units_inside_tax_2"
+                                                name="units_inside_tax_2" disabled
+                                                value="{{ $reading->units_inside_tax_2 }}">
+                                        </div>
+                                    @endif
+                                    @if ($reading->consumption_ranges > 2)
+                                        <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                            <label for="units_inside_tax_3">Unidades dentro da 3ª Faixa</label>
+                                            <input type="text" class="form-control" id="units_inside_tax_3"
+                                                name="units_inside_tax_3" disabled
+                                                value="{{ $reading->units_inside_tax_3 }}">
+                                        </div>
+                                    @endif
+                                    @if ($reading->consumption_ranges > 3)
+                                        <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                            <label for="units_inside_tax_4">Unidades dentro da 4ª Faixa</label>
+                                            <input type="text" class="form-control" id="units_inside_tax_4"
+                                                name="units_inside_tax_4" disabled
+                                                value="{{ $reading->units_inside_tax_4 }}">
+                                        </div>
+                                    @endif
+                                    @if ($reading->consumption_ranges > 4)
+                                        <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                            <label for="units_inside_tax_5">Unidades dentro da 5ª Faixa</label>
+                                            <input type="text" class="form-control" id="units_inside_tax_5"
+                                                name="units_inside_tax_5" disabled
+                                                value="{{ $reading->units_inside_tax_5 }}">
+                                        </div>
+                                    @endif
+                                    @if ($reading->consumption_ranges > 5)
+                                        <div class="col-12 col-md-4 form-group px-0 pl-md-2">
+                                            <label for="units_inside_tax_6">Unidades dentro da 6ª Faixa</label>
+                                            <input type="text" class="form-control" id="units_inside_tax_6"
+                                                name="units_inside_tax_6" disabled
+                                                value="{{ $reading->units_inside_tax_6 }}">
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="border-bottom mb-4"></div>
