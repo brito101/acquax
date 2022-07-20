@@ -67,7 +67,7 @@ class ApartmentReport extends Model
 
     public function getKiteCarCostAttribute($value)
     {
-        return 'R$ ' . number_format($value, 2, ',', '.');
+        return 'R$ ' . number_format($value, 3, ',', '.');
     }
 
     public function getTotalConsumedAttribute($value)
@@ -78,6 +78,6 @@ class ApartmentReport extends Model
     /** Aux */
     private function convertToMoney($number)
     {
-        return 'R$ ' . number_format($number, 2, ',', '.');
+        return 'R$ ' . number_format($number, 3, ',', '.');
     }
 }
