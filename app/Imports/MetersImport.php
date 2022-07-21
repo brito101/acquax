@@ -28,7 +28,8 @@ class MetersImport implements ToModel, WithHeadingRow
             'location' => $row['localizacao'] ?? null,
             'initial_reading' => $row['leitura_inicial'] ? str_replace(',', '.', $row['leitura_inicial']) : 0,
             'year_manufacture' => $row['ano_fabricacao'] ?? null,
-            'main' =>  $row['principal'] == 'Não' ? false : true
+            'main' =>  $row['principal'] == 'Não' ? false : true,
+            'rotation' => $row['rotacao'] ?? 'Crescente'
         ]);
     }
 }

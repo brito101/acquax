@@ -22,7 +22,8 @@ class Meter extends Model
         'location',
         'initial_reading',
         'year_manufacture',
-        'main'
+        'main',
+        'rotation',
     ];
 
     /** Relationships */

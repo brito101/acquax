@@ -275,6 +275,7 @@ return [
         'kite_car_tax' => 'valor do metro cúbico do carro pipa',
         'kite_car_qtd' => 'quantidade de caminhões',
         'consumption_ranges' => 'total de faixas de consumo',
+        'rotation' => 'rotação',
     ],
 
 ];

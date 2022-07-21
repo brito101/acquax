@@ -76,8 +76,8 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2">
                                         <label for="type_meter_id">Tipo do Medidor</label>
                                         <x-adminlte-select2 name="type_meter_id">
                                             @foreach ($typeMeters as $type)
@@ -86,31 +86,45 @@
                                             @endforeach
                                         </x-adminlte-select2>
                                     </div>
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="year_manufacture">Ano de Fabricação</label>
                                         <input type="text" class="form-control" id="year_manufacture"
                                             placeholder="Ano de Fabricação do Medidor" name="year_manufacture"
                                             value="{{ old('year_manufacture') }}">
                                     </div>
-                                </div>
 
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
-                                        <label for="status">Status do Medidor</label>
-                                        <x-adminlte-select2 name="status">
-                                            <option {{ old('status') == 'Ativo' ? 'selected' : '' }}>Ativo</option>
-                                            <option {{ old('status') == 'Inativo' ? 'selected' : '' }}>Inativo</option>
+                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                        <label for="rotation">Setindo de Rotação</label>
+                                        <x-adminlte-select2 name="rotation">
+                                            <option {{ old('rotation') == 'Crescente' ? 'selected' : '' }}
+                                                value="Crescente">
+                                                Crescente</option>
+                                            <option {{ old('rotation') == 'Decrescente' ? 'selected' : '' }}
+                                                value="Decrescente">
+                                                Decrescente</option>
                                         </x-adminlte-select2>
                                     </div>
 
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
-                                        @php
-                                            $config = [
-                                                'state' => true,
-                                            ];
-                                        @endphp
-                                        <x-adminlte-input-switch name="main" data-on-text="Sim" data-off-text="Não"
-                                            label="Medidor principal" data-on-color="teal" :config="$config" />
+                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
+                                        <label for="status">Status do Medidor</label>
+                                        <x-adminlte-select2 name="status">
+                                            <option {{ old('status') == 'Ativo' ? 'selected' : '' }} value="Ativo">
+                                                Ativo</option>
+                                            <option {{ old('status') == 'Inativo' ? 'selected' : '' }} value="Inativo">
+                                                Inativo</option>
+                                        </x-adminlte-select2>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2">
+                                        <label for="main">Medidor principal</label>
+                                        <x-adminlte-select2 name="main">
+                                            <option {{ old('main') == true ? 'selected' : '' }} value="true">
+                                                Sim</option>
+                                            <option {{ old('status') == false ? 'selected' : '' }} value="false">
+                                                Não</option>
+                                        </x-adminlte-select2>
                                     </div>
                                 </div>
 

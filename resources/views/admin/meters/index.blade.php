@@ -77,18 +77,18 @@
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
                                 <h3 class="card-title align-self-center">Medidores Cadastrados</h3>
                                 @can('Criar Medidores')
-                                    <a href="{{ route('admin.meters.create') }}" title="Novo Medidor"
-                                        class="btn btn-success"><i class="fas fa-fw fa-plus"></i>Novo
+                                    <a href="{{ route('admin.meters.create') }}" title="Novo Medidor" class="btn btn-success"><i
+                                            class="fas fa-fw fa-plus"></i>Novo
                                         Medidor</a>
                                 @endcan
                             </div>
                         </div>
 
                         @php
-                            $heads = [['label' => 'ID', 'width' => 5], 'Identificador', 'Propriedade', 'Localização', 'Tipo', 'Fabricação', 'Principal', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                            $heads = [['label' => 'ID', 'width' => 5], 'Identificador', 'Propriedade', 'Localização', 'Tipo', 'Fabricação', 'Principal', 'Rotação', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
                             $config = [
                                 'ajax' => url('/admin/meters'),
-                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'register', 'name' => 'register'], ['data' => 'property', 'name' => 'property'], ['data' => 'location', 'name' => 'location'], ['data' => 'type', 'name' => 'type'], ['data' => 'year_manufacture', 'name' => 'year_manufacture'], ['data' => 'main', 'name' => 'main'], ['data' => 'status', 'name' => 'status'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'register', 'name' => 'register'], ['data' => 'property', 'name' => 'property'], ['data' => 'location', 'name' => 'location'], ['data' => 'type', 'name' => 'type'], ['data' => 'year_manufacture', 'name' => 'year_manufacture'], ['data' => 'main', 'name' => 'main'], ['data' => 'rotation', 'name' => 'rotation'], ['data' => 'status', 'name' => 'status'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
                                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                 'autoFill' => true,
                                 'processing' => true,

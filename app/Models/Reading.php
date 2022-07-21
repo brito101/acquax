@@ -65,15 +65,28 @@ class Reading extends Model
     /** Appends */
     public function getVolumeConsumedAttribute()
     {
+
         $datePrevious = $this->getPreviousDateRef($this->month_ref, $this->year_ref);
         $previous = Reading::where('month_ref', $datePrevious[0])
             ->where('year_ref', $datePrevious[1])
             ->where('meter_id', $this->meter_id)->first();
         if ($previous) {
-            $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($previous->reading);
+            if ($this->meter->rotation == 'Crescente') {
+                $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($previous->reading);
+            } elseif ($this->meter->rotation == 'Decrescente') {
+                $volume = $this->convertToFloat($previous->reading) - $this->convertToFloat($this->reading);
+            } else {
+                $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($previous->reading);
+            }
         } else {
             $mether = Meter::where('id', $this->meter_id)->first();
-            $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($mether->initial_reading);
+            if ($this->meter->rotation == 'Crescente') {
+                $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($mether->initial_reading);
+            } elseif ($this->meter->rotation == 'Decrescente') {
+                $volume = $this->convertToFloat($mether->initial_reading) - $this->convertToFloat($this->reading);
+            } else {
+                $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($mether->initial_reading);
+            }
         }
         return number_format($volume, 13, ",", ".");
     }

@@ -40,7 +40,8 @@ class MeterRequest extends FormRequest
             'location' => 'nullable|max:191',
             'initial_reading' => 'required|numeric|between:0,999999999.9999999999999',
             'year_manufacture' => 'nullable|integer|min:1900|max:' . date("Y"),
-            'main' => 'boolean'
+            'main' => 'boolean',
+            'rotation' => 'nullable|in:Crescente,Decrescente'
         ];
     }
 
