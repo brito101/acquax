@@ -4,6 +4,24 @@
 @section('title', '- Dashboard')
 
 @section('content')
+
+    @if ($advertisement)
+        <x-adminlte-modal id="advertisementModal" title="{{ $advertisement->title }}" size="lg" theme="light"
+            icon="fas fa-gift" v-centered scrollable>
+            <div>
+                <img src="{{ Storage::url('advertisements/' . $advertisement->cover) }}"
+                    class="card-img-top img-fluid rounded" alt="{{ $advertisement->title }}"
+                    style="max-height: 800px; object-fit: cover">
+            </div>
+            <x-slot name="footerSlot">
+                <a href="{{ $advertisement->link }}" target="_blank" class="btn btn-primary ml-auto" theme="primary">Saiba
+                    Mais!</a>
+            </x-slot>
+        </x-adminlte-modal>
+        <x-adminlte-button label="Abrir Modal" data-toggle="modal" data-target="#advertisementModal" class="bg-teal"
+            id="advertisementModalButton" class="d-none" />
+    @endif
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -183,7 +201,8 @@
 
                                                 <canvas style="height: 250px; display: block; width: 684px;"
                                                     id="chart-appartment-reading-{{ $loop->index }}"
-                                                    class="chart-appartment-reading" width="684" height="250px"></canvas>
+                                                    class="chart-appartment-reading" width="684"
+                                                    height="250px"></canvas>
                                             </div>
 
                                         </div>
@@ -313,6 +332,9 @@
 
 
 @section('custom_js')
+    <script>
+        $('#advertisementModalButton').click();
+    </script>
     @if ($residences)
         @foreach ($residences as $residence)
             <script>

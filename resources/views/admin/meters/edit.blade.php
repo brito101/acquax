@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 @section('plugins.select2', true)
-@section('plugins.BootstrapSwitch', true)
 
 @section('title', '- Edição de Medidor')
 

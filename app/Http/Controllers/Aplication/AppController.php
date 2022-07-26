@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Aplication;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advertisement;
 use App\Models\Complex;
 use App\Models\Resident;
 use App\Models\Syndic;
@@ -37,6 +38,12 @@ class AppController extends Controller
             $complexes = null;
         }
 
-        return view('application.home.index', compact('residences', 'complexes'));
+        $advertisement = Advertisement::where('status', 'Ativo')->inRandomOrder()->first();
+        if ($advertisement) {
+            $advertisement->views += 1;
+            $advertisement->update();
+        }
+
+        return view('application.home.index', compact('residences', 'complexes', 'advertisement'));
     }
 }

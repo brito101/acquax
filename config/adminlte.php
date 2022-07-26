@@ -463,6 +463,27 @@ return [
                 ],
             ],
         ],
+        /** Advertisement */
+        [
+            'text'        => 'Propagandas',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-bullhorn',
+            'can'         => 'Acessar Propagandas',
+            'submenu' => [
+                [
+                    'text' => 'Listagem de Propagandas',
+                    'url'  => 'admin/advertisements',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Listar Propagandas',
+                ],
+                [
+                    'text' => 'Cadastro de Propagandas',
+                    'url'  => 'admin/advertisements/create',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Propagandas',
+                ],
+            ],
+        ],
         /** Settings */
         [
             'text'    => 'Configurações',

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\ACL\PermissionController;
 use App\Http\Controllers\Admin\ACL\RoleController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdvertisementController;
 use App\Http\Controllers\Admin\ApartmentController;
 use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\ComplexController;
@@ -126,6 +127,10 @@ Route::group(['middleware' => ['auth']], function () {
         /** Dealerships Readings */
         Route::get('/dealerships-readings/destroy/{id}', [DealershipReadingController::class, 'destroy']);
         Route::resource('dealerships-readings', DealershipReadingController::class);
+
+        /** Advertisements */
+        Route::get('/advertisements/destroy/{id}', [AdvertisementController::class, 'destroy']);
+        Route::resource('advertisements', AdvertisementController::class);
 
         /**
          * Configurations
