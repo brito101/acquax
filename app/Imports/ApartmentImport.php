@@ -23,7 +23,7 @@ class ApartmentImport implements ToModel, WithHeadingRow
             'status' => 'Ativo',
             'user_id' => Auth::user()->id,
             'block_id' => Block::where('name', $row['bloco'])->where('complex_id', Complex::where('alias_name', $row['condominio'])->first()->id)->first()->id,
-            'fraction' => $row['fracao'],
+            'fraction' => $row['fracao'] ?? 0,
         ]);
     }
 }
