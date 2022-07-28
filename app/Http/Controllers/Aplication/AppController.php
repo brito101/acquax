@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Aplication;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
+use App\Models\AdvertisingComplex;
+use App\Models\Apartment;
+use App\Models\Block;
 use App\Models\Complex;
 use App\Models\Resident;
 use App\Models\Syndic;
@@ -38,7 +41,11 @@ class AppController extends Controller
             $complexes = null;
         }
 
-        $advertisement = Advertisement::where('status', 'Ativo')->inRandomOrder()->first();
+        $blocks = Apartment::whereIn('id', $residences->pluck('apartment_id'))->pluck('block_id');
+        $complexList = Block::whereIn('id', $blocks)->pluck('complex_id');
+        $advertisingComplex = AdvertisingComplex::where('complex_id', $complexList)->pluck('advertisement_id');
+
+        $advertisement = Advertisement::where('status', 'Ativo')->whereIn('id', $advertisingComplex)->inRandomOrder()->first();
         if ($advertisement) {
             $advertisement->views += 1;
             $advertisement->update();

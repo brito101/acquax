@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdvertisementRequest;
 use App\Models\Advertisement;
+use App\Models\AdvertisingComplex;
+use App\Models\Complex;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -39,7 +41,9 @@ class AdvertisementController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        return view('admin.advertisements.create');
+        $complexes = Complex::orderBy('alias_name')->get();
+
+        return view('admin.advertisements.create', compact('complexes'));
     }
 
     /**
@@ -83,6 +87,14 @@ class AdvertisementController extends Controller
         $advertisement = Advertisement::create($data);
 
         if ($advertisement->save()) {
+            if ($request->complexes) {
+                foreach ($request->complexes as $complex) {
+                    $item = new AdvertisingComplex();
+                    $item->complex_id = $complex;
+                    $item->advertisement_id = $advertisement->id;
+                    $item->save();
+                }
+            }
             return redirect()
                 ->route('admin.advertisements.index')
                 ->with('success', 'Cadastro realizado!');
@@ -112,7 +124,10 @@ class AdvertisementController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        return view('admin.advertisements.edit', compact('advertisement'));
+        $complexes = Complex::orderBy('alias_name')->get();
+        $advertisingComplex = AdvertisingComplex::whereIn('complex_id', $complexes->pluck('id'))->get();
+
+        return view('admin.advertisements.edit', compact('advertisement', 'complexes', 'advertisingComplex'));
     }
 
     /**
@@ -124,6 +139,7 @@ class AdvertisementController extends Controller
      */
     public function update(AdvertisementRequest $request, $id)
     {
+
         if (!Auth::user()->hasPermissionTo('Editar Propagandas')) {
             abort(403, 'Acesso não autorizado');
         }
@@ -166,6 +182,20 @@ class AdvertisementController extends Controller
         $data['editor'] = Auth::user()->id;
 
         if ($advertisement->update($data)) {
+            if ($request->complexes) {
+                $old = AdvertisingComplex::where('advertisement_id', $advertisement->id)->get();
+                if ($old) {
+                    foreach ($old as $o) {
+                        $o->delete();
+                    }
+                }
+                foreach ($request->complexes as $complex) {
+                    $item = new AdvertisingComplex();
+                    $item->complex_id = $complex;
+                    $item->advertisement_id = $advertisement->id;
+                    $item->save();
+                }
+            }
             return redirect()
                 ->route('admin.advertisements.index')
                 ->with('success', 'Atualização realizada!');
@@ -201,6 +231,13 @@ class AdvertisementController extends Controller
                 unlink($imagePath);
                 $advertisement->cover = null;
                 $advertisement->update();
+            }
+
+            $old = AdvertisingComplex::where('advertisement_id', $advertisement->id)->get();
+            if ($old) {
+                foreach ($old as $o) {
+                    $o->delete();
+                }
             }
 
             return redirect()

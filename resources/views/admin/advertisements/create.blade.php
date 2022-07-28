@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 @section('plugins.BsCustomFileInput', true)
 @section('plugins.select2', true)
+@section('plugins.BootstrapSelect', true)
 
 @section('title', '- Nova Propaganda')
 
@@ -66,8 +67,29 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 form-group px-0">
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    @php
+                                        $config = [
+                                            'liveSearch' => true,
+                                            'liveSearchPlaceholder' => 'Pesquisar...',
+                                            'title' => 'Podem ser selecionados um ou mais...',
+                                            'enable-old-support' => true,
+                                            'showTick' => true,
+                                            'actionsBox' => true,
+                                        ];
+                                    @endphp
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                        <x-adminlte-select-bs id="complexes" name="complexes[]" label="Condomínios"
+                                            class="border" igroup-size="md" :config="$config" multiple required>
+                                            @foreach ($complexes as $complex)
+                                                <option value="{{ $complex->id }}">
+                                                    {{ $complex->alias_name }}
+                                                </option>
+                                            @endforeach
+                                        </x-adminlte-select-bs>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <x-adminlte-input-file name="cover" label="Imagem de Exibição"
                                             placeholder="Selecione uma imagem..." legend="Selecionar" required />
                                     </div>
