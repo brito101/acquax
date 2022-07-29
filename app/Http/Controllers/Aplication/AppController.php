@@ -43,7 +43,7 @@ class AppController extends Controller
 
         $blocks = Apartment::whereIn('id', $residences->pluck('apartment_id'))->pluck('block_id');
         $complexList = Block::whereIn('id', $blocks)->pluck('complex_id');
-        $advertisingComplex = AdvertisingComplex::where('complex_id', $complexList)->pluck('advertisement_id');
+        $advertisingComplex = AdvertisingComplex::whereIn('complex_id', $complexList)->pluck('advertisement_id');
 
         $advertisement = Advertisement::where('status', 'Ativo')->whereIn('id', $advertisingComplex)->inRandomOrder()->first();
         if ($advertisement) {
