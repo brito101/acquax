@@ -117,7 +117,6 @@ class AdminController extends Controller
             $name = "app";
             $foundIndex = array_search($name, $array);
             $page = array_slice($array,  $foundIndex + 1, 1);
-            // return $page[2] ?? 'home';
             return $page;
         });
 
