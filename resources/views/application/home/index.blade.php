@@ -32,11 +32,38 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Dashboard</li>
+
+                        @if ($notifications->count() > 0)
+                            <li class="nav-item dropdown show mb-n3">
+                                <a class="nav-link text-danger" data-toggle="dropdown" href="#" aria-expanded="true">
+                                    <i class="far fa-bell fa-2x"></i>
+                                    <span class="badge badge-warning navbar-badge">{{ $notifications->count() }}</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right"
+                                    style="left: inherit; right: 0px;">
+                                    <span class="dropdown-item dropdown-header">{{ $notifications->count() }}
+                                        {{ $notifications->count() == 1 ? 'Notificação' : 'Notificações' }}</span>
+                                    <div class="dropdown-divider"></div>
+                                    @foreach ($notifications as $notification)
+                                        <p class="px-2">{{ $notification->message }} <span
+                                                class="float-right text-muted text-sm">{{ date('d/m/Y H:i', strtotime($notification->created_at)) }}</span>
+                                        </p>
+                                        <a href="{{ route('app.notificationRead', ['notification' => $notification->id]) }}"
+                                            class="dropdown-item bg-gradient-blue notification" style="white-space: unset;">
+                                            Marcar como lido
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                    @endforeach
+                                </div>
+                            </li>
+                        @endif
                     </ol>
                 </div>
             </div>
         </div>
     </div>
+
+
     <section class="content">
         <div class="container-fluid">
             @include('components.alert')
@@ -332,9 +359,7 @@
 
 
 @section('custom_js')
-    <script>
-        $('#advertisementModalButton').click();
-    </script>
+    <script src="{{ asset('js/app-home.js') }}"></script>
     @if ($residences)
         @foreach ($residences as $residence)
             <script>

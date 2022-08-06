@@ -77,7 +77,8 @@ class DealershipReading extends Model
         'kite_car_qtd',
         'value_per_kite_car',
         'kite_car_consumed_units',
-        'kite_car_cost_units'
+        'kite_car_cost_units',
+        'average',
     ];
 
     protected $appends = [
@@ -668,7 +669,6 @@ class DealershipReading extends Model
         $limit = $this->convertToFloat($this->dealership_consumption_tax_2);
         foreach ($this->getApartmentReadings() as $reading) {
             $value = $this->convertToFloat($reading->volume_consumed);
-            $value = $this->kiteCarCalc($value);
             if ($this->consumption_ranges == 2) {
                 if ($value > $tax) {
                     $volume_consumed += $value;
@@ -690,7 +690,6 @@ class DealershipReading extends Model
         $limit = $this->convertToFloat($this->dealership_consumption_tax_3);
         foreach ($this->getApartmentReadings() as $reading) {
             $value = $this->convertToFloat($reading->volume_consumed);
-            $value = $this->kiteCarCalc($value);
             if ($this->consumption_ranges == 3) {
                 if ($value > $tax) {
                     $volume_consumed += $value;
@@ -712,7 +711,6 @@ class DealershipReading extends Model
         $limit = $this->convertToFloat($this->dealership_consumption_tax_4);
         foreach ($this->getApartmentReadings() as $reading) {
             $value = $this->convertToFloat($reading->volume_consumed);
-            $value = $this->kiteCarCalc($value);
             if ($this->consumption_ranges == 4) {
                 if ($value > $tax) {
                     $volume_consumed += $value;
@@ -734,7 +732,6 @@ class DealershipReading extends Model
         $limit = $this->convertToFloat($this->dealership_consumption_tax_5);
         foreach ($this->getApartmentReadings() as $reading) {
             $value = $this->convertToFloat($reading->volume_consumed);
-            $value = $this->kiteCarCalc($value);
             if ($this->consumption_ranges == 5) {
                 if ($value > $tax) {
                     $volume_consumed += $value;
@@ -756,7 +753,6 @@ class DealershipReading extends Model
         $limit = $this->convertToFloat($this->dealership_consumption_tax_6);
         foreach ($this->getApartmentReadings() as $reading) {
             $value = $this->convertToFloat($reading->volume_consumed);
-            $value = $this->kiteCarCalc($value);
             if ($this->consumption_ranges == 6) {
                 if ($value > $tax) {
                     $volume_consumed += $value;
@@ -769,6 +765,17 @@ class DealershipReading extends Model
         }
 
         $this->attributes['consumption_tax_6'] =  $volume_consumed;
+    }
+
+    public function setAverageAttribute($value)
+    {
+        $total = 0;
+        $units = $this->totalApartments();
+        if ($units > 0) {
+            $total = $this->convertToFloat($this->monthly_consumption) / $units;
+        }
+
+        $this->attributes['average'] = $total;
     }
 
     /**
@@ -1016,6 +1023,23 @@ class DealershipReading extends Model
                     break;
             }
 
+            $total = $total_consumed + $kite_car_consumed;
+
+            /** Notification */
+            if ($total > $this->average) {
+                $data['message'] = "Consumo acima da média do condomínio {$this->complex['alias_name']} em {$this->month_ref}/{$this->year_ref}";
+                $data['apartment_id'] = $apartment->id;
+                $data['dealership_reading_id'] = $this->id;
+                $notification = Notification::where('dealership_reading_id', $this->id)
+                    ->where('apartment_id', $apartment->id)
+                    ->first();
+                if ($notification) {
+                    $notification->update($data);
+                } else {
+                    Notification::create($data);
+                }
+            }
+
             return [
                 'volume_consumed' => $total_consumed, // dealership
                 'consumed_cost' => $consumed_cost,
@@ -1023,7 +1047,7 @@ class DealershipReading extends Model
                 'readings' => $readings->pluck('id'),
                 'kite_car_consumed' => $kite_car_consumed,
                 'kite_car_cost' => $kite_car_cost,
-                'total_consumed' => $total_consumed + $kite_car_consumed
+                'total_consumed' => $total
             ];
         } else {
             return null;

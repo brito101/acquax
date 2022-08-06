@@ -22,6 +22,7 @@ use App\Http\Controllers\Aplication\AppController;
 use App\Http\Controllers\Aplication\MeterReadingController;
 use App\Http\Controllers\Aplication\SupportController;
 use App\Http\Controllers\Aplication\UserController as AplicationUserController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth']], function () {
     Route::get('app', [AppController::class, 'index'])->name('app.home');
     Route::prefix('app')->name('app.')->group(function () {
+
+        /** Notifications */
+        Route::post('read-notification/{notification}', [AppController::class, 'notificationRead'])->name('notificationRead');
 
         /** Apartments Readings */
         Route::get('residences-readings', [AplicationApartmentController::class, 'index'])->name('residences.readings');

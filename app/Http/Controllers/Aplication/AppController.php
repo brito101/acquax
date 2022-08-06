@@ -8,6 +8,7 @@ use App\Models\AdvertisingComplex;
 use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
+use App\Models\Notification;
 use App\Models\Resident;
 use App\Models\Syndic;
 use Illuminate\Http\Request;
@@ -51,6 +52,17 @@ class AppController extends Controller
             $advertisement->update();
         }
 
-        return view('application.home.index', compact('residences', 'complexes', 'advertisement'));
+        $notifications = Notification::whereIn('apartment_id', $residences->pluck('apartment_id'))->where('read', false)->get();
+
+        return view('application.home.index', compact('residences', 'complexes', 'advertisement', 'notifications'));
+    }
+
+    public function notificationRead(Notification $notification)
+    {
+        if ($notification) {
+            $notification->read = !$notification->read;
+            $notification->update();
+            return \response()->json($notification->read);
+        }
     }
 }

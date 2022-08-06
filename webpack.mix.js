@@ -15,6 +15,8 @@ require('laravel-mix-purgecss');
 mix.js("resources/js/app.js", "public/js")
     .copy("resources/img", "public/img")
     .sass("resources/sass/app.scss", "public/css")
+    /** App */
+    .scripts(["resources/js/app-home.js"], "public/js/app-home.js")
     /** Admin */
     .scripts(["resources/js/company.js"], "public/js/company.js")
     .scripts(["resources/js/address.js"], "public/js/address.js")

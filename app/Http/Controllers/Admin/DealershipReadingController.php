@@ -107,6 +107,7 @@ class DealershipReadingController extends Controller
         $data['consumption_tax_4'] = 'forced';
         $data['consumption_tax_5'] = 'forced';
         $data['consumption_tax_6'] = 'forced';
+        $data['average'] = 'forced';
 
         $data['editor'] = Auth::user()->id;
 
@@ -214,6 +215,7 @@ class DealershipReadingController extends Controller
         $data['consumption_tax_4'] = 'forced';
         $data['consumption_tax_5'] = 'forced';
         $data['consumption_tax_6'] = 'forced';
+        $data['average'] = 'forced';
 
         $data['editor'] = Auth::user()->id;
 
