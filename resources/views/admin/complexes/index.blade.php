@@ -120,6 +120,9 @@
                                                                 {{ $complex->telephone }}
                                                             </li>
                                                         </ul>
+                                                        <p class="text-muted text-sm mt-2 mb-0 pb-0">Status:<span
+                                                                class="badge {{ $complex->status == 'Ativo' ? 'badge-info' : 'badge-warning' }} ml-2 text-md">{{ $complex->status }}</span>
+                                                        </p>
                                                     </div>
                                                     <div class="col-5 text-center">
                                                         @if ($complex->photo)

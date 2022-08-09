@@ -11,9 +11,11 @@ use App\Models\Complex;
 use App\Models\Meter;
 use App\Models\Reading;
 use App\Models\Resident;
+use App\Models\Views\Block as ViewsBlock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use DataTables;
 
 class BlockController extends Controller
 {
@@ -32,14 +34,27 @@ class BlockController extends Controller
             $complex = Complex::where('id', $request['complex'])->first();
             if (empty($complex->id)) {
                 abort(403, 'Acesso não autorizado');
+            } else {
+                $blocks = ViewsBlock::where('complex_id', $request['complex'])->get();
             }
-            $blocks = Block::where('complex_id', $request['complex'])->get();
         } else {
-            $complex = Complex::all();
-            $blocks = Block::all();
+            $blocks = ViewsBlock::query();
         }
 
-        return view('admin.blocks.index', compact('blocks', 'complex'));
+        if ($request->ajax()) {
+            return Datatables::of($blocks)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="blocks/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="blocks/destroy/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão deste bloco?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        $filter = $request['complex'];
+
+        return view('admin.blocks.index', compact('filter'));
     }
 
     /**

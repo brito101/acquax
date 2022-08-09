@@ -26,6 +26,7 @@ class ApartmentController extends Controller
      */
     public function index(Request $request)
     {
+
         if (!Auth::user()->hasPermissionTo('Listar Apartamentos')) {
             abort(403, 'Acesso não autorizado');
         }
@@ -52,7 +53,9 @@ class ApartmentController extends Controller
                 ->make(true);
         }
 
-        return view('admin.apartments.index');
+        $filter = $request['complex'];
+
+        return view('admin.apartments.index', compact('filter'));
     }
 
     /**

@@ -41,17 +41,24 @@
                             <div class="card-body">
 
                                 <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
                                         <label for="social_name">Nome do Condomínio</label>
                                         <input type="text" class="form-control" id="social_name"
                                             placeholder="Nome do Condomínio" name="social_name"
                                             value="{{ old('social_name') }}" required>
                                     </div>
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
                                         <label for="alias_name">Nome Fantasia do Condomínio</label>
                                         <input type="text" class="form-control" id="alias_name"
                                             placeholder="Nome Fantasia do Condomínio" name="alias_name"
                                             value="{{ old('alias_name') }}" required>
+                                    </div>
+                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2 mb-0">
+                                        <label for="status">Status do Condomínio</label>
+                                        <x-adminlte-select2 name="status">
+                                            <option {{ old('status') == 'Ativo' ? 'selected' : '' }}>Ativo</option>
+                                            <option {{ old('status') == 'Inativo' ? 'selected' : '' }}>Inativo</option>
+                                        </x-adminlte-select2>
                                     </div>
                                 </div>
 
@@ -80,8 +87,8 @@
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="cell">Celular</label>
-                                        <input type="tel" class="form-control" id="cell" placeholder="Celular" name="cell"
-                                            value="{{ old('cell') }}">
+                                        <input type="tel" class="form-control" id="cell" placeholder="Celular"
+                                            name="cell" value="{{ old('cell') }}">
                                     </div>
                                 </div>
 
@@ -116,29 +123,30 @@
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="complement">Complemento</label>
-                                        <input type="text" class="form-control" id="complement" placeholder="Complemento"
-                                            name="complement" value="{{ old('complement') }}">
+                                        <input type="text" class="form-control" id="complement"
+                                            placeholder="Complemento" name="complement" value="{{ old('complement') }}">
                                     </div>
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="neighborhood">Bairro</label>
-                                        <input type="text" class="form-control" id="neighborhood" placeholder="Bairro"
-                                            name="neighborhood" value="{{ old('neighborhood') }}" required>
+                                        <input type="text" class="form-control" id="neighborhood"
+                                            placeholder="Bairro" name="neighborhood" value="{{ old('neighborhood') }}"
+                                            required>
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="state">Estado</label>
-                                        <input type="text" class="form-control" id="state" placeholder="UF" name="state"
-                                            value="{{ old('state') }}">
+                                        <input type="text" class="form-control" id="state" placeholder="UF"
+                                            name="state" value="{{ old('state') }}">
                                     </div>
                                 </div>
 
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="city">Cidade</label>
-                                        <input type="text" class="form-control" id="city" placeholder="Cidade" name="city"
-                                            value="{{ old('city') }}" required>
+                                        <input type="text" class="form-control" id="city" placeholder="Cidade"
+                                            name="city" value="{{ old('city') }}" required>
                                     </div>
                                 </div>
 

@@ -31,7 +31,8 @@ class ComplexImport implements ToModel, WithHeadingRow
             'neighborhood' => $row['bairro'],
             'state' => $row['estado'],
             'city' => $row['cidade'],
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'status' => $row['status'] ?? 'Ativo'
         ]);
     }
 }

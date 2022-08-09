@@ -44,8 +44,7 @@
                         <div class="card-header">
                             <i class="fas fa-fw fa-upload"></i> Importação de Planilha de Cadastro de Apartamentos
                         </div>
-                        <form action="{{ route('admin.apartments.import') }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('admin.apartments.import') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body pb-0">
                                 <x-adminlte-input-file name="file" label="Arquivo" placeholder="Selecione o arquivo..."
@@ -72,7 +71,7 @@
                         @php
                             $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Bloco', 'Apartamento', 'Fração Ideal', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
                             $config = [
-                                'ajax' => url('/admin/apartments'),
+                                'ajax' => url('/admin/apartments?complex=' . $filter),
                                 'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'complex_name', 'name' => 'complex_name'], ['data' => 'block_name', 'name' => 'block_name'], ['data' => 'name', 'name' => 'name'], ['data' => 'fraction', 'name' => 'fraction'], ['data' => 'status', 'name' => 'status'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
                                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                 'autoFill' => true,
