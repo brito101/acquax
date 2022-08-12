@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\ComplexController;
 use App\Http\Controllers\Admin\DealershipReadingController;
 use App\Http\Controllers\Admin\MeterController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ReadingController;
 use App\Http\Controllers\Admin\ResidentController;
 use App\Http\Controllers\Admin\Settings\DealershipController;
@@ -135,6 +136,10 @@ Route::group(['middleware' => ['auth']], function () {
         /** Advertisements */
         Route::get('/advertisements/destroy/{id}', [AdvertisementController::class, 'destroy']);
         Route::resource('advertisements', AdvertisementController::class);
+
+        /** Blog */
+        Route::get('/posts/destroy/{id}', [PostController::class, 'destroy']);
+        Route::resource('posts', PostController::class);
 
         /**
          * Configurations
