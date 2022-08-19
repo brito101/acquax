@@ -46,8 +46,9 @@
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="name">Nome do Apartamento</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Nome do Bloco"
-                                            name="name" value="{{ old('name') ?? $apartment->name }}" required>
+                                        <input type="text" class="form-control" id="name"
+                                            placeholder="Nome do Apartamento" name="name"
+                                            value="{{ old('name') ?? $apartment->name }}" required>
                                     </div>
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="fraction">Fração Ideal</label>
