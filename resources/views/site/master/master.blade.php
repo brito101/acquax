@@ -4,7 +4,7 @@
 -->
 
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" itemscope itemtype="http://schema.org/WebPage">
 
 <head>
     <meta charset="UTF-8">
@@ -46,8 +46,8 @@
                         <div class="top-header-social top-header-social-bg">
                             <ul>
                                 <li>
-                                    <a href="https://www.instagram.com/acquaxdobrasil/" target="_blank"
-                                        rel="noreferrer">
+                                    <a href="https://www.instagram.com/acquaxdobrasil/" target="_blank" rel="noreferrer"
+                                        title="Acqua X do Brasil no Instagram">
                                         <i class='bx bxl-instagram'></i>
                                     </a>
                                 </li>
@@ -63,7 +63,7 @@
     <div class="navbar-area">
         <div class="mobile-nav">
             <a href="{{ route('site.home') }}" class="logo text-primary">
-                <img src="{{ asset('img/logo.png') }}" width="200" height="37" alt="{{ env('APP_NAME') }}">
+                <img src="{{ asset('img/logo.webp') }}" width="200" height="37" alt="{{ env('APP_NAME') }}">
             </a>
         </div>
 
@@ -71,7 +71,7 @@
             <div class="container">
                 <nav class="navbar navbar-expand-md navbar-light ">
                     <a class="navbar-brand" href="{{ route('site.home') }}">
-                        <img src="{{ asset('img/logo.png') }}" alt="{{ env('APP_NAME') }}" width="300"
+                        <img src="{{ asset('img/logo.webp') }}" alt="{{ env('APP_NAME') }}" width="300"
                             height="55">
                     </a>
                     <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
@@ -170,7 +170,7 @@
                         <div class="footer-widget">
                             <div class="footer-logo">
                                 <a href="{{ route('site.home') }}">
-                                    <img src="{{ asset('img/logo.png') }}" idth="300" height="55"
+                                    <img src="{{ asset('img/logo-269x55.webp') }}" width="269" height="55"
                                         alt="{{ env('APP_NAME') }}">
                                 </a>
                             </div>
@@ -304,7 +304,8 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
-                        <img src="{{ asset('img/awards.png') }}" idth="300" height="" alt="Nosso Prêmios">
+                        <img src="{{ asset('img/awards-561x118.webp') }}" width="561" height="118"
+                            alt="Nosso Prêmios">
                     </div>
                 </div>
             </div>
@@ -323,6 +324,7 @@
     <div class="switch-box">
         <label id="switch" class="switch">
             <input type="checkbox" onchange="toggleTheme()" id="slider">
+            <label for="slider" class="d-none">Deseja mudar de tema?</label>
             <span class="slider round"></span>
         </label>
     </div>
@@ -339,6 +341,7 @@
     <script src="{{ asset('js/contact-form-script.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
     <script src="{{ asset('js/goto.js') }}"></script>
+    @yield('custom_js')
 </body>
 
 </html>

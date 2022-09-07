@@ -65,22 +65,22 @@
     <section class="work-process-area-two pt-70 pb-70" id="company">
         <div class="container">
             <div class="row align-items-center justify-content-center">
-                <img src="{{ asset('img/logo.png') }}"
-                    alt="Acqua X do Brasil - Garantimos o futuro trabalhando com sustentabilidade"
-                    style="max-width: 800px;">
+                <img src="{{ asset('img/logo-776x143.webp') }}"
+                    alt="Acqua X do Brasil - Garantimos o futuro trabalhando com sustentabilidade" style="max-width: 776px;"
+                    width="776" height="143">
                 <div class="col-lg-7 pt-2">
                     <div class="row d-flex align-items-end">
                         <div class="col-lg-6 col-sm-6">
                             <div class="work-process-card-two">
                                 <div class="number-title"><i class="bx bx-buildings"></i></div>
-                                <h3>600+</h3>
+                                <h2>600+</h2>
                                 <p>Prédios Individualizados</p>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-6">
                             <div class="work-process-card-two">
                                 <div class="number-title"><i class="bx bxs-tachometer"></i></div>
-                                <h3>300.000+</h3>
+                                <h2>300.000+</h2>
                                 <p>Hidrômetros Instalados</p>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                         <div class="col-lg-6 col-sm-6">
                             <div class="work-process-card-two">
                                 <div class="number-title"><i class="bx bxs-chart"></i></div>
-                                <h3>50.000+</h3>
+                                <h2>50.000+</h2>
                                 <p>Pontos de Gestão e Medição</p>
                             </div>
                         </div>
@@ -124,26 +124,31 @@
                 <div class="col-lg-4 col-sm-6">
                     <div class="services-card" style="height: 300px">
                         <div>
-                            <img src={{ asset('img/card-1.png') }} alt="Medição Individual de Água e Gás">
+                            <img src={{ asset('img/card-1.webp') }} alt="Medição Individual de Água e Gás" width="200"
+                                height="180">
                         </div>
-                        <h3><a href="" title="Medição Individual de Água e Gás">Medição Individual de Água e Gás</a>
+                        <h3><a href="{{ route('site.service.hydrometerMeasurement') }}"
+                                title="Medição Individual de Água e Gás">Medição Individual de Água e Gás</a>
                         </h3>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="services-card" style="height: 300px">
                         <div>
-                            <img src={{ asset('img/card-2.png') }} alt="Individualização de Hidrômetro">
+                            <img src={{ asset('img/card-2.webp') }} alt="Individualização de Hidrômetro" width="200"
+                                height="180">
                         </div>
-                        <h3><a href="" title="Individualização de Hidrômetro">Individualização de Hidrômetro</a></h3>
+                        <h3><a href="{{ route('site.service.waterIndividualization') }}"
+                                title="Individualização de Hidrômetro">Individualização de Hidrômetro</a></h3>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="services-card" style="height: 300px">
                         <div>
-                            <img src={{ asset('img/card-3.png') }} alt="Bloqueador de Ar">
+                            <img src={{ asset('img/card-3.webp') }} alt="Bloqueador de Ar" width="200" height="180">
                         </div>
-                        <h3><a href="" title="Bloqueador de Ar">Bloqueador de Ar</a></h3>
+                        <h3><a href="{{ route('site.service.airBlock') }}" title="Bloqueador de Ar">Bloqueador
+                                de Ar</a></h3>
                     </div>
                 </div>
             </div>
@@ -151,17 +156,21 @@
                 <div class="col-lg-4 col-sm-6">
                     <div class="services-card" style="height: 300px">
                         <div>
-                            <img src={{ asset('img/card-4.png') }} alt="Manutenção de Bombas">
+                            <img src={{ asset('img/card-4.webp') }} alt="Manutenção de Bombas" width="200"
+                                height="180">
                         </div>
-                        <h3><a href="" title="Manutenção de Bombas">Manutenção de Bombas</a></h3>
+                        <h3><a href="{{ route('site.service.pumpMaintenance') }}" title="Manutenção de Bombas">Manutenção
+                                de Bombas</a></h3>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="services-card" style="height: 300px">
                         <div>
-                            <img src={{ asset('img/card-5.png') }} alt="Dispositivo Anti Sucção">
+                            <img src={{ asset('img/card-5.webp') }} alt="Dispositivo Anti Sucção" width="200"
+                                height="180">
                         </div>
-                        <h3><a href="" title="Dispositivo Anti Sucção">Dispositivo Anti Sucção</a></h3>
+                        <h3><a href="{{ route('site.service.antiSuctionDevice') }}"
+                                title="Dispositivo Anti Sucção">Dispositivo Anti Sucção</a></h3>
                     </div>
                 </div>
             </div>
@@ -181,7 +190,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="call-us-img py-5">
-                        <img src="{{ asset('img/app.png') }}" alt="Images">
+                        <img src="{{ asset('img/app.webp') }}" alt="Aplicativo" width="298" height="589">
                     </div>
                 </div>
             </div>
@@ -193,7 +202,8 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="about-img-5">
-                        <img src="{{ asset('img/surprise.png') }}" alt="Surpresas na conta de água?">
+                        <img src="{{ asset('img/surprise.webp') }}" alt="Surpresas na conta de água?" width="384"
+                            height="374">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -279,14 +289,16 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="choose-img-two">
-                        <img src="{{ asset('img/water-box.png') }}" alt="Medidor de caixa d'água">
+                        <img src="{{ asset('img/water-box.webp') }}" alt="Medidor de caixa d'água" width="460"
+                            height="275">
                     </div>
                 </div>
             </div>
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="choose-img-two">
-                        <img src="{{ asset('img/houseplant.jpg') }}" alt="Medidor de caixa d'água">
+                        <img src="{{ asset('img/houseplant.webp') }}"
+                            alt="Medidor via Bluetooth e Wi-Fi / Planta de Incêndio" width="460" height="275">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -310,7 +322,7 @@
     <section class="services-area-four pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <span class="sp-color2">Blog</span>
+                <span class="sp-color8">Blog</span>
                 <h2>Confira nossas últimas postagens!</h2>
             </div>
             <div class="row justify-content-center align-items-center pt-45">
@@ -336,4 +348,10 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('custom_js')
+    <script>
+        $('.owl-dot').attr('aria-label', 'botão de navegação do slide');
+    </script>
 @endsection
