@@ -355,6 +355,34 @@
             @endif
         </div>
     </section>
+
+    @if (count($posts) > 0)
+        <section class="py-4">
+            <h2 class="mb-3"><i class="fas fa-fw fa-blog"></i> Confira nossas últimas postagens!</h2>
+            <div class="col-12 d-flex flex-wrap justify-content-start px-0">
+                @foreach ($posts as $post)
+                    <div class="col-12 col-md-4">
+                        <div class="card p-2">
+                            <img src="{{ Storage::url('posts/' . $post->cover) }}" class="card-img-top shadow-sm"
+                                alt="{{ $post->title }}"
+                                style="min-height: 200px; max-height: 200px; object-fit: cover">
+                            <div class="card-body">
+                                <h5 class="card-title mb-2">{{ $post->title }}</h5>
+                                <p class="card-text text-muted">{{ $post->headline }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row d-flex flex-wrap justify-content-center">
+                                    <div class="col-12 col-md-6">
+                                        <a href="#" class="btn btn-success w-100 m-1" target="_blank">Acessar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+    @endif
 @endsection
 
 

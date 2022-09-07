@@ -9,6 +9,7 @@ use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
 use App\Models\Notification;
+use App\Models\Post;
 use App\Models\Resident;
 use App\Models\Syndic;
 use Illuminate\Http\Request;
@@ -54,7 +55,10 @@ class AppController extends Controller
 
         $notifications = Notification::whereIn('apartment_id', $residences->pluck('apartment_id'))->where('read', false)->get();
 
-        return view('application.home.index', compact('residences', 'complexes', 'advertisement', 'notifications'));
+        $posts = Post::where('status', 'Publicado')
+            ->orderBy('created_at', 'desc')->limit(3)->get();
+
+        return view('application.home.index', compact('residences', 'complexes', 'advertisement', 'notifications', 'posts'));
     }
 
     public function notificationRead(Notification $notification)
