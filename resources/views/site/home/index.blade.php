@@ -67,7 +67,7 @@
             <div class="row align-items-center justify-content-center">
                 <img src="{{ asset('img/logo-776x143.webp') }}"
                     alt="Acqua X do Brasil - Garantimos o futuro trabalhando com sustentabilidade" style="max-width: 776px;"
-                    width="776" height="143">
+                    width="776">
                 <div class="col-lg-7 pt-2">
                     <div class="row d-flex align-items-end">
                         <div class="col-lg-6 col-sm-6">

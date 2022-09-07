@@ -304,8 +304,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
-                        <img src="{{ asset('img/awards-561x118.webp') }}" width="561" height="118"
-                            alt="Nosso Prêmios">
+                        <img src="{{ asset('img/awards-561x118.webp') }}" width="561" alt="Nosso Prêmios">
                     </div>
                 </div>
             </div>
