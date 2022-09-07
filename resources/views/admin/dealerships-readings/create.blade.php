@@ -365,7 +365,7 @@
 
                                     <div class="col-12 col-md-2 form-group px-0 px-md-2 kite_car">
                                         <label for="kite_car_tax">Valor do m<sup>3</sup></label>
-                                        <input type="text" class="form-control money_format_2" id="kite_car_tax"
+                                        <input type="text" class="form-control money_format_3" id="kite_car_tax"
                                             placeholder="Quantidade em Reais" name="kite_car_tax"
                                             value="{{ old('kite_car_tax') }}">
                                     </div>

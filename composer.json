@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "doctrine/dbal": "^3.3",
+        "eusonlito/laravel-meta": "^3.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",

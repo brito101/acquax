@@ -144,8 +144,7 @@
                                         <label for="reading_date_next">Data da Próxima Leitura</label>
                                         <input type="text" class="form-control acquax-date" id="reading_date_next"
                                             placeholder="Data da Próxima" name="reading_date_next"
-                                            value="{{ old('reading_date_next') ?? $reading->reading_date_next }}"
-                                            required>
+                                            value="{{ old('reading_date_next') ?? $reading->reading_date_next }}" required>
                                     </div>
 
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
@@ -413,7 +412,7 @@
 
                                     <div class="col-12 col-md-2 form-group px-0 px-md-2 kite_car">
                                         <label for="kite_car_tax">Valor do m<sup>3</sup></label>
-                                        <input type="text" class="form-control money_format_2" id="kite_car_tax"
+                                        <input type="text" class="form-control money_format_3" id="kite_car_tax"
                                             placeholder="Quantidade em Reais" name="kite_car_tax"
                                             value="{{ old('kite_car_tax') ?? $reading->kite_car_tax }}">
                                     </div>
@@ -458,8 +457,7 @@
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="consumption_value">Valor do Consumo</label>
                                         <input type="text" class="form-control" id="consumption_value"
-                                            name="consumption_value" disabled
-                                            value="{{ $reading->consumption_value }}">
+                                            name="consumption_value" disabled value="{{ $reading->consumption_value }}">
                                     </div>
 
                                     <div class="col-12 col-md-3 form-group px-0 pl-md-2">
@@ -524,8 +522,7 @@
                                     <div class="col-12 col-md-3 form-group px-0 pr-md-2">
                                         <label for="consumption_tax_1">Consumo na 1ª Faixa</label>
                                         <input type="text" class="form-control" id="consumption_tax_1"
-                                            name="consumption_tax_1" disabled
-                                            value="{{ $reading->consumption_tax_1 }}">
+                                            name="consumption_tax_1" disabled value="{{ $reading->consumption_tax_1 }}">
                                     </div>
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="total_cost_tax_1">Custo total 1ª Faixa</label>

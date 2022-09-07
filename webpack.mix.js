@@ -1,5 +1,5 @@
 const mix = require("laravel-mix");
-require('laravel-mix-purgecss');
+require("laravel-mix-purgecss");
 
 /*
  |--------------------------------------------------------------------------
@@ -15,6 +15,33 @@ require('laravel-mix-purgecss');
 mix.js("resources/js/app.js", "public/js")
     .copy("resources/img", "public/img")
     .sass("resources/sass/app.scss", "public/css")
+    /** Site */
+    .sass("resources/sass/site.scss", "public/css")
+    .copy("node_modules/animate.css/animate.min.css", "public/css")
+    .copy("node_modules/boxicons", "public/boxicons")
+    .copy("node_modules/jquery/dist/jquery.min.js", "public/js")
+    .copy("node_modules/bootstrap/dist/js/bootstrap.bundle.min.js", "public/js")
+    .copy(
+        "resources/OwlCarousel2-2.3.4/dist/owl.carousel.min.js",
+        "public/js"
+    )
+    .copy(
+        "resources/Magnific-Popup/dist/jquery.magnific-popup.min.js",
+        "public/js"
+    )
+    .copy(
+        "resources/jquery-nice-select-1.1.0/js/jquery.nice-select.min.js",
+        "public/js"
+    )
+    .copy("resources/js/wow.min.js", "public/js")
+    .copy("resources/js/form-validator.min.js", "public/js")
+    .scripts(["resources/js/mainmenu.js"], "public/js/mainmenu.js")
+    .scripts(
+        ["resources/js/contact-form-script.js"],
+        "public/js/contact-form-script.js"
+    )
+    .scripts(["resources/js/custom.js"], "public/js/custom.js")
+    .scripts(["resources/js/goto.js"], "public/js/goto.js")
     /** App */
     .scripts(["resources/js/app-home.js"], "public/js/app-home.js")
     /** Admin */
@@ -31,14 +58,8 @@ mix.js("resources/js/app.js", "public/js")
         ["resources/js/dealerships-reading.js"],
         "public/js/dealerships-reading.js"
     )
-    .scripts(
-        ["resources/js/apartment.js"],
-        "public/js/apartment.js"
-    )
-    .scripts(
-        ["resources/js/meter.js"],
-        "public/js/meter.js"
-    )
+    .scripts(["resources/js/apartment.js"], "public/js/apartment.js")
+    .scripts(["resources/js/meter.js"], "public/js/meter.js")
     .options({
         processCssUrls: false,
     })

@@ -24,6 +24,12 @@ use App\Http\Controllers\Aplication\MeterReadingController;
 use App\Http\Controllers\Aplication\SupportController;
 use App\Http\Controllers\Aplication\UserController as AplicationUserController;
 use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\Site\CompanyController;
+use App\Http\Controllers\Site\ContactController;
+use App\Http\Controllers\Site\HomeController;
+use App\Http\Controllers\Site\PoliceController;
+use App\Http\Controllers\Site\PostController as SitePostController;
+use App\Http\Controllers\Site\ServiceController;
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -40,8 +46,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('app', [AppController::class, 'index'])->name('app.home');
     Route::prefix('app')->name('app.')->group(function () {
+        /** Dash */
+        Route::get('/', [AppController::class, 'index'])->name('home');
 
         /** Notifications */
         Route::post('read-notification/{notification}', [AppController::class, 'notificationRead'])->name('notificationRead');
@@ -168,11 +175,43 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-/** Web */
-/** Home */
-// Route::get('/', [SiteController::class, 'index'])->name('home');
-Route::get('/', function () {
-    return redirect('admin');
+/**
+ * Site
+ * */
+Route::name('site.')->group(function () {
+
+    /** Home */
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    /** Company */
+    Route::get('/nossa-empresa', [CompanyController::class, 'index'])->name('company');
+
+    /** Services */
+    /** Air Block */
+    Route::get('/servicos/bloqueador-de-ar', [ServiceController::class, 'airBlock'])->name('service.airBlock');
+    /** Anti Suction Device */
+    Route::get('/servicos/dispositivo-anti-succao', [ServiceController::class, 'antiSuctionDevice'])->name('service.antiSuctionDevice');
+    /** Water Individualization */
+    Route::get('/servicos/individualizacao-de-agua', [ServiceController::class, 'waterIndividualization'])->name('service.waterIndividualization');
+    /** Pump Maintenance */
+    Route::get('/servicos/manutencao-de-bomba', [ServiceController::class, 'pumpMaintenance'])->name('service.pumpMaintenance');
+    /** Hydrometer Measurement */
+    Route::get('/servicos/medicao-de-hidrometro', [ServiceController::class, 'hydrometerMeasurement'])->name('service.hydrometerMeasurement');
+
+    /** Blog */
+    Route::get('/blog/{slug}', [SitePostController::class, 'post'])->name('post');
+    Route::get('/blog', [SitePostController::class, 'index'])->name('posts');
+
+    /** Contact */
+    Route::get('/contato', [ContactController::class, 'index'])->name('contact');
+    Route::post('/sendEmail', [ContactController::class, 'sendEmail'])->name('sendEmail');
+
+    /** Police */
+    Route::get('/politica-de-privacidade', [PoliceController::class, 'index'])->name('police');
 });
 
 Auth::routes();
+
+Route::fallback(function () {
+    return view('site.404');
+});
