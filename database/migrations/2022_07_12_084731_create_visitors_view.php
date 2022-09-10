@@ -15,7 +15,7 @@ class CreateVisitorsView extends Migration
     public function up()
     {
         DB::statement("
-        CREATE VIEW visitors_view AS
+        CREATE OR REPLACE VIEW visitors_view AS
         SELECT v.id, v.url, v.method, v.created_at
         FROM shetabit_visits as v
         ");

@@ -323,7 +323,6 @@
     <div class="switch-box">
         <label id="switch" class="switch">
             <input type="checkbox" onchange="toggleTheme()" id="slider">
-            <label for="slider" class="d-none">Deseja mudar de tema?</label>
             <span class="slider round"></span>
         </label>
     </div>

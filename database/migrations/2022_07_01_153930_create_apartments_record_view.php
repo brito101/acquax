@@ -15,7 +15,7 @@ class CreateApartmentsRecordView extends Migration
     public function up()
     {
         DB::statement("
-        CREATE VIEW apartments_record_view AS
+        CREATE OR REPLACE VIEW apartments_record_view AS
         SELECT ap.id, ap.name, ap.status, ap.fraction, bl.id as block_id, bl.name as block_name, cp.id as complex_id, cp.alias_name as complex_name
         FROM apartments as ap
         LEFT JOIN blocks as bl ON ap.block_id = bl.id

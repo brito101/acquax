@@ -15,7 +15,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="about-play">
-                        <img src="{{ asset('img/hydrometer-measurement-0.jpg') }}" alt="Medição de Hidrômetro">
+                        <img src="{{ asset('img/hydrometer-measurement-0.webp') }}" alt="Medição de Hidrômetro">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="choose-img">
-                        <img src="{{ asset('img/hydrometer-measurement-1.png') }}" alt="Medição de Hidrômetro"
+                        <img src="{{ asset('img/hydrometer-measurement-1.webp') }}" alt="Medição de Hidrômetro"
                             style="max-height: 500px">
                     </div>
                 </div>
@@ -81,7 +81,7 @@
             <div class="row pt-45">
                 <div class="col-12">
                     <div class="contact-form">
-                        <form id="contactForm" action="{{ route('site.sendEmail') }}" method="POST" novalidate="true">
+                        <form id="contactForm" action="{{ route('site.sendEmail') }}" method="POST">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -109,8 +109,7 @@
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="msg_subject" id="msg_subject" equired
-                                    value="Medição de Hodrômetro">
+                                <input type="hidden" name="msg_subject" id="msg_subject" value="Medição de Hodrômetro">
 
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">

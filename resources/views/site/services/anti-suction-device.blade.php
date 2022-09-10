@@ -15,7 +15,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="about-play">
-                        <img src="{{ asset('img/anti-suction-device-0.png') }}" alt="Dispositivo Anti Sucção">
+                        <img src="{{ asset('img/anti-suction-device-0.webp') }}" alt="Dispositivo Anti Sucção">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -82,7 +82,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="choose-img">
-                        <img src="{{ asset('img/anti-suction-device-1.png') }}" alt="Dispositivo Anti Sucção">
+                        <img src="{{ asset('img/anti-suction-device-1.webp') }}" alt="Dispositivo Anti Sucção">
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
             <div class="row pt-45">
                 <div class="col-12">
                     <div class="contact-form">
-                        <form id="contactForm" action="{{ route('site.sendEmail') }}" method="POST" novalidate="true">
+                        <form id="contactForm" action="{{ route('site.sendEmail') }}" method="POST">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -125,8 +125,7 @@
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="msg_subject" id="msg_subject" equired
-                                    value="Dispositivo anti sucção">
+                                <input type="hidden" name="msg_subject" id="msg_subject" value="Dispositivo anti sucção">
 
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">

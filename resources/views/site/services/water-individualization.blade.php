@@ -15,7 +15,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="about-play">
-                        <img src="{{ asset('img/water-individualization-0.jpg') }}" alt="Individualização de Hidrômetro">
+                        <img src="{{ asset('img/water-individualization-0.webp') }}" alt="Individualização de Hidrômetro">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -58,7 +58,7 @@
             <div class="row pt-45">
                 <div class="col-12">
                     <div class="contact-form">
-                        <form id="contactForm" action="{{ route('site.sendEmail') }}" method="POST" novalidate="true">
+                        <form id="contactForm" action="{{ route('site.sendEmail') }}" method="POST">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="msg_subject" id="msg_subject" equired
+                                <input type="hidden" name="msg_subject" id="msg_subject"
                                     value="Individualização de hidrômetro">
 
                                 <div class="col-lg-12 col-md-12">

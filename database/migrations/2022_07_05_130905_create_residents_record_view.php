@@ -15,7 +15,7 @@ class CreateResidentsRecordView extends Migration
     public function up()
     {
         DB::statement("
-        CREATE VIEW residents_view AS
+        CREATE OR REPLACE VIEW residents_view AS
         SELECT r.id,
         CONCAT(u.name, ' - ', u.document_person, ' - ', u.email) as resident,
         CONCAT('Condomínio ', cp.alias_name, ' - Bl. ', bl.name, ' - Ap. ', ap.name) as property,

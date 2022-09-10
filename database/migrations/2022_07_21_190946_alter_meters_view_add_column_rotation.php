@@ -16,7 +16,7 @@ class AlterMetersViewAddColumnRotation extends Migration
     {
         DB::statement("DROP VIEW meters_view");
         DB::statement("
-        CREATE VIEW meters_view AS
+        CREATE OR REPLACE VIEW meters_view AS
         SELECT m.id, m.register, CONCAT('Condomínio ', cp.alias_name, ' - Bl. ', bl.name, ' - Ap. ', ap.name) as property, m.location, tm.name as type, m.year_manufacture,
         CASE
             WHEN m.main = 1 THEN 'Sim'
@@ -40,7 +40,7 @@ class AlterMetersViewAddColumnRotation extends Migration
     public function down()
     {
         DB::statement("
-        CREATE VIEW meters_view AS
+        CREATE OR REPLACE VIEW meters_view AS
         SELECT m.id, m.register, CONCAT('Condomínio ', cp.alias_name, ' - Bl. ', bl.name, ' - Ap. ', ap.name) as property, m.location, tm.name as type, m.year_manufacture,
         CASE
             WHEN m.main = 1 THEN 'Sim'

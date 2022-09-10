@@ -14,7 +14,6 @@ class AlterTableDealershipReadingAddComputedData extends Migration
     public function up()
     {
         Schema::table('dealership_readings', function (Blueprint $table) {
-            $table->decimal('monthly_consumption', 13, 3)->default(0);
             $table->decimal('diff_consumption', 13, 3)->default(0);
             $table->decimal('previous_monthly_consumption', 13, 3)->default(0);
             $table->decimal('previous_billed_consumption', 13, 3)->default(0);

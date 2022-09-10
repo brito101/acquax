@@ -164,7 +164,17 @@
                                                     </div>
                                                     <div class="col-12 pt-2 text-center">
                                                         <h2 class="lead">
-                                                            <b>{{ 'Condomínio ' . $reading->meter->apartment->getComplexNameAttribute() . ' - Bl. ' . $reading->meter->apartment->getBlockNameAttribute() . ' - Ap. ' . $reading->meter->apartment['name'] }}</b>
+                                                            @isset($reading->meter->apartment)
+                                                                <b>{{ 'Condomínio ' .
+                                                                    $reading->meter->apartment->getComplexNameAttribute() .
+                                                                    ' - Bl. ' .
+                                                                    $reading->meter->apartment->getBlockNameAttribute() .
+                                                                    ' - Ap. ' .
+                                                                    $reading->meter->apartment['name'] }}
+                                                                </b>
+                                                            @else
+                                                                <b>Apartamento excluído</b>
+                                                            @endisset ()
                                                         </h2>
                                                     </div>
                                                 </div>

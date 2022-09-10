@@ -15,7 +15,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="about-play">
-                        <img src="{{ asset('img/pump-maintenance-0.png') }}" alt="Manutenção de Bombas">
+                        <img src="{{ asset('img/pump-maintenance-0.webp') }}" alt="Manutenção de Bombas">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -63,7 +63,7 @@
             <div class="row pt-45">
                 <div class="col-12">
                     <div class="contact-form">
-                        <form id="contactForm" action="{{ route('site.sendEmail') }}" method="POST" novalidate="true">
+                        <form id="contactForm" action="{{ route('site.sendEmail') }}" method="POST">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -91,8 +91,7 @@
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="msg_subject" id="msg_subject" equired
-                                    value="Manutenção de bomba">
+                                <input type="hidden" name="msg_subject" id="msg_subject" value="Manutenção de bomba">
 
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">

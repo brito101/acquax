@@ -32,7 +32,7 @@ class ReadingController extends Controller
         }
 
         $complexes = Complex::all();
-        $readings = Reading::orderBy('id', 'desc')->paginate(24);
+        $readings = Reading::with('meter')->orderBy('id', 'desc')->paginate(24);
         return view('admin.readings.index', compact('readings', 'complexes'));
     }
 

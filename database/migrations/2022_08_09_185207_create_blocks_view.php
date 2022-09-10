@@ -15,7 +15,7 @@ class CreateBlocksView extends Migration
     public function up()
     {
         DB::statement("
-        CREATE VIEW blocks_view AS
+        CREATE OR REPLACE VIEW blocks_view AS
         SELECT bl.id, bl.name, bl.status, bl.complex_id, c.alias_name as complex
         FROM blocks as bl
         LEFT JOIN complexes c ON c.id = bl.complex_id

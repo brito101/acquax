@@ -40,7 +40,7 @@ class RolesTableSeeder extends Seeder
                 'name' => 'Leiturista',
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
-            ]
+            ],
             /** 5 */
             [
                 'name' => 'Marketing',

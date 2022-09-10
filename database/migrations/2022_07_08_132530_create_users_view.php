@@ -15,7 +15,7 @@ class CreateUsersView extends Migration
     public function up()
     {
         DB::statement("
-        CREATE VIEW users_view AS
+        CREATE OR REPLACE VIEW users_view AS
         SELECT u.id, u.name, u.email, u.document_person, mr.role_id, r.name as type
         FROM users as u
         LEFT JOIN model_has_roles as mr ON mr.model_id = u.id

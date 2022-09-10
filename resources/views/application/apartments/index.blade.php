@@ -96,10 +96,10 @@
                                                     </div>
 
                                                     @php
-                                                        $heads = [['label' => 'ID', 'width' => 5], 'Mês', 'Ano', 'Valor', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
+                                                        $heads = [['label' => 'ID', 'width' => 5], 'Unidade', 'Mês', 'Ano', 'Valor', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
                                                         $config = [
                                                             'ajax' => url('/app/residences-readings-ajax/' . $apartment->id),
-                                                            'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'total_unit', 'name' => 'total_unit'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                                            'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'unit', 'name' => 'unit'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'total_unit', 'name' => 'total_unit'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
                                                             'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                                             'autoFill' => true,
                                                             'processing' => true,

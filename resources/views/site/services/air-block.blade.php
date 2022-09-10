@@ -15,7 +15,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="about-play">
-                        <img src="{{ asset('img/air-block-0.png') }}" alt="Bloqueador de Ar">
+                        <img src="{{ asset('img/air-block-0.webp') }}" alt="Bloqueador de Ar">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -58,7 +58,7 @@
             <div class="row pt-45">
                 <div class="col-12">
                     <div class="contact-form">
-                        <form id="contactForm" action="{{ route('site.sendEmail') }}" method="POST" novalidate="true">
+                        <form id="contactForm" action="{{ route('site.sendEmail') }}" method="POST">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="msg_subject" id="msg_subject" equired value="Bloqueador de ar">
+                                <input type="hidden" name="msg_subject" id="msg_subject" value="Bloqueador de ar">
 
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
