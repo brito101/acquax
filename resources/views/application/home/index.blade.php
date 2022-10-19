@@ -373,7 +373,8 @@
                             <div class="card-footer">
                                 <div class="row d-flex flex-wrap justify-content-center">
                                     <div class="col-12 col-md-6">
-                                        <a href="#" class="btn btn-success w-100 m-1" target="_blank">Acessar</a>
+                                        <a href="{{ route('site.post', ['slug' => $post->slug]) }}"
+                                            class="btn btn-success w-100 m-1" target="_blank">Acessar</a>
                                     </div>
                                 </div>
                             </div>

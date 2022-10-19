@@ -232,7 +232,7 @@
                     }
                 });
             };
-            setInterval(getData, 10000);
+            setInterval(getData, 60 * 1000);
         }
 
         const topPage = document.getElementById('topPageChart');

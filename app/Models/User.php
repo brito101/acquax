@@ -61,4 +61,9 @@ class User extends Authenticatable
             'name' => 'Não Informado',
         ]);
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
 }

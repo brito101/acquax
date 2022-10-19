@@ -110,6 +110,7 @@
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
     @yield('custom_js')
+    @yield('chat_js')
 
 </body>
 

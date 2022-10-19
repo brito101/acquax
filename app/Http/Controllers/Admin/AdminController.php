@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+
     public function index()
     {
         if (Auth::user()->hasRole('Usuário')) {
@@ -111,7 +112,10 @@ class AdminController extends Controller
         $chart->dataset = (array_values($dataList));
 
         /** Top Pages */
-        $pages = Visit::where('url', 'like', "%app%")->where('url', 'not like', "%columns%")->where('method', 'GET')->get();
+        $pages = Visit::where('url', 'like', "%app%")
+            ->where('url', 'not like', "%columns%")
+            ->where('method', 'GET')
+            ->get();
         $topPages = $pages->groupBy(function ($reg) {
             $array = explode("/", $reg->url);
             $name = "app";

@@ -8,7 +8,9 @@ $(document).ready(function () {
     const captureButton = document.getElementById("capture");
     const hidden = document.getElementById("cover_base64");
     const constraints = {
-        video: true,
+        video: {
+           facingMode: 'environment',
+        },
     };
     captureButton.addEventListener("click", (e) => {
         e.preventDefault();

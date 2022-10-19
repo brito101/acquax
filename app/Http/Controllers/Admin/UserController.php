@@ -32,7 +32,7 @@ class UserController extends Controller
         if (Auth::user()->hasRole('Programador')) {
             $users = ViewsUser::all('id', 'name', 'document_person', 'email', 'type');
         } elseif (Auth::user()->hasRole('Administrador')) {
-            $users = ViewsUser::whereIn('type', ['Administrador', 'Usuário'])->get();
+            $users = ViewsUser::select('id', 'name', 'document_person', 'email', 'type')->whereIn('type', ['Administrador', 'Leiturista', 'Usuário'])->get();
         } else {
             $users = null;
         }
