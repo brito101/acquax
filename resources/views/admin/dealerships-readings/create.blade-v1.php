@@ -39,11 +39,10 @@
 
                         <form method="POST" action="{{ route('admin.dealerships-readings.store') }}">
                             @csrf
-                            <input type="hidden" name="average" value="0">
                             <div class="card-body">
 
                                 <div class="d-flex flex-wrap justify-content-between">
-                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2 mb-0">
+                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2">
                                         <label for="complex_id">Condomínio</label>
                                         <x-adminlte-select2 name="complex_id">
                                             @foreach ($complexes as $complex)
@@ -54,7 +53,7 @@
                                         </x-adminlte-select2>
                                     </div>
 
-                                    <div class="col-12 col-md-3 form-group px-0 px-md-2 mb-0">
+                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="month_ref">Mês de Referência</label>
                                         <x-adminlte-select2 name="month_ref">
                                             <option {{ old('month_ref') == 'Janeiro' ? 'selected' : '' }}>
@@ -102,7 +101,7 @@
                                             name="year_ref" value="{{ old('year_ref') ?? date('Y') }}" required>
                                     </div>
 
-                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2 mb-0">
+                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
                                         <label for="dealership_id">Concessionária</label>
                                         <x-adminlte-select2 name="dealership_id">
                                             @foreach ($dealerships as $dealership)
@@ -129,24 +128,24 @@
                                             value="{{ old('reading_date_next') }}" required>
                                     </div>
 
-                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="total_days">Total de Dias</label>
                                         <input type="text" class="form-control" id="total_days"
                                             placeholder="Total de dias computados" name="total_days"
                                             value="{{ old('total_days') }}" required>
                                     </div>
-
-                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
-                                        <label for="consumption_ranges">Qtd de faixas de Consumo</label>
-                                        <input name="consumption_ranges" id="consumption_ranges" class="form-control"
-                                            type="number" min="1" max="6" value="1"
-                                            value="{{ old('consumption_ranges') }}" required>
-                                    </div>
                                 </div>
 
 
                                 <div class="d-flex flex-wrap justify-content-start">
-                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2">
+                                        <label for="consumption_ranges">Qtd de faixas de Consumo</label>
+                                        <input name="consumption_ranges" id="consumption_ranges" class="form-control"
+                                            type="number" min="1" max="6"
+                                            value="{{ old('consumption_ranges') }}" required>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="dealership_cost_tax_1">Custo da 1ª Faixa de Consumo</label>
                                         <input type="text" class="form-control money_format_3" id="dealership_cost_tax_1"
                                             placeholder="Valor limite da 1ª Faixa de Consumo pela concessionária"
@@ -154,192 +153,88 @@
                                             required>
                                     </div>
 
-                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
-                                        <label for="consumption_tax_1">Consumo na 1ª Faixa</label>
-                                        <input type="text" class="form-control" id="consumption_tax_1"
-                                            name="consumption_tax_1" value="{{ old('consumption_tax_1') }}"
-                                            placeholder="valor em metros cúbicos (0,00)" required>
-                                    </div>
-
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2">
-                                        <label for="units_inside_tax_1">Unidades na 1ª Faixa</label>
-                                        <input type="number" class="form-control" id="units_inside_tax_1"
-                                            name="units_inside_tax_1" step="1"
-                                            value="{{ old('units_inside_tax_1') }}" required>
-                                    </div>
-                                </div>
-
-                                {{-- Range 2 --}}
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2" data-consumption_ranges="2">
-                                        <label for="dealership_consumption_tax_1">Início 2ª Faixa de Consumo em
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2" data-consumption_ranges="2">
+                                        <label for="dealership_consumption_tax_1">Valor limite da 1ª Faixa de Consumo em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control" id="dealership_consumption_tax_1"
+                                            placeholder="Valor da 1ª Faixa de Consumo pela concessionária"
                                             name="dealership_consumption_tax_1"
-                                            value="{{ old('dealership_consumption_tax_1') }}"
-                                            placeholder="Valor da faixa em metros cúbicos">
+                                            value="{{ old('dealership_consumption_tax_1') }}">
                                     </div>
 
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="2">
-                                        <label for="dealership_cost_tax_2">Custo</label>
-                                        <input type="text" class="form-control money_format_3"
-                                            id="dealership_cost_tax_2"
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2" data-consumption_ranges="2">
+                                        <label for="dealership_cost_tax_2">Custo da 2ª Faixa de Consumo</label>
+                                        <input type="text" class="form-control money_format_3" id="dealership_cost_tax_2"
                                             placeholder="Valor em reais da 2ª Faixa de Consumo pela concessionária"
                                             name="dealership_cost_tax_2" value="{{ old('dealership_cost_tax_2') }}">
                                     </div>
 
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="2">
-                                        <label for="consumption_tax_2">Consumo</label>
-                                        <input type="text" class="form-control" id="consumption_tax_2"
-                                            name="consumption_tax_2" value="{{ old('consumption_tax_2') }}"
-                                            placeholder="valor em metros cúbicos (0,00)">
-                                    </div>
-
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="2">
-                                        <label for="units_inside_tax_2">Unidades na 2ª Faixa</label>
-                                        <input type="number" class="form-control" id="units_inside_tax_2"
-                                            name="units_inside_tax_2" step="1"
-                                            value="{{ old('units_inside_tax_2') }}">
-                                    </div>
-
-                                </div>
-
-                                {{-- Range 3 --}}
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2" data-consumption_ranges="3">
-                                        <label for="dealership_consumption_tax_2">Início 3ª Faixa de Consumo em
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2" data-consumption_ranges="3">
+                                        <label for="dealership_consumption_tax_2">Valor limite da 2ª Faixa de Consumo em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control" id="dealership_consumption_tax_2"
+                                            placeholder="Valor limite da 2ª Faixa de Consumo pela concessionária"
                                             name="dealership_consumption_tax_2"
-                                            value="{{ old('dealership_consumption_tax_2') }}"
-                                            placeholder="Valor da faixa em metros cúbicos">
+                                            value="{{ old('dealership_consumption_tax_2') }}">
                                     </div>
 
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="3">
-                                        <label for="dealership_cost_tax_3">Custo</label>
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2" data-consumption_ranges="3">
+                                        <label for="dealership_cost_tax_3">Custo da 3ª Faixa de Consumo</label>
                                         <input type="text" class="form-control money_format_3"
                                             id="dealership_cost_tax_3"
                                             placeholder="Valor em reais da 3ª Faixa de Consumo pela concessionária"
                                             name="dealership_cost_tax_3" value="{{ old('dealership_cost_tax_3') }}">
                                     </div>
 
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="3">
-                                        <label for="consumption_tax_3">Consumo</label>
-                                        <input type="text" class="form-control" id="consumption_tax_3"
-                                            name="consumption_tax_3" value="{{ old('consumption_tax_3') }}"
-                                            placeholder="valor em metros cúbicos (0,00)">
-                                    </div>
-
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="3">
-                                        <label for="units_inside_tax_3">Unidades na 3ª Faixa</label>
-                                        <input type="number" class="form-control" id="units_inside_tax_3"
-                                            name="units_inside_tax_3" step="1"
-                                            value="{{ old('units_inside_tax_3') }}">
-                                    </div>
-
-                                </div>
-
-                                {{-- Range 4 --}}
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2" data-consumption_ranges="4">
-                                        <label for="dealership_consumption_tax_3">Início 4ª Faixa de Consumo em
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2" data-consumption_ranges="4">
+                                        <label for="dealership_consumption_tax_3">Valor limite da 3ª Faixa de Consumo em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control" id="dealership_consumption_tax_3"
+                                            placeholder="Valor limite da 3ª Faixa de Consumo pela concessionária"
                                             name="dealership_consumption_tax_3"
-                                            value="{{ old('dealership_consumption_tax_3') }}"
-                                            placeholder="Valor da faixa em metros cúbicos">
+                                            value="{{ old('dealership_consumption_tax_3') }}">
                                     </div>
 
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="4">
-                                        <label for="dealership_cost_tax_4">Custo</label>
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2" data-consumption_ranges="4">
+                                        <label for="dealership_cost_tax_4">Custo da 4ª Faixa de Consumo</label>
                                         <input type="text" class="form-control money_format_3"
                                             id="dealership_cost_tax_4"
-                                            placeholder="Valor em reais da 4ª Faixa de Consumo pela concessionária"
+                                            placeholder="Valor limite da 4ª Faixa de Consumo pela concessionária"
                                             name="dealership_cost_tax_4" value="{{ old('dealership_cost_tax_4') }}">
                                     </div>
 
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="4">
-                                        <label for="consumption_tax_4">Consumo</label>
-                                        <input type="text" class="form-control" id="consumption_tax_4"
-                                            name="consumption_tax_4" value="{{ old('consumption_tax_4') }}"
-                                            placeholder="valor em metros cúbicos (0,00)">
-                                    </div>
-
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="4">
-                                        <label for="units_inside_tax_4">Unidades na 4ª Faixa</label>
-                                        <input type="number" class="form-control" id="units_inside_tax_4"
-                                            name="units_inside_tax_4" step="1"
-                                            value="{{ old('units_inside_tax_4') }}">
-                                    </div>
-
-                                </div>
-
-                                {{-- Range 5 --}}
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2" data-consumption_ranges="5">
-                                        <label for="dealership_consumption_tax_4">Início 5ª Faixa de Consumo em
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2" data-consumption_ranges="5">
+                                        <label for="dealership_consumption_tax_4">Valor limite da 4ª Faixa de Consumo em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control" id="dealership_consumption_tax_4"
+                                            placeholder="Valor limite da 4ª Faixa de Consumo pela concessionária"
                                             name="dealership_consumption_tax_4"
-                                            value="{{ old('dealership_consumption_tax_4') }}"
-                                            placeholder="Valor da faixa em metros cúbicos">
+                                            value="{{ old('dealership_consumption_tax_4') }}">
                                     </div>
 
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="5">
-                                        <label for="dealership_cost_tax_5">Custo</label>
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2" data-consumption_ranges="5">
+                                        <label for="dealership_cost_tax_5">Custo da 5ª Faixa de Consumo</label>
                                         <input type="text" class="form-control money_format_3"
                                             id="dealership_cost_tax_5"
                                             placeholder="Valor em reais da 5ª Faixa de Consumo pela concessionária"
                                             name="dealership_cost_tax_5" value="{{ old('dealership_cost_tax_5') }}">
                                     </div>
 
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="5">
-                                        <label for="consumption_tax_5">Consumo</label>
-                                        <input type="text" class="form-control" id="consumption_tax_5"
-                                            name="consumption_tax_5" value="{{ old('consumption_tax_5') }}"
-                                            placeholder="valor em metros cúbicos (0,00)">
-                                    </div>
-
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="5">
-                                        <label for="units_inside_tax_5">Unidades na 5ª Faixa</label>
-                                        <input type="number" class="form-control" id="units_inside_tax_5"
-                                            name="units_inside_tax_5" step="1"
-                                            value="{{ old('units_inside_tax_5') }}">
-                                    </div>
-
-                                </div>
-
-                                {{-- Range 6 --}}
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2" data-consumption_ranges="6">
-                                        <label for="dealership_consumption_tax_5">Início 6ª Faixa de Consumo em
+                                    <div class="col-12 col-md-6 form-group px-0 pr-md-2" data-consumption_ranges="6">
+                                        <label for="dealership_consumption_tax_5">Valor limite da 5ª Faixa de Consumo em
                                             m<sup>3</sup></label>
                                         <input type="text" class="form-control" id="dealership_consumption_tax_5"
+                                            placeholder="Valor limite da 5ª Faixa de Consumo pela concessionária"
                                             name="dealership_consumption_tax_5"
-                                            value="{{ old('dealership_consumption_tax_5') }}"
-                                            placeholder="Valor da faixa em metros cúbicos">
+                                            value="{{ old('dealership_consumption_tax_5') }}">
                                     </div>
 
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="6">
-                                        <label for="dealership_cost_tax_6">Custo</label>
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2" data-consumption_ranges="6">
+                                        <label for="dealership_cost_tax_6">Custo da 6ª Faixa de Consumo</label>
                                         <input type="text" class="form-control money_format_3"
                                             id="dealership_cost_tax_6"
                                             placeholder="Valor em reais da 6ª Faixa de Consumo pela concessionária"
                                             name="dealership_cost_tax_6" value="{{ old('dealership_cost_tax_6') }}">
-                                    </div>
-
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="6">
-                                        <label for="consumption_tax_6">Consumo</label>
-                                        <input type="text" class="form-control" id="consumption_tax_6"
-                                            name="consumption_tax_6" value="{{ old('consumption_tax_6') }}"
-                                            placeholder="valor em metros cúbicos (0,00)">
-                                    </div>
-
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2" data-consumption_ranges="6">
-                                        <label for="units_inside_tax_6">Unidades na 6ª Faixa</label>
-                                        <input type="number" class="form-control" id="units_inside_tax_6"
-                                            name="units_inside_tax_6" step="1"
-                                            value="{{ old('units_inside_tax_6') }}">
                                     </div>
 
                                 </div>
@@ -480,99 +375,6 @@
                                         <input type="number" class="form-control" id="kite_car_qtd"
                                             placeholder="Quantidade" name="kite_car_qtd" min="0"
                                             value="{{ old('kite_car_qtd') }}">
-                                    </div>
-
-                                    <div class="col-12 col-md-2 form-group px-0 px-md-2 kite_car">
-                                        <label for="value_per_kite_car">Valor por Caminhão</label>
-                                        <input type="text" class="form-control money_format_3" id="value_per_kite_car"
-                                            name="value_per_kite_car" value="{{ old('value_per_kite_car') }}">
-                                    </div>
-
-                                    <div class="col-12 col-md-2 form-group px-0 pl-md-2 kite_car">
-                                        <label for="kite_car_total">Valor Total Carro Pipa</label>
-                                        <input type="text" class="form-control money_format_3" id="kite_car_total"
-                                            name="kite_car_total" value="{{ old('kite_car_total') }}">
-                                    </div>
-
-                                </div>
-
-                                {{-- Totais --}}
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2">
-                                        <label for="monthly_consumption">Consumo Unidades em m<sup>3</sup></label>
-                                        <input type="text" class="form-control" id="monthly_consumption"
-                                            name="monthly_consumption" value="{{ old('monthly_consumption') }}"
-                                            placeholder="Consumo total das unidades" required>
-                                    </div>
-
-                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
-                                        <label for="total_value">Conta Total</label>
-                                        <input type="text" class="form-control money_format_2" id="total_value"
-                                            name="total_value" value="{{ old('total_value') }}">
-                                    </div>
-
-                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
-                                        <label for="consumption_value">Valor do Consumo</label>
-                                        <input type="text" class="form-control money_format_2" id="consumption_value"
-                                            name="consumption_value" value="{{ old('consumption_value') }}">
-                                    </div>
-
-                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
-                                        <label for="sewage_value">Valor do Esgoto</label>
-                                        <input type="text" class="form-control money_format_2" id="sewage_value"
-                                            name="sewage_value" value="{{ old('sewage_value') }}">
-                                    </div>
-                                </div>
-
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
-                                        <label for="diff_cost">Área Comum</label>
-                                        <input type="text" class="form-control money_format_2" id="diff_cost"
-                                            name="diff_cost" value="{{ old('diff_cost') }}">
-                                    </div>
-
-                                    <div class="col-12 col-md-4 form-group px-0 px-md-2 kite_car">
-                                        <label for="kite_car_consumed_units">Consumo Carro Pipa das Unidades em
-                                            m<sup>3</sup></label>
-                                        <input type="text" class="form-control" id="kite_car_consumed_units"
-                                            name="kite_car_consumed_units" placeholder="total consumido pelas unidades"
-                                            value="{{ old('kite_car_consumed_units') }}">
-                                    </div>
-
-                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2 kite_car">
-                                        <label for="kite_car_cost_units">Valor Carro Pipa das Unidades</label>
-                                        <input type="text" class="form-control money_format_2"
-                                            id="kite_car_cost_units" name="kite_car_cost_units"
-                                            value="{{ old('kite_car_cost_units') }}">
-                                    </div>
-
-                                </div>
-
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
-                                        <label for="diff_consumption">Diferença entre Real e Concessionária em
-                                            m<sup>3</sup></label>
-                                        <input type="text" class="form-control" id="diff_consumption"
-                                            name="diff_consumption" value="{{ old('diff_consumption') }}"
-                                            placeholder="Valor em metros cúbicos (0,000)">
-                                    </div>
-
-                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
-                                        <label for="previous_billed_consumption">Consumo Faturado Mês Anterior em
-                                            m<sup>3</sup></label>
-                                        <input type="text" class="form-control" id="previous_billed_consumption"
-                                            name="previous_billed_consumption"
-                                            value="{{ old('previous_billed_consumption') }}"
-                                            placeholder="Valor em metros cúbicos (0,000)">
-                                    </div>
-
-                                    <div class="col-12 col-md-4 form-group px-0 pl-md-2">
-                                        <label for="previous_monthly_consumption">Consumo Real Anterior em
-                                            m<sup>3</sup></label>
-                                        <input type="text" class="form-control" id="previous_monthly_consumption"
-                                            name="previous_monthly_consumption"
-                                            value="{{ old('previous_monthly_consumption') }}"
-                                            placeholder="Valor em metros cúbicos (0,000)">
                                     </div>
 
                                 </div>

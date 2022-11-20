@@ -329,6 +329,18 @@ return [
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'can'  => 'Criar Leitura das Concessionárias',
                 ],
+                [
+                    'text' => 'Listagem de Relatórios',
+                    'url'  => 'admin/reports',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Listar Relatórios',
+                ],
+                [
+                    'text' => 'Cadastro de Relatório',
+                    'url'  => 'admin/reports/create',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Relatórios',
+                ],
             ],
         ],
         /** Complexes */

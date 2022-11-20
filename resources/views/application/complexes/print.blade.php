@@ -122,8 +122,8 @@
                                 em
                                 m<sup>3</sup></label>
                             <input type="text" class="form-control bg-light" id="dealership_consumption_tax_3"
-                                name="dealership_consumption_tax_3"
-                                value="{{ $reading->dealership_consumption_tax_3 }}" disabled>
+                                name="dealership_consumption_tax_3" value="{{ $reading->dealership_consumption_tax_3 }}"
+                                disabled>
                         </div>
 
                         <div class="col-6 form-group pr-l">
@@ -138,8 +138,8 @@
                                 em
                                 m<sup>3</sup></label>
                             <input type="text" class="form-control bg-light" id="dealership_consumption_tax_4"
-                                name="dealership_consumption_tax_4"
-                                value="{{ $reading->dealership_consumption_tax_4 }}" disabled>
+                                name="dealership_consumption_tax_4" value="{{ $reading->dealership_consumption_tax_4 }}"
+                                disabled>
                         </div>
 
                         <div class="col-6 form-group pl-2">
@@ -154,8 +154,8 @@
                                 em
                                 m<sup>3</sup></label>
                             <input type="text" class="form-control bg-light" id="dealership_consumption_tax_5"
-                                name="dealership_consumption_tax_5"
-                                value="{{ $reading->dealership_consumption_tax_5 }}" disabled>
+                                name="dealership_consumption_tax_5" value="{{ $reading->dealership_consumption_tax_5 }}"
+                                disabled>
                         </div>
 
                         <div class="col-6 form-group pl-2">
@@ -302,8 +302,7 @@
                             <label for="kite_car_consumed_units">Consumo Carro Pipa das Unidades em
                                 m<sup>3</sup></label>
                             <input type="text" class="form-control bg-light" id="kite_car_consumed_units"
-                                name="kite_car_consumed_units" disabled
-                                value="{{ $reading->kite_car_consumed_units }}">
+                                name="kite_car_consumed_units" disabled value="{{ $reading->kite_car_consumed_units }}">
                         </div>
 
                         <div class="col-4 form-group px-2">
@@ -536,7 +535,7 @@
             setTimeout(function() {
                 window.print();
                 window.close();
-            }, 100);
+            }, 1000);
         }
     </script>
 @endsection

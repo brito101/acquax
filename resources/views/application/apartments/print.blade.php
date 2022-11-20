@@ -100,8 +100,8 @@
                     <div class="col-4 form-group pr-2">
                         <label for="dealership_consumption">Consumo do Condomínio em m<sup>3</sup></label>
                         <input type="text" class="form-control bg-light" id="dealership_consumption"
-                            name="dealership_consumption"
-                            value="{{ $reading->dealershipReading->dealership_consumption }}" disabled>
+                            name="dealership_consumption" value="{{ $reading->dealershipReading->dealership_consumption }}"
+                            disabled>
                     </div>
                     <div class="col-4 form-group px-2">
                         <label for="dealership_cost">Consumo do Condomínio em Reais</label>
@@ -111,8 +111,7 @@
                     <div class="col-4 form-group pl-2">
                         <label for="diff_consumption">Área Comum em m<sup>3</sup></label>
                         <input type="text" class="form-control bg-light" id="diff_consumption"
-                            name="diff_consumption" value="{{ $reading->dealershipReading->diff_consumption }}"
-                            disabled>
+                            name="diff_consumption" value="{{ $reading->dealershipReading->diff_consumption }}" disabled>
                     </div>
                 </div>
 
@@ -156,8 +155,7 @@
                         <div class="col-4 form-group pl-2">
                             <label for="kite_car_total">Valor Total Carro Pipa</label>
                             <input type="text" class="form-control bg-light" id="kite_car_total"
-                                name="kite_car_total" disabled
-                                value="{{ $reading->dealershipReading->kite_car_total }}">
+                                name="kite_car_total" disabled value="{{ $reading->dealershipReading->kite_car_total }}">
                         </div>
 
                     </div>
@@ -227,8 +225,7 @@
                     <div class="col-4 form-group pr-2">
                         <label for="diff_consumption">Diferença Real e Concessionária em m<sup>3</sup></label>
                         <input type="text" class="form-control bg-light" id="diff_consumption"
-                            name="diff_consumption" disabled
-                            value="{{ $reading->dealershipReading->diff_consumption }}">
+                            name="diff_consumption" disabled value="{{ $reading->dealershipReading->diff_consumption }}">
                     </div>
 
                     < <div class="col-4 form-group px-2">
@@ -271,16 +268,16 @@
             @if ($reading->dealershipReading->kite_car == 'Sim')
                 <div class="d-flex flex-wrap justify-content-start">
                     <div class="col-4 form-group pr-2">
-                        <label for="total_cokite_car_consumednsumed">Consumo Carro Pipa em
+                        <label for="kite_car_consumed">Consumo Carro Pipa em
                             m<sup>3</sup></label>
                         <input type="text" class="form-control bg-light" id="kite_car_consumed"
                             name="kite_car_consumed" value="{{ $reading->kite_car_consumed }}" disabled>
                     </div>
 
                     <div class="col-4 form-group px-2">
-                        <label for="total_cokite_car_consumednsumed">Valor do Carro Pipa</label>
-                        <input type="text" class="form-control bg-light" id="kite_car_consumed"
-                            name="kite_car_consumed" value="{{ $reading->kite_car_cost }}" disabled>
+                        <label for="kite_car_cost">Valor do Carro Pipa</label>
+                        <input type="text" class="form-control bg-light" id="kite_car_cost" name="kite_car_cost"
+                            value="{{ $reading->kite_car_cost }}" disabled>
                     </div>
 
                     <div class="col-4 form-group pl-2">
@@ -293,13 +290,13 @@
 
                 <div class="d-flex flex-wrap justify-content-start">
                     <div class="col-4 form-group pr-2">
-                        <label for="total_consumed">Cosumo Total da Unidade</label>
+                        <label for="total_consumed">Cosumo Total da Unidade em m<sup>3</sup></label>
                         <input type="text" class="form-control bg-light" id="total_consumed" name="total_consumed"
                             value="{{ $reading->total_consumed }}" disabled>
                     </div>
 
                     <div class="col-4 form-group px-2">
-                        <label for="total_unit">Valor Total da Unidade em m<sup>3</sup></label>
+                        <label for="total_unit">Valor Total da Unidade</label>
                         <input type="text" class="form-control bg-light" id="total_unit" name="total_unit"
                             value="{{ $reading->total_unit }}" disabled>
                     </div>
@@ -419,7 +416,9 @@
         window.onload = function() {
             $(".main-footer").remove();
             window.print();
-            window.close();
+            setTimeout(function() {
+                window.close();
+            }, 1000);
         }
     </script>
 @endsection

@@ -87,11 +87,42 @@ class DealershipReadingController extends Controller
 
         $data = $request->all();
 
+        /** computed data forced */
+        $data['monthly_consumption'] = 'forced';
+        $data['total_value'] = 'forced';
+        $data['diff_consumption'] = 'forced';
+        $data['previous_monthly_consumption'] = 'forced';
+        $data['previous_billed_consumption'] = 'forced';
+        $data['units_inside_tax_1'] = 'forced';
+        $data['units_inside_tax_2'] = 'forced';
+        $data['units_inside_tax_3'] = 'forced';
+        $data['units_inside_tax_4'] = 'forced';
+        $data['units_inside_tax_5'] = 'forced';
+        $data['units_inside_tax_6'] = 'forced';
+        $data['kite_car_total'] = 'forced';
+        $data['value_per_kite_car'] = 'forced';
+        $data['consumption_tax_1'] = 'forced';
+        $data['consumption_tax_2'] = 'forced';
+        $data['consumption_tax_3'] = 'forced';
+        $data['consumption_tax_4'] = 'forced';
+        $data['consumption_tax_5'] = 'forced';
+        $data['consumption_tax_6'] = 'forced';
+        $data['average'] = 'forced';
+
         $data['editor'] = Auth::user()->id;
 
         $reading = DealershipReading::create($data);
 
         if ($reading->save()) {
+            $reading->generateApartmentReport();
+            $consumedCalc = $reading->calcTotalConsumed();
+            $reading->consumption_value = $consumedCalc['water'];
+            $reading->sewage_value = $consumedCalc['sewage'];
+            $reading->kite_car_consumed_units = $consumedCalc['kite_car_consumed_units'];
+            $reading->kite_car_cost_units = $consumedCalc['kite_car_cost_units'];
+            $reading->diff_cost = $consumedCalc['diff_cost'];
+            $reading->update();
+            $reading->finalCalc();
             return redirect()
                 ->route('admin.dealerships-readings.index')
                 ->with('success', 'Cadastro realizado!');
@@ -164,9 +195,40 @@ class DealershipReadingController extends Controller
 
         $data = $request->all();
 
+        /** computed data forced */
+        $data['monthly_consumption'] = 'forced';
+        $data['total_value'] = 'forced';
+        $data['diff_consumption'] = 'forced';
+        $data['previous_monthly_consumption'] = 'forced';
+        $data['previous_billed_consumption'] = 'forced';
+        $data['units_inside_tax_1'] = 'forced';
+        $data['units_inside_tax_2'] = 'forced';
+        $data['units_inside_tax_3'] = 'forced';
+        $data['units_inside_tax_4'] = 'forced';
+        $data['units_inside_tax_5'] = 'forced';
+        $data['units_inside_tax_6'] = 'forced';
+        $data['kite_car_total'] = 'forced';
+        $data['value_per_kite_car'] = 'forced';
+        $data['consumption_tax_1'] = 'forced';
+        $data['consumption_tax_2'] = 'forced';
+        $data['consumption_tax_3'] = 'forced';
+        $data['consumption_tax_4'] = 'forced';
+        $data['consumption_tax_5'] = 'forced';
+        $data['consumption_tax_6'] = 'forced';
+        $data['average'] = 'forced';
+
         $data['editor'] = Auth::user()->id;
 
         if ($reading->update($data)) {
+            $reading->generateApartmentReport();
+            $consumedCalc = $reading->calcTotalConsumed();
+            $reading->consumption_value = $consumedCalc['water'];
+            $reading->sewage_value = $consumedCalc['sewage'];
+            $reading->kite_car_consumed_units = $consumedCalc['kite_car_consumed_units'];
+            $reading->kite_car_cost_units = $consumedCalc['kite_car_cost_units'];
+            $reading->diff_cost = $consumedCalc['diff_cost'];
+            $reading->update();
+            $reading->finalCalc();
             return redirect()
                 ->route('admin.dealerships-readings.index')
                 ->with('success', 'Cadastro realizado!');

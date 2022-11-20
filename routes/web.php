@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ACL\RoleController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdvertisementController;
 use App\Http\Controllers\Admin\ApartmentController;
+use App\Http\Controllers\Admin\ApartmentReportController;
 use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\Chat\MessageController;
 use App\Http\Controllers\Admin\ComplexController;
@@ -145,6 +146,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::match(['get', 'post'], '/readings-search', [ReadingController::class, 'search'])->name('readings.search');
             Route::get('/readings/destroy/{id}', [ReadingController::class, 'destroy']);
             Route::resource('readings', ReadingController::class);
+
+            /** Apartments Reports */
+            Route::post('reports-import', [ApartmentReportController::class, 'fileImport'])->name('reports.import');
+            Route::get('/reports/destroy/{id}', [ApartmentReportController::class, 'destroy']);
+            Route::resource('reports', ApartmentReportController::class);
 
             /** Dealerships Readings */
             Route::get('/dealerships-readings/destroy/{id}', [DealershipReadingController::class, 'destroy']);

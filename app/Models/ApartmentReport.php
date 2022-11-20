@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Views\Apartment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,7 +25,10 @@ class ApartmentReport extends Model
     /** Relationships */
     public function apartment()
     {
-        return $this->belongsTo(Apartment::class);
+        return $this->belongsTo(Apartment::class)->withDefault([
+            'name' => 'Excluído',
+            'block_name' => 'Excluído',
+        ]);;
     }
 
     public function dealershipReading()

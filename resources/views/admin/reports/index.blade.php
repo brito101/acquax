@@ -1,22 +1,21 @@
 @extends('adminlte::page')
-
-@section('title', '- Medidores')
 @section('plugins.Datatables', true)
 @section('plugins.DatatablesPlugins', true)
 @section('plugins.BsCustomFileInput', true)
 
-@section('content')
+@section('title', '- Relatórios de Apartamentos')
 
+@section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-tachometer-alt"></i> Medidores</h1>
+                    <h1><i class="fas fa-fw fa-list-ul"></i> Relatórios de Apartamentos</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Medidores</li>
+                        <li class="breadcrumb-item active">Relatórios de Apartamentos</li>
                     </ol>
                 </div>
             </div>
@@ -27,12 +26,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 d-flex justify-content-end pb-4">
-                    <a class="btn btn-secondary" href="{{ Storage::url('medidores.ods') }}" download>Download
-                        Planilha</a>
+                    <a class="btn btn-secondary" href="{{ Storage::url('relatorio.ods') }}" download>Download Planilha</a>
                 </div>
             </div>
         </div>
     </section>
+
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -41,10 +41,16 @@
                     @include('components.alert')
 
                     <div class="card card-solid">
-                        <div class="card-header">
-                            <i class="fas fa-fw fa-upload"></i> Importação de Planilha de Cadastro de Medidores
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="d-flex justify-content-start align-items-center col-12 col-md-6"><i
+                                    class="fas fa-fw fa-upload"></i>
+                                Importação de Planilha de Relatórios</div>
+                            <div class="d-flex justify-content-end col-12 col-md-6">
+                                <x-adminlte-button label="" data-toggle="modal" data-target="#tip"
+                                    class="float-right bg-purple" icon="fa fa-question" />
+                            </div>
                         </div>
-                        <form action="{{ route('admin.meters.import') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.reports.import') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body pb-0">
                                 <x-adminlte-input-file name="file" label="Arquivo" placeholder="Selecione o arquivo..."
@@ -58,25 +64,26 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
-                                <h3 class="card-title align-self-center">Medidores Cadastrados</h3>
-                                @can('Criar Medidores')
-                                    <a href="{{ route('admin.meters.create') }}" title="Novo Medidor" class="btn btn-success"><i
-                                            class="fas fa-fw fa-plus"></i>Novo
-                                        Medidor</a>
+                                <h3 class="card-title align-self-center">Relatórios</h3>
+                                @can('Criar Relatórios')
+                                    <a href="{{ route('admin.reports.create') }}" title="Novo Relatório"
+                                        class="btn btn-success"><i class="fas fa-fw fa-plus"></i>Novo
+                                        Relatório</a>
                                 @endcan
                             </div>
                         </div>
 
                         @php
-                            $heads = [['label' => 'ID', 'width' => 5], 'Identificador', 'Propriedade', 'Localização', 'Tipo', 'Fabricação', 'Principal', 'Rotação', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                            $heads = [['label' => 'ID', 'width' => 5], 'Unidade', 'Ano', 'Mês', 'Consumo (m3)', 'Total', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
                             $config = [
-                                'ajax' => url('/admin/meters'),
-                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'register', 'name' => 'register'], ['data' => 'property', 'name' => 'property'], ['data' => 'location', 'name' => 'location'], ['data' => 'type', 'name' => 'type'], ['data' => 'year_manufacture', 'name' => 'year_manufacture'], ['data' => 'main', 'name' => 'main'], ['data' => 'rotation', 'name' => 'rotation'], ['data' => 'status', 'name' => 'status'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                'ajax' => url('/admin/reports'),
+                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'unit', 'name' => 'unit'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'consumed', 'name' => 'consumed'], ['data' => 'total_unit', 'name' => 'total_unit'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
                                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                 'autoFill' => true,
                                 'processing' => true,
                                 'serverSide' => true,
                                 'responsive' => true,
+                                'order' => [[0, 'desc']],
                                 'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
                                 'buttons' => [
                                     ['extend' => 'pageLength', 'className' => 'btn-default'],
@@ -98,4 +105,32 @@
             </div>
         </div>
     </section>
+
+    <x-adminlte-modal id="tip" title="Informações sobre a importação" theme="purple" icon="fas fa-question"
+        size='lg' disable-animations>
+        <p>A importação dos relatórios de cada apartamento poderá ser realizado via importação de planilha própria, no botão
+            de <b>download</b> presente nesta página, ou inserido um a um como novo cadastro (viável para condomínios com
+            poucos apartamentos).</p>
+        <p>Para importar, basta preencher os valores dos campos, levando em consideração o nome fantasia exato do
+            condomínio, nome do bloco e do apartamento. Caso não sejam localizáveis, o armazenamento não armazenará e
+            passará para a próxima linha. <b class="text-red">IMPORTANTE</b>: a conta da concessionária deverá já estar
+            lançanda, pois será utilizada como referência para o armazenamento e será localizada a partir das informações do
+            condomínio, mês e ano de referência</p>
+        <p>Caso um relatório já exista para um apartamento e período de referência, ele será deletado e as informações da
+            última
+            importação serão apresentadas. Desta forma, caso haja algum erro, uma nova importação poderá ser realizada de
+            forma tranquila, pois não existirá duplicidade de relatórios.</p>
+        <p>Passo a passo ideal de cadastro:</p>
+        <ul>
+            <li>Cadastrar as medições dos medidores via importação</li>
+            <li>Cadastrar a conta do condomínio recebida pela concessionária</li>
+            <li>Cadastrar os relatórios para os apartamentos via importação</li>
+        </ul>
+        <p>A apresentação para os moradores seguirá da mesma, incluindo a notificação em caso de consumo acima da média do
+            condomínio.</p>
+        <x-slot name="footerSlot">
+            <x-adminlte-button theme="primary" label="Fechar" data-dismiss="modal" />
+        </x-slot>
+    </x-adminlte-modal>
+
 @endsection

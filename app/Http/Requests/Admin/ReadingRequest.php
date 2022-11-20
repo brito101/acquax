@@ -35,12 +35,20 @@ class ReadingRequest extends FormRequest
             $base64 = $name;
         }
 
-        $this->merge([
-            'cover_base64' => $base64,
-            'reading' => str_replace(',', '.', str_replace('.', '', $this->reading)),
-            'reading_date' => Carbon::createFromFormat('d/m/Y', $this->reading_date)->format('Y-m-d'),
-            'reading_date_next' => Carbon::createFromFormat('d/m/Y', $this->reading_date_next)->format('Y-m-d'),
-        ]);
+        if ($base64) {
+            $this->merge([
+                'cover_base64' => $base64,
+                'reading' => str_replace(',', '.', str_replace('.', '', $this->reading)),
+                'reading_date' => Carbon::createFromFormat('d/m/Y', $this->reading_date)->format('Y-m-d'),
+                'reading_date_next' => Carbon::createFromFormat('d/m/Y', $this->reading_date_next)->format('Y-m-d'),
+            ]);
+        } else {
+            $this->merge([
+                'reading' => str_replace(',', '.', str_replace('.', '', $this->reading)),
+                'reading_date' => Carbon::createFromFormat('d/m/Y', $this->reading_date)->format('Y-m-d'),
+                'reading_date_next' => Carbon::createFromFormat('d/m/Y', $this->reading_date_next)->format('Y-m-d'),
+            ]);
+        }
     }
 
     /**

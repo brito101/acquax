@@ -43,7 +43,11 @@ class Apartment extends Model
     /**  Appends */
     public function getBlockNameAttribute()
     {
-        return $this->block['name'];
+        if ($this->block) {
+            return $this->block['name'];
+        } else {
+            return 'Excluído';
+        }
     }
 
     public function getComplexNameAttribute()
