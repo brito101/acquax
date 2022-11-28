@@ -410,7 +410,7 @@
                     const myChart{!! $loop->index !!} = new Chart(ctx{!! $loop->index !!}, {
                         type: 'line',
                         data: {
-                            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Agosto',
+                            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
                                 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
                             ],
                             datasets: [{
@@ -488,7 +488,7 @@
                     const myChartY{!! $loop->index !!} = new Chart(cty{!! $loop->index !!}, {
                         type: 'line',
                         data: {
-                            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Agosto',
+                            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
                                 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
                             ],
                             datasets: [{
