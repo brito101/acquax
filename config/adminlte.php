@@ -517,6 +517,27 @@ return [
                 ],
             ],
         ],
+        /** Schedule */
+        [
+            'text'        => 'Agenda',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-calendar',
+            'can'         => 'Acessar Agenda',
+            'submenu' => [
+                [
+                    'text' => 'Eventos da Agenda',
+                    'url'  => 'admin/schedule',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Listar Eventos na Agenda',
+                ],
+                [
+                    'text' => 'Cadastro de Eventos',
+                    'url'  => 'admin/schedule/create',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Eventos na Agenda',
+                ],
+            ],
+        ],
         /** Settings */
         [
             'text'    => 'Configurações',

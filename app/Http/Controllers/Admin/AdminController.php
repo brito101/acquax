@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Complex;
+use App\Models\Guest;
 use App\Models\Meter;
 use App\Models\Reading;
 use App\Models\Resident;
+use App\Models\Schedule;
 use App\Models\Syndic;
 use App\Models\User;
 use App\Models\Views\Apartment as ViewsApartment;
@@ -36,6 +38,14 @@ class AdminController extends Controller
         $syndics = Syndic::all('id')->count();
         $readings = Reading::all('id')->count();
 
+        /** Schedule */
+        $guests = Guest::where('user_id', Auth::user()->id)->pluck('schedule_id');
+        $schedules = Schedule::whereDate('start', '<=', date('Y-m-d'))
+            ->whereDate('end', '>=', date('Y-m-d'))
+            ->where('user_id', Auth::user()->id)
+            ->orWhereIn('id', $guests)
+            ->get();
+
         /** Statistics */
         $statistics = $this->accessStatistics();
         $onlineUsers = $statistics['onlineUsers'];
@@ -57,7 +67,8 @@ class AdminController extends Controller
             'percent',
             'access',
             'chart',
-            'topPages'
+            'topPages',
+            'schedules'
         ));
     }
 

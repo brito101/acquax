@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\MeterController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ReadingController;
 use App\Http\Controllers\Admin\ResidentController;
+use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\Settings\DealershipController;
 use App\Http\Controllers\Admin\Settings\GenreController;
 use App\Http\Controllers\Admin\Settings\TypeMetersController;
@@ -163,6 +164,11 @@ Route::group(['middleware' => ['auth']], function () {
             /** Blog */
             Route::get('/posts/destroy/{id}', [PostController::class, 'destroy']);
             Route::resource('posts', PostController::class);
+
+            /** Schedule */
+            Route::get('schedule-day/{day?}', [ScheduleController::class, 'day']);
+            Route::resource('schedule', ScheduleController::class);
+
 
             /**
              * Configurations

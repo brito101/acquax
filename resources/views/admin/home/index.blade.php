@@ -19,10 +19,32 @@
             </div>
         </div>
     </div>
+
+    @can('Listar Eventos na Agenda')
+        <section class="content mx-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-fw fa-calendar"></i> Agenda do Dia</h3>
+                </div>
+                <div class="card-body d-flex flex-wrap justify-content-start px-0 pb-0">
+                    @forelse ($schedules as $schedule)
+                        <div class="col-12 col-md-6">
+                            <x-adminlte-small-box title="{{ Str::limit($schedule->title, 15) }}"
+                                text="{{ 'Período: ' . date('d/m/Y H:i', strtotime($schedule->start)) . ' até ' . date('d/m/Y H:i', strtotime($schedule->end)) }}"
+                                icon="fas fa-calendar" theme="teal"
+                                url="{{ route('admin.schedule.show', ['schedule' => $schedule->id]) }}"
+                                url-text="Visualizar Evento" />
+                        </div>
+                    @empty
+                        <p class="px-3">Não há agendamento de eventos para o dia</p>
+                    @endforelse
+                </div>
+            </div>
+        </section>
+    @endcan
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3">
                         <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-user-shield"></i></span>
