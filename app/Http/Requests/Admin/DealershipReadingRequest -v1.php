@@ -5,7 +5,7 @@ namespace App\Http\Requests\Admin;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DealershipReadingRequest extends FormRequest
+class DealershipReadingRequestV1 extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
