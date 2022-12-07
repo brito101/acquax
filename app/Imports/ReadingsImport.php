@@ -18,16 +18,17 @@ class ReadingsImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        return new Reading([
-            'meter_id' => Meter::where('register', $row['chassi'])->first()->id,
-            // 'reading' => str_replace(',', '.', str_replace('.', '', $row['leitura'])),
-            'reading' => str_replace(',', '.', $row['leitura']),
-            'month_ref' => $row['mes_ref'],
-            'year_ref' => $row['ano_ref'],
-            'reading_date' => Carbon::createFromFormat('d/m/Y', $row['data_leitura'])->format('Y-m-d'),
-            'reading_date_next' => Carbon::createFromFormat('d/m/Y', $row['prox_leitura'])->format('Y-m-d'),
-            'url_cover' => $row['foto'],
-            'editor' => Auth::user()->id
-        ]);
+        if (isset($row['chassi'])) {
+            return new Reading([
+                'meter_id' => Meter::where('register', $row['chassi'])->first()->id,
+                'reading' => str_replace(',', '.', $row['leitura']),
+                'month_ref' => $row['mes_ref'],
+                'year_ref' => $row['ano_ref'],
+                'reading_date' => Carbon::createFromFormat('d/m/Y', $row['data_leitura'])->format('Y-m-d'),
+                'reading_date_next' => Carbon::createFromFormat('d/m/Y', $row['prox_leitura'])->format('Y-m-d'),
+                'url_cover' => $row['foto'],
+                'editor' => Auth::user()->id
+            ]);
+        }
     }
 }
