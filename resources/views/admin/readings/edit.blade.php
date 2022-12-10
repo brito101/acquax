@@ -34,6 +34,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados Cadastrais da Leitura #{{ $reading->id }}</h3>
+                            <small class="float-right text-black-50">Criado por {{ $reading->user->name }} em
+                                {{ date('d/m/Y H:i', strtotime($reading->created_at)) }}</small>
                         </div>
 
 
@@ -129,8 +131,7 @@
                                         <label for="reading_date_next">Data da Próxima Leitura</label>
                                         <input type="text" class="form-control acquax-date" id="reading_date_next"
                                             placeholder="Data da Próxima" name="reading_date_next"
-                                            value="{{ old('reading_date_next') ?? $reading->reading_date_next }}"
-                                            required>
+                                            value="{{ old('reading_date_next') ?? $reading->reading_date_next }}" required>
                                     </div>
                                 </div>
 

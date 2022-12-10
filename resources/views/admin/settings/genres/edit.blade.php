@@ -32,6 +32,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados Cadastrais do Gênero</h3>
+                            <small class="float-right text-black-50">Criado por {{ $genre->user->name }} em
+                                {{ date('d/m/Y H:i', strtotime($genre->created_at)) }}</small>
                         </div>
 
                         <form method="POST" action="{{ route('admin.genres.update', ['genre' => $genre->id]) }}">
@@ -42,8 +44,9 @@
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="name">Nome do Gênero</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Nome do Gênero"
-                                            name="name" value="{{ old('name') ?? $genre->name }}" required>
+                                        <input type="text" class="form-control" id="name"
+                                            placeholder="Nome do Gênero" name="name"
+                                            value="{{ old('name') ?? $genre->name }}" required>
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="acronym">Abreviatura</label>

@@ -19,7 +19,7 @@ class ApartmentReport extends Model
     ];
 
     protected $fillable = [
-        'consumed', 'consumed_cost', 'sewage_cost', 'total_unit', 'partial', 'dealership_reading_id', 'readings', 'apartment_id', 'month_ref', 'year_ref', 'kite_car_consumed', 'kite_car_cost', 'total_consumed'
+        'consumed', 'consumed_cost', 'sewage_cost', 'total_unit', 'partial', 'dealership_reading_id', 'readings', 'apartment_id', 'month_ref', 'year_ref', 'kite_car_consumed', 'kite_car_cost', 'total_consumed', 'editor'
     ];
 
     /** Relationships */
@@ -34,6 +34,13 @@ class ApartmentReport extends Model
     public function dealershipReading()
     {
         return $this->belongsTo(DealershipReading::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'editor')->withDefault([
+            'name' => 'usário não informado',
+        ]);
     }
 
     /** Accessors */

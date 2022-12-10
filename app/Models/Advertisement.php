@@ -13,4 +13,12 @@ class Advertisement extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['title', 'cover', 'link', 'status', 'editor', 'views'];
+
+    /** Relationships */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'editor')->withDefault([
+            'name' => 'usuário não informado',
+        ]);
+    }
 }

@@ -35,6 +35,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados Cadastrais do Bloco</h3>
+                            <small class="float-right text-black-50">Criado por {{ $block->user->name }} em
+                                {{ date('d/m/Y H:i', strtotime($block->created_at)) }}</small>
                         </div>
 
                         <form method="POST" action="{{ route('admin.blocks.update', ['block' => $block->id]) }}">
@@ -48,8 +50,9 @@
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="name">Nome do Bloco</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Nome do Bloco"
-                                            name="name" value="{{ old('name') ?? $block->name }}" required>
+                                        <input type="text" class="form-control" id="name"
+                                            placeholder="Nome do Bloco" name="name"
+                                            value="{{ old('name') ?? $block->name }}" required>
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="status">Status do Bloco</label>

@@ -33,6 +33,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados Cadastrais do Condomínio</h3>
+                            <small class="float-right text-black-50">Criado por {{ $complex->user->name }} em
+                                {{ date('d/m/Y H:i', strtotime($complex->created_at)) }}</small>
                         </div>
 
                         <form method="POST" action="{{ route('admin.complexes.update', ['complex' => $complex->id]) }}"
@@ -88,7 +90,8 @@
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="telephone">Telefone</label>
                                         <input type="tel" class="form-control" id="telephone" placeholder="Telefone"
-                                            name="telephone" value="{{ old('telephone') ?? $complex->telephone }}" required>
+                                            name="telephone" value="{{ old('telephone') ?? $complex->telephone }}"
+                                            required>
                                     </div>
                                     <div class="col-12 col-md-6 form-group px-0 pl-md-2">
                                         <label for="cell">Celular</label>

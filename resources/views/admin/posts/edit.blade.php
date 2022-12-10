@@ -34,6 +34,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados Cadastrais do Post</h3>
+                            <small class="float-right text-black-50">Criado por {{ $post->user->name }} em
+                                {{ date('d/m/Y H:i', strtotime($post->created_at)) }}</small>
                         </div>
 
                         <form method="POST" action="{{ route('admin.posts.update', ['post' => $post->id]) }}"

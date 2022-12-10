@@ -36,6 +36,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados Cadastrais de Consumo</h3>
+                            <small class="float-right text-black-50">Criado por {{ $reading->user->name }} em
+                                {{ date('d/m/Y H:i', strtotime($reading->created_at)) }}</small>
                         </div>
 
 

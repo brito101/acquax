@@ -52,6 +52,13 @@ class Complex extends Model
         return $this->hasMany(DealershipReading::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault([
+            'name' => 'usário não informado',
+        ]);
+    }
+
     /** Aux */
     public function lastReading()
     {

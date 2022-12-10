@@ -33,6 +33,13 @@ class Block extends Model
         return $this->hasMany(Apartment::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault([
+            'name' => 'usário não informado',
+        ]);
+    }
+
     // Mutator
     public function getComplexNameAttribute()
     {

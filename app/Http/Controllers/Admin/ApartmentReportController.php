@@ -87,6 +87,8 @@ class ApartmentReportController extends Controller
             ->pluck('id');
         $data['readings'] = $readings->toArray();
 
+        $data['editor'] = Auth::user()->id;
+
         $apartmentReport = ApartmentReport::create($data);
 
         if ($apartmentReport->save()) {

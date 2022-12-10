@@ -33,6 +33,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados Cadastrais do Tipo</h3>
+                            <small class="float-right text-black-50">Criado por {{ $typeMeter->user->name }} em
+                                {{ date('d/m/Y H:i', strtotime($typeMeter->created_at)) }}</small>
                         </div>
 
                         <form method="POST"

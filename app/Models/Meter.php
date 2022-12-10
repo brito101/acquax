@@ -43,6 +43,13 @@ class Meter extends Model
         return $this->hasMany(Reading::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault([
+            'name' => 'usário não informado',
+        ]);
+    }
+
     /**  Accessor */
     public function getInitialReadingAttribute($value)
     {

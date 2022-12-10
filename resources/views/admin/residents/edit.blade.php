@@ -32,6 +32,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados Cadastrais do Morador</h3>
+                            <small class="float-right text-black-50">Criado por {{ $resident->editorName()->name }} em
+                                {{ date('d/m/Y H:i', strtotime($resident->created_at)) }}</small>
                         </div>
 
 
@@ -61,9 +63,9 @@
                                         <x-adminlte-select2 name="apartment_id">
                                             @foreach ($apartments as $apartment)
                                                 <option
-                                                    {{ old('apartment_id') == $apartment->id? 'selected': ($resident->apartment_id == $apartment->id? 'selected': '') }}
+                                                    {{ old('apartment_id') == $apartment->id ? 'selected' : ($resident->apartment_id == $apartment->id ? 'selected' : '') }}
                                                     value="{{ $apartment->id }}">
-                                                    {{ 'Condomínio ' .$apartment->getComplexNameAttribute() .' - Bloco ' .$apartment->getBlockNameAttribute() .' - Apartamento ' .$apartment->name }}
+                                                    {{ 'Condomínio ' . $apartment->getComplexNameAttribute() . ' - Bloco ' . $apartment->getBlockNameAttribute() . ' - Apartamento ' . $apartment->name }}
                                                 </option>
                                             @endforeach
                                         </x-adminlte-select2>

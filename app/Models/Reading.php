@@ -39,6 +39,13 @@ class Reading extends Model
         return $this->belongsTo(Meter::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'editor')->withDefault([
+            'name' => 'usário não informado',
+        ]);
+    }
+
     /**  Accessor */
     public function getReadingAttribute($value)
     {
@@ -65,11 +72,11 @@ class Reading extends Model
     /** Appends */
     public function getVolumeConsumedAttribute()
     {
-
         $datePrevious = $this->getPreviousDateRef($this->month_ref, $this->year_ref);
         $previous = Reading::where('month_ref', $datePrevious[0])
             ->where('year_ref', $datePrevious[1])
             ->where('meter_id', $this->meter_id)->first();
+
         if ($previous) {
             if ($this->meter->rotation == 'Crescente') {
                 $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($previous->reading);
@@ -80,12 +87,16 @@ class Reading extends Model
             }
         } else {
             $mether = Meter::where('id', $this->meter_id)->first();
-            if ($this->meter->rotation == 'Crescente') {
-                $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($mether->initial_reading);
-            } elseif ($this->meter->rotation == 'Decrescente') {
-                $volume = $this->convertToFloat($mether->initial_reading) - $this->convertToFloat($this->reading);
+            if ($mether) {
+                if ($this->meter->rotation == 'Crescente') {
+                    $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($mether->initial_reading);
+                } elseif ($this->meter->rotation == 'Decrescente') {
+                    $volume = $this->convertToFloat($mether->initial_reading) - $this->convertToFloat($this->reading);
+                } else {
+                    $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($mether->initial_reading);
+                }
             } else {
-                $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($mether->initial_reading);
+                $volume = $this->convertToFloat($this->reading);
             }
         }
         return number_format($volume, 13, ",", ".");

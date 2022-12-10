@@ -32,6 +32,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados Cadastrais do Síndico</h3>
+                            <small class="float-right text-black-50">Criado por {{ $syndic->editorName()->name }} em
+                                {{ date('d/m/Y H:i', strtotime($syndic->created_at)) }}</small>
                         </div>
 
 

@@ -107,6 +107,13 @@ class DealershipReading extends Model
         return $this->hasMany(ApartmentReport::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'editor')->withDefault([
+            'name' => 'usário não informado',
+        ]);
+    }
+
     /**
      * Kite Car
      * */

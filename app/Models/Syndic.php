@@ -40,4 +40,15 @@ class Syndic extends Model
             'alias_name' => 'Inexistente',
         ]);
     }
+
+    /** Aux */
+    public function editorName()
+    {
+        $editor = User::find($this->editor);
+        if ($editor) {
+            return $editor;
+        } else {
+            return ['name' => 'usário não informado'];
+        }
+    }
 }

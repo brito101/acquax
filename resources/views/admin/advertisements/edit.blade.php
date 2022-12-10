@@ -34,6 +34,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados Cadastrais da Propaganda</h3>
+                            <small class="float-right text-black-50">Criado por {{ $advertisement->user->name }} em
+                                {{ date('d/m/Y H:i', strtotime($advertisement->created_at)) }}</small>
                         </div>
 
                         <form method="POST"

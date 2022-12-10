@@ -32,6 +32,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados Cadastrais do Apartamento</h3>
+                            <small class="float-right text-black-50">Criado por {{ $apartment->user->name }} em
+                                {{ date('d/m/Y H:i', strtotime($apartment->created_at)) }}</small>
                         </div>
 
 

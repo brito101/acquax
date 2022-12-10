@@ -25,8 +25,8 @@ class Post extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class)->withDefault([
-            'name' => 'Anônimo',
+        return $this->belongsTo(User::class, 'editor')->withDefault([
+            'name' => env('APP_NAME'),
         ]);
     }
 }
