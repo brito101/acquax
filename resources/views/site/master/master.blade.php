@@ -319,14 +319,12 @@
         </div>
     </footer>
 
-
     <div class="switch-box">
         <label id="switch" class="switch">
             <input type="checkbox" onchange="toggleTheme()" id="slider">
             <span class="slider round"></span>
         </label>
     </div>
-
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
@@ -338,7 +336,6 @@
     <script src="{{ asset('js/form-validator.min.js') }}"></script>
     <script src="{{ asset('js/contact-form-script.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
-    <script src="{{ asset('js/goto.js') }}"></script>
     @yield('custom_js')
 </body>
 

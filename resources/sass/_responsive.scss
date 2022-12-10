@@ -400,6 +400,8 @@
     }
     .about-play {
         margin-bottom: 30px;
+        display: flex;
+        flex-wrap: wrap;
     }
     .about-play img {
         border-radius: 10px;

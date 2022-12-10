@@ -15,7 +15,15 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="about-play">
-                        <img src="{{ asset('img/air-block-0.webp') }}" alt="Bloqueador de Ar">
+                        <img src="{{ asset('img/air-block-0.webp') }}" alt="About Images">
+                        <div class="about-play-content">
+                            <span class="pt-5">Assista nosso vídeo</span>
+                            <h2>A solução para a sua conta!</h2>
+                            <div class="play-on-area">
+                                <a href="https://www.youtube.com/watch?v=BG0Tvg_Xdpk" class="play-on popup-btn"><i
+                                        class="bx bx-play"></i></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
