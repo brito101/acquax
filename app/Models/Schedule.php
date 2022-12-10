@@ -12,7 +12,7 @@ class Schedule extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['title', 'description', 'start', 'end', 'user_id'];
+    protected $fillable = ['title', 'description', 'start', 'end', 'user_id', 'color'];
 
     /** Relationships */
     public function guests()

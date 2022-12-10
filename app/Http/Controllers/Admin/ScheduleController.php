@@ -24,14 +24,20 @@ class ScheduleController extends Controller
         }
 
         if ($request->ajax()) {
-            $guests = Guest::where('user_id', Auth::user()->id)->pluck('schedule_id');
-            $data = Schedule::whereDate('start', '>=', $request->start)
-                ->whereDate('end',   '<=', $request->end)
-                ->where('user_id', Auth::user()->id)
-                ->orWhereIn('id', $guests)
-                ->get(['id', 'title', 'start', 'end']);
+            if (Auth::user()->hasRole('Programador|Administrador')) {
+                $schedules = Schedule::whereDate('start', '>=', $request->start)
+                    ->whereDate('end',   '<=', $request->end)
+                    ->get(['id', 'title', 'start', 'end']);
+            } else {
+                $guests = Guest::where('user_id', Auth::user()->id)->pluck('schedule_id');
+                $schedules = Schedule::whereDate('start', '>=', $request->start)
+                    ->whereDate('end',   '<=', $request->end)
+                    ->where('user_id', Auth::user()->id)
+                    ->orWhereIn('id', $guests)
+                    ->get(['id', 'title', 'start', 'end']);
+            }
 
-            return response()->json($data);
+            return response()->json($schedules);
         }
 
         return view('admin.schedule.index');

@@ -39,12 +39,18 @@ class AdminController extends Controller
         $readings = Reading::all('id')->count();
 
         /** Schedule */
-        $guests = Guest::where('user_id', Auth::user()->id)->pluck('schedule_id');
-        $schedules = Schedule::whereDate('start', '<=', date('Y-m-d'))
-            ->whereDate('end', '>=', date('Y-m-d'))
-            ->where('user_id', Auth::user()->id)
-            ->orWhereIn('id', $guests)
-            ->get();
+        if (Auth::user()->hasRole('Programador|Administrador')) {
+            $schedules = Schedule::whereDate('start', '<=', date('Y-m-d'))
+                ->whereDate('end', '>=', date('Y-m-d'))
+                ->get();
+        } else {
+            $guests = Guest::where('user_id', Auth::user()->id)->pluck('schedule_id');
+            $schedules = Schedule::whereDate('start', '<=', date('Y-m-d'))
+                ->whereDate('end', '>=', date('Y-m-d'))
+                ->where('user_id', Auth::user()->id)
+                ->orWhereIn('id', $guests)
+                ->get();
+        }
 
         /** Statistics */
         $statistics = $this->accessStatistics();

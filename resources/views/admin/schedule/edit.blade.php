@@ -1,5 +1,6 @@
 @extends('adminlte::page')
 @section('plugins.BootstrapSelect', true)
+@section('plugins.select2', true)
 
 @section('title', '- Edição de Evento')
 
@@ -92,6 +93,46 @@
                                                 </option>
                                             @endforeach
                                         </x-adminlte-select-bs>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-between mb-0">
+                                    <div class="col-12 col-md-3 form-group px-0 pr-md-2">
+                                        <div class="form-group">
+                                            <label for="color">Cor</label>
+                                            <x-adminlte-select2 name="color" required>
+                                                <option
+                                                    {{ old('color') == 'teal' ? 'selected' : ($schedule->color == 'teal' ? 'selected' : '') }}
+                                                    value="teal">
+                                                    Padrão
+                                                </option>
+                                                <option
+                                                    {{ old('color') == 'warning' ? 'selected' : ($schedule->color == 'warning' ? 'selected' : '') }}
+                                                    value="warning">
+                                                    Amarelo
+                                                </option>
+                                                <option
+                                                    {{ old('color') == 'primary' ? 'selected' : ($schedule->color == 'primary' ? 'selected' : '') }}
+                                                    value="primary">
+                                                    Azul
+                                                </option>
+                                                <option
+                                                    {{ old('color') == 'secondary' ? 'selected' : ($schedule->color == 'secondary' ? 'selected' : '') }}
+                                                    value="secondary">
+                                                    Cinza
+                                                </option>
+                                                <option
+                                                    {{ old('color') == 'danger' ? 'selected' : ($schedule->color == 'danger' ? 'selected' : '') }}
+                                                    value="danger">
+                                                    Vermelho
+                                                </option>
+                                                <option
+                                                    {{ old('color') == 'success' ? 'selected' : ($schedule->color == 'teal' ? 'success' : '') }}
+                                                    value="success">
+                                                    Verde
+                                                </option>
+                                            </x-adminlte-select2>
+                                        </div>
                                     </div>
                                 </div>
 

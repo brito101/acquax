@@ -28,12 +28,12 @@
                 </div>
                 <div class="card-body d-flex flex-wrap justify-content-start px-0 pb-0">
                     @forelse ($schedules as $schedule)
-                        <div class="col-12 col-md-6">
-                            <x-adminlte-small-box title="{{ Str::limit($schedule->title, 15) }}"
-                                text="{{ 'Período: ' . date('d/m/Y H:i', strtotime($schedule->start)) . ' até ' . date('d/m/Y H:i', strtotime($schedule->end)) }}"
-                                icon="fas fa-calendar" theme="teal"
-                                url="{{ route('admin.schedule.show', ['schedule' => $schedule->id]) }}"
-                                url-text="Visualizar Evento" />
+                        <div class="col-6 col-md-3 p-2">
+                            <a href="{{ route('admin.schedule.show', ['schedule' => $schedule->id]) }}"
+                                class="btn bg-{{ $schedule->color }} w-100 text-left"
+                                title="Evento na Agenda: {{ $schedule->title }}"><i class="fas fa-calendar"></i>
+                                {{ Str::limit($schedule->title, 15) }}</i>
+                            </a>
                         </div>
                     @empty
                         <p class="px-3">Não há agendamento de eventos para o dia</p>
@@ -42,6 +42,7 @@
             </div>
         </section>
     @endcan
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">

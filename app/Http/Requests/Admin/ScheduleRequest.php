@@ -29,6 +29,7 @@ class ScheduleRequest extends FormRequest
             'description' => 'nullable|min:1|max:40000',
             'start' => 'required|date_format:Y-m-d\TH:i',
             'end' => 'required|date_format:Y-m-d\TH:i|after:start',
+            'color' => 'nullable|in:teal,warning,primary,secondary,danger,success'
         ];
     }
 
@@ -37,6 +38,7 @@ class ScheduleRequest extends FormRequest
         return [
             'start.date_format' => 'Formato de data do campo início inválido',
             'end.date_format' => 'Formato de data do campo término inválido',
+            'color.in' => 'Cor inválida',
         ];
     }
 }
