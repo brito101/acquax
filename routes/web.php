@@ -232,7 +232,9 @@ Route::group(['middleware' => ['log']], function () {
         Route::get('/politica-de-privacidade', [PoliceController::class, 'index'])->name('police');
     });
 
-    Auth::routes();
+    Auth::routes([
+        'register' => false,
+    ]);
 
     Route::fallback(function () {
         return view('site.404');
