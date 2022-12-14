@@ -15,7 +15,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="about-play">
-                        <img src="{{ asset('img/air-block-0.webp') }}" alt="About Images">
+                        <img src="{{ asset('img/air-block-0.webp') }}" alt="About Images" style="width: 100%;">
                         <div class="about-play-content">
                             <span class="pt-5">Assista nosso vídeo</span>
                             <h2>A solução para a sua conta!</h2>

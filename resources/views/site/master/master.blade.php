@@ -336,7 +336,10 @@
     <script src="{{ asset('js/form-validator.min.js') }}"></script>
     <script src="{{ asset('js/contact-form-script.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
-    @yield('custom_js')
+    @if (Route::currentRouteName() == 'site.home')
+        <script src="{{ asset('js/goto.js') }}"></script>
+        @yield('custom_js')
+    @endif
 </body>
 
 </html>
