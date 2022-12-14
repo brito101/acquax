@@ -36,7 +36,9 @@ class Reading extends Model
 
     public function meter()
     {
-        return $this->belongsTo(Meter::class);
+        return $this->belongsTo(Meter::class)->withDefault([
+            'register' => 'excluído do sistema',
+        ]);
     }
 
     public function user()
@@ -117,7 +119,11 @@ class Reading extends Model
             $volume = $this->convertToFloat($previous->reading) - $this->convertToFloat($pre_previous->reading);
         } elseif ($previous) {
             $mether = Meter::where('id', $this->meter_id)->first();
-            $volume = $this->convertToFloat($previous->reading) - $this->convertToFloat($mether->initial_reading);
+            if ($mether) {
+                $volume = $this->convertToFloat($previous->reading) - $this->convertToFloat($mether->initial_reading);
+            } else {
+                return "Inexistente";
+            }
         } else {
             return "Inexistente";
         }

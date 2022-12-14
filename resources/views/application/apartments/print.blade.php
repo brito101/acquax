@@ -153,7 +153,6 @@
                                 name="kite_car_total" disabled value="{{ $reading->dealershipReading->kite_car_total }}">
                         </div>
 
-
                         <div class="col-4 form-group pr-2">
                             <label for="kite_car_consumed_units">Consumo Carro Pipa das Unidades em
                                 m<sup>3</sup></label>
@@ -168,170 +167,171 @@
                                 name="kite_car_cost_units" disabled
                                 value="{{ $reading->dealershipReading->kite_car_cost_units }}">
                         </div>
+                    </div>
                 @endif
-            </div>
 
-            <h4 class="h5 text-muted mt-3">Dados da Unidade</h4>
-            <div class="d-flex flex-wrap justify-content-between">
-                <div class="col-4 form-group pr-2">
-                    <label for="total_consumed">Consumo da Unidade em m<sup>3</sup></label>
-                    <input type="text" class="form-control bg-light" id="total_consumed" name="total_consumed"
-                        value="{{ $reading->consumed }}" disabled>
-                </div>
-                <div class="col-4 form-group px-2">
-                    <label for="consumed_cost">Valor de Consumo</label>
-                    <input type="text" class="form-control bg-light" id="consumed_cost" name="consumed_cost"
-                        value="{{ $reading->consumed_cost }}" disabled>
-                </div>
-                <div class="col-4 form-group pl-2">
-                    <label for="sewage_cost">Valor do Esgoto</label>
-                    <input type="text" class="form-control bg-light" id="sewage_cost" name="sewage_cost"
-                        value="{{ $reading->sewage_cost }}" disabled>
-                </div>
-            </div>
 
-            @if ($reading->dealershipReading->kite_car == 'Sim')
-                <div class="d-flex flex-wrap justify-content-start">
+                <h4 class="h5 text-muted mt-3">Dados da Unidade</h4>
+                <div class="d-flex flex-wrap justify-content-between">
                     <div class="col-4 form-group pr-2">
-                        <label for="kite_car_consumed">Consumo Carro Pipa em
-                            m<sup>3</sup></label>
-                        <input type="text" class="form-control bg-light" id="kite_car_consumed"
-                            name="kite_car_consumed" value="{{ $reading->kite_car_consumed }}" disabled>
-                    </div>
-
-                    <div class="col-4 form-group px-2">
-                        <label for="kite_car_cost">Valor do Carro Pipa</label>
-                        <input type="text" class="form-control bg-light" id="kite_car_cost" name="kite_car_cost"
-                            value="{{ $reading->kite_car_cost }}" disabled>
-                    </div>
-
-                    <div class="col-4 form-group pl-2">
-                        <label for="partial">Rateio Proporcional</label>
-                        <input type="text" class="form-control bg-light" id="partial" name="partial"
-                            value="{{ $reading->partial }}" disabled>
-                    </div>
-
-                </div>
-
-                <div class="d-flex flex-wrap justify-content-start">
-                    <div class="col-4 form-group pr-2">
-                        <label for="total_consumed">Cosumo Total da Unidade em m<sup>3</sup></label>
+                        <label for="total_consumed">Consumo da Unidade em m<sup>3</sup></label>
                         <input type="text" class="form-control bg-light" id="total_consumed" name="total_consumed"
-                            value="{{ $reading->total_consumed }}" disabled>
+                            value="{{ $reading->consumed }}" disabled>
                     </div>
-
                     <div class="col-4 form-group px-2">
-                        <label for="total_unit">Valor Total da Unidade</label>
-                        <input type="text" class="form-control bg-light" id="total_unit" name="total_unit"
-                            value="{{ $reading->total_unit }}" disabled>
+                        <label for="consumed_cost">Valor de Consumo</label>
+                        <input type="text" class="form-control bg-light" id="consumed_cost" name="consumed_cost"
+                            value="{{ $reading->consumed_cost }}" disabled>
                     </div>
-                </div>
-            @else
-                <div class="d-flex flex-wrap justify-content-start">
-                    <div class="col-4 form-group pr-2">
-                        <label for="partial">Rateio Proporcional</label>
-                        <input type="text" class="form-control bg-light" id="partial" name="partial"
-                            value="{{ $reading->partial }}" disabled>
-                    </div>
-
-                    <div class="col-4 form-group px-2">
-                        <label for="total_consumed">Cosumo Total da Unidade em m<sup>3</sup></label>
-                        <input type="text" class="form-control bg-light" id="total_consumed" name="total_consumed"
-                            value="{{ $reading->total_consumed }}" disabled>
-                    </div>
-
                     <div class="col-4 form-group pl-2">
-                        <label for="total_unit">Valor Total da Unidade</label>
-                        <input type="text" class="form-control bg-light" id="total_unit" name="total_unit"
-                            value="{{ $reading->total_unit }}" disabled>
+                        <label for="sewage_cost">Valor do Esgoto</label>
+                        <input type="text" class="form-control bg-light" id="sewage_cost" name="sewage_cost"
+                            value="{{ $reading->sewage_cost }}" disabled>
                     </div>
                 </div>
-            @endif
 
-            <div class="border-bottom mb-4"></div>
-            <h4 class="h5 text-muted mt-3">Detalhes por Medidor</h4>
-            <div class="d-flex flex-wrap justify-content-between">
-                @foreach ($readings as $reading)
-                    <div class="col-12 px-0">
-                        <h5>Medidor {{ $reading->meter['register'] }}
-                            @if ($reading->meter['location'])
-                                <span class="ml-2 badge badge-secondary">{{ $reading->meter['location'] }}</span>
-                            @endif
-                        </h5>
-                    </div>
-
-                    <div class="col-3 form-group pr-2 d-flex flex-wrap justify-content-between">
-                        @if ($reading->cover_base64)
-                            <div class='col-12 align-self-center d-flex justify-content-center px-0'>
-                                <img src="{{ url('storage/readings/' . $reading->cover_base64) }}"
-                                    alt="Imagem da leitura"
-                                    style="max-width: 100%; object-fit: cover; width: 100%; aspect-ratio: 1;"
-                                    class="img-thumbnail d-block">
-                            </div>
-                        @elseif ($reading->cover)
-                            <div class='col-12 align-self-center d-flex justify-content-center px-0'>
-                                <img src="{{ url('storage/readings/' . $reading->cover) }}" alt="Imagem da leitura"
-                                    style="max-width: 100%; object-fit: cover; width: 100%; aspect-ratio: 1;"
-                                    class="img-thumbnail d-block">
-                            </div>
-                        @elseif ($reading->cover)
-                            <div class='col-12 align-self-center d-flex justify-content-center px-0'>
-                                <img src="{{ url('storage/readings/' . $reading->cover) }}" alt="Imagem da leitura"
-                                    style="max-width: 100%; object-fit: cover; width: 100%; aspect-ratio: 1;"
-                                    class="img-thumbnail d-block">
-                            </div>
-                        @elseif ($reading->url_cover)
-                            <div class='col-12 align-self-center d-flex justify-content-center px-0'>
-                                <img src="{{ $reading->url_cover }}" alt="Imagem da leitura"
-                                    style="max-width: 100%; object-fit: cover; width: 100%; aspect-ratio: 1;"
-                                    class="img-thumbnail d-block">
-                            </div>
-                        @else
-                            <div class='col-12 align-self-center d-flex justify-content-center px-0'>
-                                <img src="{{ asset('img/no-image.png') }}" alt="Sem Imagem de Leitura"
-                                    style="max-width: 100%; object-fit: cover; width: 100%; aspect-ratio: 1;"
-                                    class="img-thumbnail d-block">
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-9 form-group pl-2 d-flex flex-wrap justify-content-between align-content-center">
-
-                        <div class="col-6 form-group pr-2">
-                            <label for="reading">Valor da Leitura em m<sup>3</sup></label>
-                            <input type="text" class="form-control bg-light" id="reading" name="reading"
-                                value="{{ number_format(str_replace(',', '.', str_replace('.', '', $reading->reading)), 3, ',', '.') }}"
-                                disabled>
-                        </div>
-
-                        <div class="col-6 form-group pl-2">
-                            <label for="volume_consumed">Consumo em m<sup>3</sup></label>
-                            <input type="text" class="form-control bg-light" id="volume_consumed"
-                                name="volume_consumed"
-                                value="{{ number_format(str_replace(',', '.', str_replace('.', '', $reading->volume_consumed)), 3, ',', '.') }}"
-                                disabled>
-                        </div>
-
-                        <div class="col-6 form-group pr-2">
-                            <label for="previous_volume_consumed">Consumo Anterior em
+                @if ($reading->dealershipReading->kite_car == 'Sim')
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div class="col-4 form-group pr-2">
+                            <label for="kite_car_consumed">Consumo Carro Pipa em
                                 m<sup>3</sup></label>
-                            <input type="text" class="form-control bg-light" id="previous_volume_consumed"
-                                name="previous_volume_consumed"
-                                value="{{ $reading->previous_volume_consumed != 'Inexistente' ? number_format(str_replace(',', '.', str_replace('.', '', $reading->previous_volume_consumed)), 3, ',', '.') : 'Inexistente' }}"
-                                disabled>
+                            <input type="text" class="form-control bg-light" id="kite_car_consumed"
+                                name="kite_car_consumed" value="{{ $reading->kite_car_consumed }}" disabled>
                         </div>
 
-                        <div class="col-6 form-group pl-2">
-                            <label for="comparative_percentage">Porcentagem Comparativa</label>
-                            <input type="text"
-                                class="form-control {{ str_contains($reading->comparative_percentage, '-') ? 'bg-success' : ($reading->comparative_percentage == 'Inexistente' ? 'bg-light' : 'bg-warning') }}"
-                                id="comparative_percentage" name="comparative_percentage"
-                                value="{{ $reading->comparative_percentage }}" disabled>
+                        <div class="col-4 form-group px-2">
+                            <label for="kite_car_cost">Valor do Carro Pipa</label>
+                            <input type="text" class="form-control bg-light" id="kite_car_cost" name="kite_car_cost"
+                                value="{{ $reading->kite_car_cost }}" disabled>
+                        </div>
+
+                        <div class="col-4 form-group pl-2">
+                            <label for="partial">Rateio Proporcional</label>
+                            <input type="text" class="form-control bg-light" id="partial" name="partial"
+                                value="{{ $reading->partial }}" disabled>
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div class="col-4 form-group pr-2">
+                            <label for="total_consumed">Cosumo Total da Unidade em m<sup>3</sup></label>
+                            <input type="text" class="form-control bg-light" id="total_consumed"
+                                name="total_consumed" value="{{ $reading->total_consumed }}" disabled>
+                        </div>
+
+                        <div class="col-4 form-group px-2">
+                            <label for="total_unit">Valor Total da Unidade</label>
+                            <input type="text" class="form-control bg-light" id="total_unit" name="total_unit"
+                                value="{{ $reading->total_unit }}" disabled>
                         </div>
                     </div>
-                @endforeach
+                @else
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div class="col-4 form-group pr-2">
+                            <label for="partial">Rateio Proporcional</label>
+                            <input type="text" class="form-control bg-light" id="partial" name="partial"
+                                value="{{ $reading->partial }}" disabled>
+                        </div>
+
+                        <div class="col-4 form-group px-2">
+                            <label for="total_consumed">Cosumo Total da Unidade em m<sup>3</sup></label>
+                            <input type="text" class="form-control bg-light" id="total_consumed"
+                                name="total_consumed" value="{{ $reading->total_consumed }}" disabled>
+                        </div>
+
+                        <div class="col-4 form-group pl-2">
+                            <label for="total_unit">Valor Total da Unidade</label>
+                            <input type="text" class="form-control bg-light" id="total_unit" name="total_unit"
+                                value="{{ $reading->total_unit }}" disabled>
+                        </div>
+                    </div>
+                @endif
+
+                <div class="border-bottom mb-4"></div>
+                <h4 class="h5 text-muted mt-3">Detalhes por Medidor</h4>
+                <div class="d-flex flex-wrap justify-content-between">
+                    @foreach ($readings as $reading)
+                        <div class="col-12 px-0">
+                            <h5>Medidor {{ $reading->meter['register'] }}
+                                @if ($reading->meter['location'])
+                                    <span class="ml-2 badge badge-secondary">{{ $reading->meter['location'] }}</span>
+                                @endif
+                            </h5>
+                        </div>
+
+                        <div class="col-3 form-group pr-2 d-flex flex-wrap justify-content-between">
+                            @if ($reading->cover_base64)
+                                <div class='col-12 align-self-center d-flex justify-content-center px-0'>
+                                    <img src="{{ url('storage/readings/' . $reading->cover_base64) }}"
+                                        alt="Imagem da leitura"
+                                        style="max-width: 100%; object-fit: cover; width: 100%; aspect-ratio: 1;"
+                                        class="img-thumbnail d-block">
+                                </div>
+                            @elseif ($reading->cover)
+                                <div class='col-12 align-self-center d-flex justify-content-center px-0'>
+                                    <img src="{{ url('storage/readings/' . $reading->cover) }}" alt="Imagem da leitura"
+                                        style="max-width: 100%; object-fit: cover; width: 100%; aspect-ratio: 1;"
+                                        class="img-thumbnail d-block">
+                                </div>
+                            @elseif ($reading->cover)
+                                <div class='col-12 align-self-center d-flex justify-content-center px-0'>
+                                    <img src="{{ url('storage/readings/' . $reading->cover) }}" alt="Imagem da leitura"
+                                        style="max-width: 100%; object-fit: cover; width: 100%; aspect-ratio: 1;"
+                                        class="img-thumbnail d-block">
+                                </div>
+                            @elseif ($reading->url_cover)
+                                <div class='col-12 align-self-center d-flex justify-content-center px-0'>
+                                    <img src="{{ $reading->url_cover }}" alt="Imagem da leitura"
+                                        style="max-width: 100%; object-fit: cover; width: 100%; aspect-ratio: 1;"
+                                        class="img-thumbnail d-block">
+                                </div>
+                            @else
+                                <div class='col-12 align-self-center d-flex justify-content-center px-0'>
+                                    <img src="{{ asset('img/no-image.png') }}" alt="Sem Imagem de Leitura"
+                                        style="max-width: 100%; object-fit: cover; width: 100%; aspect-ratio: 1;"
+                                        class="img-thumbnail d-block">
+                                </div>
+                            @endif
+                        </div>
+                        <div class="col-9 form-group pl-2 d-flex flex-wrap justify-content-between align-content-center">
+
+                            <div class="col-6 form-group pr-2">
+                                <label for="reading">Valor da Leitura em m<sup>3</sup></label>
+                                <input type="text" class="form-control bg-light" id="reading" name="reading"
+                                    value="{{ number_format(str_replace(',', '.', str_replace('.', '', $reading->reading)), 3, ',', '.') }}"
+                                    disabled>
+                            </div>
+
+                            <div class="col-6 form-group pl-2">
+                                <label for="volume_consumed">Consumo em m<sup>3</sup></label>
+                                <input type="text" class="form-control bg-light" id="volume_consumed"
+                                    name="volume_consumed"
+                                    value="{{ number_format(str_replace(',', '.', str_replace('.', '', $reading->volume_consumed)), 3, ',', '.') }}"
+                                    disabled>
+                            </div>
+
+                            <div class="col-6 form-group pr-2">
+                                <label for="previous_volume_consumed">Consumo Anterior em
+                                    m<sup>3</sup></label>
+                                <input type="text" class="form-control bg-light" id="previous_volume_consumed"
+                                    name="previous_volume_consumed"
+                                    value="{{ $reading->previous_volume_consumed != 'Inexistente' ? number_format(str_replace(',', '.', str_replace('.', '', $reading->previous_volume_consumed)), 3, ',', '.') : 'Inexistente' }}"
+                                    disabled>
+                            </div>
+
+                            <div class="col-6 form-group pl-2">
+                                <label for="comparative_percentage">Porcentagem Comparativa</label>
+                                <input type="text"
+                                    class="form-control {{ str_contains($reading->comparative_percentage, '-') ? 'bg-success' : ($reading->comparative_percentage == 'Inexistente' ? 'bg-light' : 'bg-warning') }}"
+                                    id="comparative_percentage" name="comparative_percentage"
+                                    value="{{ $reading->comparative_percentage }}" disabled>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
-    </div>
-    </form>
+        </form>
 
     </div>
 @endsection

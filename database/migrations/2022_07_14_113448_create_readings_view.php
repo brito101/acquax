@@ -22,7 +22,7 @@ class CreateReadingsView extends Migration
         LEFT JOIN apartments ap ON ap.id = m.apartment_id
         LEFT JOIN blocks bl ON bl.id = ap.block_id
         LEFT JOIN complexes as cp ON bl.complex_id = cp.id
-        WHERE r.deleted_at IS NULL
+        WHERE r.deleted_at IS NULL AND m.deleted_at IS NULL
         ");
     }
 
