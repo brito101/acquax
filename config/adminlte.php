@@ -283,6 +283,27 @@ return [
                 ],
             ],
         ],
+        /** Reading Schedule */
+        [
+            'text'        => 'Agenda de Leituras',
+            'url'         => '#',
+            'icon'        => 'fas fa-fw fa-calendar-check',
+            'can'         => 'Acessar Agendamentos de Leitura',
+            'submenu' => [
+                [
+                    'text' => 'Leituras Agendadas',
+                    'url'  => 'admin/reading-schedule',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Listar Agendamentos de Leitura',
+                ],
+                [
+                    'text' => 'Cadastro de Agendamento',
+                    'url'  => 'admin/reading-schedule/create',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Agendamentos de Leitura',
+                ],
+            ],
+        ],
         /** Readings */
         [
             'text'        => 'Leituras de Medidores',

@@ -29,7 +29,8 @@ class ScheduleRequest extends FormRequest
             'description' => 'nullable|min:1|max:40000',
             'start' => 'required|date_format:Y-m-d\TH:i',
             'end' => 'required|date_format:Y-m-d\TH:i|after:start',
-            'color' => 'nullable|in:teal,warning,primary,secondary,danger,success'
+            'color' => 'nullable|in:teal,warning,primary,secondary,danger,success',
+            'complex_id' => 'nullable|exists:complexes,id'
         ];
     }
 

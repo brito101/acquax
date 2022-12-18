@@ -27,12 +27,14 @@ class ScheduleController extends Controller
             if (Auth::user()->hasRole('Programador|Administrador')) {
                 $schedules = Schedule::whereDate('start', '>=', $request->start)
                     ->whereDate('end',   '<=', $request->end)
+                    ->where('type', null)
                     ->get(['id', 'title', 'start', 'end']);
             } else {
                 $guests = Guest::where('user_id', Auth::user()->id)->pluck('schedule_id');
                 $schedules = Schedule::whereDate('start', '>=', $request->start)
                     ->whereDate('end',   '<=', $request->end)
                     ->where('user_id', Auth::user()->id)
+                    ->where('type', null)
                     ->orWhereIn('id', $guests)
                     ->get(['id', 'title', 'start', 'end']);
             }
@@ -134,13 +136,11 @@ class ScheduleController extends Controller
             ]);
         }
 
-        $schedule = Schedule::where('id', $id)->with('guests')->first();
+        $schedule = Schedule::where('id', $id)->where('type', null)->with('guests')->first();
 
         if (!$schedule) {
             abort(403, 'Acesso não autorizado');
         }
-
-
 
         return view('admin.schedule.show', compact('schedule'));
     }
@@ -157,7 +157,7 @@ class ScheduleController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $schedule = Schedule::where('id', $id)->with('guests')->first();
+        $schedule = Schedule::where('id', $id)->where('type', null)->with('guests')->first();
 
         if (!$schedule) {
             abort(403, 'Acesso não autorizado');
@@ -185,7 +185,7 @@ class ScheduleController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $schedule = Schedule::find($id);
+        $schedule = Schedule::where('type', null)->where('id', $id)->first();
 
         if (!$schedule) {
             abort(403, 'Acesso não autorizado');
@@ -212,6 +212,8 @@ class ScheduleController extends Controller
                         }
                     }
                 }
+            } else {
+                $guest = Guest::where('schedule_id', $schedule->id)->delete();
             }
 
             return redirect()
@@ -237,7 +239,7 @@ class ScheduleController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $schedule = Schedule::find($id);
+        $schedule = Schedule::where('type', null)->where('id', $id)->first();
 
         if (!$schedule) {
             abort(403, 'Acesso não autorizado');

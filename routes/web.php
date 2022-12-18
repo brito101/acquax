@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\DealershipReadingController;
 use App\Http\Controllers\Admin\MeterController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ReadingController;
+use App\Http\Controllers\Admin\ReadingScheduleController;
 use App\Http\Controllers\Admin\ResidentController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\Settings\DealershipController;
@@ -169,6 +170,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('schedule-day/{day?}', [ScheduleController::class, 'day']);
             Route::resource('schedule', ScheduleController::class);
 
+            /** Reading Schedule */
+            Route::get('/reading-schedule/executed/{id}', [ReadingScheduleController::class, 'executed']);
+            Route::get('/reading-schedule/destroy/{id}', [ReadingScheduleController::class, 'destroy']);
+            Route::resource('reading-schedule', ReadingScheduleController::class);
 
             /**
              * Configurations

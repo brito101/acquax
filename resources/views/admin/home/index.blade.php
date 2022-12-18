@@ -29,11 +29,19 @@
                 <div class="card-body d-flex flex-wrap justify-content-start px-0 pb-0">
                     @forelse ($schedules as $schedule)
                         <div class="col-6 col-md-3 p-2">
-                            <a href="{{ route('admin.schedule.show', ['schedule' => $schedule->id]) }}"
-                                class="btn bg-{{ $schedule->color }} w-100 text-left"
-                                title="Evento na Agenda: {{ $schedule->title }}"><i class="fas fa-calendar"></i>
-                                {{ Str::limit($schedule->title, 15) }}</i>
-                            </a>
+                            @if ($schedule->type == null)
+                                <a href="{{ route('admin.schedule.show', ['schedule' => $schedule->id]) }}"
+                                    class="btn bg-{{ $schedule->color }} w-100 text-left"
+                                    title="Evento na Agenda: {{ $schedule->title }}"><i class="fas fa-calendar"></i>
+                                    {{ Str::limit($schedule->title, 15) }}</i>
+                                </a>
+                            @else
+                                <a href="{{ route('admin.reading-schedule.show', ['reading_schedule' => $schedule->id]) }}"
+                                    class="btn bg-{{ $schedule->color }} w-100 text-left" title="{{ $schedule->title }}"><i
+                                        class="fas fa-calendar-check"></i>
+                                    {{ Str::limit($schedule->title, 15) }}</i>
+                                </a>
+                            @endif
                         </div>
                     @empty
                         <p class="px-3">Não há agendamento de eventos para o dia</p>

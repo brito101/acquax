@@ -12,7 +12,7 @@ class Guest extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['schedule_id', 'visualized', 'user_id'];
+    protected $fillable = ['schedule_id', 'visualized', 'user_id', 'executed'];
 
     /** Relationships */
     public function schedule()
@@ -22,6 +22,8 @@ class Guest extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault([
+            'name' => 'Inexistente'
+        ]);
     }
 }

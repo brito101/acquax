@@ -500,7 +500,7 @@ class PermissionsTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],
-            /** Schedules 93 to 97*/
+            /** Schedules 93 to 97 */
             [
                 'name' => 'Acessar Agenda',
                 'guard_name' => 'web',
@@ -523,6 +523,32 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Excluir Eventos na Agenda',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            /** Reading Schedule 98 to 102 */
+            [
+                'name' => 'Acessar Agendamentos de Leitura',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Listar Agendamentos de Leitura',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Criar Agendamentos de Leitura',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Editar Agendamentos de Leitura',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Excluir Agendamentos de Leitura',
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],
