@@ -68,7 +68,7 @@ class Apartment extends Model
         $meters = Meter::where('apartment_id', $this->id)->pluck('id');
         $readings = Reading::whereIn('meter_id', $meters)->where('year_ref', date('Y'))->get();
         $months = [
-            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Agosto',
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
             'Setembro', 'Outubro', 'Novembro', 'Dezembro'
         ];
 
@@ -126,7 +126,7 @@ class Apartment extends Model
     public function getMonthlyReport()
     {
         $months = [
-            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Agosto',
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
             'Setembro', 'Outubro', 'Novembro', 'Dezembro'
         ];
 
