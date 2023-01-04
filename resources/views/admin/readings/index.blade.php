@@ -1,5 +1,6 @@
 @extends('adminlte::page')
-@section('plugins.select2', true)
+@section('plugins.Datatables', true)
+@section('plugins.DatatablesPlugins', true)
 @section('plugins.BsCustomFileInput', true)
 
 @section('title', '- Leituras de Medidores')
@@ -51,62 +52,6 @@
                             </div>
                         </form>
                     </div>
-                    <div class="card card-solid">
-                        <div class="card-header">
-                            <i class="fas fa-fw fa-search"></i> Pesquisa de Leituras Cadastradas
-                        </div>
-                        <form method="POST" action="{{ route('admin.readings.search') }}">
-                            @csrf
-                            <div class="card-body pb-0">
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    <div class="col-12 col-md-3 form-group px-0">
-                                        <label for="complex_id">Condomínio</label>
-                                        <x-adminlte-select2 name="complex_id">
-                                            <option value="null" selected>Selecione</option>
-                                            @foreach ($complexes as $complex)
-                                                <option value="{{ $complex->id }}">
-                                                    {{ $complex->alias_name }}
-                                                </option>
-                                            @endforeach
-                                        </x-adminlte-select2>
-                                    </div>
-                                    <div class="col-12 col-md-3 form-group px-0 pl-md-3">
-                                        <label for="month_ref">Mês de Referência</label>
-                                        <x-adminlte-select2 name="month_ref">
-                                            <option value="null" selected>Selecione</option>
-                                            <option> Janeiro</option>
-                                            <option>Fevereiro</option>
-                                            <option>Março</option>
-                                            <option>Abril</option>
-                                            <option>Maio</option>
-                                            <option>Junho</option>
-                                            <option>Julho</option>
-                                            <option>Agosto</option>
-                                            <option>Setembro</option>
-                                            <option>Outubro</option>
-                                            <option>Novembro</option>
-                                            <option>Dezembro</option>
-                                        </x-adminlte-select2>
-                                    </div>
-                                    <div class="col-12 col-md-3 form-group px-0 pl-md-3">
-                                        <label for="year">Ano</label>
-                                        <input type="text" id="year" name="year" class="form-control"
-                                            placeholder="YYYY" value="{{ date('Y') }}">
-                                    </div>
-                                    <div class="col-12 col-md-3 form-group px-0 pl-md-3">
-                                        <label for="id">Nº da leitura</label>
-                                        <input type="text" name="id" class="form-control"
-                                            placeholder="nº da Leitura (ID)">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Pequisar</button>
-                                <a href="{{ route('admin.readings.index') }}" class="btn btn-secondary">Limpar</a>
-                            </div>
-                        </form>
-                    </div>
 
                     <div class="card card-solid">
                         <div class="card-header">
@@ -119,94 +64,32 @@
                             </div>
                         </div>
 
-                        <div class="card-body pb-0">
-                            <div class="row">
-                                @forelse ($readings as $reading)
-                                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                                        <div class="card bg-light d-flex flex-fill">
-                                            <div class="card-header text-muted border-bottom-0">
-                                                Leitura #{{ $reading->id }}
-                                            </div>
-                                            <div class="card-body pt-0">
-                                                <div class="row">
-                                                    <div class="col-7">
-                                                        <p class="text-muted text-sm py-0 my-0"><b>Leitura:</b>
-                                                            {{ $reading->getRoundedReading() }} m<sup>3</sup>
-                                                        </p>
-                                                        <p class="text-muted text-sm py-0 my-0"><b>Data Ref:</b>
-                                                            {{ $reading->month_ref }}/{{ $reading->year_ref }}
-                                                        </p>
-                                                        <p class="text-muted text-sm py-0 my-0"><b>Data da leitura:</b>
-                                                            {{ $reading->reading_date }}
-                                                        </p>
-                                                        <p class="text-muted text-sm py-0 my-0"><b>Próxima leitura:</b>
-                                                            {{ $reading->reading_date_next }}
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-5 text-center">
-                                                        @if ($reading->cover_base64)
-                                                            <img src="{{ url('storage/readings/' . $reading->cover_base64) }}"
-                                                                alt="Imagem da Leitura" class="img-circle img-fluid"
-                                                                style="object-fit: cover; width: 100%; aspect-ratio: 1;">
-                                                        @elseif ($reading->cover)
-                                                            <img src="{{ url('storage/readings/' . $reading->cover) }}"
-                                                                alt="Imagem da Leitura" class="img-circle img-fluid"
-                                                                style="object-fit: cover; width: 100%; aspect-ratio: 1;">
-                                                        @elseif ($reading->url_cover)
-                                                            <img src="{{ $reading->url_cover }}" alt="Imagem da Leitura"
-                                                                class="img-circle img-fluid"
-                                                                style="object-fit: cover; width: 100%; aspect-ratio: 1;">
-                                                        @else
-                                                            <img src="{{ asset('img/no-image.png') }}"
-                                                                alt="Sem Imagem de Leitura" class="img-circle img-fluid"
-                                                                style="object-fit: cover; width: 100%; aspect-ratio: 1;">
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-12 pt-2 text-center">
-                                                        <h2 class="lead">
-                                                            @isset($reading->meter->apartment)
-                                                                <b>{{ 'Condomínio ' .
-                                                                    $reading->meter->apartment->getComplexNameAttribute() .
-                                                                    ' - Bl. ' .
-                                                                    $reading->meter->apartment->getBlockNameAttribute() .
-                                                                    ' - Ap. ' .
-                                                                    $reading->meter->apartment['name'] }}
-                                                                </b>
-                                                            @else
-                                                                <b>Apartamento excluído</b>
-                                                            @endisset ()
-                                                        </h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <div class="text-center d-flex flex-wrap justify-content-center">
-                                                    <a href="{{ route('admin.readings.edit', ['reading' => $reading->id]) }}"
-                                                        class="btn btn-sm btn-primary mr-2">
-                                                        <i class="fas fa-edit mr-2"></i>Editar</a>
+                        @php
+                            $heads = [['label' => 'ID', 'width' => 5], 'Unidade', 'Medidor', 'Leitura', 'Mês', 'Ano', 'Imagem', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                            $config = [
+                                'ajax' => url('/admin/readings'),
+                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'property', 'name' => 'property'], ['data' => 'meter', 'name' => 'meter'], ['data' => 'value', 'name' => 'reading'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'image', 'name' => 'image'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
+                                'autoFill' => true,
+                                'processing' => true,
+                                'serverSide' => true,
+                                'responsive' => true,
+                                'order' => [[0, 'desc']],
+                                'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
+                                'buttons' => [
+                                    ['extend' => 'pageLength', 'className' => 'btn-default'],
+                                    ['extend' => 'copy', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-copy text-secondary"></i>', 'titleAttr' => 'Copiar', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'print', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-print text-info"></i>', 'titleAttr' => 'Imprimir', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'csv', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-csv text-primary"></i>', 'titleAttr' => 'Exportar para CSV', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'excel', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-excel text-success"></i>', 'titleAttr' => 'Exportar para Excel', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                    ['extend' => 'pdf', 'className' => 'btn-default', 'text' => '<i class="fas fa-fw fa-lg fa-file-pdf text-danger"></i>', 'titleAttr' => 'Exportar para PDF', 'exportOptions' => ['columns' => ':not([dt-no-export])']],
+                                ],
+                            ];
+                        @endphp
 
-                                                    <a href="readings/destroy/{{ $reading->id }}"
-                                                        class="btn btn-sm btn-danger ml-2"
-                                                        onclick="return confirm('Confirma a exclusão desta leitura?')">
-                                                        <i class="fas fa-trash mr-2"></i>Excluir
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                @empty
-                                    <p>Não há leituras cadastradas</p>
-                                @endforelse
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <nav aria-label="Readings Page Navigation">
-                                <ul class="pagination justify-content-center m-0">
-                                    {{ $readings->appends(request()->input())->links() }}
-                                </ul>
-                            </nav>
+                        <div class="card-body">
+                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
+                                striped hoverable beautify />
                         </div>
 
                     </div>
@@ -215,9 +98,4 @@
         </div>
 
     </section>
-@endsection
-
-@section('custom_js')
-    <script src="{{ asset('vendor/jquery/jquery.inputmask.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/reading-index.js') }}"></script>
 @endsection

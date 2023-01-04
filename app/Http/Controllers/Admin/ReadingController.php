@@ -15,8 +15,10 @@ use JeroenNoten\LaravelAdminLte\View\Components\Tool\Datatable;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ReadingsImport;
+use App\Models\Views\AdminReading;
 use Illuminate\Support\Facades\Validator;
 use Image;
+use DataTables;
 
 class ReadingController extends Controller
 {
@@ -25,15 +27,29 @@ class ReadingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!Auth::user()->hasPermissionTo('Listar Leituras')) {
             abort(403, 'Acesso não autorizado');
         }
 
-        $complexes = Complex::all();
-        $readings = Reading::with('meter')->orderBy('id', 'desc')->paginate(24);
-        return view('admin.readings.index', compact('readings', 'complexes'));
+        $readings = AdminReading::query();
+
+        if ($request->ajax()) {
+            return Datatables::of($readings)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="readings/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="readings/destroy/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão desta leitura?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->addColumn('value', function ($row) {
+                    return number_format($row->reading, 3, ",", ".");
+                })
+                ->rawColumns(['action', 'value'])
+                ->make(true);
+        }
+
+        return view('admin.readings.index');
     }
 
     /**
