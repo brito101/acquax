@@ -74,10 +74,10 @@
                         </div>
 
                         @php
-                            $heads = [['label' => 'ID', 'width' => 5], 'Unidade', 'Ano', 'Mês', 'Consumo (m3)', 'Total', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                            $heads = [['label' => 'ID', 'width' => 5], 'Condomínio', 'Bl.', 'Ap.', 'Ano', 'Mês', 'Consumo (m3)', 'Total', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
                             $config = [
                                 'ajax' => url('/admin/reports'),
-                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'unit', 'name' => 'unit'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'consumed', 'name' => 'consumed'], ['data' => 'total_unit', 'name' => 'total_unit'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'complex', 'name' => 'complex'], ['data' => 'block', 'name' => 'block'], ['data' => 'apartment', 'name' => 'apartment'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'consumed', 'name' => 'consumed'], ['data' => 'total_unit', 'name' => 'total_unit'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
                                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                 'autoFill' => true,
                                 'processing' => true,

@@ -2,7 +2,6 @@
 
 <p>Tarefas pendentes:</p>
 <ol>
-    <li>Na Listagem de Relatório separar por colunas o condomínio, bloco e apartamento</li>
     <li>Controle de leitura x leiturista</li>
     <li>Quem passar das média de consumo uma mensagem por diferentes canais de comunicação</li>
     <li>Lista de tarefas (talvez no OS)</li>
