@@ -260,6 +260,12 @@
                                     </div>
                                 </li>
                                 <li>
+                                    <i class="bx bx-phone-call"></i>
+                                    <div class="content">
+                                        <a href="tel:2139005451" rel="noreferrer">(21) 3900-5451</a>
+                                    </div>
+                                </li>
+                                <li>
                                     <i class="bx bxl-whatsapp"></i>
                                     <div class="content">
                                         <a href="https://wa.me/5521997500020" rel="noreferrer" target="_blank">
@@ -268,11 +274,9 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <i class="bx bxl-whatsapp"></i>
+                                    <i class="bx bx-phone-call"></i>
                                     <div class="content">
-                                        <a href="https://wa.me/5511997535977" rel="noreferrer" target="_blank">
-                                            (11) 99753-5977
-                                        </a>
+                                        <a href="tel:2139005451" rel="noreferrer">(27) 3500-1904</a>
                                     </div>
                                 </li>
                                 <li>
@@ -280,6 +284,20 @@
                                     <div class="content">
                                         <a href="https://wa.me/5527999135013" rel="noreferrer" target="_blank">
                                             (27) 99913-5013
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bx-phone-call"></i>
+                                    <div class="content">
+                                        <a href="tel:2139005451" rel="noreferrer">(11) 3164-0085</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="bx bxl-whatsapp"></i>
+                                    <div class="content">
+                                        <a href="https://wa.me/5511997535977" rel="noreferrer" target="_blank">
+                                            (11) 99753-5977
                                         </a>
                                     </div>
                                 </li>

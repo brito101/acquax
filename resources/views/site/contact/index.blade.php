@@ -29,24 +29,30 @@
                             </li>
                             <li>
                                 <div class="content">
-                                    <i class="bx bxl-whatsapp"></i>
+                                    <i class="bx bx-phone-call" style="left: -10px; top:20px;"></i>
+                                    <i class="bx bxl-whatsapp" style="left: 10px; top:50px;"></i>
                                     <h3>Rio de Janeiro-RJ</h3>
+                                    <a href="tel:2139005451" rel="noreferrer">(21) 3900-5451</a>
                                     <a href="https://wa.me/5521997500020" rel="noreferrer">(21) 99750-0020</a>
                                 </div>
                             </li>
                             <li>
                                 <div class="content">
-                                    <i class="bx bxl-whatsapp"></i>
-                                    <h3>São Paulo-SP</h3>
-                                    <a href="https://wa.me/5511997535977" rel="noreferrer">(11)
-                                        99753-5977</a>
+                                    <i class="bx bx-phone-call" style="left: -10px; top:20px;"></i>
+                                    <i class="bx bxl-whatsapp" style="left: 10px; top:50px;"></i>
+                                    <h3>Vitória-ES</h3>
+                                    <a href="tel:2139005451" rel="noreferrer">(27) 3500-1904</a>
+                                    <a href="https://wa.me/552799913-5013" rel="noreferrer">(27) 99913-5013</a>
                                 </div>
                             </li>
                             <li>
                                 <div class="content">
-                                    <i class="bx bxl-whatsapp"></i>
-                                    <h3>Vitória-ES</h3>
-                                    <a href="https://wa.me/552799913-5013" rel="noreferrer">(27) 99913-5013</a>
+                                    <i class="bx bx-phone-call" style="left: -10px; top:20px;"></i>
+                                    <i class="bx bxl-whatsapp" style="left: 10px; top:50px;"></i>
+                                    <h3>São Paulo-SP</h3>
+                                    <a href="tel:2139005451" rel="noreferrer">(11) 3164-0085</a>
+                                    <a href="https://wa.me/5511997535977" rel="noreferrer">(11)
+                                        99753-5977</a>
                                 </div>
                             </li>
                             <li>
