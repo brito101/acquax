@@ -9,6 +9,7 @@
     <li>Monitoramento em realtime</li>
     <li>Apresentar dados de medição de gás</li>
     <li>Analisar modelo de negócios https://lessloss.com.br/</li>
+     <li>Controle de leitura x leiturista</li>
 </ol>
 
 <p>Useful commands:</p>
