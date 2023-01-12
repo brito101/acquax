@@ -1,6 +1,6 @@
 # Acquax do Brasil
 
-<p>Tarefas pendentes:</p>
+<p>Pending Tasks:</p>
 <ol>
     <li>Colocar pop-up com novos contatos em todas as páginas</li>
     <li>Colocar 'lengthMenu' => [[10, 50, 100, 500, 1000, -1], [10, 50, 100, 500, 1000, 'Tudo']], em todas as listagens do DataTables</li>

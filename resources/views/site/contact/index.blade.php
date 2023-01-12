@@ -41,7 +41,7 @@
                                     <i class="bx bx-phone-call" style="left: -10px; top:20px;"></i>
                                     <i class="bx bxl-whatsapp" style="left: 10px; top:50px;"></i>
                                     <h3>Vitória-ES</h3>
-                                    <a href="tel:2139005451" rel="noreferrer">(27) 3500-1904</a>
+                                    <a href="tel:2735001904" rel="noreferrer">(27) 3500-1904</a>
                                     <a href="https://wa.me/552799913-5013" rel="noreferrer">(27) 99913-5013</a>
                                 </div>
                             </li>
@@ -50,7 +50,7 @@
                                     <i class="bx bx-phone-call" style="left: -10px; top:20px;"></i>
                                     <i class="bx bxl-whatsapp" style="left: 10px; top:50px;"></i>
                                     <h3>São Paulo-SP</h3>
-                                    <a href="tel:2139005451" rel="noreferrer">(11) 3164-0085</a>
+                                    <a href="tel:1131640085" rel="noreferrer">(11) 3164-0085</a>
                                     <a href="https://wa.me/5511997535977" rel="noreferrer">(11)
                                         99753-5977</a>
                                 </div>

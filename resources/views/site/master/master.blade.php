@@ -276,7 +276,7 @@
                                 <li>
                                     <i class="bx bx-phone-call"></i>
                                     <div class="content">
-                                        <a href="tel:2139005451" rel="noreferrer">(27) 3500-1904</a>
+                                        <a href="tel:2735001904" rel="noreferrer">(27) 3500-1904</a>
                                     </div>
                                 </li>
                                 <li>
@@ -290,7 +290,7 @@
                                 <li>
                                     <i class="bx bx-phone-call"></i>
                                     <div class="content">
-                                        <a href="tel:2139005451" rel="noreferrer">(11) 3164-0085</a>
+                                        <a href="tel:1131640085" rel="noreferrer">(11) 3164-0085</a>
                                     </div>
                                 </li>
                                 <li>
