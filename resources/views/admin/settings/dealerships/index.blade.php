@@ -6,7 +6,7 @@
 
 @section('content')
     @if (auth()->user()->can('Editar Concessionárias') &&
-    auth()->user()->can('Excluir Concessionárias'))
+        auth()->user()->can('Excluir Concessionárias'))
         @php
             $heads = [['label' => 'ID', 'width' => 5], 'Nome', 'Serviço', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
 
@@ -18,6 +18,7 @@
 
             $config = [
                 'data' => $list,
+                'lengthMenu' => [[10, 50, 100, 500, 1000, -1], [10, 50, 100, 500, 1000, 'Tudo']],
                 'order' => [[0, 'asc']],
                 'columns' => [null, null, null, ['orderable' => false]],
                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
@@ -76,8 +77,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config" striped
-                                hoverable beautify with-buttons />
+                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
+                                striped hoverable beautify with-buttons />
                         </div>
                     </div>
                 </div>

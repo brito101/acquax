@@ -2,7 +2,6 @@
 
 <p>Pending Tasks:</p>
 <ol>
-    <li>Colocar 'lengthMenu' => [[10, 50, 100, 500, 1000, -1], [10, 50, 100, 500, 1000, 'Tudo']], em todas as listagens do DataTables</li>
     <li>Criar página com listagem geral das unidades (gerencial)</li>
     <li>Controle de leitura x leiturista</li>
     <li>Quem passar das média de consumo uma mensagem por diferentes canais de comunicação</li>

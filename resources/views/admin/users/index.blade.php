@@ -44,8 +44,7 @@
                         <div class="card-header">
                             <i class="fas fa-fw fa-upload"></i> Importação de Planilha de Atualização de E-mail
                         </div>
-                        <form action="{{ route('admin.users.importEmail') }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('admin.users.importEmail') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body pb-0">
                                 <x-adminlte-input-file name="file" label="Arquivo" placeholder="Selecione o arquivo..."
@@ -62,8 +61,8 @@
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
                                 <h3 class="card-title align-self-center">Usuários Cadastrados</h3>
                                 @can('Criar Usuários')
-                                    <a href="{{ route('admin.users.create') }}" title="Novo Usuário"
-                                        class="btn btn-success"><i class="fas fa-fw fa-plus"></i>Novo Usuário</a>
+                                    <a href="{{ route('admin.users.create') }}" title="Novo Usuário" class="btn btn-success"><i
+                                            class="fas fa-fw fa-plus"></i>Novo Usuário</a>
                                 @endcan
                             </div>
                         </div>
@@ -78,6 +77,7 @@
                                 'processing' => true,
                                 'serverSide' => true,
                                 'responsive' => true,
+                                'lengthMenu' => [[10, 50, 100, 500, 1000, -1], [10, 50, 100, 500, 1000, 'Tudo']],
                                 'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
                                 'buttons' => [
                                     ['extend' => 'pageLength', 'className' => 'btn-default'],

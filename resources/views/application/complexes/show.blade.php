@@ -205,6 +205,7 @@
                                                     'processing' => true,
                                                     'serverSide' => true,
                                                     'responsive' => true,
+                                                    'lengthMenu' => [[10, 50, 100, 500, 1000, -1], [10, 50, 100, 500, 1000, 'Tudo']],
                                                     'order' => [[0, 'asc']],
                                                     'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
                                                 ];
@@ -221,6 +222,7 @@
                                                     'processing' => true,
                                                     'serverSide' => true,
                                                     'responsive' => true,
+                                                    'lengthMenu' => [[10, 50, 100, 500, 1000, -1], [10, 50, 100, 500, 1000, 'Tudo']],
                                                     'order' => [[0, 'asc']],
                                                     'dom' => '<"d-flex flex-wrap col-12 justify-content-between"Bf>rtip',
                                                 ];

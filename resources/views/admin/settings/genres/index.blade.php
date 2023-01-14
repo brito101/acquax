@@ -6,7 +6,7 @@
 
 @section('content')
     @if (auth()->user()->can('Editar Gêneros') &&
-    auth()->user()->can('Excluir Gêneros'))
+        auth()->user()->can('Excluir Gêneros'))
         @php
             $heads = [['label' => 'ID', 'width' => 5], 'Nome', 'Sigla', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
 
@@ -18,6 +18,7 @@
 
             $config = [
                 'data' => $list,
+                'lengthMenu' => [[10, 50, 100, 500, 1000, -1], [10, 50, 100, 500, 1000, 'Tudo']],
                 'order' => [[0, 'asc']],
                 'columns' => [null, null, null, ['orderable' => false]],
                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
@@ -70,14 +71,14 @@
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
                                 <h3 class="card-title align-self-center">Gêneros Cadastrados</h3>
                                 @can('Criar Gêneros')
-                                    <a href="{{ route('admin.genres.create') }}" title="Novo Gênero"
-                                        class="btn btn-success"><i class="fas fa-fw fa-plus"></i>Novo Gênero</a>
+                                    <a href="{{ route('admin.genres.create') }}" title="Novo Gênero" class="btn btn-success"><i
+                                            class="fas fa-fw fa-plus"></i>Novo Gênero</a>
                                 @endcan
                             </div>
                         </div>
                         <div class="card-body">
-                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config" striped
-                                hoverable beautify with-buttons />
+                            <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
+                                striped hoverable beautify with-buttons />
                         </div>
                     </div>
                 </div>
