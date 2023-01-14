@@ -2,6 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/css/site.css": "/css/site.css",
     "/css/app.css": "/css/app.css",
+    "/css/new-phones-modal.css": "/css/new-phones-modal.css",
     "/img/404-error.jpg": "/img/404-error.jpg",
     "/img/air-block-0.png": "/img/air-block-0.png",
     "/img/air-block-0.webp": "/img/air-block-0.webp",
@@ -55,6 +56,7 @@
     "/img/logo.png": "/img/logo.png",
     "/img/logo.webp": "/img/logo.webp",
     "/img/no-image.png": "/img/no-image.png",
+    "/img/phone-modal.webp": "/img/phone-modal.webp",
     "/img/pump-maintenance-0.png": "/img/pump-maintenance-0.png",
     "/img/pump-maintenance-0.webp": "/img/pump-maintenance-0.webp",
     "/img/share.png": "/img/share.png",
@@ -96,5 +98,6 @@
     "/js/reading-index.js": "/js/reading-index.js",
     "/js/dealerships-reading.js": "/js/dealerships-reading.js",
     "/js/apartment.js": "/js/apartment.js",
-    "/js/meter.js": "/js/meter.js"
+    "/js/meter.js": "/js/meter.js",
+    "/js/new-phones-modal.js": "/js/new-phones-modal.js"
 }

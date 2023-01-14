@@ -1,0 +1,1 @@
+$((function(){$.magnificPopup.open({items:{src:"#new-phones-modal",type:"inline"},fixedContentPos:!0,fixedBgPos:!0,overflowY:"auto",closeBtnInside:!0,preloader:!1,midClick:!0,removalDelay:300,mainClass:"mpf-new-phones-popup"})}));

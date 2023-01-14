@@ -60,6 +60,10 @@ mix.js("resources/js/app.js", "public/js")
     )
     .scripts(["resources/js/apartment.js"], "public/js/apartment.js")
     .scripts(["resources/js/meter.js"], "public/js/meter.js")
+    /** New Phones Modal */
+    .sass("resources/sass/new-phones-modal.scss", "public/css")
+    .scripts(["resources/js/new-phones-modal.js"], "public/js/new-phones-modal.js")
+    /** */
     .options({
         processCssUrls: false,
     })

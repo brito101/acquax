@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('css/site.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('boxicons/css/boxicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/new-phones-modal.css') }}">
     <link rel="icon" href="{{ asset('img/favicon.png') }}" type="image/png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -344,6 +345,11 @@
         </label>
     </div>
 
+    <div id="new-phones-modal" class="white-popup-block mfp-hide">
+        <img src="{{ asset('img/phone-modal.webp') }}" title="Novos telefones de contato"
+            alt="Novos telefones de contato">
+    </div>
+
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
@@ -358,6 +364,7 @@
         <script src="{{ asset('js/goto.js') }}"></script>
         @yield('custom_js')
     @endif
+    <script src="{{ asset('/js/new-phones-modal.js') }}"></script>
 </body>
 
 </html>
