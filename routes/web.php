@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\Chat\MessageController;
 use App\Http\Controllers\Admin\ComplexController;
 use App\Http\Controllers\Admin\DealershipReadingController;
+use App\Http\Controllers\Admin\Management\CondominiumReportsController;
 use App\Http\Controllers\Admin\MeterController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ReadingController;
@@ -174,6 +175,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/reading-schedule/executed/{id}', [ReadingScheduleController::class, 'executed']);
             Route::get('/reading-schedule/destroy/{id}', [ReadingScheduleController::class, 'destroy']);
             Route::resource('reading-schedule', ReadingScheduleController::class);
+
+            /** Management */
+            Route::get('/management-reports-condominiums', [CondominiumReportsController::class, 'index'])->name('management-reports-condominiums');
 
             /**
              * Configurations

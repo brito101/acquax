@@ -364,6 +364,21 @@ return [
                 ],
             ],
         ],
+        /** Managements Reports */
+        [
+            'text'      => 'Relatórios Gerenciais',
+            'url'       => '#',
+            'icon'      => 'fas fa-fw fa-folder-open',
+            'can'       => 'Acessar Relatórios Gerenciais',
+            'submenu'   => [
+                [
+                    'text' => 'Lista de Condomínios',
+                    'url'  => 'admin/management-reports-condominiums',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Listar Relatório de Condomínios',
+                ],
+            ]
+        ],
         /** Complexes */
         [
             'text'        => 'Condomínios',
