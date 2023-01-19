@@ -10,6 +10,7 @@ use App\Models\ApartmentReport;
 use App\Models\Block;
 use App\Models\Complex;
 use App\Models\DealershipReading;
+use App\Models\Notification;
 use App\Models\Settings\Dealership;
 use App\Models\Views\Apartment as ViewsApartment;
 use App\Models\Views\ApartmentReport as ViewsApartmentReport;
@@ -212,5 +213,36 @@ class DealershipReadingController extends Controller
                 ->back()
                 ->with('error', 'Erro ao excluir!');
         }
+    }
+
+    public function batchDelete(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Excluir Leitura das Concessionárias')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->ids) {
+            return redirect()
+                ->back()
+                ->with('error', 'Selecione ao menos uma linha!');
+        }
+
+        $ids = explode(",", $request->ids);
+
+        foreach ($ids as $id) {
+            $reading = DealershipReading::where('id', $id)->first();
+
+            if (empty($reading->id)) {
+                abort(403, 'Acesso não autorizado');
+            }
+
+            $reading->delete();
+            ApartmentReport::where('dealership_reading_id', $id)->delete();
+            Notification::where('apartment_id', $id)->delete();
+        }
+
+        return redirect()
+            ->route('admin.dealerships-readings.index')
+            ->with('success', 'Contas das Concessionárias excluídas!');
     }
 }

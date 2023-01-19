@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MeterRequest;
 use App\Imports\MetersImport;
 use App\Models\Apartment;
+use App\Models\ApartmentReport;
 use App\Models\Settings\TypeMeter;
 use App\Models\Meter;
+use App\Models\Reading;
 use App\Models\Views\Meter as ViewsMeter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -179,6 +181,7 @@ class MeterController extends Controller
         }
 
         if ($meter->delete()) {
+            Reading::where('meter_id', $id)->delete();
             return redirect()
                 ->back()
                 ->with('success', 'Exclusão realizada!');
@@ -198,5 +201,35 @@ class MeterController extends Controller
         }
         Excel::import(new MetersImport, $request->file('file')->store('temp'));
         return back()->with('success', 'Importação realizada!');;
+    }
+
+    public function batchDelete(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Excluir Medidores')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->ids) {
+            return redirect()
+                ->back()
+                ->with('error', 'Selecione ao menos uma linha!');
+        }
+
+        $ids = explode(",", $request->ids);
+
+        foreach ($ids as $id) {
+            $meter = Meter::where('id', $id)->first();
+
+            if (!$meter) {
+                abort(403, 'Acesso não autorizado');
+            }
+
+            $meter->delete();
+            Reading::where('meter_id', $id)->delete();
+        }
+
+        return redirect()
+            ->route('admin.meters.index')
+            ->with('success', 'Medidores excluídos!');
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\ACL\PermissionController;
 use App\Http\Controllers\Admin\ACL\RoleController;
 use App\Http\Controllers\Admin\AdminController;
@@ -106,6 +105,7 @@ Route::group(['middleware' => ['auth']], function () {
 
             /** Users */
             Route::post('users-import-email', [UserController::class, 'fileImportEmail'])->name('users.importEmail');
+            Route::post('/users/batchDelete', [UserController::class, 'batchDelete'])->name('users.batchDelete');
             Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
             Route::get('/users/destroy/{id}', [UserController::class, 'destroy']);
             Route::resource('users', UserController::class);
@@ -130,6 +130,7 @@ Route::group(['middleware' => ['auth']], function () {
 
             /** Meters */
             Route::post('meters-import', [MeterController::class, 'fileImport'])->name('meters.import');
+            Route::post('/meters/batchDelete', [MeterController::class, 'batchDelete'])->name('meters.batchDelete');
             Route::get('/meters/destroy/{id}', [MeterController::class, 'destroy']);
             Route::resource('meters', MeterController::class);
 
@@ -147,15 +148,18 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/readings/photo', [ReadingController::class, 'photoImport'])->name('readings.photo.import');
             Route::post('readings-import', [ReadingController::class, 'fileImport'])->name('readings.import');
             Route::match(['get', 'post'], '/readings-search', [ReadingController::class, 'search'])->name('readings.search');
+            Route::post('/readings/batchDelete', [ReadingController::class, 'batchDelete'])->name('readings.batchDelete');
             Route::get('/readings/destroy/{id}', [ReadingController::class, 'destroy']);
             Route::resource('readings', ReadingController::class);
 
             /** Apartments Reports */
             Route::post('reports-import', [ApartmentReportController::class, 'fileImport'])->name('reports.import');
+            Route::post('/reports/batchDelete', [ApartmentReportController::class, 'batchDelete'])->name('reports.batchDelete');
             Route::get('/reports/destroy/{id}', [ApartmentReportController::class, 'destroy']);
             Route::resource('reports', ApartmentReportController::class);
 
             /** Dealerships Readings */
+            Route::post('/dealerships-readings/batchDelete', [DealershipReadingController::class, 'batchDelete'])->name('dealerships-readings.batchDelete');
             Route::get('/dealerships-readings/destroy/{id}', [DealershipReadingController::class, 'destroy']);
             Route::resource('dealerships-readings', DealershipReadingController::class);
 
@@ -173,6 +177,7 @@ Route::group(['middleware' => ['auth']], function () {
 
             /** Reading Schedule */
             Route::get('/reading-schedule/executed/{id}', [ReadingScheduleController::class, 'executed']);
+            Route::post('/reading-schedule/batchDelete', [ReadingScheduleController::class, 'batchDelete'])->name('reading-schedule.batchDelete');
             Route::get('/reading-schedule/destroy/{id}', [ReadingScheduleController::class, 'destroy']);
             Route::resource('reading-schedule', ReadingScheduleController::class);
 

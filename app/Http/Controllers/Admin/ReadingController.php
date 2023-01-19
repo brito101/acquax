@@ -15,6 +15,7 @@ use JeroenNoten\LaravelAdminLte\View\Components\Tool\Datatable;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ReadingsImport;
+use App\Models\ApartmentReport;
 use App\Models\Views\AdminReading;
 use Illuminate\Support\Facades\Validator;
 use Image;
@@ -368,5 +369,49 @@ class ReadingController extends Controller
         }
 
         return redirect()->back()->with('success', "Foram importadas {$counterImg} imagens com sucesso e atualizado o total de {$counterReadings} leituras");
+    }
+
+    public function batchDelete(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Excluir Leituras')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->ids) {
+            return redirect()
+                ->back()
+                ->with('error', 'Selecione ao menos uma linha!');
+        }
+
+        $ids = explode(",", $request->ids);
+
+        foreach ($ids as $id) {
+            $reading = Reading::where('id', $id)->first();
+
+            if (empty($reading->id)) {
+                abort(403, 'Acesso não autorizado');
+            }
+
+            $imagePath = storage_path() . '/app/public/readings/' . $reading->cover;
+            $imagePathBase64 = storage_path() . '/app/public/readings/' . $reading->cover_base64;
+
+            if ($reading->delete()) {
+                if (File::isFile($imagePath)) {
+                    unlink($imagePath);
+                    $reading->cover = null;
+                    $reading->update();
+                }
+
+                if (File::isFile($imagePathBase64)) {
+                    unlink($imagePathBase64);
+                    $reading->cover_base64 = null;
+                    $reading->update();
+                }
+            }
+        }
+
+        return redirect()
+            ->route('admin.readings.index')
+            ->with('success', 'Leituras excluídas!');
     }
 }

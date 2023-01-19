@@ -64,7 +64,7 @@ class ApartmentReportObserver
      */
     public function deleted(ApartmentReport $apartmentReport)
     {
-        $notification = Notification::find('apartment_id', $apartmentReport->apartment_id);
+        $notification = Notification::where('apartment_id', $apartmentReport->apartment_id)->first();
         if ($notification) {
             $notification->delete();
         }

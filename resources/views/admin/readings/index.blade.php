@@ -88,6 +88,19 @@
                             ];
                         @endphp
 
+                        <div class="card-body pb-0">
+                            <div class="px-2 col-12">
+                                <form method="POST" action="{{ route('admin.readings.batchDelete') }}"
+                                    class="w-100 flex-wrap d-flex justify-content-end">
+                                    @csrf
+                                    <input type="hidden" name="ids" value="" id="ids" class="ids">
+                                    <button type="submit" id="batch-delete" class="btn btn-danger"
+                                        data-confirm="Confirma a exclusão desta seleção?"><i class="fas fa-fw fa-trash"></i>
+                                        Exclusão em Lote</button>
+                                </form>
+                            </div>
+                        </div>
+
                         <div class="card-body">
                             <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
                                 striped hoverable beautify />
@@ -99,4 +112,27 @@
         </div>
 
     </section>
+@endsection
+
+@section('custom_js')
+    <script>
+        $('#table1 tbody').on('click', 'tr', function() {
+            $(this).toggleClass('selected bg-dark');
+            let rows = $('#table1')[0].rows;
+            let ids = [];
+            $.each(rows, function(i, el) {
+                if ($(el).hasClass('selected')) {
+                    ids.push(el.children[0].textContent);
+                }
+            });
+            $(".ids").val(ids)
+        });
+
+        $("#batch-delete").on('click', function(e) {
+            if (!confirm($(this).data('confirm'))) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+            }
+        });
+    </script>
 @endsection

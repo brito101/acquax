@@ -308,4 +308,33 @@ class ReadingScheduleController extends Controller
                 ->with('error', 'Erro ao excluir!');
         }
     }
+
+    public function batchDelete(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Excluir Agendamentos de Leitura')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->ids) {
+            return redirect()
+                ->back()
+                ->with('error', 'Selecione ao menos uma linha!');
+        }
+
+        $ids = explode(",", $request->ids);
+
+        foreach ($ids as $id) {
+            $schedule = Schedule::where('type', 'leitura')->where('id', $id)->first();
+
+            if (!$schedule) {
+                abort(403, 'Acesso não autorizado');
+            }
+            $guests = Guest::where('schedule_id', $schedule->id)->delete();
+            $schedule->delete();
+        }
+
+        return redirect()
+            ->route('admin.reading-schedule.index')
+            ->with('success', 'Agendamentos de Leituras excluídos!');
+    }
 }

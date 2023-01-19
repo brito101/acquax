@@ -228,4 +228,34 @@ class ApartmentReportController extends Controller
         Excel::import(new ApartmentReportImport, $request->file('file')->store('temp'));
         return back()->with('success', 'Importação realizada!');;
     }
+
+    public function batchDelete(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Excluir Relatórios')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->ids) {
+            return redirect()
+                ->back()
+                ->with('error', 'Selecione ao menos uma linha!');
+        }
+
+        $ids = explode(",", $request->ids);
+
+        foreach ($ids as $id) {
+            $report = ApartmentReport::find($id);
+
+            if (!$report) {
+                abort(403, 'Acesso não autorizado');
+            }
+
+            $report->delete();
+            Notification::where('apartment_id', $id)->delete();
+        }
+
+        return redirect()
+            ->route('admin.reports.index')
+            ->with('success', 'Relatórios excluídos!');
+    }
 }

@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Imports\UsersImport;
+use App\Models\Message;
+use App\Models\Resident;
+use App\Models\Schedule;
 use App\Models\Settings\Genre;
+use App\Models\Syndic;
 use App\Models\User;
 use App\Models\Views\User as ViewsUser;
 use Illuminate\Http\Request;
@@ -264,6 +268,11 @@ class UserController extends Controller
                 $user->update();
             }
 
+            Message::where('sender_id', $id)->orWhere('receiver_id', $id)->delete();
+            Resident::where('user_id', $id)->delete();
+            Syndic::where('user_id', $id)->delete();
+            Schedule::where('user_id', $id)->delete();
+
             return redirect()
                 ->route('admin.users.index')
                 ->with('success', 'Exclusão realizada!');
@@ -287,5 +296,42 @@ class UserController extends Controller
         }
         Excel::import(new UsersImport, $request->file('file')->store('temp'));
         return back()->with('success', 'Importação realizada!');
+    }
+
+    public function batchDelete(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Excluir Usuários')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->ids) {
+            return redirect()
+                ->back()
+                ->with('error', 'Selecione ao menos uma linha!');
+        }
+
+        $ids = explode(",", $request->ids);
+
+        foreach ($ids as $id) {
+            $user = User::where('id', $id)->first();
+            if (!$user) {
+                abort(403, 'Acesso não autorizado');
+            }
+            $imagePath = storage_path() . '/app/public/users/' . $user->photo;
+            if (File::isFile($imagePath)) {
+                unlink($imagePath);
+                $user->photo = null;
+                $user->update();
+            }
+            Message::where('sender_id', $id)->orWhere('receiver_id', $id)->delete();
+            Resident::where('user_id', $id)->delete();
+            Syndic::where('user_id', $id)->delete();
+            Schedule::where('user_id', $id)->delete();
+            $user->delete();
+        }
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'Usuários excluídos!');
     }
 }

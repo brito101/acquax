@@ -2,7 +2,7 @@
 
 <p>Pending Tasks:</p>
 <ol>
-    <li>Criar página com listagem geral das unidades (gerencial)</li>
+    <li>Adicionar exclusões em lote (continuar a partir da listagem dos condomínios)</li>
     <li>Controle de leitura x leiturista</li>
     <li>Quem passar das média de consumo uma mensagem por diferentes canais de comunicação</li>
     <li>Lista de tarefas (talvez no OS)</li>
