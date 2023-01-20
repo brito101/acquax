@@ -23,7 +23,7 @@ class MetersImport implements ToModel, WithHeadingRow
             'register' => $row['chassi'],
             'status' => 'Ativo',
             'apartment_id' => Apartment::where('name', $row['apartamento'])->where('block_id', Block::where('name', $row['bloco'])->where('complex_id', Complex::where('alias_name', $row['condominio'])->first()->id)->first()->id)->first()->id,
-            'type_meter_id' => 1,
+            'type_meter_id' => $row['tipo'] == 'Gás' || $row['tipo'] == 'Gas' || $row['tipo'] == 'gas' || $row['tipo'] == 'gás' ? 2 : 1,
             'user_id' => Auth::user()->id,
             'location' => $row['localizacao'] ?? null,
             'initial_reading' => $row['leitura_inicial'] ? str_replace(',', '.', $row['leitura_inicial']) : 0,
