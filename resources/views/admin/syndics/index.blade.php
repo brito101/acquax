@@ -6,13 +6,13 @@
 
 @section('content')
     @if (auth()->user()->can('Editar Síndicos') &&
-        auth()->user()->can('Excluir Síndicos'))
+            auth()->user()->can('Excluir Síndicos'))
         @php
             $list = [];
 
             $heads = [['label' => 'ID', 'width' => 5], 'Síndico', 'Condomínio', 'Status', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
             foreach ($syndics as $syndic) {
-                $list[] = [$syndic->id, $syndic->user['name'] . ' - CPF: ' . $syndic->user['document_person'] . ' - E-mail: ' . $syndic->user['email'], $syndic->complex['alias_name'], $syndic->status, '<nobr>' . '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar" href="syndics/' . $syndic->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-default text-danger mx-1 shadow" title="Excluir" href="syndics/destroy/' . $syndic->id . '" onclick="return confirm(\'Confirma a exclusão deste síndico?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
+                $list[] = [$syndic->id, $syndic->user['name'] . ' - CPF: ' . $syndic->user['document_person'] . ' - E-mail: ' . $syndic->user['email'], $syndic->complex['alias_name'], $syndic->status, '<nobr>' . '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="syndics/' . $syndic->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="syndics/destroy/' . $syndic->id . '" onclick="return confirm(\'Confirma a exclusão deste síndico?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>'];
             }
 
             $config = [
@@ -76,6 +76,20 @@
                                 @endcan
                             </div>
                         </div>
+
+                        <div class="card-body pb-0">
+                            <div class="px-2 col-12">
+                                <form method="POST" action="{{ route('admin.syndics.batchDelete') }}"
+                                    class="w-100 flex-wrap d-flex justify-content-end">
+                                    @csrf
+                                    <input type="hidden" name="ids" value="" id="ids" class="ids">
+                                    <button type="submit" id="batch-delete" class="btn btn-danger"
+                                        data-confirm="Confirma a exclusão desta seleção?"><i class="fas fa-fw fa-trash"></i>
+                                        Exclusão em Lote</button>
+                                </form>
+                            </div>
+                        </div>
+
                         <div class="card-body">
                             <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
                                 striped hoverable beautify with-buttons />
@@ -85,4 +99,27 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('custom_js')
+    <script>
+        $('#table1 tbody').on('click', 'tr', function() {
+            $(this).toggleClass('selected bg-dark');
+            let rows = $('#table1')[0].rows;
+            let ids = [];
+            $.each(rows, function(i, el) {
+                if ($(el).hasClass('selected')) {
+                    ids.push(el.children[0].textContent);
+                }
+            });
+            $(".ids").val(ids)
+        });
+
+        $("#batch-delete").on('click', function(e) {
+            if (!confirm($(this).data('confirm'))) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+            }
+        });
+    </script>
 @endsection

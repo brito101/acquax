@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ComplexRequest;
 use App\Imports\ComplexImport;
+use App\Models\AdvertisingComplex;
 use App\Models\Apartment;
+use App\Models\ApartmentReport;
 use App\Models\Block;
 use App\Models\Complex;
 use App\Models\DealershipReading;
 use App\Models\Meter;
+use App\Models\Notification;
 use App\Models\Reading;
 use App\Models\Resident;
+use App\Models\Schedule;
 use App\Models\Syndic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +23,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
+use DataTables;
 use Image;
 
 class ComplexController extends Controller
@@ -28,15 +33,27 @@ class ComplexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!Auth::user()->hasPermissionTo('Listar Condomínios')) {
             abort(403, 'Acesso não autorizado');
         }
+        // $complexes = Complex::orderBy('created_at', 'desc')->paginate(6);
+        $complexes = Complex::get();
 
-        $complexes = Complex::orderBy('created_at', 'desc')->paginate(6);
+        if ($request->ajax()) {
+            return Datatables::of($complexes)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="complexes/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="complexes/destroy/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão deste condomínio?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a><a class="btn btn-xs btn-success mx-1 shadow" title="Blocos" href="blocks?complex=' . $row->id . '"><i class="fa fa-lg fa-fw fa-building"></i></a>' . ($row->total_blocks > 0 ? '<a class="btn btn-xs btn-info mx-1 shadow" title="Apartamentos" href="apartments?complex=' . $row->id . '"><i class="fa fa-lg fa-fw fa-home"></i></a>' : '') . '<a class="btn btn-xs btn-secondary mx-1 shadow" title="Síndicos" href="syndics?complex=' . $row->id . '"><i class="fa fa-lg fa-fw fa-user-friends"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
-        return view('admin.complexes.index', compact('complexes'));
+        // return view('admin.complexes.index', \compact('complexes'));
+        return view('admin.complexes.index');
     }
 
     public function search(Request $request)
@@ -213,50 +230,7 @@ class ComplexController extends Controller
                 $complex->update();
             }
 
-            $blocks = Block::where('complex_id', $id)->get();
-            if ($blocks->isNotEmpty()) {
-                foreach ($blocks as $block) {
-                    $apartments = Apartment::where('block_id', $block->id)->get();
-                    if ($apartments->isNotEmpty()) {
-                        foreach ($apartments as $apartment) {
-                            $residents = Resident::where('apartment_id', $apartment->id)->get();
-                            if ($residents->isNotEmpty()) {
-                                foreach ($residents as $resident) {
-                                    $resident->delete();
-                                }
-                            }
-                            $apartment->delete();
-                            $meters = Meter::where('apartment_id', $apartment->id)->get();
-                            if ($meters->isNotEmpty()) {
-                                foreach ($meters as $meter) {
-                                    $readings = Reading::where('meter_id', $id)->get();
-                                    if ($readings->isNotEmpty()) {
-                                        foreach ($readings as $reading) {
-                                            $reading->delete();
-                                        }
-                                    }
-                                    $meter->delete();
-                                }
-                            }
-                        }
-                    }
-                    $block->delete();
-                }
-            }
-
-            $syndics = Syndic::where('complex_id', $id)->get();
-            if ($syndics->isNotEmpty()) {
-                foreach ($syndics as $syndic) {
-                    $syndic->delete();
-                }
-            }
-
-            $dealershipReadings = DealershipReading::where('complex_id', $id)->get();
-            if ($dealershipReadings->isNotEmpty()) {
-                foreach ($dealershipReadings as $reading) {
-                    $reading->delete();
-                }
-            }
+            $this->cascadeDelete($id);
 
             return redirect()
                 ->route('admin.complexes.index')
@@ -340,5 +314,62 @@ class ComplexController extends Controller
         }
 
         return redirect()->back()->with('success', "Foram importadas {$counterImg} imagens com sucesso e atualizado o total de {$counterComplex} condomínios");
+    }
+
+    public function batchDelete(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Excluir Condomínios')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->ids) {
+            return redirect()
+                ->back()
+                ->with('error', 'Selecione ao menos uma linha!');
+        }
+
+        $ids = explode(",", $request->ids);
+
+        foreach ($ids as $id) {
+            $complex = Complex::find($id);
+
+            if (!$complex) {
+                abort(403, 'Acesso não autorizado');
+            }
+            $this->cascadeDelete($id);
+            $complex->delete();
+        }
+
+        return redirect()
+            ->route('admin.complexes.index')
+            ->with('success', 'Condomínios excluídos!');
+    }
+
+    private function cascadeDelete($id): void
+    {
+        $blocks = Block::where('complex_id', $id)->get();
+        foreach ($blocks as $block) {
+            $apartments = Apartment::where('block_id', $block->id)->get();
+            foreach ($apartments as $apartment) {
+                $meters = Meter::where('apartment_id', $apartment->id)->get();
+                foreach ($meters as $meter) {
+                    Reading::where('meter_id', $meter->id)->delete();
+                    $meter->delete();
+                }
+                ApartmentReport::where('apartment_id', $apartment->id)->delete();
+                Notification::where('apartment_id', $apartment->id)->delete();
+                Resident::where('apartment_id', $apartment->id)->delete();
+                $apartment->delete();
+            }
+            $block->delete();
+        }
+        AdvertisingComplex::where('complex_id', $id)->delete();
+        $dealershipReadings = DealershipReading::where('complex_id', $id)->get();
+        foreach ($dealershipReadings as $dealershipReading) {
+            Notification::where('dealership_reading_id', $dealershipReading->id)->delete();
+            $dealershipReading->delete();
+        }
+        Schedule::where('complex_id', $id)->delete();
+        Syndic::where('complex_id', $id)->delete();
     }
 }

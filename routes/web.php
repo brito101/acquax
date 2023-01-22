@@ -115,16 +115,19 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/complexes/photo', [ComplexController::class, 'photoImport'])->name('complexes.photo.import');
             Route::post('complex-import', [ComplexController::class, 'fileImport'])->name('complex.import');
             Route::match(['get', 'post'], 'complex-search', [ComplexController::class, 'search'])->name('complex.search');
+            Route::post('/complex/batchDelete', [ComplexController::class, 'batchDelete'])->name('complexes.batchDelete');
             Route::get('/complexes/destroy/{id}', [ComplexController::class, 'destroy']);
             Route::resource('complexes', ComplexController::class);
 
             /** Blocks */
             Route::post('blocks-import', [BlockController::class, 'fileImport'])->name('blocks.import');
+            Route::post('/blocks/batchDelete', [BlockController::class, 'batchDelete'])->name('blocks.batchDelete');
             Route::get('blocks/destroy/{id}', [BlockController::class, 'destroy']);
             Route::resource('blocks', BlockController::class);
 
             /** Apartments */
             Route::post('apartments-import', [ApartmentController::class, 'fileImport'])->name('apartments.import');
+            Route::post('/apartments/batchDelete', [ApartmentController::class, 'batchDelete'])->name('apartments.batchDelete');
             Route::get('/apartments/destroy/{id}', [ApartmentController::class, 'destroy']);
             Route::resource('apartments', ApartmentController::class);
 
@@ -136,10 +139,12 @@ Route::group(['middleware' => ['auth']], function () {
 
             /** Residents */
             Route::post('residents-import', [ResidentController::class, 'fileImport'])->name('residents.import');
+            Route::post('/residents/batchDelete', [ResidentController::class, 'batchDelete'])->name('residents.batchDelete');
             Route::get('/residents/destroy/{id}', [ResidentController::class, 'destroy']);
             Route::resource('residents', ResidentController::class);
 
             /** Syndics */
+            Route::post('/syndics/batchDelete', [SyndicController::class, 'batchDelete'])->name('syndics.batchDelete');
             Route::get('/syndics/destroy/{id}', [SyndicController::class, 'destroy']);
             Route::resource('syndics', SyndicController::class);
 

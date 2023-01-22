@@ -2,15 +2,13 @@
 
 <p>Pending Tasks:</p>
 <ol>
-    <li>Adicionar exclusões em lote (continuar a partir da listagem dos condomínios)</li>
-    <li>Controle de leitura x leiturista</li>
-    <li>Quem passar das média de consumo uma mensagem por diferentes canais de comunicação</li>
-    <li>Lista de tarefas (talvez no OS)</li>
-    <li>Landing Page (analisar montagem da página em subdomínio ou um específico)</li>
-    <li>Monitoramento em realtime</li>
-    <li>Apresentar dados de medição de gás</li>
+    <li>Controle de leitura x leiturista;</li>
+    <li>Quem passar das média de consumo uma mensagem por diferentes canais de comunicação;</li>
+    <li>Lista de tarefas (talvez no OS);</li>
+    <li>Landing Page (analisar montagem da página em subdomínio ou um específico);</li>
+    <li>Monitoramento em realtime;</li>
+    <li>Apresentar dados de medição de gás; e</li>
     <li>Analisar modelo de negócios https://lessloss.com.br/</li>
-     <li>Controle de leitura x leiturista</li>
 </ol>
 
 <p>Useful commands:</p>

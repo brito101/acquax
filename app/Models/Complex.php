@@ -35,6 +35,11 @@ class Complex extends Model
         'status'
     ];
 
+    protected $appends = [
+        'total_blocks',
+        'total_apartments',
+    ];
+
     /** Relationships */
 
     public function blocks()
@@ -57,6 +62,16 @@ class Complex extends Model
         return $this->belongsTo(User::class)->withDefault([
             'name' => 'usário não informado',
         ]);
+    }
+
+    public function getTotalBlocksAttribute($values)
+    {
+        return $this->blocks->count();
+    }
+
+    public function getTotalApartmentsAttribute($values)
+    {
+        return $this->hasManyThrough(Apartment::class, Block::class)->count();
     }
 
     /** Aux */

@@ -209,4 +209,32 @@ class ResidentController extends Controller
         Excel::import(new ResidentsImport, $request->file('file')->store('temp'));
         return back()->with('success', 'Importação realizada!');
     }
+
+    public function batchDelete(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Excluir Moradores')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->ids) {
+            return redirect()
+                ->back()
+                ->with('error', 'Selecione ao menos uma linha!');
+        }
+
+        $ids = explode(",", $request->ids);
+
+        foreach ($ids as $id) {
+            $resident = Resident::find($id);
+
+            if (!$resident) {
+                abort(403, 'Acesso não autorizado');
+            }
+            $resident->delete();
+        }
+
+        return redirect()
+            ->route('admin.residents.index')
+            ->with('success', 'Moradores excluídos!');
+    }
 }

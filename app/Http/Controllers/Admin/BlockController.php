@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BlockRequest;
 use App\Imports\BlockImport;
 use App\Models\Apartment;
+use App\Models\ApartmentReport;
 use App\Models\Block;
 use App\Models\Complex;
 use App\Models\Meter;
+use App\Models\Notification;
 use App\Models\Reading;
 use App\Models\Resident;
 use App\Models\Views\Block as ViewsBlock;
@@ -200,33 +202,7 @@ class BlockController extends Controller
         }
 
         if ($block->delete()) {
-
-            $apartments = Apartment::where('block_id', $id)->get();
-            if ($apartments->isNotEmpty()) {
-                foreach ($apartments as $apartment) {
-                    if ($apartments->isNotEmpty()) {
-                        $residents = Resident::where('apartment_id', $apartment->id)->get();
-                        if ($residents->isNotEmpty()) {
-                            foreach ($residents as $resident) {
-                                $resident->delete();
-                            }
-                        }
-                        $meters = Meter::where('apartment_id', $apartment->id)->get();
-                        if ($meters->isNotEmpty()) {
-                            foreach ($meters as $meter) {
-                                $readings = Reading::where('meter_id', $id)->get();
-                                if ($readings->isNotEmpty()) {
-                                    foreach ($readings as $reading) {
-                                        $reading->delete();
-                                    }
-                                }
-                                $meter->delete();
-                            }
-                        }
-                        $apartment->delete();
-                    }
-                }
-            }
+            $this->cascadeDelete($id);
 
             return redirect()
                 ->back()
@@ -247,5 +223,50 @@ class BlockController extends Controller
         }
         Excel::import(new BlockImport, $request->file('file')->store('temp'));
         return back()->with('success', 'Importação realizada!');;
+    }
+
+    public function batchDelete(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Excluir Blocos')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->ids) {
+            return redirect()
+                ->back()
+                ->with('error', 'Selecione ao menos uma linha!');
+        }
+
+        $ids = explode(",", $request->ids);
+
+        foreach ($ids as $id) {
+            $block = Block::find($id);
+
+            if (!$block) {
+                abort(403, 'Acesso não autorizado');
+            }
+            $this->cascadeDelete($id);
+            $block->delete();
+        }
+
+        return redirect()
+            ->route('admin.complexes.index')
+            ->with('success', 'Blocos excluídos!');
+    }
+
+    private function cascadeDelete($id): void
+    {
+        $apartments = Apartment::where('block_id', $id)->get();
+        foreach ($apartments as $apartment) {
+            $meters = Meter::where('apartment_id', $apartment->id)->get();
+            foreach ($meters as $meter) {
+                Reading::where('meter_id', $meter->id)->delete();
+                $meter->delete();
+            }
+            ApartmentReport::where('apartment_id', $apartment->id)->delete();
+            Notification::where('apartment_id', $apartment->id)->delete();
+            Resident::where('apartment_id', $apartment->id)->delete();
+            $apartment->delete();
+        }
     }
 }

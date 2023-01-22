@@ -180,7 +180,7 @@ class SyndicController extends Controller
      */
     public function destroy($id)
     {
-        if (!Auth::user()->hasPermissionTo('Excluir Moradores')) {
+        if (!Auth::user()->hasPermissionTo('Excluir Síndicos')) {
             abort(403, 'Acesso não autorizado');
         }
 
@@ -199,5 +199,33 @@ class SyndicController extends Controller
                 ->back()
                 ->with('error', 'Erro ao excluir!');
         }
+    }
+
+    public function batchDelete(Request $request)
+    {
+        if (!Auth::user()->hasPermissionTo('Excluir Síndicos')) {
+            abort(403, 'Acesso não autorizado');
+        }
+
+        if (!$request->ids) {
+            return redirect()
+                ->back()
+                ->with('error', 'Selecione ao menos uma linha!');
+        }
+
+        $ids = explode(",", $request->ids);
+
+        foreach ($ids as $id) {
+            $syndic = Syndic::find($id);
+
+            if (!$syndic) {
+                abort(403, 'Acesso não autorizado');
+            }
+            $syndic->delete();
+        }
+
+        return redirect()
+            ->route('admin.syndics.index')
+            ->with('success', 'Síndicos excluídos!');
     }
 }
