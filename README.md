@@ -2,7 +2,6 @@
 
 <p>Pending Tasks:</p>
 <ol>
-    <li>Controle de leitura x leiturista;</li>
     <li>Quem passar das média de consumo uma mensagem por diferentes canais de comunicação;</li>
     <li>Lista de tarefas (talvez no OS);</li>
     <li>Landing Page (analisar montagem da página em subdomínio ou um específico);</li>

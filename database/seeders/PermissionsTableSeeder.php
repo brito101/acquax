@@ -552,7 +552,7 @@ class PermissionsTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],
-            /** Management Reports 103 to 104*/
+            /** Management Reports 103 to 105*/
             [
                 'name' => 'Acessar Relatórios Gerenciais',
                 'guard_name' => 'web',
@@ -560,6 +560,11 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Listar Relatório de Condomínios',
+                'guard_name' => 'web',
+                'created_at' => new DateTime('now')
+            ],
+            [
+                'name' => 'Listar Relatório de Leitura X Leiturista',
                 'guard_name' => 'web',
                 'created_at' => new DateTime('now')
             ],

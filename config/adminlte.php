@@ -377,6 +377,12 @@ return [
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'can'  => 'Listar Relatório de Condomínios',
                 ],
+                [
+                    'text' => 'Leituras X Leituristas',
+                    'url'  => 'admin/management-meter-readers',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Listar Relatório de Leitura X Leiturista',
+                ],
             ]
         ],
         /** Complexes */

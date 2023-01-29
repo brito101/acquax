@@ -891,6 +891,15 @@ class RolesHasPermissionTableSeeder extends Seeder
                 'permission_id' => 104,
                 'role_id' => 2
             ],
+            /** Management Meter Readers 105 */
+            [
+                'permission_id' => 105,
+                'role_id' => 1
+            ],
+            [
+                'permission_id' => 105,
+                'role_id' => 2
+            ],
         ]);
     }
 }
