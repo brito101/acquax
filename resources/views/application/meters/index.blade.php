@@ -38,10 +38,10 @@
                             </div>
 
                             @php
-                                $heads = [['label' => 'ID', 'width' => 5], 'Medidor', 'Imóvel', 'Localização', 'Mês Ref', 'Ano Ref', 'Data da Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                                $heads = [['label' => 'ID', 'width' => 5], 'Medidor', 'Imóvel', 'Tipo', 'Mês Ref', 'Ano Ref', 'Data da Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
                                 $config = [
                                     'ajax' => url('/app/meters-readings-ajax'),
-                                    'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'register', 'name' => 'register'], ['data' => 'property', 'name' => 'property'], ['data' => 'location', 'name' => 'location'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'reading_date', 'name' => 'reading_date'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                    'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'register', 'name' => 'register'], ['data' => 'property', 'name' => 'property'], ['data' => 'meter_type', 'name' => 'meter_type'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'reading_date', 'name' => 'reading_date'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
                                     'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                     'autoFill' => true,
                                     'processing' => true,
@@ -72,10 +72,10 @@
                         <h3><span class="badge badge-secondary">Condomínios Administrados</span></h3>
 
                         @php
-                            $heads = [['label' => 'ID', 'width' => 5], 'Medidor', 'Imóvel', 'Localização', 'Mês Ref', 'Ano Ref', 'Data da Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                            $heads = [['label' => 'ID', 'width' => 5], 'Medidor', 'Imóvel', 'Tipo', 'Mês Ref', 'Ano Ref', 'Data da Leitura', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
                             $config = [
                                 'ajax' => url('/app/meters-complex-readings-ajax'),
-                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'register', 'name' => 'register'], ['data' => 'property', 'name' => 'property'], ['data' => 'location', 'name' => 'location'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'reading_date', 'name' => 'reading_date'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'register', 'name' => 'register'], ['data' => 'property', 'name' => 'property'], ['data' => 'meter_type', 'name' => 'meter_type'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'reading_date', 'name' => 'reading_date'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
                                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                 'autoFill' => true,
                                 'processing' => true,
