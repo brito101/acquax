@@ -2,11 +2,12 @@
 
 <p>Pending Tasks:</p>
 <ol>
+    <li>Fazer apresentação para usuários do sistema (todos);</li>
+    <li>Apresentar dados de medidores de gás;</li>
     <li>Quem passar das média de consumo uma mensagem por diferentes canais de comunicação;</li>
     <li>Lista de tarefas (talvez no OS);</li>
     <li>Landing Page (analisar montagem da página em subdomínio ou um específico);</li>
-    <li>Monitoramento em realtime;</li>
-    <li>Apresentar dados de medição de gás; e</li>
+    <li>Monitoramento em realtime; e</li>
     <li>Analisar modelo de negócios https://lessloss.com.br/</li>
 </ol>
 
