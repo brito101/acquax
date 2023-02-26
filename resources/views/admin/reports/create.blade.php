@@ -69,6 +69,10 @@
                                     </div>
                                 </div>
 
+                                <div class="col-12">
+                                    <h4 class="text-muted text-center py-2">Dados de Água e Esgoto</h4>
+                                </div>
+
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <div class="col-12 col-md-4 form-group px-0 pr-md-2">
                                         <label for="consumed">Consumo em m<sup>3</sup></label>

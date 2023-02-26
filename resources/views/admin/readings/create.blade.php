@@ -49,6 +49,7 @@
                                             @foreach ($meters as $meter)
                                                 <option {{ old('meter_id') == $meter->id ? 'selected' : '' }}
                                                     value="{{ $meter->id }}">{{ $meter->register }}
+                                                    ({{ $meter->typeMeter->name }})
                                                 </option>
                                             @endforeach
                                         </x-adminlte-select2>

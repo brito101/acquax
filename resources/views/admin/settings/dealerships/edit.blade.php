@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@section('plugins.select2', true)
 
 @section('title', '- Edição de Concessionária')
 
@@ -50,11 +51,17 @@
                                         <input type="text" class="form-control" id="name" placeholder="Nome do Tipo"
                                             name="name" value="{{ old('name') ?? $dealership->name }}" required>
                                     </div>
-                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2">
+                                    <div class="col-12 col-md-6 form-group px-0 pl-md-2 mb-0">
                                         <label for="service">Serviço Prestado</label>
-                                        <input type="text" class="form-control" id="service"
-                                            placeholder="Água e esgoto, energia elétrica..." name="service"
-                                            value="{{ old('service') ?? $dealership->service }}">
+                                        <x-adminlte-select2 name="service">
+                                            <option
+                                                {{ old('service') == 'Água e Esgoto' ? 'selected' : ($dealership->service == 'Água e Esgoto' ? 'selected' : '') }}>
+                                                Água e
+                                                Esgoto</option>
+                                            <option
+                                                {{ old('service') == 'Gás' ? 'selected' : ($dealership->service == 'Gás' ? 'selected' : '') }}>
+                                                Gás</option>
+                                        </x-adminlte-select2>
                                     </div>
                                 </div>
 

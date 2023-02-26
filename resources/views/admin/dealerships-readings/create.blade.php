@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('plugins.select2', true)
 
-@section('title', '- Cadastro de Consumo de Condomínio')
+@section('title', '- Cadastro de Consumo de Água de Condomínio')
 
 @section('content')
 
@@ -9,12 +9,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-chart-bar"></i> Novo Consumo</h1>
+                    <h1><i class="fas fa-fw fa-chart-bar"></i> Novo Consumo de Água</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.dealerships-readings.index') }}">Consumo dos
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dealerships-readings.index') }}">Consumo de Água
+                                dos
                                 Condomínios</a>
                         </li>
                         <li class="breadcrumb-item active">Novo Consumo</li>
@@ -33,7 +34,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Dados Cadastrais de Consumo</h3>
+                            <h3 class="card-title">Dados Cadastrais de Consumo de Água</h3>
                         </div>
 
 

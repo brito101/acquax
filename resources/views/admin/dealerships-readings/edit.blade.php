@@ -3,7 +3,7 @@
 @section('plugins.Datatables', true)
 @section('plugins.DatatablesPlugin', true)
 
-@section('title', '- Edição de Consumo de Condomínio')
+@section('title', '- Edição de Consumo de Água do Condomínio')
 
 @section('content')
 
@@ -11,12 +11,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-chart-bar"></i> Editar Consumo</h1>
+                    <h1><i class="fas fa-fw fa-chart-bar"></i> Editar Consumo de Água</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.dealerships-readings.index') }}">Consumo dos
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dealerships-readings.index') }}">Consumo de Água
+                                dos
                                 Condomínios</a>
                         </li>
                         <li class="breadcrumb-item active">Editar Consumo</li>
@@ -35,7 +36,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Dados Cadastrais de Consumo</h3>
+                            <h3 class="card-title">Dados Cadastrais de Consumo de Água</h3>
                             <small class="float-right text-black-50">Criado por {{ $reading->user->name }} em
                                 {{ date('d/m/Y H:i', strtotime($reading->created_at)) }}</small>
                         </div>
@@ -288,7 +289,7 @@
 
                                         @php
                                             $heads = ['Bl', 'Ap', 'Consumo Unidades (m³)', 'Valor de Consumo', 'Valor de Esgoto', 'Consumo Carro Pipa (m³)', 'Custo Carro Pipa', 'Ajuste de Área Comum', 'Total da Unidade'];
-
+                                            
                                             $config = [
                                                 'ajax' => url('/admin/dealerships-readings/' . $reading->id . '/edit'),
                                                 'columns' => [['data' => 'block', 'name' => 'block'], ['data' => 'apartment', 'name' => 'apartment'], ['data' => 'consumed', 'name' => 'consumed'], ['data' => 'consumed_cost', 'name' => 'consumed_cost'], ['data' => 'sewage_cost', 'name' => 'sewage_cost'], ['data' => 'kite_car_consumed', 'name' => 'kite_car_consumed'], ['data' => 'kite_car_cost', 'name' => 'kite_car_cost'], ['data' => 'partial', 'name' => 'partial'], ['data' => 'total_unit', 'name' => 'total_unit']],

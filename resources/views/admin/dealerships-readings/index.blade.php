@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', '- Consumo de Condomínios')
+@section('title', '- Consumo de Água dos Condomínios')
 @section('plugins.Datatables', true)
 @section('plugins.DatatablesPlugins', true)
 
@@ -10,12 +10,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-chart-bar"></i> Consumo de Condomínios</h1>
+                    <h1><i class="fas fa-fw fa-chart-bar"></i> Consumo de Água dos Condomínios</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Consumo de Condomínios</li>
+                        <li class="breadcrumb-item active">Consumo de Água dos Condomínios</li>
                     </ol>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex flex-wrap justify-content-between col-12 align-content-center">
-                                <h3 class="card-title align-self-center">Consumo de Condomínios Cadastrados</h3>
+                                <h3 class="card-title align-self-center">Consumo de Água dos Condomínios Cadastrados</h3>
                                 @can('Criar Leitura das Concessionárias')
                                     <a href="{{ route('admin.dealerships-readings.create') }}" title="Novo Consumo"
                                         class="btn btn-success"><i class="fas fa-fw fa-plus"></i>Novo Consumo</a>

@@ -181,7 +181,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="position-relative mb-4" style="display: block; height: 267px;">
+                            <div class="position-relative mb-4" style="display: block; width: 100%; height: auto;">
                                 <div class="chartjs-size-monitor">
                                     <div class="chartjs-size-monitor-expand">
                                         <div></div>
@@ -190,7 +190,7 @@
                                         <div></div>
                                     </div>
                                 </div>
-                                <canvas id="topPageChart" class="chartjs-render-monitor"></canvas>
+                                <canvas id="topPageChart" class="chartjs-render-monitor" style="height: auto"></canvas>
                             </div>
                         </div>
                     </div>

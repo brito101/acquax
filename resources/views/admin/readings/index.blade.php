@@ -65,10 +65,10 @@
                         </div>
 
                         @php
-                            $heads = [['label' => 'ID', 'width' => 5], 'Unidade', 'Medidor', 'Leitura', 'Mês', 'Ano', 'Imagem', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
+                            $heads = [['label' => 'ID', 'width' => 5], 'Unidade', 'Medidor', 'Tipo', 'Leitura', 'Mês', 'Ano', 'Imagem', ['label' => 'Ações', 'no-export' => true, 'width' => 10]];
                             $config = [
                                 'ajax' => url('/admin/readings'),
-                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'property', 'name' => 'property'], ['data' => 'meter', 'name' => 'meter'], ['data' => 'value', 'name' => 'reading'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'image', 'name' => 'image'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
+                                'columns' => [['data' => 'id', 'name' => 'id'], ['data' => 'property', 'name' => 'property'], ['data' => 'meter', 'name' => 'meter'], ['data' => 'meter_type', 'name' => 'meter_type'], ['data' => 'value', 'name' => 'reading'], ['data' => 'month_ref', 'name' => 'month_ref'], ['data' => 'year_ref', 'name' => 'year_ref'], ['data' => 'image', 'name' => 'image'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
                                 'language' => ['url' => asset('vendor/datatables/js/pt-BR.json')],
                                 'autoFill' => true,
                                 'processing' => true,

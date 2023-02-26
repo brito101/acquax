@@ -59,7 +59,7 @@ class DealershipReadingController extends Controller
         }
 
         $complexes = Complex::all('id', 'alias_name');
-        $dealerships = Dealership::all('id', 'name');
+        $dealerships = Dealership::where('service', 'Água e Esgoto')->get();
 
         return view('admin.dealerships-readings.create', compact('complexes', 'dealerships'));
     }
@@ -123,7 +123,7 @@ class DealershipReadingController extends Controller
         }
 
         $complexes = Complex::all('id', 'alias_name');
-        $dealerships = Dealership::all('id', 'name');
+        $dealerships = Dealership::where('service', 'Água e Esgoto')->get();
 
         $reports = ViewsApartmentReport::where('dealership_reading_id', $id)->get();
         if ($request->ajax()) {

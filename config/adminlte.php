@@ -339,13 +339,13 @@ return [
             'can'         => 'Acessar Leitura das Concessionárias',
             'submenu' => [
                 [
-                    'text' => 'Listagem de Consumo',
+                    'text' => 'Listagem de Consumo de Água',
                     'url'  => 'admin/dealerships-readings',
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'can'  => 'Listar Leitura das Concessionárias',
                 ],
                 [
-                    'text' => 'Cadastro de Consumo',
+                    'text' => 'Cadastro de Consumo de Água',
                     'url'  => 'admin/dealerships-readings/create',
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'can'  => 'Criar Leitura das Concessionárias',

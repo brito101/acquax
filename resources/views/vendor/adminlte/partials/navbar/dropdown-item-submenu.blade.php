@@ -1,14 +1,11 @@
 <li @isset($item['id']) id="{{ $item['id'] }}" @endisset class="dropdown-submenu dropdown-hover">
 
     {{-- Menu toggler --}}
-    <a class="dropdown-item dropdown-toggle" href="" data-toggle="dropdown"
-       {!! $item['data-compiled'] ?? '' !!}>
+    <a class="dropdown-item dropdown-toggle" href="" data-toggle="dropdown" {!! $item['data-compiled'] ?? '' !!}>
 
         {{-- Icon (optional) --}}
         @isset($item['icon'])
-            <i class="{{ $item['icon'] ?? '' }} {{
-                isset($item['icon_color']) ? 'text-' . $item['icon_color'] : ''
-            }}"></i>
+            <i class="{{ $item['icon'] ?? '' }} {{ isset($item['icon_color']) ? 'text-' . $item['icon_color'] : '' }}"></i>
         @endisset
 
         {{-- Text --}}

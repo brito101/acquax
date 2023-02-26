@@ -25,7 +25,7 @@ class DealershipRequest extends FormRequest
     {
         return [
             'name' => 'required|min:1|max:150',
-            'service' => 'required|min:1|max:150'
+            'service' => 'required|in:Água e Esgoto,Gás'
         ];
     }
 }
