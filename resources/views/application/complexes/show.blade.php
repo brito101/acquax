@@ -2,7 +2,7 @@
 @section('plugins.Datatables', true)
 @section('plugins.DatatablesPlugin', true)
 
-@section('title', '- Edição de Consumo de Condomínio')
+@section('title', '- Consumo de Água do Condomínio')
 
 @section('content')
 
@@ -10,14 +10,15 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-chart-bar"></i> Condomínio {{ $complex->alias_name }} - Consumo</h1>
+                    <h1><i class="fas fa-fw fa-chart-bar"></i> Condomínio {{ $complex->alias_name }} - Consumo de Água</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('app.home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('app.residences.readings') }}">Leituras</a>
+                        <li class="breadcrumb-item"><a href="{{ route('app.residences.readings') }}">Relatórios de Consumo de
+                                Água</a>
                         </li>
-                        <li class="breadcrumb-item active">Condomínio</li>
+                        <li class="breadcrumb-item active">Consumo de Água do Condomínio</li>
                     </ol>
                 </div>
             </div>
@@ -196,7 +197,7 @@
                                         @if ($reading->kite_car == 'Sim')
                                             @php
                                                 $heads = ['Bl', 'Ap', 'Consumo Unidades (m³)', 'Valor de Consumo', 'Valor de Esgoto', 'Consumo Carro Pipa (m³)', 'Custo Carro Pipa', 'Ajuste de Área Comum', 'Total da Unidade', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
-
+                                                
                                                 $config = [
                                                     'ajax' => url('/app/complex-readings-report-ajax/' . $reading->id),
                                                     'columns' => [['data' => 'block', 'name' => 'block'], ['data' => 'apartment', 'name' => 'apartment'], ['data' => 'consumed', 'name' => 'consumed'], ['data' => 'consumed_cost', 'name' => 'consumed_cost'], ['data' => 'sewage_cost', 'name' => 'sewage_cost'], ['data' => 'kite_car_consumed', 'name' => 'kite_car_consumed'], ['data' => 'kite_car_cost', 'name' => 'kite_car_cost'], ['data' => 'partial', 'name' => 'partial'], ['data' => 'total_unit', 'name' => 'total_unit'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],
@@ -213,7 +214,7 @@
                                         @else
                                             @php
                                                 $heads = ['Bl', 'Ap', 'Consumo Unidades (m³)', 'Valor de Consumo', 'Valor de Esgoto', 'Ajuste de Área Comum', 'Total da Unidade', ['label' => 'Visualizar', 'no-export' => true, 'width' => 10]];
-
+                                                
                                                 $config = [
                                                     'ajax' => url('/app/complex-readings-report-ajax/' . $reading->id),
                                                     'columns' => [['data' => 'block', 'name' => 'block'], ['data' => 'apartment', 'name' => 'apartment'], ['data' => 'consumed', 'name' => 'consumed'], ['data' => 'consumed_cost', 'name' => 'consumed_cost'], ['data' => 'sewage_cost', 'name' => 'sewage_cost'], ['data' => 'partial', 'name' => 'partial'], ['data' => 'total_unit', 'name' => 'total_unit'], ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false]],

@@ -75,7 +75,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-header bg-info">
+                                <div class="card-header bg-gradient-info">
                                     <h5 class="card-title">Condomínio {{ $complex->alias_name }}</h5>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">

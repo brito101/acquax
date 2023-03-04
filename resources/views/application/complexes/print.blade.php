@@ -10,13 +10,13 @@
     </style>
 @endsection
 
-@section('title', '- Dados de Consumo')
+@section('title', '- Dados de Consumo de Água do Condomínio')
 
 @section('content')
     <div class="card ml-n4 border" style="margin-bottom: -75px;">
         <div class="d-flex flex-wrap justify-content-center">
             <img src="{{ asset('img/logo.png') }}" style="width: 500px;">
-            <h2 class="w-100 text-center">Relatório de Consumo de Água</h2>
+            <h2 class="w-100 text-center">Relatório de Consumo de Água do Condomínio</h2>
         </div>
         <div class="card-header">
             <h3 class="card-title">Dados de Consumo</h3>
@@ -177,11 +177,11 @@
                         @if ($reading->kite_car == 'Sim')
                             @php
                                 $heads = ['Bl', 'Ap', 'Consumo Unidades (m³)', 'Valor de Consumo', 'Valor de Esgoto', 'Consumo Carro Pipa (m³)', 'Custo Carro Pipa', 'Ajuste de Área Comum', 'Total da Unidade'];
-
+                                
                                 foreach ($reading->apartmentReports as $report) {
                                     $list[] = [$report->apartment->block_name, $report->apartment->name, $report->consumed, $report->consumed_cost, $report->sewage_cost, $report->kite_car_consumed, $report->kite_car_cost, $report->partial, $report->total_unit];
                                 }
-
+                                
                                 $config = [
                                     'data' => $list,
                                     'order' => [[0, 'asc']],
@@ -191,18 +191,18 @@
                                     'searching' => false,
                                     'info' => false,
                                 ];
-
+                                
                             @endphp
                         @else
                             @php
                                 $heads = ['Bl', 'Ap', 'Consumo Unidades (m³)', 'Valor de Consumo', 'Valor de Esgoto', 'Ajuste de Área Comum', 'Total da Unidade'];
-
+                                
                                 $list = [];
-
+                                
                                 foreach ($reading->apartmentReports as $report) {
                                     $list[] = [$report->apartment->block_name, $report->apartment->name, $report->consumed, $report->consumed_cost, $report->sewage_cost, $report->partial, $report->total_unit];
                                 }
-
+                                
                                 $config = [
                                     'data' => $list,
                                     'order' => [[0, 'asc']],
@@ -212,7 +212,7 @@
                                     'searching' => false,
                                     'info' => false,
                                 ];
-
+                                
                             @endphp
                         @endif
                         <x-adminlte-datatable id="table1" :heads="$heads" :heads="$heads" :config="$config"
