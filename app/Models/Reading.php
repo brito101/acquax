@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Settings\TypeMeter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -88,7 +89,8 @@ class Reading extends Model
                 $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($previous->reading);
             }
         } else {
-            $mether = Meter::where('id', $this->meter_id)->first();
+            $typeMeterWater = TypeMeter::where('name', 'Água')->first();
+            $mether = Meter::where('id', $this->meter_id)->where('type_meter_id', $typeMeterWater->id)->first();
             if ($mether) {
                 if ($this->meter->rotation == 'Crescente') {
                     $volume = $this->convertToFloat($this->reading) - $this->convertToFloat($mether->initial_reading);
@@ -118,7 +120,8 @@ class Reading extends Model
         if ($previous && $pre_previous) {
             $volume = $this->convertToFloat($previous->reading) - $this->convertToFloat($pre_previous->reading);
         } elseif ($previous) {
-            $mether = Meter::where('id', $this->meter_id)->first();
+            $typeMeterWater = TypeMeter::where('name', 'Água')->first();
+            $mether = Meter::where('id', $this->meter_id)->where('type_meter_id', $typeMeterWater->id)->first();
             if ($mether) {
                 $volume = $this->convertToFloat($previous->reading) - $this->convertToFloat($mether->initial_reading);
             } else {

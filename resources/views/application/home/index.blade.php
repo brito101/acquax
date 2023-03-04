@@ -67,6 +67,9 @@
     <section class="content">
         <div class="container-fluid">
             @include('components.alert')
+            <div>
+                <h4 class="text-center text-primary font-weight-bold">Consumo de Água</h4>
+            </div>
             @if ($complexes)
                 @foreach ($complexes as $complex)
                     <div class="row">
@@ -84,13 +87,14 @@
                                     </div>
                                 </div>
 
+
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-8 d-flex flex-wrap justify-content-center align-content-center">
                                             <p class="text-center">
                                                 <strong>Gráfico de Consumo {{ date('Y') }}</strong>
                                             </p>
-                                            <div class="chart">
+                                            <div class="chart col-12">
                                                 <div class="chartjs-size-monitor">
                                                     <div class="chartjs-size-monitor-expand">
                                                         <div class=""></div>
@@ -195,7 +199,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-header bg-info">
+                                <div class="card-header bg-gradient-blue">
                                     <h5 class="card-title">
                                         {{ $residence->apartment->block->complex['alias_name'] }} -
                                         Bl: {{ $residence->apartment->block['name'] }} -
@@ -216,7 +220,7 @@
                                             <p class="text-center">
                                                 <strong>Gráfico de Consumo {{ date('Y') }}</strong>
                                             </p>
-                                            <div class="chart">
+                                            <div class="chart col-12">
                                                 <div class="chartjs-size-monitor">
                                                     <div class="chartjs-size-monitor-expand">
                                                         <div class=""></div>

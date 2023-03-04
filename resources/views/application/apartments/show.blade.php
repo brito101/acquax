@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', '- Dados de Consumo')
+@section('title', '- Consumo de Água')
 
 @section('content')
 
@@ -8,14 +8,15 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-chart-line"></i> Apartamento {{ $apartment->name }} - Consumo</h1>
+                    <h1><i class="fas fa-fw fa-chart-line"></i> Apartamento {{ $apartment->name }} - Consumo de Água</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('app.home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('app.residences.readings') }}">Leituras</a>
+                        <li class="breadcrumb-item"><a href="{{ route('app.residences.readings') }}">Relatórios de Consumo de
+                                Água</a>
                         </li>
-                        <li class="breadcrumb-item active">Dados de Consumo</li>
+                        <li class="breadcrumb-item active">Consumo de Água</li>
                     </ol>
                 </div>
             </div>
@@ -32,6 +33,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dados de Consumo</h3>
+                            <small class="float-right text-black-50">Relatório {{ $reading->id }} criado em
+                                {{ date('d/m/Y H:i', strtotime($reading->created_at)) }}</small>
                         </div>
 
 

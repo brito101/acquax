@@ -238,13 +238,13 @@ return [
         ],
         /** Apartment Readings */
         [
-            'text' => 'Relatórios de Leituras',
+            'text' => 'Consumo de Água',
             'url'  => 'app/residences-readings',
             'icon' => 'fas fa-fw fa-chart-line',
             'can'  => 'Acessar Leituras Apartamento',
         ],
         [
-            'text' => 'Relatórios de Medidores',
+            'text' => 'Leituras de Medidores',
             'url'  => 'app/meter-readings',
             'icon' => 'fas fa-fw fa-tachometer-alt',
             'can'  => 'Acessar Medições Apartamento',

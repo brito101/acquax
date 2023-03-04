@@ -46,19 +46,25 @@
                                             value="{{ $reading->meter['register'] }}" disabled>
                                     </div>
 
+                                    <div class="col-12 col-md-2 form-group px-0 px-md-2">
+                                        <label for="type">Tipo</label>
+                                        <input type="text" class="form-control bg-light" id="type" name="type"
+                                            value="{{ $reading->meter->typeMeter->name }}" disabled>
+                                    </div>
+
                                     <div class="col-12 col-md-3 form-group px-0 px-md-2">
                                         <label for="location">Localização</label>
                                         <input type="text" class="form-control bg-light" id="location" name="location"
                                             value="{{ $reading->location ?? 'Não Informada' }}" disabled>
                                     </div>
 
-                                    <div class="col-12 col-md-3 form-group px-0 px-md-2">
+                                    <div class="col-12 col-md-2 form-group px-0 px-md-2">
                                         <label for="month_ref">Mês</label>
                                         <input type="text" class="form-control bg-light" id="month_ref" name="month_ref"
                                             value="{{ $reading->month_ref }}" disabled>
                                     </div>
 
-                                    <div class="col-12 col-md-3 form-group px-0 pl-md-2">
+                                    <div class="col-12 col-md-2 form-group px-0 pl-md-2">
                                         <label for="year_ref">Ano</label>
                                         <input type="text" class="form-control bg-light" id="year_ref" name="year_ref"
                                             value="{{ $reading->year_ref }}" disabled>
@@ -96,7 +102,7 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex flex-wrap justify-content-start col-12 col-md-6 px-0">
+                                <div class="d-flex flex-wrap justify-content-start col-12 col-md-6">
                                     <div class="col-12 col-md-6 form-group px-0 pr-md-2">
                                         <label for="previous_volume_consumed">Consumo Anterior em m<sup>3</sup></label>
                                         <input type="text" class="form-control bg-light" id="previous_volume_consumed"

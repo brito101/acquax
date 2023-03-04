@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Settings\TypeMeter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -65,7 +66,8 @@ class Apartment extends Model
     /** Aux */
     public function getValuesChart()
     {
-        $meters = Meter::where('apartment_id', $this->id)->pluck('id');
+        $typeMeterWater = TypeMeter::where('name', 'Água')->first();
+        $meters = Meter::where('apartment_id', $this->id)->where('type_meter_id', $typeMeterWater->id)->pluck('id');
         $readings = Reading::whereIn('meter_id', $meters)->where('year_ref', date('Y'))->get();
         $months = [
             'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
@@ -96,7 +98,8 @@ class Apartment extends Model
 
     public function getTotalConsume()
     {
-        $meters = Meter::where('apartment_id', $this->id)->pluck('id');
+        $typeMeterWater = TypeMeter::where('name', 'Água')->first();
+        $meters = Meter::where('apartment_id', $this->id)->where('type_meter_id', $typeMeterWater->id)->pluck('id');
         $readings = Reading::whereIn('meter_id', $meters)->where('year_ref', date('Y'))->get();
         $consumed = 0;
         foreach ($readings as $reading) {
@@ -108,7 +111,8 @@ class Apartment extends Model
 
     public function getAverageConsume()
     {
-        $meters = Meter::where('apartment_id', $this->id)->pluck('id');
+        $typeMeterWater = TypeMeter::where('name', 'Água')->first();
+        $meters = Meter::where('apartment_id', $this->id)->where('type_meter_id', $typeMeterWater->id)->pluck('id');
         $readings = Reading::whereIn('meter_id', $meters)->where('year_ref', date('Y'))->get();
         $units = 0;
         $consumed = 0;

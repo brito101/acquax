@@ -7,7 +7,7 @@
     </style>
 @endsection
 
-@section('title', '- Dados de Consumo')
+@section('title', '- Dados de Consumo de Água')
 
 @section('content')
     <div class="card ml-n4 border" style="margin-bottom: -75px;">
@@ -17,6 +17,8 @@
         </div>
         <div class="card-header">
             <h3 class="card-title">Dados de Consumo</h3>
+            <small class="float-right text-black-50">Relatório {{ $reading->id }} criado em
+                {{ date('d/m/Y H:i', strtotime($reading->created_at)) }}</small>
         </div>
 
         <form style="border: 4px solid #007bff">

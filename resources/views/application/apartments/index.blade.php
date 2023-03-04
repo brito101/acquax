@@ -2,7 +2,7 @@
 @section('plugins.Datatables', true)
 @section('plugins.DatatablesPlugins', true)
 
-@section('title', '- Relatórios de Leituras')
+@section('title', '- Relatórios de Consumo de Água')
 
 @section('content')
 
@@ -10,12 +10,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><i class="fas fa-fw fa-chart-line"></i> Relatórios de Leituras</h1>
+                    <h1><i class="fas fa-fw fa-chart-line"></i> Relatórios de Consumo de Água</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('app.home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Leituras</li>
+                        <li class="breadcrumb-item active">Relatórios de Consumo de Água</li>
                     </ol>
                 </div>
             </div>
@@ -84,7 +84,8 @@
                                                     <div class="card-header">
                                                         <div
                                                             class="d-flex flex-wrap justify-content-between col-12 align-content-center">
-                                                            <h3 class="card-title align-self-center">Leituras Cadastradas
+                                                            <h3 class="card-title align-self-center">Leituras de Água
+                                                                Cadastradas
                                                                 para o
                                                                 Ap.
                                                                 {{ $apartment->name }}, Bl.
@@ -137,7 +138,8 @@
                                                     <div class="card-header">
                                                         <div
                                                             class="d-flex flex-wrap justify-content-between col-12 align-content-center">
-                                                            <h3 class="card-title align-self-center">Leituras Cadastradas
+                                                            <h3 class="card-title align-self-center">Leituras de Água
+                                                                Cadastradas
                                                                 para o Condomínio {{ $complex->alias_name }}</h3>
                                                         </div>
                                                     </div>
@@ -183,7 +185,8 @@
                                                     <div class="card-header">
                                                         <div
                                                             class="d-flex flex-wrap justify-content-between col-12 align-content-center">
-                                                            <h3 class="card-title align-self-center">Leituras Cadastradas
+                                                            <h3 class="card-title align-self-center">Leituras de Água
+                                                                Cadastradas
                                                                 para o condomínio {{ $complex->alias_name }}
                                                             </h3>
                                                         </div>
