@@ -10,7 +10,7 @@ class DealershipReadingGas extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = ['dealership_readings_gas'];
+    protected $table = 'dealership_readings_gas';
 
     protected $dates = ['deleted_at'];
 
@@ -30,4 +30,24 @@ class DealershipReadingGas extends Model
         'consumption_value',
         'editor',
     ];
+
+    /**
+     * Relationships
+     * */
+    public function complex()
+    {
+        return $this->belongsTo(Complex::class);
+    }
+
+    public function dealership()
+    {
+        return $this->belongsTo(Dealership::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'editor')->withDefault([
+            'name' => 'usário não informado',
+        ]);
+    }
 }

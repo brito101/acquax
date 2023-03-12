@@ -351,6 +351,18 @@ return [
                     'can'  => 'Criar Leitura das Concessionárias',
                 ],
                 [
+                    'text' => 'Listagem de Consumo de Gás',
+                    'url'  => 'admin/dealerships-readings-gas',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Listar Leitura das Concessionárias',
+                ],
+                [
+                    'text' => 'Cadastro de Consumo de Gás',
+                    'url'  => 'admin/dealerships-readings-gas/create',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'can'  => 'Criar Leitura das Concessionárias',
+                ],
+                [
                     'text' => 'Listagem de Relatórios',
                     'url'  => 'admin/reports',
                     'icon' => 'fas fa-fw fa-chevron-right',

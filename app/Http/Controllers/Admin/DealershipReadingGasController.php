@@ -3,23 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\DealershipReadingRequest;
-use App\Http\Requests\Admin\Settings\DealershipRequest;
-use App\Models\Apartment;
-use App\Models\ApartmentReport;
-use App\Models\Block;
+use App\Http\Requests\Admin\DealershipReadingGasRequest;
 use App\Models\Complex;
-use App\Models\DealershipReading;
-use App\Models\Notification;
+use App\Models\DealershipReadingGas;
 use App\Models\Settings\Dealership;
-use App\Models\Views\Apartment as ViewsApartment;
-use App\Models\Views\ApartmentReport as ViewsApartmentReport;
-use App\Models\Views\DealershipReading as ViewsDealershipReading;
+use App\Models\Views\DealershipReadingGas as ViewsDealershipReadingGas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DataTables;
 
-class DealershipReadingController extends Controller
+class DealershipReadingGasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,19 +25,19 @@ class DealershipReadingController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $readings = ViewsDealershipReading::query();
+        $readings = ViewsDealershipReadingGas::query();
         if ($request->ajax()) {
             return Datatables::of($readings)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="dealerships-readings/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="dealerships-readings/destroy/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão desta leitura?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>';
+                    $btn = '<a class="btn btn-xs btn-primary mx-1 shadow" title="Editar" href="dealerships-readings-gas/' . $row->id . '/edit"><i class="fa fa-lg fa-fw fa-pen"></i></a>' . '<a class="btn btn-xs btn-danger mx-1 shadow" title="Excluir" href="dealerships-readings-gas/destroy/' . $row->id . '" onclick="return confirm(\'Confirma a exclusão desta leitura?\')"><i class="fa fa-lg fa-fw fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
 
-        return view('admin.dealerships-readings.index');
+        return view('admin.dealerships-readings-gas.index');
     }
 
     /**
@@ -59,9 +52,9 @@ class DealershipReadingController extends Controller
         }
 
         $complexes = Complex::all('id', 'alias_name');
-        $dealerships = Dealership::where('service', 'Água e Esgoto')->get();
+        $dealerships = Dealership::where('service', 'Gás')->get();
 
-        return view('admin.dealerships-readings.create', compact('complexes', 'dealerships'));
+        return view('admin.dealerships-readings-gas.create', compact('complexes', 'dealerships'));
     }
 
     /**
@@ -70,7 +63,7 @@ class DealershipReadingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(DealershipReadingRequest $request)
+    public function store(DealershipReadingGasRequest $request)
     {
         if (!Auth::user()->hasPermissionTo('Criar Leitura das Concessionárias')) {
             abort(403, 'Acesso não autorizado');
@@ -90,11 +83,11 @@ class DealershipReadingController extends Controller
 
         $data['editor'] = Auth::user()->id;
 
-        $reading = DealershipReading::create($data);
+        $reading = DealershipReadingGas::create($data);
 
         if ($reading->save()) {
             return redirect()
-                ->route('admin.dealerships-readings.index')
+                ->route('admin.dealerships-readings-gas.index')
                 ->with('success', 'Cadastro realizado!');
         } else {
             return redirect()
@@ -117,22 +110,23 @@ class DealershipReadingController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $reading = DealershipReading::where('id', $id)->first();
+        $reading = DealershipReadingGas::where('id', $id)->first();
         if (empty($reading->id)) {
             abort(403, 'Acesso não autorizado');
         }
 
         $complexes = Complex::all('id', 'alias_name');
-        $dealerships = Dealership::where('service', 'Água e Esgoto')->get();
+        $dealerships = Dealership::where('service', 'Gás')->get();
 
-        $reports = ViewsApartmentReport::where('dealership_reading_id', $id)->get();
-        if ($request->ajax()) {
-            return Datatables::of($reports)
-                ->addIndexColumn()
-                ->make(true);
-        }
+        // $reports = ViewsApartmentReport::where('dealership_reading_id', $id)->get();
+        // if ($request->ajax()) {
+        //     return Datatables::of($reports)
+        //         ->addIndexColumn()
+        //         ->make(true);
+        // }
 
-        return view('admin.dealerships-readings.edit', compact('reading', 'complexes', 'dealerships', 'reports'));
+        // return view('admin.dealerships-readings-gas.edit', compact('reading', 'complexes', 'dealerships', 'reports'));
+        return view('admin.dealerships-readings-gas.edit', compact('reading', 'complexes', 'dealerships'));
     }
 
     /**
@@ -142,13 +136,13 @@ class DealershipReadingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(DealershipReadingRequest $request, $id)
+    public function update(DealershipReadingGasRequest $request, $id)
     {
         if (!Auth::user()->hasPermissionTo('Editar Leitura das Concessionárias')) {
             abort(403, 'Acesso não autorizado');
         }
 
-        $reading = DealershipReading::where('id', $id)->first();
+        $reading = DealershipReadingGas::where('id', $id)->first();
         if (empty($reading->id)) {
             abort(403, 'Acesso não autorizado');
         }
@@ -169,7 +163,7 @@ class DealershipReadingController extends Controller
 
         if ($reading->update($data)) {
             return redirect()
-                ->route('admin.dealerships-readings.index')
+                ->route('admin.dealerships-readings-gas.index')
                 ->with('success', 'Cadastro realizado!');
         } else {
             return redirect()
@@ -191,20 +185,20 @@ class DealershipReadingController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $reading = DealershipReading::where('id', $id)->first();
+        $reading = DealershipReadingGas::where('id', $id)->first();
 
         if (empty($reading->id)) {
             abort(403, 'Acesso não autorizado');
         }
 
-        $reports = $reading->apartmentReports;
+        // $reports = $reading->apartmentReports;
 
         if ($reading->delete()) {
-            if ($reports->count() > 0) {
-                foreach ($reports as $report) {
-                    $report->delete();
-                }
-            }
+            // if ($reports->count() > 0) {
+            //     foreach ($reports as $report) {
+            //         $report->delete();
+            //     }
+            // }
             return redirect()
                 ->back()
                 ->with('success', 'Exclusão realizada!');
@@ -230,19 +224,19 @@ class DealershipReadingController extends Controller
         $ids = explode(",", $request->ids);
 
         foreach ($ids as $id) {
-            $reading = DealershipReading::where('id', $id)->first();
+            $reading = DealershipReadingGas::where('id', $id)->first();
 
             if (empty($reading->id)) {
                 abort(403, 'Acesso não autorizado');
             }
 
             $reading->delete();
-            ApartmentReport::where('dealership_reading_id', $id)->delete();
-            Notification::where('apartment_id', $id)->delete();
+            // ApartmentReport::where('dealership_reading_id', $id)->delete();
+            // Notification::where('apartment_id', $id)->delete();
         }
 
         return redirect()
-            ->route('admin.dealerships-readings.index')
+            ->route('admin.dealerships-readings-gas.index')
             ->with('success', 'Contas das Concessionárias excluídas!');
     }
 }

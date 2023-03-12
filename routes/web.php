@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\BlockController;
 use App\Http\Controllers\Admin\Chat\MessageController;
 use App\Http\Controllers\Admin\ComplexController;
 use App\Http\Controllers\Admin\DealershipReadingController;
+use App\Http\Controllers\Admin\DealershipReadingGasController;
 use App\Http\Controllers\Admin\Management\CondominiumReportsController;
 use App\Http\Controllers\Admin\Management\MeterReadersController;
 use App\Http\Controllers\Admin\MeterController;
@@ -168,6 +169,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/dealerships-readings/batchDelete', [DealershipReadingController::class, 'batchDelete'])->name('dealerships-readings.batchDelete');
             Route::get('/dealerships-readings/destroy/{id}', [DealershipReadingController::class, 'destroy']);
             Route::resource('dealerships-readings', DealershipReadingController::class);
+
+            /** Dealerships Readings Gas */
+            Route::post('/dealerships-readings-gas/batchDelete', [DealershipReadingGasController::class, 'batchDelete'])->name('dealerships-readings-gas.batchDelete');
+            Route::get('/dealerships-readings-gas/destroy/{id}', [DealershipReadingGasController::class, 'destroy']);
+            Route::resource('dealerships-readings-gas', DealershipReadingGasController::class);
 
             /** Advertisements */
             Route::get('/advertisements/destroy/{id}', [AdvertisementController::class, 'destroy']);
