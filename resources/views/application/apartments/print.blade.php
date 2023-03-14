@@ -217,7 +217,7 @@
 
                     <div class="d-flex flex-wrap justify-content-start">
                         <div class="col-4 form-group pr-2">
-                            <label for="total_consumed">Cosumo Total da Unidade em m<sup>3</sup></label>
+                            <label for="total_consumed">Consumo Total da Unidade em m<sup>3</sup></label>
                             <input type="text" class="form-control bg-light" id="total_consumed"
                                 name="total_consumed" value="{{ $reading->total_consumed }}" disabled>
                         </div>
@@ -237,7 +237,7 @@
                         </div>
 
                         <div class="col-4 form-group px-2">
-                            <label for="total_consumed">Cosumo Total da Unidade em m<sup>3</sup></label>
+                            <label for="total_consumed">Consumo Total da Unidade em m<sup>3</sup></label>
                             <input type="text" class="form-control bg-light" id="total_consumed"
                                 name="total_consumed" value="{{ $reading->total_consumed }}" disabled>
                         </div>

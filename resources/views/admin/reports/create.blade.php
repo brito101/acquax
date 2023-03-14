@@ -122,7 +122,7 @@
                                 <div class="d-flex flex-wrap justify-content-start">
 
                                     <div class="col-12 col-md-4 form-group px-0 pr-md-2">
-                                        <label for="partial">Cosumo Total da Unidade em m<sup>3</sup></label>
+                                        <label for="partial">Consumo Total da Unidade em m<sup>3</sup></label>
                                         <input type="text" class="form-control" id="partial"
                                             placeholder="Valor em metros cúbicos" name="total_consumed"
                                             value="{{ old('total_consumed') }}" required>

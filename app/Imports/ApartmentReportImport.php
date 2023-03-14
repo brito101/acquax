@@ -62,7 +62,7 @@ class ApartmentReportImport implements ToModel, WithHeadingRow
                 'partial' => $row['rateio'] ? str_replace(',', '.', $row['rateio']) : 0,
                 'kite_car_consumed' => $row['consumo_pipa_m3'] ? str_replace(',', '.', $row['consumo_pipa_m3']) : 0,
                 'kite_car_cost' => $row['custo_pipa'] ? str_replace(',', '.', $row['custo_pipa']) : 0,
-                'total_consumed' => $row['cosumo_total_m3'] ? str_replace(',', '.', $row['cosumo_total_m3']) : 0,
+                'total_consumed' => $row['consumo_total_m3'] ? str_replace(',', '.', $row['consumo_total_m3']) : 0,
                 'total_unit' => $row['valor_total_unidade'] ? str_replace(',', '.', $row['valor_total_unidade']) : 0,
                 'readings' => $meter_readings,
             ]);
