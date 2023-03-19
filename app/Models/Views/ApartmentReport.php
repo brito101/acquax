@@ -47,6 +47,26 @@ class ApartmentReport extends Model
         return 'R$ ' . number_format($value, 2, ',', '.');
     }
 
+    public function getConsumptionGasValueAttribute($value)
+    {
+        if ($value) {
+            return number_format($value, 3, ',', '.');
+        } else {
+            return null;
+        }
+    }
+
+
+    public function getTotalGasValueAttribute($value)
+    {
+        if ($value) {
+            return 'R$ ' . number_format($value, 2, ',', '.');
+        } else {
+            return null;
+        }
+    }
+
+
 
     /** Aux */
     private function convertToMoney($number)

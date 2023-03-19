@@ -45,6 +45,8 @@ class ApartmentReportRequest extends FormRequest
             'total_unit' => str_replace(',', '.', str_replace('.', '', str_replace('R$ ', '', $this->total_unit))),
             'block_id' =>  $block ? $block->id : -1,
             'apartment_id' =>  $apartment ? $apartment->id : -1,
+            'consumption_gas_value' => $this->consumption_gas_value ? str_replace(',', '.', str_replace('.', '', $this->consumption_gas_value)) : null,
+            'total_gas_value' => $this->total_gas_value ? str_replace(',', '.', str_replace('.', '', str_replace('R$ ', '', $this->total_gas_value))) : null,
         ]);
     }
 
@@ -67,6 +69,8 @@ class ApartmentReportRequest extends FormRequest
             'kite_car_cost' => 'nullable|numeric|between:0,999999999.999',
             'total_consumed' => 'required|numeric|between:0,999999999.999',
             'total_unit' => 'required|numeric|between:0,999999999.999',
+            'consumption_gas_value' => 'nullable|numeric|between:0,999999999.999',
+            'total_gas_value' => 'nullable|numeric|between:0,999999999.999',
         ];
     }
 
@@ -83,6 +87,8 @@ class ApartmentReportRequest extends FormRequest
             'kite_car_cost.between' => 'O campo custo do carro pipa deve ser entre 0 e 999.999.999,.',
             'total_consumed.between' => 'O campo total consumido deve ser entre 0 e 999.999.999,999.',
             'total_unit' => 'O campo total da unidade deve ser entre 0 e 999.999.999,.',
+            'consumption_gas_value.between' => 'O campo consumo de gás deve ser entre 0 e 999.999.999,.',
+            'total_gas_value.between' => 'O campo valor do consumo de gás deve ser entre 0 e 999.999.999,999.',
         ];
     }
 }

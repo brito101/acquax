@@ -19,7 +19,10 @@ class ApartmentReport extends Model
     ];
 
     protected $fillable = [
-        'consumed', 'consumed_cost', 'sewage_cost', 'total_unit', 'partial', 'dealership_reading_id', 'readings', 'apartment_id', 'month_ref', 'year_ref', 'kite_car_consumed', 'kite_car_cost', 'total_consumed', 'editor'
+        'consumed', 'consumed_cost', 'sewage_cost', 'total_unit', 'partial',
+        'dealership_reading_id', 'readings', 'apartment_id', 'month_ref',
+        'year_ref', 'kite_car_consumed', 'kite_car_cost', 'total_consumed', 'editor',
+        'consumption_gas_value', 'total_gas_value'
     ];
 
     /** Relationships */
@@ -83,6 +86,26 @@ class ApartmentReport extends Model
     {
         return number_format($value, 3, ',', '.');
     }
+
+    public function getConsumptionGasValueAttribute($value)
+    {
+        if ($value) {
+            return number_format($value, 3, ',', '.');
+        } else {
+            return null;
+        }
+    }
+
+
+    public function getTotalGasValueAttribute($value)
+    {
+        if ($value) {
+            return 'R$ ' . number_format($value, 2, ',', '.');
+        } else {
+            return null;
+        }
+    }
+
 
     /** Aux */
     private function convertToMoney($number)

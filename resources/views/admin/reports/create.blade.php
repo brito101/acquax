@@ -136,6 +136,28 @@
                                     </div>
 
                                 </div>
+
+                                <div class="col-12">
+                                    <h4 class="text-muted text-center py-2">Dados de Gás</h4>
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-start">
+
+                                    <div class="col-12 col-md-4 form-group px-0 pr-md-2">
+                                        <label for="consumption_gas_value">Consumo de Gás em m<sup>3</sup></label>
+                                        <input type="text" class="form-control" id="consumption_gas_value"
+                                            placeholder="Valor em metros cúbicos" name="consumption_gas_value"
+                                            value="{{ old('consumption_gas_value') }}">
+                                    </div>
+
+                                    <div class="col-12 col-md-4 form-group px-0 px-md-2">
+                                        <label for="total_gas_value">Valor Total do Gás</label>
+                                        <input type="text" class="form-control money_format_2" id="total_gas_value"
+                                            placeholder="Custo em reais" name="total_gas_value"
+                                            value="{{ old('total_gas_value') }}">
+                                    </div>
+
+                                </div>
                             </div>
 
                             <div class="card-footer">

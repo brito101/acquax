@@ -56,15 +56,17 @@ class ApartmentReportImport implements ToModel, WithHeadingRow
                 'dealership_reading_id' =>  $dealershipReading ? $dealershipReading->id : -1,
                 'month_ref' => $row['mes_ref'],
                 'year_ref' => $row['ano_ref'],
-                'consumed' => $row['consumo_m3'] ? str_replace(',', '.', $row['consumo_m3']) : 0,
-                'consumed_cost' => $row['valor_consumo'] ? str_replace(',', '.', $row['valor_consumo']) : 0,
+                'consumed' => $row['consumo_agua_m3'] ? str_replace(',', '.', $row['consumo_agua_m3']) : 0,
+                'consumed_cost' => $row['valor_consumo_agua'] ? str_replace(',', '.', $row['valor_consumo_agua']) : 0,
                 'sewage_cost' => $row['valor_esgoto'] ? str_replace(',', '.', $row['valor_esgoto']) : 0,
-                'partial' => $row['rateio'] ? str_replace(',', '.', $row['rateio']) : 0,
+                'partial' => $row['rateio_agua'] ? str_replace(',', '.', $row['rateio_agua']) : 0,
                 'kite_car_consumed' => $row['consumo_pipa_m3'] ? str_replace(',', '.', $row['consumo_pipa_m3']) : 0,
                 'kite_car_cost' => $row['custo_pipa'] ? str_replace(',', '.', $row['custo_pipa']) : 0,
-                'total_consumed' => $row['consumo_total_m3'] ? str_replace(',', '.', $row['consumo_total_m3']) : 0,
-                'total_unit' => $row['valor_total_unidade'] ? str_replace(',', '.', $row['valor_total_unidade']) : 0,
+                'total_consumed' => $row['consumo_total_agua_m3'] ? str_replace(',', '.', $row['consumo_total_agua_m3']) : 0,
+                'total_unit' => $row['valor_total_agua_unidade'] ? str_replace(',', '.', $row['valor_total_agua_unidade']) : 0,
                 'readings' => $meter_readings,
+                'consumption_gas_value' => $row['consumo_gas_m3'] ? str_replace(',', '.', $row['consumo_gas_m3']) : null,
+                'total_gas_value' => $row['valor_consumo_gas'] ? str_replace(',', '.', $row['valor_consumo_gas']) : null,
             ]);
         } else {
             return;

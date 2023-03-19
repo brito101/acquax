@@ -307,6 +307,8 @@ return [
         'total_consumed' => 'consumo total',
         'total_unit' => 'total da unidade',
         'dealership_cost' => 'custo da concessionária em reais',
+        'consumption_gas_value' => 'consumo de gás',
+        'total_gas_value' => 'valor do consumo de gás',
     ],
 
 ];

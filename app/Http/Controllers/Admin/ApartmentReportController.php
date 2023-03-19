@@ -30,7 +30,7 @@ class ApartmentReportController extends Controller
             abort(403, 'Acesso não autorizado');
         }
 
-        $reports = ViewsApartmentReport::query();
+        $reports = ViewsApartmentReport::get();
         if ($request->ajax()) {
             return Datatables::of($reports)
                 ->addIndexColumn()
