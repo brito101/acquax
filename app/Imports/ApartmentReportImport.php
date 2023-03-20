@@ -9,6 +9,7 @@ use App\Models\Complex;
 use App\Models\DealershipReading;
 use App\Models\Meter;
 use App\Models\Reading;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -67,6 +68,7 @@ class ApartmentReportImport implements ToModel, WithHeadingRow
                 'readings' => $meter_readings,
                 'consumption_gas_value' => $row['consumo_gas_m3'] ? str_replace(',', '.', $row['consumo_gas_m3']) : null,
                 'total_gas_value' => $row['valor_consumo_gas'] ? str_replace(',', '.', $row['valor_consumo_gas']) : null,
+                'editor' => Auth::user()->id,
             ]);
         } else {
             return;
