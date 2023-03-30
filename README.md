@@ -2,7 +2,8 @@
 
 <p>Pending Tasks:</p>
 <ol>
-    <li>Colocar a imagem referente ao condomínio do usuário na dashboard</li>
+    <li>Colocar a imagem referente ao condomínio do usuário na dashboard;</li>
+    <li>Módulo pra upload de boletos e apresentação para os síndicos;</li>
     <li>Apresentar dados de medidores de gás;</li>
     <li>Fazer apresentação para usuários do sistema (todos);</li>    
     <li>Quem passar das média de consumo uma mensagem por diferentes canais de comunicação;</li>
