@@ -1,1 +1,327 @@
-function setTheme(e){localStorage.setItem("theme",e),document.documentElement.className=e}function toggleTheme(){"theme-dark"===localStorage.getItem("theme")?setTheme("theme-light"):setTheme("theme-dark")}!function(e){"use strict";function t(){e(".newsletter-form").addClass("animated shake"),setTimeout((function(){e(".newsletter-form").removeClass("animated shake")}),1e3)}function a(t,a){if(t)var o="validation-success";else o="validation-danger";e("#validator-newsletter").removeClass().addClass(o).text(a)}jQuery(".mean-menu").meanmenu({meanScreenWidth:"991"}),e(window).on("scroll",(function(){e(this).scrollTop()>150?e(".navbar-area").addClass("sticky-nav"):e(".navbar-area").removeClass("sticky-nav")})),e(".side-nav-responsive .dot-menu").on("click",(function(){e(".side-nav-responsive .container-max .container").toggleClass("active")})),e(".banner-slider").owlCarousel({loop:!0,margin:30,nav:!1,items:1,dots:!0,autoplay:!0,autoHeight:!1,autoplayHoverPause:!0}),e(".case-study-slider").owlCarousel({loop:!0,margin:30,nav:!1,dots:!1,center:!0,autoplay:!0,autoplayHoverPause:!0,responsive:{0:{items:1},600:{items:2},1024:{items:3},1200:{items:4}}}),e(".brand-slider").owlCarousel({loop:!0,margin:60,nav:!1,dots:!1,autoplay:!0,autoplayHoverPause:!0,responsive:{0:{items:2},600:{items:2},700:{items:3},1024:{items:5}}}),e(".clients-slider").owlCarousel({loop:!0,margin:30,nav:!0,dots:!1,autoplay:!0,autoplayHoverPause:!0,responsive:{0:{items:1},992:{items:2}},navText:["<i class='bx bx-chevron-left'></i>","<i class='bx bx-chevron-right'></i>"]}),e(".clients-slider-two").owlCarousel({loop:!0,margin:30,nav:!0,dots:!1,autoplay:!0,autoplayHoverPause:!0,items:1,navText:["<i class='bx bx-chevron-left'></i>","<i class='bx bx-chevron-right'></i>"]}),e(".banner-sub-slider").owlCarousel({loop:!0,margin:30,nav:!1,dots:!1,autoplay:!0,autoplayHoverPause:!0,responsive:{0:{items:1},1024:{items:3}}}),e(".popup-btn").magnificPopup({disableOn:320,type:"iframe",mainClass:"mfp-fade",removalDelay:160,preloader:!1,fixedContentPos:!1}),e("select").niceSelect(),e(".accordion").find(".accordion-title").on("click",(function(){e(this).toggleClass("active"),e(this).next().slideToggle("fast"),e(".accordion-content").not(e(this).next()).slideUp("fast"),e(".accordion-title").not(e(this)).removeClass("active")})),e(".skill-bar").each((function(){e(this).find(".progress-content").animate({width:e(this).attr("data-percentage")},2e3),e(this).find(".progress-number-mark").animate({left:e(this).attr("data-percentage")},{duration:2e3,step:function(t,a){var o=Math.round(t);e(this).find(".percent").html(o+"%")}})})),(new WOW).init(),e(window).on("load",(function(){e(".preloader").fadeOut(500)})),e("body").append("<div class='go-top'><i class='bx bx-chevrons-up'></i></div>"),e(window).on("scroll",(function(){var t=e(window).scrollTop();t>600&&e(".go-top").addClass("active"),t<600&&e(".go-top").removeClass("active")})),e(".go-top").on("click",(function(){e("html, body").animate({scrollTop:"0"},50)})),setInterval((function(){var t,a,o,s,n,i,l;t=new Date("December 30, 2022 17:00:00 PDT"),t=Date.parse(t)/1e3,a=new Date,o=t-(a=Date.parse(a)/1e3),s=Math.floor(o/86400),n=Math.floor((o-86400*s)/3600),i=Math.floor((o-86400*s-3600*n)/60),l=Math.floor(o-86400*s-3600*n-60*i),n<"10"&&(n="0"+n),i<"10"&&(i="0"+i),l<"10"&&(l="0"+l),e("#days").html(s+"<span>Days</span>"),e("#hours").html(n+"<span>Hours</span>"),e("#minutes").html(i+"<span>Minutes</span>"),e("#seconds").html(l+"<span>Seconds</span>")}),300),e(".newsletter-form").validator().on("submit",(function(e){e.isDefaultPrevented()?(t(),a(!1,"Please enter your email correctly")):e.preventDefault()}))}(jQuery),"theme-dark"===localStorage.getItem("theme")?(setTheme("theme-dark"),document.getElementById("slider").checked=!1):(setTheme("theme-light"),document.getElementById("slider").checked=!0);
+(function ($) {
+    "use strict";
+
+    // Mean Menu JS
+    jQuery(".mean-menu").meanmenu({
+        meanScreenWidth: "991",
+    });
+
+    // Navbar Area
+    $(window).on("scroll", function () {
+        if ($(this).scrollTop() > 150) {
+            $(".navbar-area").addClass("sticky-nav");
+        } else {
+            $(".navbar-area").removeClass("sticky-nav");
+        }
+    });
+
+    // Search Overlay JS
+    // $(".nav-side .search-box i").on("click", function () {
+    //     $(".search-overlay").toggleClass("search-overlay-active");
+    // });
+    // $(".search-close").on("click", function () {
+    //     $(".search-overlay").removeClass("search-overlay-active");
+    // });
+
+    // Others Option For Responsive JS
+    $(".side-nav-responsive .dot-menu").on("click", function () {
+        $(".side-nav-responsive .container-max .container").toggleClass(
+            "active"
+        );
+    });
+
+    // Banner Slider
+    $(".banner-slider").owlCarousel({
+        loop: true,
+        margin: 30,
+        nav: false,
+        items: 1,
+        dots: true,
+        autoplay: true,
+        autoHeight: false,
+        autoplayHoverPause: true,
+    });
+
+    // Case Study Slider
+    $(".case-study-slider").owlCarousel({
+        loop: true,
+        margin: 30,
+        nav: false,
+        dots: false,
+        center: true,
+        autoplay: true,
+        autoplayHoverPause: true,
+        responsive: {
+            0: {
+                items: 1,
+            },
+            600: {
+                items: 2,
+            },
+            1024: {
+                items: 3,
+            },
+            1200: {
+                items: 4,
+            },
+        },
+    });
+
+    // Brand Slider
+    $(".brand-slider").owlCarousel({
+        loop: true,
+        margin: 60,
+        nav: false,
+        dots: false,
+        autoplay: true,
+        autoplayHoverPause: true,
+        responsive: {
+            0: {
+                items: 2,
+            },
+            600: {
+                items: 2,
+            },
+            700: {
+                items: 3,
+            },
+            1024: {
+                items: 5,
+            },
+        },
+    });
+
+    // Clients Slider
+    $(".clients-slider").owlCarousel({
+        loop: true,
+        margin: 30,
+        nav: true,
+        dots: false,
+        autoplay: true,
+        autoplayHoverPause: true,
+        responsive: {
+            0: {
+                items: 1,
+            },
+            992: {
+                items: 2,
+            },
+        },
+        navText: [
+            "<i class='bx bx-chevron-left'></i>",
+            "<i class='bx bx-chevron-right'></i>",
+        ],
+    });
+
+    // Clients Slider
+    $(".clients-slider-two").owlCarousel({
+        loop: true,
+        margin: 30,
+        nav: true,
+        dots: false,
+        autoplay: true,
+        autoplayHoverPause: true,
+        items: 1,
+        navText: [
+            "<i class='bx bx-chevron-left'></i>",
+            "<i class='bx bx-chevron-right'></i>",
+        ],
+    });
+
+    // Banner Sub Slider
+    $(".banner-sub-slider").owlCarousel({
+        loop: true,
+        margin: 30,
+        nav: false,
+        dots: false,
+        autoplay: true,
+        autoplayHoverPause: true,
+        responsive: {
+            0: {
+                items: 1,
+            },
+            1024: {
+                items: 3,
+            },
+        },
+    });
+
+    // Popup Video
+    $(".popup-btn").magnificPopup({
+        disableOn: 320,
+        type: "iframe",
+        mainClass: "mfp-fade",
+        removalDelay: 160,
+        preloader: false,
+        fixedContentPos: false,
+    });
+
+    // Nice Select JS
+    $("select").niceSelect();
+
+    // FAQ Accordion JS
+    $(".accordion")
+        .find(".accordion-title")
+        .on("click", function () {
+            // Adds Active Class
+            $(this).toggleClass("active");
+            // Expand or Collapse This Panel
+            $(this).next().slideToggle("fast");
+            // Hide The Other Panels
+            $(".accordion-content").not($(this).next()).slideUp("fast");
+            // Removes Active Class From Other Titles
+            $(".accordion-title").not($(this)).removeClass("active");
+        });
+
+    // Skill-bar JS
+    $(".skill-bar").each(function () {
+        $(this)
+            .find(".progress-content")
+            .animate({ width: $(this).attr("data-percentage") }, 2000);
+        $(this)
+            .find(".progress-number-mark")
+            .animate(
+                { left: $(this).attr("data-percentage") },
+                {
+                    duration: 2000,
+                    step: function (now, fx) {
+                        var data = Math.round(now);
+                        $(this)
+                            .find(".percent")
+                            .html(data + "%");
+                    },
+                }
+            );
+    });
+
+    // WOW JS
+    new WOW().init();
+
+    // Preloader JS
+    $(window).on("load", function () {
+        $(".preloader").fadeOut(500);
+    });
+
+    // Back To Top
+    $("body").append(
+        "<div class='go-top'><i class='bx bx-chevrons-up'></i></div>"
+    );
+    $(window).on("scroll", function () {
+        var scrolled = $(window).scrollTop();
+        if (scrolled > 600) $(".go-top").addClass("active");
+        if (scrolled < 600) $(".go-top").removeClass("active");
+    });
+    $(".go-top").on("click", function () {
+        $("html, body").animate(
+            {
+                scrollTop: "0",
+            },
+            50
+        );
+    });
+
+    // Count Time JS
+    function makeTimer() {
+        var endTime = new Date("December 30, 2022 17:00:00 PDT");
+        var endTime = Date.parse(endTime) / 1000;
+        var now = new Date();
+        var now = Date.parse(now) / 1000;
+        var timeLeft = endTime - now;
+        var days = Math.floor(timeLeft / 86400);
+        var hours = Math.floor((timeLeft - days * 86400) / 3600);
+        var minutes = Math.floor((timeLeft - days * 86400 - hours * 3600) / 60);
+        var seconds = Math.floor(
+            timeLeft - days * 86400 - hours * 3600 - minutes * 60
+        );
+        if (hours < "10") {
+            hours = "0" + hours;
+        }
+        if (minutes < "10") {
+            minutes = "0" + minutes;
+        }
+        if (seconds < "10") {
+            seconds = "0" + seconds;
+        }
+        $("#days").html(days + "<span>Days</span>");
+        $("#hours").html(hours + "<span>Hours</span>");
+        $("#minutes").html(minutes + "<span>Minutes</span>");
+        $("#seconds").html(seconds + "<span>Seconds</span>");
+    }
+    setInterval(function () {
+        makeTimer();
+    }, 300);
+
+    // Subscribe form
+    $(".newsletter-form")
+        .validator()
+        .on("submit", function (event) {
+            if (event.isDefaultPrevented()) {
+                // Handle The Invalid Form...
+                formErrorSub();
+                submitMSGSub(false, "Please enter your email correctly");
+            } else {
+                // Everything Looks Good!
+                event.preventDefault();
+            }
+        });
+    function callbackFunction(resp) {
+        if (resp.result === "success") {
+            formSuccessSub();
+        } else {
+            formErrorSub();
+        }
+    }
+    function formSuccessSub() {
+        $(".newsletter-form")[0].reset();
+        submitMSGSub(true, "Thank you for subscribing!");
+        setTimeout(function () {
+            $("#validator-newsletter").addClass("hide");
+        }, 4000);
+    }
+    function formErrorSub() {
+        $(".newsletter-form").addClass("animated shake");
+        setTimeout(function () {
+            $(".newsletter-form").removeClass("animated shake");
+        }, 1000);
+    }
+    function submitMSGSub(valid, msg) {
+        if (valid) {
+            var msgClasses = "validation-success";
+        } else {
+            var msgClasses = "validation-danger";
+        }
+        $("#validator-newsletter").removeClass().addClass(msgClasses).text(msg);
+    }
+
+    // AJAX MailChimp
+    // $(".newsletter-form").ajaxChimp({
+    //     url: "https://envyTheme.us20.list-manage.com/subscribe/post?u=60e1ffe2e8a68ce1204cd39a5&amp;id=42d6d188d9", // Your url MailChimp
+    //     callback: callbackFunction,
+    // });
+})(jQuery);
+
+// function to set a given theme/color-scheme
+function setTheme(themeName) {
+    localStorage.setItem("theme", themeName);
+    document.documentElement.className = themeName;
+}
+
+// function to toggle between light and dark theme
+function toggleTheme() {
+    if (localStorage.getItem("theme") === "theme-dark") {
+        setTheme("theme-light");
+    } else {
+        setTheme("theme-dark");
+    }
+}
+
+// Immediately invoked function to set the theme on initial load
+(function () {
+    if (localStorage.getItem("theme") === "theme-dark") {
+        setTheme("theme-dark");
+        document.getElementById("slider").checked = false;
+    } else {
+        setTheme("theme-light");
+        document.getElementById("slider").checked = true;
+    }
+})();
